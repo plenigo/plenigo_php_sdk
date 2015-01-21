@@ -6,7 +6,8 @@ php:
   - 5.3
   - hhvm
 
-pecl install
-composer install
+before_script:
+  - pecl install mcrypt
+  - composer install
 
-phpunit
+script: phpunit
