@@ -7,7 +7,6 @@ php:
   - hhvm
 
 before_script:
-  - pecl install mcrypt
   - composer install
 
 script: phpunit
