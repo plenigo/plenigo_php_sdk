@@ -16,20 +16,6 @@ class CurlRequestTest extends PHPUnit_Framework_Testcase
         $req->close();
     }
 
-    public function testExecutionHTTPS()
-    {
-        $req = new CurlRequest("https://www.google.com/");
-
-        $req->setOption(CURLOPT_SSL_VERIFYPEER, false);
-        $req->setOption(CURLOPT_RETURNTRANSFER, true);
-        $req->setOption(CURLOPT_FOLLOWLOCATION, true);
-
-        $response = $req->execute();
-
-        $this->assertNotSame(false, strpos($response, 'google'));
-        $req->close();
-    }
-
     /**
      * @expectedException \Exception
      */
