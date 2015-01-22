@@ -16,43 +16,14 @@ class CurlRequestTest extends PHPUnit_Framework_Testcase
         $req->close();
     }
 
-    public function testExecutionHTTPS()
-    {
-        $req = new CurlRequest("https://www.google.com/");
-
-        $req->setOption(CURLOPT_SSL_VERIFYPEER, false);
-        $req->setOption(CURLOPT_RETURNTRANSFER, true);
-        $req->setOption(CURLOPT_FOLLOWLOCATION, true);
-
-        $response = $req->execute();
-
-        $this->assertNotSame(false, strpos($response, 'google'));
-        $req->close();
-    }
-
     /**
      * @expectedException \Exception
      */
-    public function testExecutionMarlformedURLException()
+    public function testExecutionMalformedURLException()
     {
         $req = new CurlRequest("htp://www.om/something_invalid_here");
 
         $req->setOption(CURLOPT_RETURNTRANSFER, true);
-
-        $req->execute();
-
-        $req->close();
-    }
-
-    /**
-     * @expectedException \Exception
-     */
-    public function testExecutionHTTPStatusCodeException()
-    {
-        $req = new CurlRequest("http://www.google.com/");
-
-        $req->setOption(CURLOPT_RETURNTRANSFER, true);
-        $req->setOption(CURLOPT_FOLLOWLOCATION, false);
 
         $req->execute();
 

@@ -65,20 +65,6 @@ class EncryptionUtilsTest extends PHPUnit_Framework_Testcase
     }
 
     /**
-     * <p>
-     * Test case for encryption method failure.
-     * </p>
-     *
-     * @expectedException PHPUnit_Framework_Error_Warning
-     */
-    public function testEncryptLibraryPathFail()
-    {
-        EncryptionUtils::setMCryptLibraryPath('/wrong-path');
-
-        EncryptionUtils::decryptWithAES('some-key', 'some-value');
-    }
-
-    /**
      * @expectedException Exception
      */
     public function testEncryptAlgorythmFail()
