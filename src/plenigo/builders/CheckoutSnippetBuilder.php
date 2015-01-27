@@ -59,11 +59,16 @@ class CheckoutSnippetBuilder
      */
     public function build($settings = array())
     {
-        $requestQueryString = $this->buildCheckoutRequestQueryString($settings);
         $clazz = get_class();
-        PlenigoManager::get()->notice($clazz, "Building CHECKOUT snippet:" . $requestQueryString);
-        $encodedData = $this->buildEncodedData($requestQueryString);
+        PlenigoManager::get()->notice($clazz, "Building CHECKOUT snippet:");
+        //Add testMode SDK check
+        if (PlenigoManager::get()->isTestMode() === true) {
+            $settings["testMode"] = "true";
+        }
 
+        $requestQueryString = $this->buildCheckoutRequestQueryString($settings);
+        $encodedData = $this->buildEncodedData($requestQueryString);
+		PlenigoManager::get()->notice($clazz, "Checkout QUERYSTRING:". $requestQueryString);
         return sprintf("plenigo.checkout('%s');", $encodedData);
     }
 
