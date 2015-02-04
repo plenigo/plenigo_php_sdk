@@ -18,6 +18,7 @@ class CheckoutSnippetBuilderTest extends PlenigoTestCase
             'item-123', 'item-review', 1.5, 'USD'
         );
         $product->setCategoryId("New Category");
+        $product->setSubscriptionRenewal(true);
 
         return array(array($product));
     }

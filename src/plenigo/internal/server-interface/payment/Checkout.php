@@ -86,7 +86,8 @@ final class Checkout extends ServerInterface
         ArrayUtils::addIfDefined($map, 'categoryId', $productMap, 'categoryId');
         ArrayUtils::addIfDefined($map, 'currency', $productMap, 'currency');
         ArrayUtils::addIfDefined($map, 'type', $productMap, 'type');
-
+        ArrayUtils::addIfDefined($map, 'subscriptionRenewal', $productMap, 'subscriptionRenewal');
+        
         $this->setValuesFromMap($map);
     }
 
@@ -111,6 +112,7 @@ final class Checkout extends ServerInterface
         $this->setValueFromMapIfNotEmpty('categoryId', $map);
         $this->setValueFromMapIfNotEmpty('payWhatYouWant', $map);
         $this->setValueFromMapIfNotEmpty('testMode', $map);
+        $this->setValueFromMapIfNotEmpty('subscriptionRenewal', $map);
     }
 
     /**
@@ -267,6 +269,7 @@ final class Checkout extends ServerInterface
         $this->insertIntoMapIfDefined($map, 'categoryId', 'ci');
         $this->insertIntoMapIfDefined($map, 'payWhatYouWant', 'sp');
         $this->insertIntoMapIfDefined($map, 'testMode', 'ts');
+        $this->insertIntoMapIfDefined($map, 'subscriptionRenewal', 'rs');
 
         return $map;
     }

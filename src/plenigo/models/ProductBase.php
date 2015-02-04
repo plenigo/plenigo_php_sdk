@@ -63,6 +63,12 @@ class ProductBase extends ProductId
     private $customAmount;
 
     /**
+     * Flag indicating if this checkout is a subscription renewal
+     * @var bool
+     */
+    private $subscriptionRenewal;
+    
+    /**
      * This constructor receives price, title, id and currency as parameters, it
      * is recommended for instantiating products that are not managed by
      * plenigo.
@@ -175,6 +181,21 @@ class ProductBase extends ProductId
         $this->customAmount = safe_boolval($condition);
     }
 
+    public function isSubscriptionRenewal()
+    {
+        return $this->subscriptionRenewal;
+    }
+
+    public function getSubscriptionRenewal()
+    {
+        return $this->subscriptionRenewal;
+    }
+
+    public function setSubscriptionRenewal($subscriptionRenewal)
+    {
+        $this->subscriptionRenewal = $subscriptionRenewal;
+    }
+
     /**
      * Returns an array map from the product's values.
      *
@@ -190,6 +211,7 @@ class ProductBase extends ProductId
         ArrayUtils::addIfNotNull($map, 'categoryId', $this->getCategoryId());
         ArrayUtils::addIfNotNull($map, 'type', $this->getType());
         ArrayUtils::addIfNotNull($map, 'customAmount', $this->isCustomAmount());
+        ArrayUtils::addIfNotNull($map, 'subscriptionRenewal', $this->isSubscriptionRenewal());
 
         return $map;
     }
