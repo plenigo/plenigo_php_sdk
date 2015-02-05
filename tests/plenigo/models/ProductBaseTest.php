@@ -59,7 +59,7 @@ class ProductBaseTest extends PHPUnit_Framework_Testcase
 
         $product->setCustomAmount($expectedResult);
 
-        $this->assertEquals($expectedResult, $product->isCustomAmount());
+        $this->assertEquals($expectedResult, $product->getCustomAmount());
     }
 
     /**

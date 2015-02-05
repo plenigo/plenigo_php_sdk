@@ -162,9 +162,9 @@ class ProductBase extends ProductId
     /**
      * Checks if the custom ammount flag is set.
      *
-     * @return bool The isCustomAmount.
+     * @return bool The customAmount.
      */
-    public function isCustomAmount()
+    public function getCustomAmount()
     {
         return $this->customAmount === true;
     }
@@ -179,11 +179,6 @@ class ProductBase extends ProductId
     public function setCustomAmount($condition)
     {
         $this->customAmount = safe_boolval($condition);
-    }
-
-    public function isSubscriptionRenewal()
-    {
-        return $this->subscriptionRenewal;
     }
 
     public function getSubscriptionRenewal()
@@ -210,8 +205,8 @@ class ProductBase extends ProductId
         ArrayUtils::addIfNotNull($map, 'currency', $this->getCurrency());
         ArrayUtils::addIfNotNull($map, 'categoryId', $this->getCategoryId());
         ArrayUtils::addIfNotNull($map, 'type', $this->getType());
-        ArrayUtils::addIfNotNull($map, 'customAmount', $this->isCustomAmount());
-        ArrayUtils::addIfNotNull($map, 'subscriptionRenewal', $this->isSubscriptionRenewal());
+        ArrayUtils::addIfNotNull($map, 'customAmount', $this->getCustomAmount());
+        ArrayUtils::addIfNotNull($map, 'subscriptionRenewal', $this->getSubscriptionRenewal());
 
         return $map;
     }
