@@ -45,7 +45,8 @@ class MeteredUserData
      * @param int $logTaken        indicates the amount of views that the user has taken (after login)
      * @param bool $logReached    indicates if the limit has been reached (after login)
      */
-    public function __construct($activated, $allowed, $taken, $reached, $logAllowed, $logTaken, $logReached)
+    public function __construct($activated = false, $allowed = 0, $taken = 0, $reached = true, $logAllowed = 0, $logTaken
+    = 0, $logReached = true)
     {
         $this->isMeteredViewActivated = $activated;
         $this->freeViewsAllowed = $allowed;

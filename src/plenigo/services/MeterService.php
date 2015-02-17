@@ -159,29 +159,40 @@ class MeterService extends Service
         if (is_null($limitReached)) {
             $limitReached = false;
         }
+        $viewsAvailable = $meteredUserData->getFreeViewsAllowed();
+        $viewsUsed = $meteredUserData->getFreeViewsTaken();
         $loginLimitReached = $meteredUserData->isLoginLimitReached();
         if (is_null($loginLimitReached)) {
             $loginLimitReached = false;
         }
+        $loginViewsAvailable = $meteredUserData->getLoginFreeViewsAllowed();
+        $loginViewsUsed = $meteredUserData->getLoginFreeViewsTaken();
         $validCookie = self::checkCookieValidity($meteredUserData);
 
-        if ($limitReached === true && $loggedIn === false && $validCookie === true) {
+        //invalid Metered cookie, the Javascript should take care of it
+        if ($validCookie === false) {
+            PlenigoManager::notice($clazz, "Invalid. You shall pass this time!");
+            return true;
+        }
+
+        $limitToCheck = $limitReached;
+        $viewsToCheck = $viewsAvailable;
+        $viewsUsedToCheck = $viewsUsed;
+
+        //if login views enabled
+        if ($loggedIn === true && $loginViewsAvailable > 0) {
+            $limitToCheck = $loginLimitReached;
+            $viewsToCheck = $loginViewsAvailable;
+            $viewsUsedToCheck = $loginViewsUsed;
+        }
+
+        if ($limitToCheck === true) {
             PlenigoManager::notice($clazz, "Limit reached. You shall NOT pass!");
-            return false;
-        } else if ($loginLimitReached === true && $loggedIn === true && $validCookie === true) {
-            PlenigoManager::notice($clazz, "Limit reached, user. You shall NOT pass!");
             return false;
         }
 
-        if ($loggedIn === true) {
-            PlenigoManager::notice($clazz,
-                "Limit not reached, user. You shall pass! (" . $meteredUserData->getLoginFreeViewsTaken()
-                . "/" . $meteredUserData->getLoginFreeViewsAllowed() . ")");
-        } else {
-            PlenigoManager::notice($clazz,
-                "Limit not reached. You shall pass! (" . $meteredUserData->getFreeViewsTaken()
-                . "/" . $meteredUserData->getFreeViewsAllowed() . ")");
-        }
+        PlenigoManager::notice($clazz,
+            "Limit not reached. You shall pass! (" . $viewsUsedToCheck . "/" . $viewsToCheck . ")");
         return true;
     }
 
