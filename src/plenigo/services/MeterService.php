@@ -187,21 +187,12 @@ class MeterService extends Service
         }
 
         if ($limitToCheck === true) {
-            if ($loggedIn === false) {
-                PlenigoManager::notice($clazz, "Limit reached. You shall NOT pass!");
-            } else {
-                PlenigoManager::notice($clazz, "Limit reached, user. You shall NOT pass!");
-            }
+            PlenigoManager::notice($clazz, "Limit reached. You shall NOT pass!");
             return false;
         }
 
-        if ($loggedIn === true) {
-            PlenigoManager::notice($clazz,
-                "Limit not reached, user. You shall pass! (" . $viewsUsedToCheck . "/" . $viewsToCheck . ")");
-        } else {
-            PlenigoManager::notice($clazz,
-                "Limit not reached. You shall pass! (" . $viewsUsedToCheck . "/" . $viewsToCheck . ")");
-        }
+        PlenigoManager::notice($clazz,
+            "Limit not reached. You shall pass! (" . $viewsUsedToCheck . "/" . $viewsToCheck . ")");
         return true;
     }
 
