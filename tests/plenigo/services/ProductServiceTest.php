@@ -41,7 +41,7 @@ class ProductServiceTest extends PlenigoTestCase
             . 'turpis id eleifend mattis, turpis.","url":"http://fake.plenigo.com/products/testProduct-123/",'
             . '"choosePrice":false,"price":"29.99","type":"DIGITALNEWSPAPER","currency":"EUR","term":"2",'
             . '"cancellationPeriod":"5","autoRenewal":true,"actionPeriodName":"Summer Sale",'
-            . '"actionPeriodTerm":"2","actionPeriodPrice":"15.99","collectible":false,'
+            . '"actionPeriodTerm":"2","actionPeriodPrice":"15.99","videoPrequelTime":"45","collectible":false,'
             . '"images":[{"url":"http://fake.plenigo.com/products/testProduct-123/image1.jpg",'
             . '"description":"Front view of the product","altText":"Front view of the product"},'
             . '{"url":"http://fake.plenigo.com/products/testProduct-123/image2.jpg",'
@@ -129,6 +129,22 @@ class ProductServiceTest extends PlenigoTestCase
         $this->assertError(E_USER_NOTICE, "Getting Product data for ProductID=");
     }
 
+        /**
+     * @dataProvider productServiceProvider
+     */
+    public function testGetProductDataPrequelSuccess($data)
+    {
+        ProductServiceMock::$requestResponse = $data;
+
+        $pData = ProductServiceMock::getProductData('testProduct-123');
+
+        $this->assertInstanceOf("\plenigo\models\ProductData", $pData);
+        $this->assertEquals("45", $pData->getVideoPrequelTime());
+
+        $this->assertError(E_USER_NOTICE, "Getting Product data for ProductID=");
+    }
+
+    
     public function testGetProductDataNotFound()
     {
         $data = json_decode('{"error":"404","description":"Product testProduct-123 not found"}');

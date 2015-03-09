@@ -56,7 +56,7 @@ class ProductService extends Service
      * This can only be used for plenigo managed products.
      *
      * @param string $productId The product id to use.
-     * @return the product data related to the access token
+     * @return ProductData the product data related to the access token
      * @throws PlenigoException whenever an error happens
      */
     public static function getProductData($productId)
