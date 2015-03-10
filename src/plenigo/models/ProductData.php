@@ -25,8 +25,7 @@ use \plenigo\models\Image;
  * @author   Sebastian Dieguez <s.dieguez@plenigo.com>
  * @link     https://www.plenigo.com
  */
-class ProductData
-{
+class ProductData {
 
     private $id = null;
     private $subscription = null;
@@ -36,6 +35,7 @@ class ProductData
     private $pricingData = null;
     private $actionPeriod = null;
     private $images = array();
+    private $videoPrequelTime = null;
 
     /**
      * Product Data constructor, must be filled with the required data.
@@ -49,8 +49,7 @@ class ProductData
      * @param ActionPeriod $actionPeriod The action period information
      * @param array()      $images       The images information related to the product
      */
-    public function __construct($id, $subscript, $title, $desc, $collect, $pricingData, $actionPeriod, $images)
-    {
+    public function __construct($id, $subscript, $title, $desc, $collect, $pricingData, $actionPeriod, $images) {
         $this->id = $id;
         if (!is_null($subscript)) {
             $this->subscription = $subscript;
@@ -80,8 +79,7 @@ class ProductData
      *
      * @return The id of the product
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -90,8 +88,7 @@ class ProductData
      *
      * @return The title of the product
      */
-    public function getTitle()
-    {
+    public function getTitle() {
         return $this->title;
     }
 
@@ -100,8 +97,7 @@ class ProductData
      *
      * @return The description of the product
      */
-    public function getDescription()
-    {
+    public function getDescription() {
         return $this->description;
     }
 
@@ -110,8 +106,7 @@ class ProductData
      *
      * @return  a bool indicating if the product is collectible
      */
-    public function isCollectible()
-    {
+    public function isCollectible() {
         return ($this->collectible === true);
     }
 
@@ -120,8 +115,7 @@ class ProductData
      *
      * @return The images array
      */
-    public function getImages()
-    {
+    public function getImages() {
         return $this->images;
     }
 
@@ -130,8 +124,7 @@ class ProductData
      *
      * @return a bool indicating if the product represents a subscription
      */
-    public function isSubscribable()
-    {
+    public function isSubscribable() {
         return $this->subscription->isSubscribable();
     }
 
@@ -140,8 +133,7 @@ class ProductData
      *
      * @return A bool indicating if the user can select the price or not
      */
-    public function isPriceChosen()
-    {
+    public function isPriceChosen() {
         return $this->pricingData->isChoosePrice();
     }
 
@@ -150,8 +142,7 @@ class ProductData
      *
      * @return the price of the product
      */
-    public function getPrice()
-    {
+    public function getPrice() {
         return $this->pricingData->getAmount();
     }
 
@@ -160,8 +151,7 @@ class ProductData
      *
      * @return string product type
      */
-    public function getType()
-    {
+    public function getType() {
         return $this->pricingData->getType();
     }
 
@@ -170,8 +160,7 @@ class ProductData
      *
      * @return the currency iso code
      */
-    public function getCurrency()
-    {
+    public function getCurrency() {
         return $this->pricingData->getCurrency();
     }
 
@@ -180,8 +169,7 @@ class ProductData
      *
      * @return the subscription term
      */
-    public function getSubscriptionTerm()
-    {
+    public function getSubscriptionTerm() {
         return $this->subscription->getTerm();
     }
 
@@ -190,8 +178,7 @@ class ProductData
      *
      * @return the cancellation period for the subscription
      */
-    public function getCancellationPeriod()
-    {
+    public function getCancellationPeriod() {
         return $this->subscription->getCancellationPeriod();
     }
 
@@ -200,8 +187,7 @@ class ProductData
      *
      * @return a bool indicating if the subscription is auto-renewed
      */
-    public function isAutoRenewed()
-    {
+    public function isAutoRenewed() {
         return $this->subscription->isAutoRenewed();
     }
 
@@ -210,8 +196,7 @@ class ProductData
      *
      * @return The name of the action period
      */
-    public function getActionPeriodName()
-    {
+    public function getActionPeriodName() {
         return $this->actionPeriod->getName();
     }
 
@@ -220,8 +205,7 @@ class ProductData
      *
      * @return The term of the action period
      */
-    public function getActionPeriodTerm()
-    {
+    public function getActionPeriodTerm() {
         return $this->actionPeriod->getTerm();
     }
 
@@ -230,9 +214,26 @@ class ProductData
      *
      * @return The action period if one is defined
      */
-    public function getActionPeriodPrice()
-    {
+    public function getActionPeriodPrice() {
         return $this->actionPeriod->getPrice();
+    }
+
+    /**
+     * Duration of the Video Prequel if defined
+     *
+     * @return Duration of the Video Prequel if defined
+     */
+    public function getVideoPrequelTime() {
+        return $this->videoPrequelTime;
+    }
+
+    /**
+     * Sets the Duration of the Video Prequel
+     * 
+     * @param int $videoPrequelTime
+     */
+    public function setVideoPrequelTime($videoPrequelTime) {
+        $this->videoPrequelTime = $videoPrequelTime;
     }
 
     /**
@@ -241,17 +242,20 @@ class ProductData
      * @param array $map The array map to use for the instance creation.
      * @return ProductData instance.
      */
-    public static function createFromMap($map)
-    {
+    public static function createFromMap($map) {
         $images = Image::createFromMapArray($map);
         $actionPeriod = ActionPeriod::createFromMap($map);
         $subscription = Subscription::createFromMap($map);
         $pricingData = PricingData::createFromMap($map);
-
-        return new ProductData(
-            $map['id'], $subscription, $map['title'], $map['description'], $map['collectible'], $pricingData,
-            $actionPeriod, $images
+        $data = new ProductData(
+                $map['id'], $subscription, $map['title'], $map['description'], $map['collectible'], $pricingData, $actionPeriod, $images
         );
+
+        if (isset($map['videoPrequelTime']) && !is_null($map['videoPrequelTime'])) {
+            $data->setVideoPrequelTime($map['videoPrequelTime']);
+        }
+
+        return $data;
     }
 
 }
