@@ -247,8 +247,13 @@ class ProductData {
         $actionPeriod = ActionPeriod::createFromMap($map);
         $subscription = Subscription::createFromMap($map);
         $pricingData = PricingData::createFromMap($map);
+        $currID = isset($map['id']) ? $map['id'] : null;
+        $currTitle = isset($map['title']) ? $map['title'] : null;
+        $currDesc = isset($map['description']) ? $map['description'] : null;
+        $currCollectible = isset($map['collectible']) ? $map['collectible'] : null;
+
         $data = new ProductData(
-                $map['id'], $subscription, $map['title'], $map['description'], $map['collectible'], $pricingData, $actionPeriod, $images
+                $currID, $subscription, $currTitle, $currDesc, $currCollectible, $pricingData, $actionPeriod, $images
         );
 
         if (isset($map['videoPrequelTime']) && !is_null($map['videoPrequelTime'])) {

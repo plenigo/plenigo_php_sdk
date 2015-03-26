@@ -20,8 +20,7 @@ namespace plenigo\internal\models;
  * @author   Sebastian Dieguez <s.dieguez@plenigo.com>
  * @link     https://www.plenigo.com
  */
-class PricingData
-{
+class PricingData {
 
     private $choosePrice = false;
     private $amount = 0.0;
@@ -35,8 +34,7 @@ class PricingData
      * @param string  $type prouct type
      * @param string  $currency The currency iso code
      */
-    public function __construct($choosePrice, $amount, $type, $currency)
-    {
+    public function __construct($choosePrice, $amount, $type, $currency) {
         $this->choosePrice = $choosePrice;
         $this->amount = $amount;
         $this->type = $type;
@@ -47,8 +45,7 @@ class PricingData
      * Returns if the price amount can be changed by the user.
      * @return boolean A bool indicating if the price amount can be changed by the user
      */
-    public function isChoosePrice()
-    {
+    public function isChoosePrice() {
         return $this->choosePrice;
     }
 
@@ -56,8 +53,7 @@ class PricingData
      * The price amount.
      * @return double price amount
      */
-    public function getAmount()
-    {
+    public function getAmount() {
         return $this->amount;
     }
 
@@ -66,8 +62,7 @@ class PricingData
      *
      * @return string product type
      */
-    public function getType()
-    {
+    public function getType() {
         return $this->type;
     }
 
@@ -75,8 +70,7 @@ class PricingData
      * The currency as an ISO Code, e.g, EUR.
      * @return string iso code
      */
-    public function getCurrency()
-    {
+    public function getCurrency() {
         return $this->currency;
     }
 
@@ -86,12 +80,11 @@ class PricingData
      * @param array $map The array map to use for the instance creation.
      * @return PricingData instance.
      */
-    public static function createFromMap($map)
-    {
-        $choosePrice = $map['choosePrice'];
-        $amount = floatval($map['price']);
-        $type = floatval($map['type']);
-        $currency = $map['currency'];
+    public static function createFromMap($map) {
+        $choosePrice = iseet($map['choosePrice']) ? $map['choosePrice'] : null;
+        $amount = isset($map['price']) ? floatval($map['price']) : null;
+        $type = isset($map['type']) ? floatval($map['type']) : null;
+        $currency = isset($map['currency']) ? $map['currency'] : null;
 
         return new PricingData($choosePrice, $amount, $type, $currency);
     }

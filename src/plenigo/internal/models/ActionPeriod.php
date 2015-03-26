@@ -20,8 +20,7 @@ namespace plenigo\internal\models;
  * @author   Sebastian Dieguez <s.dieguez@plenigo.com>
  * @link     https://www.plenigo.com
  */
-class ActionPeriod
-{
+class ActionPeriod {
 
     private $name;
     private $term;
@@ -33,8 +32,7 @@ class ActionPeriod
      * @param int    $term The term of the action period
      * @param double $price The price of the action period
      */
-    public function __construct($name, $term, $price)
-    {
+    public function __construct($name, $term, $price) {
         $this->name = $name;
         $this->term = $term;
         $this->price = $price;
@@ -44,8 +42,7 @@ class ActionPeriod
      * The name of the action period.
      * @return The name of the action period
      */
-    public function getName()
-    {
+    public function getName() {
         return $this->name;
     }
 
@@ -53,8 +50,7 @@ class ActionPeriod
      * The term of the action period.
      * @return The term of the action period
      */
-    public function getTerm()
-    {
+    public function getTerm() {
         return $this->term;
     }
 
@@ -62,8 +58,7 @@ class ActionPeriod
      * The price of the action period.
      * @return The price of the action period
      */
-    public function getPrice()
-    {
+    public function getPrice() {
         return $this->price;
     }
 
@@ -73,11 +68,10 @@ class ActionPeriod
      * @param array $map The array map to use for the instance creation.
      * @return ActionPeriod instance.
      */
-    public static function createFromMap($map)
-    {
-        $name = $map['actionPeriodName'];
-        $term = $map['actionPeriodTerm'];
-        $price = $map['actionPeriodPrice'];
+    public static function createFromMap($map) {
+        $name = isset($map['actionPeriodName']) ? $map['actionPeriodName'] : null;
+        $term = isset($map['actionPeriodTerm']) ? $map['actionPeriodTerm'] : null;
+        $price = isset($map['actionPeriodPrice']) ? $map['actionPeriodPrice'] : null;
 
         return new ActionPeriod($name, $term, $price);
     }

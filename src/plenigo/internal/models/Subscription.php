@@ -20,8 +20,7 @@ namespace plenigo\internal\models;
  * @author   Sebastian Dieguez <s.dieguez@plenigo.com>
  * @link     https://www.plenigo.com
  */
-class Subscription
-{
+class Subscription {
 
     private $subscribable = false;
     private $term = 0;
@@ -35,8 +34,7 @@ class Subscription
      * @param int     $cancellationPeriod cancellation period
      * @param bool $autoRenewed Is the subscription autorenewed
      */
-    public function __construct($subscribable, $term, $cancellationPeriod, $autoRenewed)
-    {
+    public function __construct($subscribable, $term, $cancellationPeriod, $autoRenewed) {
         $this->subscribable = $subscribable;
         $this->term = $term;
         $this->cancellationPeriod = $cancellationPeriod;
@@ -47,8 +45,7 @@ class Subscription
      * Flag indicating if the product represents a subscription.
      * @return A bool indicating if the product represents a subscription
      */
-    public function isSubscribable()
-    {
+    public function isSubscribable() {
         return ($this->subscribable === true);
     }
 
@@ -56,8 +53,7 @@ class Subscription
      * The subscription term.
      * @return The subscription term
      */
-    public function getTerm()
-    {
+    public function getTerm() {
         return $this->term;
     }
 
@@ -65,8 +61,7 @@ class Subscription
      * The cancellation period.
      * @return The cancellation period
      */
-    public function getCancellationPeriod()
-    {
+    public function getCancellationPeriod() {
         return $this->cancellationPeriod;
     }
 
@@ -74,8 +69,7 @@ class Subscription
      * Flag indicating if the product subscription is auto renewed.
      * @return bool indicating if the product subscription is auto renewed
      */
-    public function isAutoRenewed()
-    {
+    public function isAutoRenewed() {
         return ($this->autoRenewed === true);
     }
 
@@ -85,12 +79,11 @@ class Subscription
      * @param array $map The array map to use for the instance creation.
      * @return Subscription instance.
      */
-    public static function createFromMap($map)
-    {
-        $subscribable = $map['subscription'];
-        $term = $map['term'];
-        $cancellationPeriod = $map['cancellationPeriod'];
-        $autoRenewed = $map['autoRenewal'];
+    public static function createFromMap($map) {
+        $subscribable = isset($map['subscription']) ? $map['subscription'] : null;
+        $term = isset($map['term']) ? $map['term'] : null;
+        $cancellationPeriod = isset($map['cancellationPeriod']) ? $map['cancellationPeriod'] : null;
+        $autoRenewed = isset($map['autoRenewal']) ? $map['autoRenewal'] : null;
 
         return new Subscription($subscribable, $term, $cancellationPeriod, $autoRenewed);
     }
