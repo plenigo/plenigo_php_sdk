@@ -63,9 +63,9 @@ class Image {
      * @return Image instance.
      */
     public static function createFromMap($map) {
-        $url = $map['url'];
-        $description = $map['description'];
-        $altText = $map['altText'];
+        $url = isset($map['url']) ? $map['url'] : null;
+        $description = isset($map['description']) ? $map['description'] : null;
+        $altText = isset($map['altText']) ? $map['altText'] : null;
 
         return new Image($url, $description, $altText);
     }
