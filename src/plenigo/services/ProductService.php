@@ -36,7 +36,8 @@ use plenigo\PlenigoManager;
  * @author   Sebastian Dieguez <s.dieguez@plenigo.com>
  * @link     https://www.plenigo.com
  */
-class ProductService extends Service {
+class ProductService extends Service
+{
 
     const ERR_MSG_PROD_DATA = "Could not retrieve Product Data!";
     const ERR_MSG_CAT_DATA = "Could not retrieve Category Data!";
@@ -58,7 +59,8 @@ class ProductService extends Service {
      * @return ProductData the product data related to the access token
      * @throws PlenigoException whenever an error happens
      */
-    public static function getProductData($productId) {
+    public static function getProductData($productId)
+    {
         $clazz = get_class();
         PlenigoManager::notice($clazz, "Getting Product data for ProductID=" . $productId);
 
@@ -104,7 +106,8 @@ class ProductService extends Service {
      * @param mixed $response the response object from the cURL call
      * @return ProductData the resulting ProductData object
      */
-    private static function buildProductData($response) {
+    private static function buildProductData($response)
+    {
         return ProductData::createFromMap(get_object_vars($response));
     }
 
@@ -116,10 +119,11 @@ class ProductService extends Service {
      * @return Array an asociative array as a ResultSet with totalElements, page size, last id and the list of products
      * @throws PlenigoException
      */
-    public static function getProductList($pageSize = 10, $lastID = null) {
+    public static function getProductList($pageSize = 10, $lastID = null)
+    {
         $clazz = get_class();
         PlenigoManager::notice(
-                $clazz, "Getting Product Listing (page size=" . $pageSize . ' lastID=' . $lastID . ')');
+            $clazz, "Getting Product Listing (page size=" . $pageSize . ' lastID=' . $lastID . ')');
 
 
         $params = self::configureListParams($pageSize, $lastID);
@@ -158,7 +162,8 @@ class ProductService extends Service {
      * @return the category data related to the access token
      * @throws PlenigoException whenever an error happens
      */
-    public static function getCategoryData($categoryId) {
+    public static function getCategoryData($categoryId)
+    {
         $clazz = get_class();
         PlenigoManager::notice($clazz, "Getting Category data for CategoryID=" . $categoryId);
 
@@ -204,7 +209,8 @@ class ProductService extends Service {
      * @param mixed $response the response object from the cURL call
      * @return CategoryData the resulting CategoryData object
      */
-    private static function buildCategoryData($response) {
+    private static function buildCategoryData($response)
+    {
         return CategoryData::createFromMap(get_object_vars($response));
     }
 
@@ -216,10 +222,11 @@ class ProductService extends Service {
      * @return Array an asociative array as a ResultSet with totalElements, page size, last id and the list of products
      * @throws PlenigoException
      */
-    public static function getCategoryList($pageSize = 10, $lastID = null) {
+    public static function getCategoryList($pageSize = 10, $lastID = null)
+    {
         $clazz = get_class();
         PlenigoManager::notice(
-                $clazz, "Getting Category Listing (page size=" . $pageSize . ' lastID=' . $lastID . ')');
+            $clazz, "Getting Category Listing (page size=" . $pageSize . ' lastID=' . $lastID . ')');
 
         $params = self::configureListParams($pageSize, $lastID);
 
@@ -257,7 +264,8 @@ class ProductService extends Service {
      *
      * @throws \plenigo\PlenigoException on request error.
      */
-    public function execute() {
+    public function execute()
+    {
         try {
             $response = parent::execute();
         } catch (\Exception $exc) {
@@ -277,7 +285,8 @@ class ProductService extends Service {
      * @param string $defaultMsg the error message for default error
      * @return PlenigoException the exception that needs to be thrown
      */
-    private static function getException($exc, $errorCode, $defaultMsg) {
+    private static function getException($exc, $errorCode, $defaultMsg)
+    {
         $clazz = get_class();
         switch ($errorCode) {
             case ErrorCode::INVALID_SECRET_OR_COMPANY_ID:
@@ -300,7 +309,8 @@ class ProductService extends Service {
      * @param string $lastID Optional. A string containing the last ID of the current page
      * @return array A key=>value array to convert to queryString for the URL
      */
-    private static function configureListParams($pageSize = 10, $lastID = null) {
+    private static function configureListParams($pageSize = 10, $lastID = null)
+    {
         $size = max(min($pageSize, 100), 10);
 
         return array(
