@@ -5,7 +5,6 @@ namespace plenigo\models;
 require_once __DIR__ . '/../internal/models/PricingData.php';
 
 use \plenigo\internal\models\PricingData;
-
 /**
  * CategoryData
  * 
@@ -19,7 +18,8 @@ use \plenigo\internal\models\PricingData;
  * @author   Maximilian Schweitzer <maximilian.schweitzer@plenigo.com>
  * @link     https://www.plenigo.com
  */
-class CategoryData {
+class CategoryData
+{
 
     private $id = null;
     private $pricingData = null;
@@ -32,7 +32,8 @@ class CategoryData {
      * @param PricingData  $pricingData  The pricing information
      * @param string       $validityTime The time span in days the category is valid
      */
-    public function __construct($id, $pricingData, $validityTime) {
+    public function __construct($id, $pricingData, $validityTime)
+    {
         $this->id = $id;
         $this->validityTime = $validityTime;
         if (!is_null($pricingData)) {
@@ -47,7 +48,8 @@ class CategoryData {
      *
      * @return The id of the category
      */
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
     }
 
@@ -56,7 +58,8 @@ class CategoryData {
      *
      * @return the price of the category
      */
-    public function getPrice() {
+    public function getPrice()
+    {
         return $this->pricingData->getAmount();
     }
 
@@ -65,7 +68,8 @@ class CategoryData {
      *
      * @return string product type
      */
-    public function getType() {
+    public function getType()
+    {
         return $this->pricingData->getType();
     }
 
@@ -74,7 +78,8 @@ class CategoryData {
      *
      * @return the currency iso code
      */
-    public function getCurrency() {
+    public function getCurrency()
+    {
         return $this->pricingData->getCurrency();
     }
 
@@ -83,7 +88,8 @@ class CategoryData {
      *
      * @return time span in days the category is valid
      */
-    public function getValidityTime() {
+    public function getValidityTime()
+    {
         return $this->validityTime;
     }
 
@@ -93,12 +99,11 @@ class CategoryData {
      * @param array $map The array map to use for the instance creation.
      * @return ProductData instance.
      */
-    public static function createFromMap($map) {
-        $currID = isset($map['id']) ? $map['id'] : null;
+    public static function createFromMap($map)
+    {
         $pricingData = PricingData::createFromMap($map);
-        $currValid = isset($map['validityTime']) ? $map['validityTime'] : null;
 
-        return new CategoryData($currID, $pricingData, $currValid);
+        return new CategoryData($map['id'], $pricingData, $map['validityTime']);
     }
 
 }
