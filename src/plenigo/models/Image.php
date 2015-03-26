@@ -14,8 +14,7 @@ namespace plenigo\models;
  * @author   Sebastian Dieguez <s.dieguez@plenigo.com>
  * @link     https://www.plenigo.com
  */
-class Image
-{
+class Image {
 
     private $url = null;
     private $description = null;
@@ -27,8 +26,7 @@ class Image
      * @param string $description The description of the image
      * @param string $altText The alt text of the image
      */
-    public function __construct($url, $description, $altText)
-    {
+    public function __construct($url, $description, $altText) {
         $this->url = $url;
         $this->description = $description;
         $this->altText = $altText;
@@ -38,8 +36,7 @@ class Image
      * The URL of the image.
      * @return The URL of the image
      */
-    public function getUrl()
-    {
+    public function getUrl() {
         return $this->url;
     }
 
@@ -47,8 +44,7 @@ class Image
      * The Description of the image.
      * @return The Description of the image
      */
-    public function getDescription()
-    {
+    public function getDescription() {
         return $this->description;
     }
 
@@ -56,8 +52,7 @@ class Image
      * The alt text of the image.
      * @return The alt text of the image
      */
-    public function getAltText()
-    {
+    public function getAltText() {
         return $this->altText;
     }
 
@@ -67,8 +62,7 @@ class Image
      * @param array $map The array map to use for the instance creation.
      * @return Image instance.
      */
-    public static function createFromMap($map)
-    {
+    public static function createFromMap($map) {
         $url = $map['url'];
         $description = $map['description'];
         $altText = $map['altText'];
@@ -82,11 +76,10 @@ class Image
      * @param array $map The array map to use for lopping the instance creation.
      * @return array of Image instances.
      */
-    public static function createFromMapArray($map)
-    {
-        $imgArray = $map['images'];
+    public static function createFromMapArray($map) {
+        $imgArray = isset($map['images']) ? $map['images'] : null;
         $resArray = array();
-        if (is_array($imgArray)) {
+        if (!is_null($imgArray) && is_array($imgArray)) {
             foreach ($imgArray as $img) {
                 $resObj = static::createFromMap(get_object_vars($img));
                 if (!is_null($resObj)) {
