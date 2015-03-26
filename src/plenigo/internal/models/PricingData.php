@@ -81,7 +81,7 @@ class PricingData {
      * @return PricingData instance.
      */
     public static function createFromMap($map) {
-        $choosePrice = iseet($map['choosePrice']) ? $map['choosePrice'] : null;
+        $choosePrice = isset($map['choosePrice']) ? $map['choosePrice'] : null;
         $amount = isset($map['price']) ? floatval($map['price']) : null;
         $type = isset($map['type']) ? floatval($map['type']) : null;
         $currency = isset($map['currency']) ? $map['currency'] : null;

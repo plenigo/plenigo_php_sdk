@@ -19,8 +19,7 @@ use \plenigo\internal\models\Address;
  * @author   René Olivo <r.olivo@plenigo.com>
  * @link     https://www.plenigo.com
  */
-class UserData
-{
+class UserData {
 
     /**
      * The user id.
@@ -78,8 +77,7 @@ class UserData
      *
      * @return UserData instance
      */
-    public function __construct($id, $email, $name, $username, $gender, $lastName, $firstName, Address $address)
-    {
+    public function __construct($id, $email, $name, $username, $gender, $lastName, $firstName, Address $address) {
         $this->id = $id;
         $this->email = $email;
         $this->name = $name;
@@ -95,8 +93,7 @@ class UserData
      *
      * @return user's id.
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -105,8 +102,7 @@ class UserData
      *
      * @return user's email.
      */
-    public function getEmail()
-    {
+    public function getEmail() {
         return $this->email;
     }
 
@@ -115,8 +111,7 @@ class UserData
      *
      * @return user's name.
      */
-    public function getName()
-    {
+    public function getName() {
         return $this->name;
     }
 
@@ -125,8 +120,7 @@ class UserData
      *
      * @return username/nickname.
      */
-    public function getUsername()
-    {
+    public function getUsername() {
         return $this->username;
     }
 
@@ -135,8 +129,7 @@ class UserData
      *
      * @return user's gender.
      */
-    public function getGender()
-    {
+    public function getGender() {
         return $this->gender;
     }
 
@@ -145,8 +138,7 @@ class UserData
      *
      * @return user's last name. 
      */
-    public function getLastName()
-    {
+    public function getLastName() {
         return $this->lastName;
     }
 
@@ -155,8 +147,7 @@ class UserData
      *
      * @return user's first name.
      */
-    public function getFirstName()
-    {
+    public function getFirstName() {
         return $this->firstName;
     }
 
@@ -165,8 +156,7 @@ class UserData
      *
      * @return user's address {@link \plenigo\internal\Address}.
      */
-    public function getAddress()
-    {
+    public function getAddress() {
         return $this->address;
     }
 
@@ -175,8 +165,7 @@ class UserData
      *
      * @return UserData map.
      */
-    public function getMap()
-    {
+    public function getMap() {
         $map = array(
             'userId' => $this->getId(),
             'email' => $this->getEmail(),
@@ -202,15 +191,20 @@ class UserData
      *
      * @return a UserData instance.
      */
-    public static function createFromMap(array $map)
-    {
+    public static function createFromMap(array $map) {
         $address = Address::createFromMap($map);
 
-        $lastName = (!isset($map['lastName']) || is_null($map['lastName'])) ? $map['name'] : $map['lastName'];
-        $userId = (!isset($map['id']) || is_null($map['id'])) ? $map['userId'] : $map['id'];
+        $name = isset($map['name']) ? $map['name'] : null;
+        $currFirstName = isset($map['firstName']) ? $map['firstName'] : null;
+        $lastName = isset($map['lastName']) ? $map['lastName'] : $name;
+        $currID = isset($map['id']) ? $map['id'] : null;
+        $userId = isset($map['userId']) ? $map['userId'] : $currID;
+        $currEmail = isset($map['email']) ? $map['email'] : null;
+        $currName = isset($map['name']) ? $map['name'] : null;
+        $currUserName = isset($map['username']) ? $map['username'] : null;
+        $currGender = isset($map['gender']) ? $map['gender'] : null;
 
-        return new UserData($userId, $map['email'], $map['name'], $map['username'], $map['gender'], $lastName,
-            $map['firstName'], $address);
+        return new UserData($userId, $currEmail, $currName, $currUserName, $currGender, $lastName, $currFirstName, $address);
     }
 
 }
