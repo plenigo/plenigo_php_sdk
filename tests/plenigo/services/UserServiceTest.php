@@ -268,27 +268,6 @@ use \plenigo\internal\ApiResults;
     }
 
     /**
-     * This will check for a bought product, but it will mock an expired cookie so the method returns false
-     * 
-     * @param object $prodData given by the Provider method
-     * @dataProvider productProvider
-     */
-    public function testHasUserBoughtWithExpiredCookie($prodData)
-    {
-        UserServiceMock::$requestResponse = $prodData;
-
-        $lastWeek = time() - (7 * 24 * 60 * 60 * 100);
-        $strInValidCustomer = ApiResults::TIMESTAMP . SdkUtils::KEY_VALUE_SEPARATOR . $lastWeek . SdkUtils::ENTRY_SEPARATOR
-            . ApiResults::CUSTOMER_ID . SdkUtils::KEY_VALUE_SEPARATOR . self::CUSTOMER_ID;
-
-        $cookieText = EncryptionUtils::encryptWithAES(PlenigoManager::get()->getSecret(), $strInValidCustomer);
-        UserServiceMock::setCookie(PlenigoManager::PLENIGO_USER_COOKIE_NAME, $cookieText);
-        $hasBought = UserServiceMock::hasUserBought($prodData->{'id'});
-        $this->assertError(E_USER_NOTICE, "Expired Cookie from CustomerID");
-        $this->assertFalse($hasBought);
-    }
-
-    /**
      * This will check for a bought product, but it will mock a not found exception
      * 
      */
