@@ -25,7 +25,7 @@ class PricingData {
     private $choosePrice = false;
     private $amount = 0.0;
     private $type = 'DIGITALNEWSPAPER';
-    private $currency = 'USD';
+    private $currency = 'EUR';
 
     /**
      * Pricing Data constructor.

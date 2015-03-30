@@ -42,7 +42,7 @@ abstract class BasicEnum
     /**
      * <p>
      * This methods ensures that the provided key is contained in the Enum's constants. 
-     * An optional parameter allows for strict as in case-insensitive) check of the 
+     * An optional parameter allows for strict as in (case-insensitive) check of the 
      * constant in the Enum class.
      * </p>
      *

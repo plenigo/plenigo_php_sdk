@@ -100,7 +100,7 @@ class MeterService extends Service
      * A day in milliseconds.
      * (24*60*60*100)
      */
-    const TS_DAY_IN_MILLIS = 8640000; //24hours in millis
+    const TS_DAY_IN_MILLIS = 86400000; //24hours in millis
 
     /**
      * This method parses the metered view data from the user in the cookie.
@@ -225,7 +225,7 @@ class MeterService extends Service
 
     /**
      * This method follows the logic of validating the creation time of the cookie, 
-     * this is a coutnermeassure for cookie spoofing to get metered views always active
+     * this is a countermeasure for cookie spoofing to get metered views always active
      * 
      * @param plenigo\internal\models\MeteredUserData $meteredInfo the Metered Info subject to checking
      * @return boolean true if is a valid cookie, false otherwise

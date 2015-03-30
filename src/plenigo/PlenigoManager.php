@@ -78,7 +78,7 @@ final class PlenigoManager
     }
 
     /**
-     * Configuration method that instantiate the Plenigo Manager class.
+     * Configuration method that instantiate the PlenigoManager class.
      *
      * @param string $secret    a String that represents the secret key for your specific company
      * @param string $companyId a String that represents the company ID used
@@ -99,7 +99,7 @@ final class PlenigoManager
      * Singleton instance retrieval method.
      *
      * @return PlenigoManager Singleton instance of {@link plenigo.PlenigoManager}
-     * @throws Exception when the Plenigo Manager has not been previously configured.
+     * @throws Exception when the PlenigoManager has not been previously configured.
      */
     public static function get()
     {
@@ -133,7 +133,7 @@ final class PlenigoManager
     }
 
     /**
-     * This returns the URL used by all the API communications within Plenigo.
+     * This returns the URL used by all the API communications within plenigo.
      *
      * @return string The API base URL
      */

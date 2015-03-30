@@ -181,11 +181,23 @@ class ProductBase extends ProductId
         $this->customAmount = safe_boolval($condition);
     }
 
+    /**
+     * Checks if the suscription renewal flag is set.
+     *
+     * @return bool The subscriptionRenewal.
+     */
     public function getSubscriptionRenewal()
     {
         return $this->subscriptionRenewal;
     }
 
+    /**
+     * Sets the suscription renewal flag.
+     *
+     * @param bool $subscriptionRenewal The condition to set.
+     *
+     * @return void
+     */
     public function setSubscriptionRenewal($subscriptionRenewal)
     {
         $this->subscriptionRenewal = $subscriptionRenewal;

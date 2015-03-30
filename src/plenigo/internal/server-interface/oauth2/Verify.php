@@ -32,7 +32,7 @@ class Verify extends ServerInterface
     protected $code;
 
     /**
-     * The redirect URI originally privided.
+     * The redirect URI originally provided.
      */
     protected $redirect_uri;
 

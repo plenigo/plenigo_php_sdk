@@ -43,7 +43,7 @@ class TokenData
     private $tokenType;
 
     /**
-     * This constructor initializes the TokenData and returns an instnace.
+     * This constructor initializes the TokenData and returns an instace.
      *
      * @param string $accessToken  The returned access token.
      * @param string $expiresIn    The time the token will expire in.

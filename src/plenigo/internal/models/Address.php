@@ -7,7 +7,7 @@ namespace plenigo\internal\models;
  *
  * <p>
  * User Data model that mirrors the information provided by
- * the Plenigo REST API.
+ * the plenigo REST API.
  * </p>
  *
  * @category SDK
@@ -139,7 +139,6 @@ class Address
      */
     public static function createFromMap(array $map)
     {
-
         return new Address(
             $map['street'],
             $map['additionalAddressInfo'],

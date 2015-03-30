@@ -11,7 +11,7 @@ use \plenigo\internal\models\Address;
  *
  * <p>
  * User Data model that mirrors the information provided by
- * the Plenigo REST API.
+ * the plenigo REST API.
  * </p>
  *
  * @category SDK

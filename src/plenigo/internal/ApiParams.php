@@ -60,7 +60,7 @@ class ApiParams extends BasicEnum
     const INFO_SCRN_SHOWN_ON_RETRY = "sab";
 
     /**
-     * The info scren shown at the end of a payment parameter.
+     * The info screen shown at the end of a payment parameter.
      */
     const INFO_SCRN_SHOWN_AT_END_OF_PAYMENT = "spf";
 
@@ -120,7 +120,7 @@ class ApiParams extends BasicEnum
     const ACCESS_TOKEN = "token";
 
     /**
-     * The gramt type of the token.
+     * The grant type of the token.
      */
     const TOKEN_GRANT_TYPE = "grant_type";
 

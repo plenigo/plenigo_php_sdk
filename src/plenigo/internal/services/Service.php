@@ -42,7 +42,7 @@ class Service
 
     /**
      * Returns a response to a GET RestClient request to a specific
-     * end-point on the Plenigo REST API.
+     * end-point on the plenigo REST API.
      *
      * @param string $endPoint The REST end-point to access.
      * @param array  $params   Optional params to pass to the request.
@@ -58,7 +58,7 @@ class Service
 
     /**
      * Returns a response to a POST RestClient request to a specific
-     * end-point on the Plenigo REST API.
+     * end-point on the plenigo REST API.
      *
      * @param string $endPoint The REST end-point to access.
      * @param array  $params   Optional params to pass to the request.
@@ -134,7 +134,7 @@ class Service
         $statusCode = $this->request->getStatusCode();
 
         if ($statusCode != 200) {
-            throw new \Exception("Request Estatus Code: " . $statusCode, $statusCode);
+            throw new \Exception("Request Status Code: " . $statusCode, $statusCode);
         }
     }
 
