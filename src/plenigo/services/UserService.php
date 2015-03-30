@@ -137,11 +137,6 @@ class UserService extends Service
             PlenigoManager::notice($clazz, self::ERR_MSG_CUSTOMER);
             return false;
         }
-        if (self::hasExpired($customer) === true) {
-            PlenigoManager::notice($clazz, self::ERR_MSG_EXPIRED);
-            return false;
-        }
-
         PlenigoManager::notice($clazz, "customer is good=" . print_r($customer, true));
         $testModeText = (PlenigoManager::get()->isTestMode()) ? 'true' : 'false';
 
@@ -230,10 +225,6 @@ class UserService extends Service
         $clazz = get_class();
         if (is_null($customer) || !($customer instanceof \plenigo\internal\models\Customer)) {
             PlenigoManager::error($clazz, self::ERR_MSG_CUSTOMER);
-            return false;
-        }
-        if (self::hasExpired($customer) === true) {
-            PlenigoManager::error($clazz, self::ERR_MSG_EXPIRED);
             return false;
         }
         return true;
