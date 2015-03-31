@@ -31,7 +31,7 @@ class PlenigoException extends \Exception
      *
      * @param type $message The response message
      * @param type $code The response code
-     * @param type $previous The previus Exception
+     * @param type $previous The previous Exception
      */
     public function __construct($message, $code = 0, $previous = null)
     {
@@ -61,7 +61,7 @@ class PlenigoException extends \Exception
     }
 
     /**
-     * Clears the entore ErrorDetail array
+     * Clears the entire ErrorDetail array
      */
     public function clearErrorDetail()
     {

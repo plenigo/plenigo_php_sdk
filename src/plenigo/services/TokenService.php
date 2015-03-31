@@ -63,7 +63,7 @@ class TokenService extends Service
     /**
      * Executes the request to get the Access Token.
      *
-     * @param string $accessCode  The Access Code provided by the Plenigo API.
+     * @param string $accessCode  The Access Code provided by the plenigo API.
      * @param string $redirectUri The redirect URI used to get the Access Code.
      * @param string $csrfToken   An optional CSRF Token to pass to the request.
      *
@@ -82,7 +82,7 @@ class TokenService extends Service
     /**
      * Executes the request to get a new Access Token using a Refresh Code.
      *
-     * @param string $refreshCode The Access Code provided by the Plenigo API.
+     * @param string $refreshCode The Access Code provided by the plenigo API.
      * @param string $csrfToken   An optional CSRF Token to pass to the request.
      *
      * @return TokenService instance.
@@ -101,7 +101,7 @@ class TokenService extends Service
      * Prepares the request to get the Access Token.
      *
      * @param string $type        The type of Token Grant Type to use.
-     * @param string $code        The Access Code provided by the Plenigo API.
+     * @param string $code        The Access Code provided by the plenigo API.
      * @param string $redirectUri An optional redirect URI used to get the Access Code.
      * @param string $csrfToken   An optional CSRF Token to pass to the request.
      *

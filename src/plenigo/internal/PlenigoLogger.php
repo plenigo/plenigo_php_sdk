@@ -18,8 +18,7 @@ namespace plenigo\internal;
  * @author   Sebastian Dieguez <s.dieguez@plenigo.com>
  * @link     https://www.plenigo.com
  */
-final class PlenigoLogger
-{
+final class PlenigoLogger {
 
     const TEMPLATE_LOG = "[%25.25s] - %s - %s";
     const ENCODING_UTF8 = "UTF-8";
@@ -33,18 +32,29 @@ final class PlenigoLogger
      * @param Exception $exc an optional Exception object to show its stacktrace and messages
      * @return void
      */
-    public static function notice($clazz, $msg, $exc = null)
-    {
-        $strDate = self::getDateString();
-        $strClass = self::getStringFromObject($clazz);
+    public static function notice($clazz, $msg, $exc = null) {
         $strStack = self::getStackFromException($exc);
-        $strMessage = htmlentities($msg, ENT_QUOTES, self::ENCODING_UTF8, false);
-        $strFinal = sprintf(self::TEMPLATE_LOG, $strDate, $strClass, $strMessage);
+        $strFinal = self::build_message_text($clazz, $msg, $exc);
         if (!is_null($strStack)) {
             $strFinal.="\n" . $strStack;
         }
         trigger_error($strFinal, E_USER_NOTICE);
         return;
+    }
+
+    /**
+     * Builds the log message including information about the location of the error itself.
+     * 
+     * @param mixed     $clazz can be an object, a string or any other variable, if its an object, it's class is shown
+     * @param string    $msg the NOTICE message to send
+     * @param Exception $exc an optional Exception object to show its stacktrace and messages
+     * @return string
+     */
+    private static function build_message_text($clazz, $msg, $exc = null) {
+        $strDate = self::getDateString();
+        $strClass = self::getStringFromObject($clazz);
+        $strMessage = htmlentities($msg, ENT_QUOTES, self::ENCODING_UTF8, false);
+        return sprintf(self::TEMPLATE_LOG, $strDate, $strClass, $strMessage);
     }
 
     /**
@@ -56,13 +66,9 @@ final class PlenigoLogger
      * @param Exception $exc an optional Exception object to show its stacktrace and messages
      * @return void
      */
-    public static function warn($clazz, $msg, $exc = null)
-    {
-        $strDate = self::getDateString();
-        $strClass = self::getStringFromObject($clazz);
+    public static function warn($clazz, $msg, $exc = null) {
         $strStack = self::getStackFromException($exc);
-        $strMessage = htmlentities($msg, ENT_QUOTES, self::ENCODING_UTF8, false);
-        $strFinal = sprintf(self::TEMPLATE_LOG, $strDate, $strClass, $strMessage);
+        $strFinal = self::build_message_text($clazz, $msg, $exc);
         if (!is_null($strStack)) {
             $strFinal.="\n" . $strStack;
         }
@@ -79,13 +85,9 @@ final class PlenigoLogger
      * @param Exception $exc an optional Exception object to show its stacktrace and messages
      * @return void
      */
-    public static function error($clazz, $msg, $exc = null)
-    {
-        $strDate = self::getDateString();
-        $strClass = self::getStringFromObject($clazz);
+    public static function error($clazz, $msg, $exc = null) {
         $strStack = self::getStackFromException($exc);
-        $strMessage = htmlentities($msg, ENT_QUOTES, self::ENCODING_UTF8, false);
-        $strFinal = sprintf(self::TEMPLATE_LOG, $strDate, $strClass, $strMessage);
+        $strFinal = self::build_message_text($clazz, $msg, $exc);
         if (!is_null($strStack)) {
             $strFinal.="\n" . $strStack;
         }
@@ -99,19 +101,17 @@ final class PlenigoLogger
      * 
      * @return string the Date in ISO 8601 formatting
      */
-    private static function getDateString()
-    {
+    private static function getDateString() {
         return date("c");
     }
 
     /**
-     * Returns a representarion of the object or its class name to show in the logs
+     * Returns a representation of the object or its class name to show in the logs
      * 
      * @param mixed $clazz can be an object, a string or any other variable, if its an object, it's class is shown
      * @return type
      */
-    private static function getStringFromObject($clazz)
-    {
+    private static function getStringFromObject($clazz) {
         if (is_object($clazz)) {
             return get_class($clazz);
         } elseif (is_string($clazz)) {
@@ -122,13 +122,12 @@ final class PlenigoLogger
     }
 
     /**
-     * Returns a representation (Java style) of the stacktrace, it recursivelly shows the "Caused by:" stacktrces
+     * Returns a representation (Java style) of the stacktrace, it recursively shows the "Caused by:" stacktraces
      * 
      * @param \Exception $exc Exception object to show its stacktrace and messages
      * @return string|null the full stacktrace or NULL
      */
-    public static function getStackFromException($exc)
-    {
+    public static function getStackFromException($exc) {
         if (is_null($exc)) {
             return null;
         }
@@ -155,8 +154,7 @@ final class PlenigoLogger
      * @param array $stackItem an array with each line in the stack of calls
      * @return string The string representation of this stacktrace line
      */
-    private static function buildStackLine($stackItem)
-    {
+    private static function buildStackLine($stackItem) {
         $result = " @";
         if (isset($stackItem['class']) && $stackItem['class'] != '') {
             $result .= $stackItem['class'] . '->';

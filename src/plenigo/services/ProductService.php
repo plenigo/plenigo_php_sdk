@@ -99,7 +99,7 @@ class ProductService extends Service {
     }
 
     /**
-     * Constructs a ProductData object populated fom a response object
+     * Constructs a ProductData object populated from a response object
      *
      * @param mixed $response the response object from the cURL call
      * @return ProductData the resulting ProductData object

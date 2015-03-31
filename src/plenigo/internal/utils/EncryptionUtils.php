@@ -221,7 +221,7 @@ final class EncryptionUtils
 if (!function_exists('hex2bin')) {
 
     /**
-     * drop-in replacement for the hex2bon function that's only available in PHP >=5.4
+     * drop-in replacement for the hex2bin function that's only available in PHP >=5.4
      * 
      * @param mixed $data an hexadecimal string presented in pairs of characters
      * @staticvar bool $old a variable to hold if this PHP version is prior to 5.2

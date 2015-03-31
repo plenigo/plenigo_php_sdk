@@ -45,7 +45,7 @@ class SdkUtils
      * that plenigo's API accepts, into an Associative array.
      *
      * @param string $data The data to parse
-     * @return te corresponding associative array
+     * @return the corresponding associative array
      */
     public static function getMapFromString($data)
     {
