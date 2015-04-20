@@ -38,8 +38,8 @@ final class Checkout extends ServerInterface {
     const TITLE_MAX_LENGTH = 100;
     const PROD_ID_MAX_LENGTH = 20;
     
-    const ERR_MSG_TITLE_TOO_LONG = "The Product title is too long and it will be truncated (10 chars max.)";
-    const ERR_MSG_PROD_ID_TOO_LONG = "The Product ID must be up to 20 chars long!";
+    const ERR_MSG_TITLE_TOO_LONG = "The Product title is too long and it will be truncated (100 chars max.)";
+    const ERR_MSG_PROD_ID_TOO_LONG = "The Product ID can be up to 20 chars long!";
 
     protected $productId;
     protected $price;
