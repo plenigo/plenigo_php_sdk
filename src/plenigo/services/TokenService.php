@@ -134,7 +134,7 @@ class TokenService extends Service
             $accessUrl = ApiURLs::GET_ACCESS_TOKEN;
         }
 
-        $request = static::postRequest($accessUrl, $verify->getMap());
+        $request = static::postRequest($accessUrl,true, $verify->getMap());
 
         $accessTokenRequest = new static($request, $csrfToken);
 

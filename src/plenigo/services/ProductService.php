@@ -67,7 +67,7 @@ class ProductService extends Service {
             ApiParams::SECRET => PlenigoManager::get()->getSecret()
         );
 
-        $request = static::getRequest(ApiURLs::GET_PRODUCT . "/" . $productId, $params);
+        $request = static::getRequest(ApiURLs::GET_PRODUCT . "/" . $productId, false, $params);
 
         $prodDataRequest = new static($request);
 
@@ -124,7 +124,7 @@ class ProductService extends Service {
 
         $params = self::configureListParams($pageSize, $lastID);
 
-        $request = static::getRequest(ApiURLs::LIST_PRODUCTS, $params);
+        $request = static::getRequest(ApiURLs::LIST_PRODUCTS, false, $params);
 
         $prodDataRequest = new static($request);
 
@@ -167,7 +167,7 @@ class ProductService extends Service {
             ApiParams::SECRET => PlenigoManager::get()->getSecret()
         );
 
-        $request = static::getRequest(ApiURLs::GET_CATEGORY . "/" . $categoryId, $params);
+        $request = static::getRequest(ApiURLs::GET_CATEGORY . "/" . $categoryId, false, $params);
 
         $categoryDataRequest = new static($request);
 
@@ -223,7 +223,7 @@ class ProductService extends Service {
 
         $params = self::configureListParams($pageSize, $lastID);
 
-        $request = static::getRequest(ApiURLs::LIST_CATEGORIES, $params);
+        $request = static::getRequest(ApiURLs::LIST_CATEGORIES, false, $params);
 
         $catRequest = new static($request);
 

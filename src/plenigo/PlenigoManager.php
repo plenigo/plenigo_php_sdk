@@ -143,6 +143,16 @@ final class PlenigoManager
     }
 
     /**
+     * This returns the URL used by the OAuth API communications within plenigo.
+     *
+     * @return string The API OAuth URL
+     */
+    public function getUrlOAuth()
+    {
+        return $this->config->getUrlOAuth();
+    }
+
+    /**
      * Checks if test mode is active or not.
      *
      * @return bool test mode

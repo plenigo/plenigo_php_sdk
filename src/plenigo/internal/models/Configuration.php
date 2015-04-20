@@ -31,6 +31,11 @@ class Configuration
     private $url;
 
     /**
+     * The URL where Oauth API is located.
+     */
+    private $urlOAuth;
+
+    /**
      * The users secret that will be used with the SDK.
      */
     private $secret;
@@ -52,19 +57,24 @@ class Configuration
      * @param string $companyId the application company ID
      * @param bool   $testMode  specifies the mode of operation
      * @param string $url       the URL to use for communication end-points
+     * @param string $urlOAuth       the URL to use for OAuth API calls
      *
      * @return void
      */
-    public function __construct($secret, $companyId, $testMode = false, $url = null)
+    public function __construct($secret, $companyId, $testMode = false, $url = null, $urlOAuth = null)
     {
         if ($url === null) {
                 $url = ApiURLs::DEFAULT_PLENIGO_URL;
+        }
+        if ($urlOAuth === null) {
+                $urlOAuth = ApiURLs::OAUTH_PLENIGO_URL;
         }
 
         $this->secret = $secret;
         $this->companyId = $companyId;
         $this->testMode = safe_boolval($testMode);
         $this->url = $url;
+        $this->urlOAuth = $urlOAuth;
     }
 
     /**
@@ -85,6 +95,16 @@ class Configuration
     public function getUrl()
     {
         return $this->url;
+    }
+
+    /**
+     * gets the OAuth URL
+     *
+     * @return string the OAuth url
+     */
+    public function getUrlOAuth()
+    {
+        return $this->urlOAuth;
     }
 
     /**
