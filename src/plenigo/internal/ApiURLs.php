@@ -18,6 +18,7 @@ namespace plenigo\internal;
  * @link     https://www.plenigo.com
  *
  */
+
 final class ApiURLs
 {
     /**
