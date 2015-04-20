@@ -5,10 +5,14 @@ namespace plenigo\internal\serverInterface\payment;
 require_once __DIR__ . '/../ServerInterface.php';
 require_once __DIR__ . '/../../models/Product.php';
 require_once __DIR__ . '/../../utils/ArrayUtils.php';
+require_once __DIR__ . '/../../../PlenigoException.php';
+require_once __DIR__ . '/../../../PlenigoManager.php';
 
 use \plenigo\internal\serverInterface\ServerInterface;
 use \plenigo\internal\models\Product as AbstractProduct;
 use \plenigo\internal\utils\ArrayUtils;
+use \plenigo\PlenigoException;
+use \plenigo\PlenigoManager;
 use \Exception;
 
 /**
@@ -29,8 +33,13 @@ use \Exception;
  * @author   René Olivo <r.olivo@plenigo.com>
  * @link     https://www.plenigo.com
  */
-final class Checkout extends ServerInterface
-{
+final class Checkout extends ServerInterface {
+
+    const TITLE_MAX_LENGTH = 100;
+    const PROD_ID_MAX_LENGTH = 20;
+    
+    const ERR_MSG_TITLE_TOO_LONG = "The Product title is too long and it will be truncated (10 chars max.)";
+    const ERR_MSG_PROD_ID_TOO_LONG = "The Product ID must be up to 20 chars long!";
 
     protected $productId;
     protected $price;
@@ -55,8 +64,7 @@ final class Checkout extends ServerInterface
      *
      * @return Checkout an instance of {@link plenigo\internal\serverInterface\payment\Checkout}
      */
-    public function __construct($map = array())
-    {
+    public function __construct($map = array()) {
         if (!is_array($map) && $map instanceof AbstractProduct === false) {
             throw new Exception('$map parameter is not a map nor an instance of Product');
         }
@@ -75,8 +83,7 @@ final class Checkout extends ServerInterface
      *
      * @return void
      */
-    public function setProduct(AbstractProduct $product)
-    {
+    public function setProduct(AbstractProduct $product) {
         $productMap = $product->getMap();
         $map = array();
 
@@ -87,7 +94,7 @@ final class Checkout extends ServerInterface
         ArrayUtils::addIfDefined($map, 'currency', $productMap, 'currency');
         ArrayUtils::addIfDefined($map, 'type', $productMap, 'type');
         ArrayUtils::addIfDefined($map, 'subscriptionRenewal', $productMap, 'subscriptionRenewal');
-        
+
         $this->setValuesFromMap($map);
     }
 
@@ -98,8 +105,7 @@ final class Checkout extends ServerInterface
      *
      * @return void
      */
-    public function setValuesFromMap($map)
-    {
+    public function setValuesFromMap($map) {
         $this->setValueFromMapIfNotEmpty('productId', $map);
         $this->setValueFromMapIfNotEmpty('price', $map);
         $this->setValueFromMapIfNotEmpty('currency', $map);
@@ -113,6 +119,8 @@ final class Checkout extends ServerInterface
         $this->setValueFromMapIfNotEmpty('payWhatYouWant', $map);
         $this->setValueFromMapIfNotEmpty('testMode', $map);
         $this->setValueFromMapIfNotEmpty('subscriptionRenewal', $map);
+
+        $this->performValidation();
     }
 
     /**
@@ -122,8 +130,7 @@ final class Checkout extends ServerInterface
      *
      * @return void
      */
-    public function setProductId($productId)
-    {
+    public function setProductId($productId) {
         //$pi validation
 
         $this->productId = $productId;
@@ -136,8 +143,7 @@ final class Checkout extends ServerInterface
      *
      * @return void
      */
-    public function setPrice($price)
-    {
+    public function setPrice($price) {
         if ($this->validateNumber($price)) {
             $this->price = $price;
         }
@@ -150,8 +156,7 @@ final class Checkout extends ServerInterface
      *
      * @return void
      */
-    public function setType($type)
-    {
+    public function setType($type) {
         $this->type = $type;
     }
 
@@ -166,8 +171,7 @@ final class Checkout extends ServerInterface
      *
      * @return void
      */
-    public function setShowBuyingAgainScreen($sab)
-    {
+    public function setShowBuyingAgainScreen($sab) {
         $this->showBuyingAgainScreen = safe_boolval($sab);
     }
 
@@ -181,8 +185,7 @@ final class Checkout extends ServerInterface
      *
      * @return void
      */
-    public function setShowCheckoutConfirmationScreen($spf)
-    {
+    public function setShowCheckoutConfirmationScreen($spf) {
         $this->showCheckoutConfirmationScreen = safe_boolval($spf);
     }
 
@@ -193,8 +196,7 @@ final class Checkout extends ServerInterface
      *
      * @return void
      */
-    public function setOauth2RedirectUrl($sso)
-    {
+    public function setOauth2RedirectUrl($sso) {
         //is this a string?
         $this->oauth2RedirectUrl = $sso;
     }
@@ -206,8 +208,7 @@ final class Checkout extends ServerInterface
      *
      * @return void
      */
-    public function setCsrfToken($csrf)
-    {
+    public function setCsrfToken($csrf) {
         //validate csrf
 
         $this->csrfToken = $csrf;
@@ -221,8 +222,7 @@ final class Checkout extends ServerInterface
      *
      * @return void
      */
-    public function setPayWhatYouWant($sp)
-    {
+    public function setPayWhatYouWant($sp) {
         $this->payWhatYouWant = safe_boolval($sp);
     }
 
@@ -233,8 +233,7 @@ final class Checkout extends ServerInterface
      *
      * @return void
      */
-    public function setTestMode($ts)
-    {
+    public function setTestMode($ts) {
         $this->testMode = safe_boolval($ts);
     }
 
@@ -243,9 +242,25 @@ final class Checkout extends ServerInterface
      *
      * @param string $ci The category ID.
      */
-    public function setCategoryId($ci)
-    {
+    public function setCategoryId($ci) {
         $this->categoryId = $ci;
+    }
+
+    /**
+     * Sets the Currency.
+     *
+     * @param string $currency The Currency.
+     */
+    public function setCurrency($currency) {
+        $this->currency = $currency;
+    }
+
+    /**
+     * Sets the Title.
+     *
+     * @param string $title The title.
+     */public function setTitle($title) {
+        $this->title = $title;
     }
 
     /**
@@ -253,8 +268,7 @@ final class Checkout extends ServerInterface
      *
      * @return array The map with the non null values assigned to the instance.
      */
-    public function getMap()
-    {
+    public function getMap() {
         $map = array();
 
         $this->insertIntoMapIfDefined($map, 'price', 'pr');
@@ -272,6 +286,16 @@ final class Checkout extends ServerInterface
         $this->insertIntoMapIfDefined($map, 'subscriptionRenewal', 'rs');
 
         return $map;
+    }
+
+    private function performValidation() {
+        $clazz = get_class();
+        if (!is_null($this->title) && strlen($this->title) > self::TITLE_MAX_LENGTH) {
+            \plenigo\PlenigoManager::notice($clazz, self::ERR_MSG_TITLE_TOO_LONG);
+        }
+        if(!is_null($this->productId) && strlen($this->productId) > self::PROD_ID_MAX_LENGTH){
+            throw new PlenigoException(self::ERR_MSG_PROD_ID_TOO_LONG);
+        }
     }
 
 }

@@ -23,6 +23,26 @@ class CheckoutSnippetBuilderTest extends PlenigoTestCase
         return array(array($product));
     }
 
+    public function checkoutProducTitleLongProvider()
+    {
+        $product = new ProductBase(
+            'item-123', '0123456789012345678901234567890123456789'
+            . '0123456789012345678901234567890123456789'
+            . '012345678901234567890123456789', 1.5, 'USD'
+        );
+
+        return array(array($product));
+    }
+
+    public function checkoutProducPIDLongProvider()
+    {
+        $product = new ProductBase(
+            '012345678901234567890123456789', 'Long Product ID', 1.5, 'USD'
+        );
+
+        return array(array($product));
+    }
+
     /**
      * @dataProvider checkoutSnippetBuilderProvider
      */
@@ -68,4 +88,15 @@ class CheckoutSnippetBuilderTest extends PlenigoTestCase
         $this->assertError(E_USER_NOTICE, "Building CHECKOUT");
     }
 
+    /**
+     * @dataProvider checkoutProducTitleLongProvider
+     */
+    public function testBuildTitleLong($product)
+    {
+        $checkout = new CheckoutSnippetBuilder($product);
+
+        $plenigoCheckoutCode = $checkout->build();
+
+        $this->assertError(E_USER_NOTICE, "title is too long");
+    }
 }
