@@ -18,7 +18,6 @@ require_once __DIR__ . '/../models/ErrorCode.php';
 use \plenigo\PlenigoManager;
 use \plenigo\PlenigoException;
 use \plenigo\internal\ApiURLs;
-use \plenigo\internal\utils\RestClient;
 use \plenigo\models\UserData;
 use \plenigo\internal\services\Service;
 use \plenigo\internal\models\Customer;
@@ -75,7 +74,7 @@ class UserService extends Service
             'token' => $accessToken,
         );
 
-        $request = static::getRequest(ApiURLs::USER_PROFILE, $params);
+        $request = static::getRequest(ApiURLs::USER_PROFILE, false, $params);
 
         $userDataRequest = new static($request);
         try {
@@ -146,7 +145,7 @@ class UserService extends Service
             ApiParams::PRODUCT_ID => $productId,
             ApiParams::TEST_MODE => $testModeText
         );
-        $request = static::getRequest(ApiURLs::USER_PRODUCT_ACCESS, $params);
+        $request = static::getRequest(ApiURLs::USER_PRODUCT_ACCESS, false, $params);
 
         $userDataRequest = new static($request);
         try {
@@ -188,7 +187,7 @@ class UserService extends Service
             ApiParams::COMPANY_ID => PlenigoManager::get()->getCompanyId(),
             ApiParams::SECRET => PlenigoManager::get()->getSecret()
         );
-        $request = static::getRequest(ApiURLs::PAYWALL_STATE, $params);
+        $request = static::getRequest(ApiURLs::PAYWALL_STATE, false, $params);
 
         $userDataRequest = new static($request);
         try {

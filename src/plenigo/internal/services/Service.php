@@ -45,13 +45,18 @@ class Service
      * end-point on the plenigo REST API.
      *
      * @param string $endPoint The REST end-point to access.
+     * @param bool $oauth TRUE if the needed request is going to the OAuth API.
      * @param array  $params   Optional params to pass to the request.
      *
      * @return the request result.
      */
-    protected static function getRequest($endPoint, array $params = array())
+    protected static function getRequest($endPoint, $oauth = false, array $params = array())
     {
-        $url = PlenigoManager::get()->getUrl() . $endPoint;
+        if($oauth){
+            $url = PlenigoManager::get()->getUrl() . $endPoint;
+        }else{
+            $url = PlenigoManager::get()->getUrlOAuth() . $endPoint;
+        }
 
         return RestClient::get($url, $params);
     }
@@ -61,13 +66,18 @@ class Service
      * end-point on the plenigo REST API.
      *
      * @param string $endPoint The REST end-point to access.
+     * @param bool $oauth TRUE if the needed request is going to the OAuth API.
      * @param array  $params   Optional params to pass to the request.
      *
      * @return the request result.
      */
-    protected static function postRequest($endPoint, array $params)
+    protected static function postRequest($endPoint, $oauth = false, array $params = array())
     {
-        $url = PlenigoManager::get()->getUrl() . $endPoint;
+        if($oauth){
+            $url = PlenigoManager::get()->getUrl() . $endPoint;
+        }else{
+            $url = PlenigoManager::get()->getUrlOAuth() . $endPoint;
+        }
 
         return RestClient::post($url, $params);
     }
