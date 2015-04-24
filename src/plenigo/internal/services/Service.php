@@ -53,6 +53,8 @@ class Service
     protected static function getRequest($endPoint, $oauth = false, array $params = array())
     {
         if($oauth){
+            $clazz = get_class();
+            PlenigoManager::notice($clazz, "OAUTH GET REQUEST");
             $url = PlenigoManager::get()->getUrlOAuth() . $endPoint;
         }else{
             $url = PlenigoManager::get()->getUrl() . $endPoint;
@@ -74,6 +76,8 @@ class Service
     protected static function postRequest($endPoint, $oauth = false, array $params = array())
     {
         if($oauth){
+            $clazz = get_class();
+            PlenigoManager::notice($clazz, "OAUTH POST REQUEST");
             $url = PlenigoManager::get()->getUrlOAuth() . $endPoint;
         }else{
             $url = PlenigoManager::get()->getUrl() . $endPoint;

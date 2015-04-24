@@ -37,7 +37,6 @@ final class Checkout extends ServerInterface {
 
     const TITLE_MAX_LENGTH = 100;
     const PROD_ID_MAX_LENGTH = 20;
-    
     const ERR_MSG_TITLE_TOO_LONG = "The Product title is too long and it will be truncated (100 chars max.)";
     const ERR_MSG_PROD_ID_TOO_LONG = "The Product ID can be up to 20 chars long!";
 
@@ -259,7 +258,8 @@ final class Checkout extends ServerInterface {
      * Sets the Title.
      *
      * @param string $title The title.
-     */public function setTitle($title) {
+     */
+    public function setTitle($title) {
         $this->title = $title;
     }
 
@@ -288,12 +288,16 @@ final class Checkout extends ServerInterface {
         return $map;
     }
 
+    /**
+     * Perform field validations when creating the Checkout object and throws Exceptions if needed
+     * @throws PlenigoException if strict validations fail
+     */
     private function performValidation() {
         $clazz = get_class();
         if (!is_null($this->title) && strlen($this->title) > self::TITLE_MAX_LENGTH) {
             \plenigo\PlenigoManager::notice($clazz, self::ERR_MSG_TITLE_TOO_LONG);
         }
-        if(!is_null($this->productId) && strlen($this->productId) > self::PROD_ID_MAX_LENGTH){
+        if (!is_null($this->productId) && strlen($this->productId) > self::PROD_ID_MAX_LENGTH) {
             throw new PlenigoException(self::ERR_MSG_PROD_ID_TOO_LONG);
         }
     }
