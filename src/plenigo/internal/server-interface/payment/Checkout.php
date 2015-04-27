@@ -290,6 +290,7 @@ final class Checkout extends ServerInterface {
 
     /**
      * Perform field validations when creating the Checkout object and throws Exceptions if needed
+     * 
      * @throws PlenigoException if strict validations fail
      */
     private function performValidation() {
