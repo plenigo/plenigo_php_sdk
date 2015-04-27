@@ -40,13 +40,13 @@ use \plenigo\models\ErrorCode;
  * @author   René Olivo <r.olivo@plenigo.com>
  * @link     https://www.plenigo.com
  */
-class UserService extends Service
-{
+class UserService extends Service {
 
     const ERR_MSG_USER_DATA = "Could not retrieve User Data!";
     const ERR_MSG_CUSTOMER = "Could not retrieve Customer Information!";
     const ERR_MSG_EXPIRED = "Plenigo Cookie has expired, please login again!";
     const ERR_MSG_USER_BOUGHT = "Error while determining if the user bought an item!";
+    const ERR_MSG_USER_LIST = "Error while retrieving bought product listing!";
     const ERR_MSG_PAYWALL = "Error while determining if the paywall is enabled!";
     const INF_MSG_ACCESS = "User tried to access an item!";
 
@@ -63,8 +63,8 @@ class UserService extends Service
      * @return UserData the UserData object {@link \plenigo\models\UserData}
      * @throws {@link \plenigo\PlenigoException}\ on response error.
      */
-    public static function getUserData($accessToken)
-    {
+
+    public static function getUserData($accessToken) {
         $clazz = get_class();
         PlenigoManager::notice($clazz, "Obtaining Logged In User Data!");
 
@@ -104,8 +104,7 @@ class UserService extends Service
      *
      * @throws \plenigo\PlenigoException on request error.
      */
-    public function execute()
-    {
+    public function execute() {
         try {
             $response = parent::execute();
         } catch (\Exception $exc) {
@@ -124,8 +123,7 @@ class UserService extends Service
      * @return TRUE if the user in the cookie has bought the product and the session is not expired, false otherwise
      * @throws \plenigo\PlenigoException whenever an error happens
      */
-    public static function hasUserBought($productId)
-    {
+    public static function hasUserBought($productId) {
         $clazz = get_class();
         PlenigoManager::notice($clazz, "Checking if user bought Product with ID=" . print_r($productId, true));
 
@@ -181,8 +179,7 @@ class UserService extends Service
      * 
      * @return bool true if Paywall is enabled and we need to check for specific product buy information
      */
-    public static function isPaywallEnabled()
-    {
+    public static function isPaywallEnabled() {
         $params = array(
             ApiParams::COMPANY_ID => PlenigoManager::get()->getCompanyId(),
             ApiParams::SECRET => PlenigoManager::get()->getSecret()
@@ -212,8 +209,7 @@ class UserService extends Service
      * 
      * @return bool TRUE if the user has been logged in
      */
-    public static function isLoggedIn()
-    {
+    public static function isLoggedIn() {
         $customer = self::getCustomerInfo();
         $clazz = get_class();
         if (is_null($customer) || !($customer instanceof \plenigo\internal\models\Customer)) {
@@ -228,8 +224,7 @@ class UserService extends Service
      * @return The Customer Information from the cookie
      * @throws \plenigo\PlenigoException whenever an error happens
      */
-    private static function getCustomerInfo()
-    {
+    private static function getCustomerInfo() {
         $cookieText = static::getCookieContents(PlenigoManager::PLENIGO_USER_COOKIE_NAME);
         if (!isset($cookieText) || is_null($cookieText) || !is_string($cookieText) || empty($cookieText)
         ) {
@@ -270,4 +265,71 @@ class UserService extends Service
         $timestampInMillis = intval($timestamp);
         return new Customer($customerId, $timestampInMillis);
     }
+
+    /**
+     * <p>Retrieves the product and suscriptions list for the current (logged in) 
+     * user, then returns it as an associative array with this sintax</p>
+     * <pre>
+     * array (
+     *   'singleProducts' => array (
+     *     0 => array(
+     *        'productId' => 'xxxx',
+     *        'title' => 'prod title',
+     *        'buyDate' => 'YYYY-MM-DD HH:mm:ss +0100',
+     *     ),
+     *   ),
+     *   'subscriptions' => array (
+     *     0 => array(
+     *        'productId' => 'yyyyyy',
+     *        'title' => 'Subscription title',
+     *        'buyDate' => 'YYYY-MM-DD HH:mm:ss +0100',
+     *        'endDate' => 'YYYY-MM-DD HH:mm:ss +0100',
+     *     ),
+     *   ),
+     * )</pre>
+     * 
+     * @return array The associative array containing the bought products/subscriptions or an empty array
+     * @throws PlenigoException If the compay ID and/or the Secret key is rejected
+     */
+    static public function getProductsBought() {
+        $res = array();
+        $customer = self::getCustomerInfo();
+        if (is_null($customer)) {
+            $clazz = get_class();
+            PlenigoManager::notice($clazz, self::ERR_MSG_CUSTOMER);
+            return $res;
+        }
+        PlenigoManager::notice($clazz, "customer is good=" . print_r($customer, true));
+        $testModeText = (PlenigoManager::get()->isTestMode()) ? 'true' : 'false';
+
+        $params = array(
+            ApiParams::COMPANY_ID => PlenigoManager::get()->getCompanyId(),
+            ApiParams::SECRET => PlenigoManager::get()->getSecret(),
+            ApiParams::TEST_MODE => $testModeText
+        );
+        $url = str_ireplace(ApiParams::URL_USER_ID_TAG, $customer->getCustomerId(), ApiURLs::USER_PRODUCTS);
+        $request = static::getRequest($url, false, $params);
+
+        $userDataRequest = new static($request);
+        try {
+            $response = $userDataRequest->execute();
+        } catch (PlenigoException $exc) {
+            $errorCode = ErrorCode::getTranslation(ApiURLs::USER_PRODUCTS, $exc->getCode());
+            if (empty($errorCode) || is_null($errorCode)) {
+                $errorCode = $exc->getCode();
+            }
+
+            $clazz = get_class();
+            PlenigoManager::error($clazz, self::ERR_MSG_USER_LIST, $exc);
+            throw new PlenigoException(self::ERR_MSG_USER_LIST, $exc->getCode(), $exc);
+        }
+        if (!is_null($response)) {
+            PlenigoManager::notice($clazz, "Product list is accessible=" . print_r($response, true));
+            $res = get_object_vars($response);
+        } else {
+            PlenigoManager::notice($clazz, "Product list NOT accesible!");
+        }
+        return $res;
+    }
+
 }

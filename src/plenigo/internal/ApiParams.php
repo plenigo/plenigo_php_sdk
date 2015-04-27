@@ -154,4 +154,8 @@ class ApiParams extends BasicEnum
      */
     const REFRESH_TOKEN = "refresh_token";
 
+    /**
+     * The replacement tag for URL directory variable value for the User ID
+     */
+    const URL_USER_ID_TAG = "{USER_ID}";
 }
