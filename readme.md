@@ -1,4 +1,5 @@
 [![Build Status](https://secure.travis-ci.org/plenigo/plenigo_php_sdk.png?branch=master)](https://travis-ci.org/plenigo/plenigo_php_sdk)
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/19dc04a2-9781-43f6-9766-e47e682164cc/small.png)](https://insight.sensiolabs.com/projects/19dc04a2-9781-43f6-9766-e47e682164cc)
 plenigo PHP SDK
 ===============
 Plenigo is a Software-As-A-Service  that allows everyone to easily monitarize his digital content.
