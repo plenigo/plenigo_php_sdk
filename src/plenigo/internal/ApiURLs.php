@@ -66,6 +66,11 @@ final class ApiURLs
     const LIST_PRODUCTS = "/api/v1/products";
 
     /**
+     * This URL is used to get all the products this user has bouight
+     */
+    const USER_PRODUCTS = "/api/v1/user/{USER_ID}/products";
+
+    /**
      * This URL is used to retrieve category information.
      */
     const GET_CATEGORY = "/api/v1/category";

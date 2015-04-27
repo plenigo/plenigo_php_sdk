@@ -35,6 +35,7 @@ abstract class ErrorCode extends BasicEnum
     const UNKNOWN_HOST = 6;
     const PRODUCT_NOT_FOUND = 7;
     const CATEGORY_NOT_FOUND = 8;
+    const USER_NOT_FOUND = 9;
     const HTTP_OK = 200;
     const HTTP_BAD_REQUEST = 400;
     const HTTP_UNAUTHORIZED = 401;
@@ -57,6 +58,7 @@ abstract class ErrorCode extends BasicEnum
         self::CONNECTION_ERROR => '',
         self::UNKNOWN_HOST => '',
         self::PRODUCT_NOT_FOUND => 'The provided product id is not valid',
+        self::USER_NOT_FOUND => 'The provided user id is not valid',
         self::CATEGORY_NOT_FOUND => 'The provided category id is not valid'
     );
 
@@ -68,6 +70,10 @@ abstract class ErrorCode extends BasicEnum
     private static $errorTranslation = array(
         ApiURLs::USER_PRODUCT_ACCESS => array(
             self::HTTP_FORBIDDEN => self::CANNOT_ACCESS_PRODUCT,
+            self::HTTP_UNAUTHORIZED => self::INVALID_SECRET_OR_COMPANY_ID,
+            self::HTTP_BAD_REQUEST => self::INVALID_PARAMETERS
+        ),
+        ApiURLs::USER_PRODUCTS => array(
             self::HTTP_UNAUTHORIZED => self::INVALID_SECRET_OR_COMPANY_ID,
             self::HTTP_BAD_REQUEST => self::INVALID_PARAMETERS
         ),

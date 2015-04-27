@@ -218,6 +218,29 @@ use \plenigo\internal\ApiResults;
         $this->assertFalse($resCheck);
         $this->assertError(E_USER_NOTICE, "URL CALL");
     }
+    
+    public function testProductsBoughtList()
+    {
+        $cookieText=  $this->getValidCookie();
+        
+        UserServiceMock::setCookie(PlenigoManager::PLENIGO_USER_COOKIE_NAME, $cookieText);
+        $response = json_decode('{"singleProducts":[{"productId":"Mze9xrw1055726494241"'
+                . ',"title":"Live Single","buyDate":"2015-03-19 09:41:34 +0100"}],'
+                . '"subscriptions":[{"productId":"wCltsuS9616126494241",'
+                . '"title":"Live Subscription","buyDate":"2015-03-19 09:42:16 +0100"'
+                . ',"endDate":"2016-03-19 09:42:16 +0100"}]}');
+
+        UserServiceMock::$requestResponse = $response;
+
+        $resCheck = array();
+        try {
+            $resCheck = UserServiceMock::getProductsBought();
+        } catch (PlenigoException $exc) {
+            var_export($exc);
+        }
+        $this->assertTrue(count($resCheck)>0,"The resulting associative array is empty");
+        $this->assertError(E_USER_NOTICE, "URL CALL");
+    }
 
     /**
      * This will check for a bought product, the mocked service will return 200 code and thus granting access to the item
@@ -230,11 +253,7 @@ use \plenigo\internal\ApiResults;
 
         UserServiceMock::$requestResponse = $prodData;
 
-        $nextWeek = time() + (7 * 24 * 60 * 60 * 100);
-        $strValidCustomer = ApiResults::TIMESTAMP . SdkUtils::KEY_VALUE_SEPARATOR . $nextWeek . SdkUtils::ENTRY_SEPARATOR
-            . ApiResults::CUSTOMER_ID . SdkUtils::KEY_VALUE_SEPARATOR . self::CUSTOMER_ID;
-
-        $cookieText = EncryptionUtils::encryptWithAES(PlenigoManager::get()->getSecret(), $strValidCustomer);
+        $cookieText = $this->getValidCookie();
         UserServiceMock::setCookie(PlenigoManager::PLENIGO_USER_COOKIE_NAME, $cookieText);
 
         $hasBought = UserServiceMock::hasUserBought($prodData->{'id'});
@@ -254,11 +273,7 @@ use \plenigo\internal\ApiResults;
 
         UserServiceMock::$requestResponse = $prodData;
 
-        $nextWeek = time() + (7 * 24 * 60 * 60 * 100);
-        $strValidCustomer = ApiResults::TIMESTAMP . SdkUtils::KEY_VALUE_SEPARATOR . $nextWeek . SdkUtils::ENTRY_SEPARATOR
-            . ApiResults::CUSTOMER_ID . SdkUtils::KEY_VALUE_SEPARATOR . self::CUSTOMER_ID;
-
-        $cookieText = EncryptionUtils::encryptWithAES(PlenigoManager::get()->getSecret(), $strValidCustomer);
+        $cookieText = $this->getValidCookie();
         UserServiceMock::setCookie(PlenigoManager::PLENIGO_USER_COOKIE_NAME, $cookieText);
 
         $hasBought = UserServiceMock::hasUserBought(array($prodData->{'id'}, $prodData->{'id2'}, $prodData->{'id3'}, $prodData->{'id4'}));
@@ -276,11 +291,7 @@ use \plenigo\internal\ApiResults;
         $response = json_decode('{"error":"400","description":"' . self::ERR_MSG_NOT_FOUND . '"}');
         UserServiceMock::$requestResponse = $response;
 
-        $nextWeek = time() + (7 * 24 * 60 * 60 * 100);
-        $strValidCustomer = ApiResults::TIMESTAMP . SdkUtils::KEY_VALUE_SEPARATOR . $nextWeek . SdkUtils::ENTRY_SEPARATOR
-            . ApiResults::CUSTOMER_ID . SdkUtils::KEY_VALUE_SEPARATOR . self::CUSTOMER_ID;
-
-        $cookieText = EncryptionUtils::encryptWithAES(PlenigoManager::get()->getSecret(), $strValidCustomer);
+        $cookieText = $this->getValidCookie();
         UserServiceMock::setCookie(PlenigoManager::PLENIGO_USER_COOKIE_NAME, $cookieText);
 
         try {
@@ -301,11 +312,7 @@ use \plenigo\internal\ApiResults;
         $response = json_decode('{"error":"402","description":"' . self::ERR_MSG_UNCOMMON . '"}');
         UserServiceMock::$requestResponse = $response;
 
-        $nextWeek = time() + (7 * 24 * 60 * 60 * 100);
-        $strValidCustomer = ApiResults::TIMESTAMP . SdkUtils::KEY_VALUE_SEPARATOR . $nextWeek . SdkUtils::ENTRY_SEPARATOR
-            . ApiResults::CUSTOMER_ID . SdkUtils::KEY_VALUE_SEPARATOR . self::CUSTOMER_ID;
-
-        $cookieText = EncryptionUtils::encryptWithAES(PlenigoManager::get()->getSecret(), $strValidCustomer);
+        $cookieText = $this->getValidCookie();
         UserServiceMock::setCookie(PlenigoManager::PLENIGO_USER_COOKIE_NAME, $cookieText);
 
         try {
@@ -326,11 +333,7 @@ use \plenigo\internal\ApiResults;
         $response = json_decode('{"error":"403","description":"The product is not found"}');
         UserServiceMock::$requestResponse = $response;
 
-        $nextWeek = time() + (7 * 24 * 60 * 60 * 100);
-        $strValidCustomer = ApiResults::TIMESTAMP . SdkUtils::KEY_VALUE_SEPARATOR . $nextWeek . SdkUtils::ENTRY_SEPARATOR
-            . ApiResults::CUSTOMER_ID . SdkUtils::KEY_VALUE_SEPARATOR . self::CUSTOMER_ID;
-
-        $cookieText = EncryptionUtils::encryptWithAES(PlenigoManager::get()->getSecret(), $strValidCustomer);
+        $cookieText = $this->getValidCookie();
         UserServiceMock::setCookie(PlenigoManager::PLENIGO_USER_COOKIE_NAME, $cookieText);
 
         $hasBought = UserServiceMock::hasUserBought('123456');
@@ -360,4 +363,16 @@ use \plenigo\internal\ApiResults;
         $this->assertFalse($hasBought);
     }
 
+    /**
+     * Returns a valid cookie text for the current date
+     * 
+     * @return string The valid cookie text
+     */
+    private function getValidCookie() {
+        $nextWeek = time() + (7 * 24 * 60 * 60 * 100);
+        $strValidCustomer = ApiResults::TIMESTAMP . SdkUtils::KEY_VALUE_SEPARATOR . $nextWeek . SdkUtils::ENTRY_SEPARATOR
+            . ApiResults::CUSTOMER_ID . SdkUtils::KEY_VALUE_SEPARATOR . self::CUSTOMER_ID;
+
+        return EncryptionUtils::encryptWithAES(PlenigoManager::get()->getSecret(), $strValidCustomer);
+    }
 }

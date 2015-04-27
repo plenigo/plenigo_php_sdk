@@ -34,8 +34,7 @@ use \plenigo\models\ErrorCode;
  * @author   Sebastian Dieguez <s.dieguez@plenigo.com>
  * @link     https://www.plenigo.com
  */
-class TokenService extends Service
-{
+class TokenService extends Service {
 
     const ERR_MSG_TOKEN = "Error getting Acces Token";
     const ERR_MSG_TOKEN_DIF = "The request and response CSRF Token are different";
@@ -53,8 +52,7 @@ class TokenService extends Service
      *
      * @return TokenService instance.
      */
-    public function __construct($request, $csrfToken = null)
-    {
+    public function __construct($request, $csrfToken = null) {
         parent::__construct($request);
 
         $this->csrfToken = $csrfToken;
@@ -71,11 +69,10 @@ class TokenService extends Service
      *
      * @throws \Exception on request error.
      */
-    public static function getAccessToken($accessCode, $redirectUri, $csrfToken = null)
-    {
+    public static function getAccessToken($accessCode, $redirectUri, $csrfToken = null) {
         $clazz = get_class();
         PlenigoManager::notice($clazz, "Getting Access Token for AccessCode=" . $accessCode);
-        
+
         return static::getToken(TokenGrantType::AUTHORIZATION_CODE, $accessCode, $redirectUri, $csrfToken);
     }
 
@@ -89,11 +86,10 @@ class TokenService extends Service
      *
      * @throws \Exception on request error.
      */
-    public static function getNewAccessToken($refreshCode, $csrfToken = null)
-    {
+    public static function getNewAccessToken($refreshCode, $csrfToken = null) {
         $clazz = get_class();
         PlenigoManager::notice($clazz, "Getting NEW Access Token for RefreshCode=" . $refreshCode);
-        
+
         return static::getToken(TokenGrantType::REFRESH_TOKEN, $refreshCode, null, $csrfToken);
     }
 
@@ -109,8 +105,7 @@ class TokenService extends Service
      *
      * @throws \Exception on request error.
      */
-    protected static function getToken($type, $code, $redirectUri = null, $csrfToken = null)
-    {
+    protected static function getToken($type, $code, $redirectUri = null, $csrfToken = null) {
         $map = array(
             'grant_type' => $type,
             'code' => $code,
@@ -134,7 +129,7 @@ class TokenService extends Service
             $accessUrl = ApiURLs::GET_ACCESS_TOKEN;
         }
 
-        $request = static::postRequest($accessUrl,true, $verify->getMap());
+        $request = static::postRequest($accessUrl, true, $verify->getMap());
 
         $accessTokenRequest = new static($request, $csrfToken);
 
@@ -145,7 +140,7 @@ class TokenService extends Service
             if (empty($errorCode) || is_null($errorCode)) {
                 $errorCode = $exc->getCode();
             }
-            $clazz=get_class();
+            $clazz = get_class();
             PlenigoManager::error($clazz, self::ERR_MSG_TOKEN, $exc);
             throw new PlenigoException(self::ERR_MSG_TOKEN, $errorCode, $exc);
         }
@@ -164,8 +159,7 @@ class TokenService extends Service
      *
      * @throws \Exception when the states don't match.
      */
-    protected static function validateResponse($response, $state = null)
-    {
+    protected static function validateResponse($response, $state = null) {
         if ($state != null && isset($response->state) && (empty($response->state) || $response->state != $state)) {
             $clazz = get_class();
             PlenigoManager::warn($clazz, self::ERR_MSG_TOKEN_DIF);
@@ -181,15 +175,14 @@ class TokenService extends Service
      *
      * @throws \Exception on request error or CSRF Token state mismatch.
      */
-    public function execute()
-    {
+    public function execute() {
         $response = $this->getRequestResponse();
 
         $this->checkForErrors($response);
 
         $this->validateResponse($response, $this->csrfToken);
 
-        return TokenData::createFromMap((array)$response);
+        return TokenData::createFromMap((array) $response);
     }
 
     /**
@@ -197,11 +190,10 @@ class TokenService extends Service
      * 
      * @return string the CSRF Token or NULL if there is a problem generating the CSRF Token
      */
-    public static function createCsrfToken()
-    {
+    public static function createCsrfToken() {
         $clazz = get_class();
         PlenigoManager::notice($clazz, "Creating a random CSRF Token!");
-        
+
         $randomtoken = null;
         try {
             if (function_exists("openssl_random_pseudo_bytes")) {

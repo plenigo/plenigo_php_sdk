@@ -24,8 +24,7 @@ use plenigo\internal\PlenigoLogger;
  * @author   Ricardo Torres <r.torres@plenigo.com>
  * @link     https://www.plenigo.com
  */
-final class PlenigoManager
-{
+final class PlenigoManager {
 
     /**
      * plenigo's User cookie name.
@@ -51,7 +50,7 @@ final class PlenigoManager
      * Configuration Object containing environment specific data.
      */
     private $config;
-    
+
     /**
      * Debug variable for PlenigoLogger commands
      *
@@ -69,12 +68,12 @@ final class PlenigoManager
      * @param string $companyId the application company ID
      * @param bool   $testMode  specifies the mode of operation
      * @param string $url       the URL to use for communication end-points
+     * @param string $urlOAuth       the URL to use for OAuth API calls
      *
      * @return void
      */
-    private function __construct($secret, $companyId, $testMode = null, $url = null)
-    {
-        $this->config = new Configuration($secret, $companyId, $testMode, $url);
+    private function __construct($secret, $companyId, $testMode = null, $url = null, $urlOAuth = null) {
+        $this->config = new Configuration($secret, $companyId, $testMode, $url, $urlOAuth);
     }
 
     /**
@@ -84,13 +83,13 @@ final class PlenigoManager
      * @param string $companyId a String that represents the company ID used
      * @param bool   $testMode  specifies the mode of operation
      * @param string $url       the URL to use for communication end-points
+     * @param string $urlOAuth       the URL to use for OAuth API calls
      *
      * @return PlenigoManager Singleton instance of {@link plenigo.PlenigoManager}
      */
-    public static function configure($secret, $companyId, $testMode = null, $url = null)
-    {
+    public static function configure($secret, $companyId, $testMode = null, $url = null, $urlOAuth = null) {
 
-        self::$instance = new PlenigoManager($secret, $companyId, $testMode, $url);
+        self::$instance = new PlenigoManager($secret, $companyId, $testMode, $url, $urlOAuth);
 
         return self::$instance;
     }
@@ -101,8 +100,7 @@ final class PlenigoManager
      * @return PlenigoManager Singleton instance of {@link plenigo.PlenigoManager}
      * @throws Exception when the PlenigoManager has not been previously configured.
      */
-    public static function get()
-    {
+    public static function get() {
         if (self::$instance === null) {
             $clazz = get_class();
             static::error($clazz, self::ERROR_MSG_CONFIGURE);
@@ -117,8 +115,7 @@ final class PlenigoManager
      *
      * @return string the company id
      */
-    public function getCompanyId()
-    {
+    public function getCompanyId() {
         return $this->config->getCompanyId();
     }
 
@@ -127,8 +124,7 @@ final class PlenigoManager
      *
      * @return string The secret key
      */
-    public function getSecret()
-    {
+    public function getSecret() {
         return $this->config->getSecret();
     }
 
@@ -137,8 +133,7 @@ final class PlenigoManager
      *
      * @return string The API base URL
      */
-    public function getUrl()
-    {
+    public function getUrl() {
         return $this->config->getUrl();
     }
 
@@ -147,8 +142,7 @@ final class PlenigoManager
      *
      * @return string The API OAuth URL
      */
-    public function getUrlOAuth()
-    {
+    public function getUrlOAuth() {
         return $this->config->getUrlOAuth();
     }
 
@@ -157,8 +151,7 @@ final class PlenigoManager
      *
      * @return bool test mode
      */
-    public function isTestMode()
-    {
+    public function isTestMode() {
         return ($this->config->isTestMode() === true);
     }
 
@@ -167,8 +160,7 @@ final class PlenigoManager
      * 
      * @return bool debug mode
      */
-    public static function isDebug()
-    {
+    public static function isDebug() {
         return self::$debug;
     }
 
@@ -177,8 +169,7 @@ final class PlenigoManager
      * 
      * @param bool $debug debug mode
      */
-    public static function setDebug($debug)
-    {
+    public static function setDebug($debug) {
         self::$debug = $debug;
     }
 
@@ -191,8 +182,7 @@ final class PlenigoManager
      * @param Exception $exc an optional Exception object to show its stacktrace and messages
      * @return bool returns FALSE only if the object reference or message are NULL
      */
-    public static function notice($obj, $msg, $exc = null)
-    {
+    public static function notice($obj, $msg, $exc = null) {
         if (is_null($obj) || is_null($msg) || self::$debug === FALSE) {
             return false;
         }
@@ -208,8 +198,7 @@ final class PlenigoManager
      * @param Exception $exc an optional Exception object to show its stacktrace and messages
      * @return bool returns FALSE only if the object reference or message are NULL
      */
-    public static function warn($obj, $msg, $exc = null)
-    {
+    public static function warn($obj, $msg, $exc = null) {
         if (is_null($obj) || is_null($msg) || self::$debug === FALSE) {
             return false;
         }
@@ -225,8 +214,7 @@ final class PlenigoManager
      * @param Exception $exc an optional Exception object to show its stacktrace and messages
      * @return bool returns FALSE only if the object reference or message are NULL
      */
-    public static function error($obj, $msg, $exc = null)
-    {
+    public static function error($obj, $msg, $exc = null) {
         if (is_null($obj) || is_null($msg) || self::$debug === FALSE) {
             return false;
         }
