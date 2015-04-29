@@ -139,12 +139,12 @@ class Address
      */
     public static function createFromMap(array $map)
     {
-        return new Address(
-            $map['street'],
-            $map['additionalAddressInfo'],
-            $map['postCode'],
-            $map['city'],
-            $map['country']
-        );
+        $street = isset($map['street']) ? $map['street'] : null;
+        $additionalAddressInfo = isset($map['additionalAddressInfo']) ? $map['additionalAddressInfo'] : null;
+        $postCode = isset($map['postCode']) ? $map['postCode'] : null;
+        $city = isset($map['city']) ? $map['city'] : null;
+        $country = isset($map['country']) ? $map['country'] : null;
+
+        return new Address($street, $additionalAddressInfo, $postCode, $city, $country);
     }
 }
