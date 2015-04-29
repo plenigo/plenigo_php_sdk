@@ -6,7 +6,9 @@ php:
   - hhvm
 
 install:
-  - composer require satooshi/php-coveralls:~0.6.1@stable
+  - travis_retry composer self-update
+  - travis_retry composer install --no-interaction --prefer-source
+  - travis_retry composer require satooshi/php-coveralls --dev
 
 before_script:
   - mkdir -p build/logs
