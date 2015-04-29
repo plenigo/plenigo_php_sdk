@@ -224,7 +224,7 @@ class UserService extends Service {
      * @return The Customer Information from the cookie
      * @throws \plenigo\PlenigoException whenever an error happens
      */
-    private static function getCustomerInfo() {
+    public static function getCustomerInfo() {
         $cookieText = static::getCookieContents(PlenigoManager::PLENIGO_USER_COOKIE_NAME);
         if (!isset($cookieText) || is_null($cookieText) || !is_string($cookieText) || empty($cookieText)
         ) {
@@ -294,8 +294,8 @@ class UserService extends Service {
     static public function getProductsBought() {
         $res = array();
         $customer = self::getCustomerInfo();
+        $clazz = get_class();
         if (is_null($customer)) {
-            $clazz = get_class();
             PlenigoManager::notice($clazz, self::ERR_MSG_CUSTOMER);
             return $res;
         }
