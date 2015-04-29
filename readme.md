@@ -1,4 +1,5 @@
-[![Build Status](https://secure.travis-ci.org/plenigo/plenigo_php_sdk.png?branch=master)](https://travis-ci.org/plenigo/plenigo_php_sdk)
+[![Build Status](https://secure.travis-ci.org/plenigo/plenigo_php_sdk.png?branch=master)](https://travis-ci.org/plenigo/plenigo_php_sdk) [![Coverage Status](https://coveralls.io/repos/plenigo/plenigo_php_sdk/badge.svg)](https://coveralls.io/r/plenigo/plenigo_php_sdk)[![Latest Stable Version](https://poser.pugx.org/plenigo/plenigo-php-sdk/v/stable)](https://packagist.org/packages/plenigo/plenigo-php-sdk)
+
 plenigo PHP SDK
 ===============
 Plenigo is a Software-As-A-Service  that allows everyone to easily monitarize his digital content.
