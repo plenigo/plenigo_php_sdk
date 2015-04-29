@@ -52,6 +52,11 @@ class Verify extends ServerInterface
     protected $state;
 
     /**
+     * The refresh token
+     */
+    protected $refresh_token;
+
+    /**
      * The constructor for the Verify class.
      *
      * @param array $map The array map with the Verify data.
@@ -79,6 +84,7 @@ class Verify extends ServerInterface
         $this->setValueFromMapIfNotEmpty('client_id', $map);
         $this->setValueFromMapIfNotEmpty('client_secret', $map);
         $this->setValueFromMapIfNotEmpty('state', $map);
+        $this->setValueFromMapIfNotEmpty('refresh_token', $map);
     }
 
 }
