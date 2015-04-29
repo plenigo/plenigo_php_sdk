@@ -38,6 +38,7 @@ class TokenService extends Service {
 
     const ERR_MSG_TOKEN = "Error getting Acces Token";
     const ERR_MSG_TOKEN_DIF = "The request and response CSRF Token are different";
+    const ERR_MSG_TOKEN_CREATE = "Could not create CSRF token";
 
     /**
      * The CSRF Token used for the request.
