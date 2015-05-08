@@ -66,7 +66,7 @@ class TokenService extends Service {
      * @param string $redirectUri The redirect URI used to get the Access Code.
      * @param string $csrfToken   An optional CSRF Token to pass to the request.
      *
-     * @return TokenData object.
+     * @return TokenData The Token Data {@link \plenigo\models\TokenData}.
      *
      * @throws \Exception on request error.
      */
@@ -83,7 +83,7 @@ class TokenService extends Service {
      * @param string $refreshCode The Access Code provided by the plenigo API.
      * @param string $csrfToken   An optional CSRF Token to pass to the request.
      *
-     * @return TokenService instance.
+     * @return TokenData The Token Data {@link \plenigo\models\TokenData}.
      *
      * @throws \Exception on request error.
      */
@@ -102,7 +102,7 @@ class TokenService extends Service {
      * @param string $redirectUri An optional redirect URI used to get the Access Code.
      * @param string $csrfToken   An optional CSRF Token to pass to the request.
      *
-     * @return TokenData object.
+     * @return TokenData The Token Data {@link \plenigo\models\TokenData}.
      *
      * @throws \Exception on request error.
      */
