@@ -216,7 +216,7 @@ class MeterService extends Service
         $logReached = safe_boolval($arr[self::LOGIN_FREE_VIEWS_LIMIT_REACHED_IDX_POS]);
         $res = new MeteredUserData($activated, $allowed, $taken, $reached, $logAllowed, $logTaken, $logReached);
         $res->setStartTime(intval($arr[self::START_TIME_IDX_POS]));
-        $res->setMeteredPeriod(trim($arr[self::START_TIME_IDX_POS]));
+        $res->setMeteredPeriod(trim($arr[self::METERED_PERIOD_IDX_POS]));
         $res->setStartWithFirstDay(safe_boolval($arr[self::START_WITH_FIRST_DAY_IDX_POS]));
         $res->setCookieCreationTime(intval($arr[self::COOKIE_CREATION_TIME_IDX_POS]));
 
