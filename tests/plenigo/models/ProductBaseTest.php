@@ -4,25 +4,25 @@ require_once __DIR__ . '/../../../src/plenigo/models/ProductBase.php';
 
 use \plenigo\models\ProductBase;
 
-class ProductBaseTest extends PHPUnit_Framework_Testcase
-{
-    public function productProvider()
-    {
+class ProductBaseTest extends PHPUnit_Framework_Testcase {
+
+    public function productProvider() {
         $data = array(
-            'id'        => '123premium',
-            'price'     => 1.5,
-            'title'     => 'premium-read',
-            'currency'  => 'USD',
-            'categoryId'  => 'Some Category'
+            'id' => '123premium',
+            'price' => 1.5,
+            'title' => 'premium-read',
+            'currency' => 'USD',
+            'categoryId' => 'Some Category',
+            'subscriptionRenewal' => true,
+            'failedPayment' => true
         );
 
         $product = new ProductBase(
-            $data['id'],
-            $data['title'],
-            $data['price'],
-            $data['currency']
+            $data['id'], $data['title'], $data['price'], $data['currency']
         );
         $product->setCategoryId($data['categoryId']);
+        $product->setSubscriptionRenewal($data['subscriptionRenewal']);
+        $product->setFailedPayment($data['failedPayment']);
 
         return array(array($product, $data));
     }
@@ -30,8 +30,7 @@ class ProductBaseTest extends PHPUnit_Framework_Testcase
     /**
      * @dataProvider productProvider
      */
-    public function testConstructor($product, $data)
-    {
+    public function testConstructor($product, $data) {
         $this->assertEquals($data['id'], $product->getId());
         $this->assertEquals($data['title'], $product->getTitle());
         $this->assertEquals($data['price'], $product->getPrice());
@@ -41,8 +40,7 @@ class ProductBaseTest extends PHPUnit_Framework_Testcase
     /**
      * @dataProvider productProvider
      */
-    public function testType($product)
-    {
+    public function testType($product) {
         $expectedResult = "EBOOK";
 
         $product->setType($expectedResult);
@@ -53,8 +51,7 @@ class ProductBaseTest extends PHPUnit_Framework_Testcase
     /**
      * @dataProvider productProvider
      */
-    public function testCustomAmount($product)
-    {
+    public function testCustomAmount($product) {
         $expectedResult = true;
 
         $product->setCustomAmount($expectedResult);
@@ -65,8 +62,7 @@ class ProductBaseTest extends PHPUnit_Framework_Testcase
     /**
      * @dataProvider productProvider
      */
-    public function testCategoryId($product)
-    {
+    public function testCategoryId($product) {
         $expectedResult = "Some other category";
 
         $product->setCategoryId($expectedResult);
@@ -74,19 +70,17 @@ class ProductBaseTest extends PHPUnit_Framework_Testcase
         $this->assertEquals($expectedResult, $product->getCategoryId());
     }
 
-    
     /**
      * @dataProvider productProvider
      */
-    public function testGetMap($product, $data)
-    {
-        $data['type']     =  "EBOOK";
-        $data['customAmount']   = true;
+    public function testGetMap($product, $data) {
+        $data['type'] = "EBOOK";
+        $data['customAmount'] = true;
 
         $product->setType($data['type']);
         $product->setCustomAmount($data['customAmount']);
 
-        $map                    = $product->getMap();
+        $map = $product->getMap();
 
         $this->assertArrayHasKey('id', $map);
         $this->assertEquals($map['id'], $data['id']);
@@ -102,5 +96,9 @@ class ProductBaseTest extends PHPUnit_Framework_Testcase
         $this->assertEquals($map['type'], $data['type']);
         $this->assertArrayHasKey('customAmount', $map);
         $this->assertEquals($map['customAmount'], $data['customAmount']);
+        $this->assertArrayHasKey('subscriptionRenewal', $map);
+        $this->assertEquals($map['subscriptionRenewal'], $data['subscriptionRenewal']);
+        $this->assertArrayHasKey('failedPayment', $map);
+        $this->assertEquals($map['failedPayment'], $data['failedPayment']);
     }
 }
