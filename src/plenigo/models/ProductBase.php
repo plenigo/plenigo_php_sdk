@@ -93,6 +93,18 @@ class ProductBase extends ProductId {
     }
 
     /**
+     * This static builder method allows the creation of the "Failed Payment" ProductBase 
+     * object needed to cumpliment with the Checkout builder interface
+     * 
+     * @return \plenigo\models\ProductBase the object configured for the Failed Payment checkout workflow
+     */
+    public static function buildFailedPaymentProduct() {
+        $res = new ProductBase("FAKE_PROD_ID");
+        $res->setFailedPayment(TRUE);
+        return $res;
+    }
+
+    /**
      * Returns the product type.
      *
      * @return string product type.

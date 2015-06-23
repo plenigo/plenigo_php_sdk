@@ -69,6 +69,12 @@ class ProductBaseTest extends PHPUnit_Framework_Testcase {
 
         $this->assertEquals($expectedResult, $product->getCategoryId());
     }
+    
+    public function testFailedPaymentBuilder() {
+        $product = ProductBase::buildFailedPaymentProduct();
+
+        $this->assertTrue($product->getFailedPayment(),"Failed Payment builder method is not configuring the Product as intended");
+    }
 
     /**
      * @dataProvider productProvider
