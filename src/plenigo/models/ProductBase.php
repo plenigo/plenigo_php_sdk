@@ -22,8 +22,8 @@ use \plenigo\internal\utils\ArrayUtils;
  * @author   Ricardo Torres <r.torres@plenigo.com>
  * @link     https://www.plenigo.com
  */
-class ProductBase extends ProductId
-{
+class ProductBase extends ProductId {
+
     const TYPE_EBOOK = "EBOOK";
     const TYPE_DIGITALNEWSPAPER = "DIGITALNEWSPAPER";
     const TYPE_DOWNLOAD = "DOWNLOAD";
@@ -56,7 +56,7 @@ class ProductBase extends ProductId
      * @var string 
      */
     private $categoryId;
-    
+
     /**
      * Flag indicating if it is a pay what you want payment process.
      */
@@ -67,7 +67,13 @@ class ProductBase extends ProductId
      * @var bool
      */
     private $subscriptionRenewal;
-    
+
+    /**
+     * Flag indicating if the checkout corresponds to a listing of all failed payments
+     * @var bool 
+     */
+    private $failedPayment;
+
     /**
      * This constructor receives price, title, id and currency as parameters, it
      * is recommended for instantiating products that are not managed by
@@ -78,8 +84,7 @@ class ProductBase extends ProductId
      * @param float      $prodPrice The product price.
      * @param string     $curr      The currency.
      */
-    public function __construct($id, $prodTitle=null, $prodPrice=null, $curr=null)
-    {
+    public function __construct($id, $prodTitle = null, $prodPrice = null, $curr = null) {
         parent::__construct($id);
 
         $this->price = $prodPrice;
@@ -88,12 +93,23 @@ class ProductBase extends ProductId
     }
 
     /**
+     * This static builder method allows the creation of the "Failed Payment" ProductBase 
+     * object needed to cumpliment with the Checkout builder interface
+     * 
+     * @return \plenigo\models\ProductBase the object configured for the Failed Payment checkout workflow
+     */
+    public static function buildFailedPaymentProduct() {
+        $res = new ProductBase("FAKE_PROD_ID");
+        $res->setFailedPayment(TRUE);
+        return $res;
+    }
+
+    /**
      * Returns the product type.
      *
      * @return string product type.
      */
-    public function getType()
-    {
+    public function getType() {
         return $this->type;
     }
 
@@ -104,8 +120,7 @@ class ProductBase extends ProductId
      *
      * @return void
      */
-    public function setType($type)
-    {
+    public function setType($type) {
         $this->type = $type;
     }
 
@@ -114,8 +129,7 @@ class ProductBase extends ProductId
      *
      * @return string Category ID
      */
-    public function getCategoryId()
-    {
+    public function getCategoryId() {
         return $this->categoryId;
     }
 
@@ -124,8 +138,7 @@ class ProductBase extends ProductId
      *
      * @param string $ci The Category ID to set.
      */
-    public function setCategoryId($ci)
-    {
+    public function setCategoryId($ci) {
         $this->categoryId = $ci;
     }
 
@@ -134,8 +147,7 @@ class ProductBase extends ProductId
      *
      * @return float Returns the currency.
      */
-    public function getCurrency()
-    {
+    public function getCurrency() {
         return $this->currency;
     }
 
@@ -144,8 +156,7 @@ class ProductBase extends ProductId
      *
      * @return float Returns the price.
      */
-    public function getPrice()
-    {
+    public function getPrice() {
         return $this->price;
     }
 
@@ -154,8 +165,7 @@ class ProductBase extends ProductId
      *
      * @return string Returns the title.
      */
-    public function getTitle()
-    {
+    public function getTitle() {
         return $this->title;
     }
 
@@ -164,8 +174,7 @@ class ProductBase extends ProductId
      *
      * @return bool The customAmount.
      */
-    public function getCustomAmount()
-    {
+    public function getCustomAmount() {
         return $this->customAmount === true;
     }
 
@@ -176,8 +185,7 @@ class ProductBase extends ProductId
      *
      * @return void
      */
-    public function setCustomAmount($condition)
-    {
+    public function setCustomAmount($condition) {
         $this->customAmount = safe_boolval($condition);
     }
 
@@ -186,8 +194,7 @@ class ProductBase extends ProductId
      *
      * @return bool The subscriptionRenewal.
      */
-    public function getSubscriptionRenewal()
-    {
+    public function getSubscriptionRenewal() {
         return $this->subscriptionRenewal;
     }
 
@@ -198,9 +205,26 @@ class ProductBase extends ProductId
      *
      * @return void
      */
-    public function setSubscriptionRenewal($subscriptionRenewal)
-    {
+    public function setSubscriptionRenewal($subscriptionRenewal) {
         $this->subscriptionRenewal = $subscriptionRenewal;
+    }
+
+    /**
+     * Gets the Failed Payment flag value
+     * 
+     * @return bool The variable as set
+     */
+    public function getFailedPayment() {
+        return $this->failedPayment;
+    }
+
+    /**
+     * Sets the Failed Payment flag
+     * 
+     * @param bool $failedPayment The variable to set
+     */
+    public function setFailedPayment($failedPayment) {
+        $this->failedPayment = $failedPayment;
     }
 
     /**
@@ -208,8 +232,7 @@ class ProductBase extends ProductId
      *
      * @return array The map data for the product.
      */
-    public function getMap()
-    {
+    public function getMap() {
         $map = parent::getMap();
 
         ArrayUtils::addIfNotNull($map, 'price', $this->getPrice());
@@ -219,7 +242,9 @@ class ProductBase extends ProductId
         ArrayUtils::addIfNotNull($map, 'type', $this->getType());
         ArrayUtils::addIfNotNull($map, 'customAmount', $this->getCustomAmount());
         ArrayUtils::addIfNotNull($map, 'subscriptionRenewal', $this->getSubscriptionRenewal());
+        ArrayUtils::addIfNotNull($map, 'failedPayment', $this->getFailedPayment());
 
         return $map;
     }
+
 }
