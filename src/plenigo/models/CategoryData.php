@@ -24,6 +24,7 @@ class CategoryData {
     private $id = null;
     private $pricingData = null;
     private $validityTime = null;
+    private $title = null;
 
     /**
      * Category data constructor, must be filled with the required data.
@@ -32,9 +33,10 @@ class CategoryData {
      * @param PricingData  $pricingData  The pricing information
      * @param string       $validityTime The time span in days the category is valid
      */
-    public function __construct($id, $pricingData, $validityTime) {
+    public function __construct($id, $pricingData, $validityTime, $title) {
         $this->id = $id;
         $this->validityTime = $validityTime;
+        $this->title = $title;
         if (!is_null($pricingData)) {
             $this->pricingData = $pricingData;
         } else {
@@ -70,6 +72,15 @@ class CategoryData {
     }
 
     /**
+     * The title of Category
+     *
+     * @return string Title
+     */
+    public function getTitle() {
+        return $this->title;
+    }
+
+    /**
      * Currency as ISO 4217 code, e.g. EUR .
      *
      * @return the currency iso code
@@ -94,11 +105,12 @@ class CategoryData {
      * @return ProductData instance.
      */
     public static function createFromMap($map) {
+        $title = isset($map['title']) ? $map['title'] : null;
         $currID = isset($map['id']) ? $map['id'] : null;
         $pricingData = PricingData::createFromMap($map);
         $currValid = isset($map['validityTime']) ? $map['validityTime'] : null;
 
-        return new CategoryData($currID, $pricingData, $currValid);
+        return new CategoryData($currID, $pricingData, $currValid, $title);
     }
 
 }
