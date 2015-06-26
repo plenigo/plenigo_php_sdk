@@ -32,6 +32,7 @@ class CategoryData {
      * @param string       $id           The category id
      * @param PricingData  $pricingData  The pricing information
      * @param string       $validityTime The time span in days the category is valid
+     * @param string       $title        The title of category
      */
     public function __construct($id, $pricingData, $validityTime, $title) {
         $this->id = $id;
@@ -74,7 +75,7 @@ class CategoryData {
     /**
      * The title of Category
      *
-     * @return string Title
+     * @return string Category-Title
      */
     public function getTitle() {
         return $this->title;
