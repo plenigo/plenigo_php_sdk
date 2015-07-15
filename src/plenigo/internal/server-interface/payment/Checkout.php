@@ -58,7 +58,7 @@ final class Checkout extends ServerInterface {
     protected $failedPayment;
     protected $shippingCost;
     protected $testMode;
-    private $allowedShippingTypes = [ProductBase::TYPE_BOOK, ProductBase::TYPE_NEWSPAPER];
+    private $allowedShippingTypes = array(ProductBase::TYPE_BOOK, ProductBase::TYPE_NEWSPAPER);
 
     /**
      * <p>
@@ -344,7 +344,7 @@ final class Checkout extends ServerInterface {
             throw new PlenigoException(self::ERR_MSG_PROD_ID_TOO_LONG);
         }
         if (!is_null($this->type) && trim($this->type !== '') && !in_array($this->type, $this->allowedShippingTypes)) {
-            if(!is_null($this->shippingCost) && is_numeric($this->shippingCost) && $this->shippingCost>0){
+            if (!is_null($this->shippingCost) && is_numeric($this->shippingCost) && $this->shippingCost > 0) {
                 throw new PlenigoException(self::ERR_MSG_INVALID_SHIPPING);
             }
         }
