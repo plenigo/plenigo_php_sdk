@@ -48,7 +48,7 @@ class ProductBase extends ProductId {
     private $currency;
 
     /**
-     * The shipping Cost
+     * The shipping cost
      * @var float 
      */
     private $shippingCost;
@@ -198,7 +198,7 @@ class ProductBase extends ProductId {
     }
 
     /**
-     * Gets the Shipping Cost of this product.
+     * Gets the shipping cost of this product.
      * 
      * @return float the shipping cost
      */
@@ -207,7 +207,7 @@ class ProductBase extends ProductId {
     }
 
     /**
-     * Sets a new Shipping Cost for this product.
+     * Sets a new shipping cost for this product.
      * 
      * @param float $shippingCost the new shipping cost
      */

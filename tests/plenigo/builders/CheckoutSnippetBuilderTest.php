@@ -40,11 +40,10 @@ class CheckoutSnippetBuilderTest extends PlenigoTestCase {
         return array(array($product));
     }
 
-    protected function tearDown()
-    {
+    protected function tearDown() {
         PlenigoManager::setDebug(true);
     }
-    
+
     /**
      * @dataProvider checkoutSnippetBuilderProvider
      */
@@ -82,7 +81,6 @@ class CheckoutSnippetBuilderTest extends PlenigoTestCase {
         $plenigoCheckoutCode = $checkout->build();
 
         $this->assertEquals("New Category", $checkout->getProduct()->getCategoryId());
-
         $this->assertRegExp("/^plenigo\\.checkout\\('\\w+'\\);$/", $plenigoCheckoutCode);
         $this->assertError(E_USER_NOTICE, "Building CHECKOUT");
         $this->assertError(E_USER_NOTICE, "Checkout QUERYSTRING");
@@ -118,7 +116,6 @@ class CheckoutSnippetBuilderTest extends PlenigoTestCase {
         $product->setShippingCost(35.4);
         $checkout = new CheckoutSnippetBuilder($product);
 
-
         $plenigoCheckoutCode = $checkout->build();
         $this->assertRegExp("/^plenigo\\.checkout\\('\\w+'\\);$/", $plenigoCheckoutCode);
         $this->assertError(E_USER_NOTICE, "Building CHECKOUT");
@@ -138,4 +135,5 @@ class CheckoutSnippetBuilderTest extends PlenigoTestCase {
         PlenigoManager::setDebug(false);
         $checkout->build();
     }
+
 }
