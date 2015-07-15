@@ -138,5 +138,4 @@ class CheckoutSnippetBuilderTest extends PlenigoTestCase {
         PlenigoManager::setDebug(false);
         $checkout->build();
     }
-
 }

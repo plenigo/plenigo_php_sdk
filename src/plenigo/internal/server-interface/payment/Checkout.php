@@ -274,14 +274,29 @@ final class Checkout extends ServerInterface {
         $this->title = $title;
     }
 
+    /**
+     * Sets the Subscription Renewal flag
+     * 
+     * @param string $sr The flag value.
+     */
     public function setSubscriptionRenewal($sr) {
         $this->subscriptionRenewal = safe_boolval($sr);
     }
 
+    /**
+     * Sets the Failed Payment flag
+     * 
+     * @param string $fp The flag value.
+     */
     public function setFailedPayment($fp) {
         $this->failedPayment = safe_boolval($fp);
     }
 
+    /**
+     * Sets the Shipping Cost ammount
+     * 
+     * @param float $sc The amount of money
+     */
     public function setShippingCost($sc) {
         if ($this->validateNumber($sc)) {
             $this->shippingCost = $sc;
