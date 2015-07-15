@@ -14,7 +14,8 @@ class ProductBaseTest extends PHPUnit_Framework_Testcase {
             'currency' => 'USD',
             'categoryId' => 'Some Category',
             'subscriptionRenewal' => true,
-            'failedPayment' => true
+            'failedPayment' => true,
+            'shippingCost' => 1.5
         );
 
         $product = new ProductBase(
@@ -23,7 +24,9 @@ class ProductBaseTest extends PHPUnit_Framework_Testcase {
         $product->setCategoryId($data['categoryId']);
         $product->setSubscriptionRenewal($data['subscriptionRenewal']);
         $product->setFailedPayment($data['failedPayment']);
-
+        $product->setShippingCost($data['shippingCost']);
+        $product->setType(ProductBase::TYPE_BOOK);
+        
         return array(array($product, $data));
     }
 
@@ -106,5 +109,7 @@ class ProductBaseTest extends PHPUnit_Framework_Testcase {
         $this->assertEquals($map['subscriptionRenewal'], $data['subscriptionRenewal']);
         $this->assertArrayHasKey('failedPayment', $map);
         $this->assertEquals($map['failedPayment'], $data['failedPayment']);
+        $this->assertArrayHasKey('shippingCost', $map);
+        $this->assertEquals($map['shippingCost'], $data['shippingCost']);
     }
 }

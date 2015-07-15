@@ -13,7 +13,7 @@ class CheckoutSnippetBuilderTest extends PlenigoTestCase {
 
     public function checkoutSnippetBuilderProvider() {
         $product = new ProductBase(
-            'item-123', 'item-review', 1.5, 'USD'
+                'item-123', 'item-review', 1.5, 'USD'
         );
         $product->setCategoryId("New Category");
         $product->setSubscriptionRenewal(true);
@@ -24,10 +24,9 @@ class CheckoutSnippetBuilderTest extends PlenigoTestCase {
 
     public function checkoutProducTitleLongProvider() {
         $product = new ProductBase(
-            'item-123',
-            '0123456789012345678901234567890123456789'
-            . '0123456789012345678901234567890123456789'
-            . '012345678901234567890123456789', 1.5, 'USD'
+                'item-123', '0123456789012345678901234567890123456789'
+                . '0123456789012345678901234567890123456789'
+                . '012345678901234567890123456789', 1.5, 'USD'
         );
 
         return array(array($product));
@@ -35,12 +34,17 @@ class CheckoutSnippetBuilderTest extends PlenigoTestCase {
 
     public function checkoutProducPIDLongProvider() {
         $product = new ProductBase(
-            '012345678901234567890123456789', 'Long Product ID', 1.5, 'USD'
+                '012345678901234567890123456789', 'Long Product ID', 1.5, 'USD'
         );
 
         return array(array($product));
     }
 
+    protected function tearDown()
+    {
+        PlenigoManager::setDebug(true);
+    }
+    
     /**
      * @dataProvider checkoutSnippetBuilderProvider
      */
@@ -90,8 +94,49 @@ class CheckoutSnippetBuilderTest extends PlenigoTestCase {
     public function testBuildTitleLong($product) {
         $checkout = new CheckoutSnippetBuilder($product);
 
-        $plenigoCheckoutCode = $checkout->build();
+        $checkout->build();
 
         $this->assertError(E_USER_NOTICE, "title is too long");
     }
+
+    /**
+     * @dataProvider checkoutProducPIDLongProvider
+     * @expectedException plenigo\PlenigoException
+     */
+    public function testBuildIDLong($product) {
+        PlenigoManager::setDebug(false);
+        $checkout = new CheckoutSnippetBuilder($product);
+
+        $checkout->build();
+    }
+
+    /**
+     * @dataProvider checkoutSnippetBuilderProvider
+     */
+    public function testValidShipping(ProductBase $product) {
+        $product->setType(ProductBase::TYPE_BOOK);
+        $product->setShippingCost(35.4);
+        $checkout = new CheckoutSnippetBuilder($product);
+
+
+        $plenigoCheckoutCode = $checkout->build();
+        $this->assertRegExp("/^plenigo\\.checkout\\('\\w+'\\);$/", $plenigoCheckoutCode);
+        $this->assertError(E_USER_NOTICE, "Building CHECKOUT");
+        $this->assertError(E_USER_NOTICE, "Checkout QUERYSTRING");
+    }
+
+    /**
+     * @dataProvider checkoutSnippetBuilderProvider
+     * @expectedException plenigo\PlenigoException
+     */
+    public function testInvalidShipping(ProductBase $product) {
+        PlenigoManager::setDebug(false);
+        $product->setType(ProductBase::TYPE_EBOOK);
+        $product->setShippingCost(35.4);
+        $checkout = new CheckoutSnippetBuilder($product);
+
+        PlenigoManager::setDebug(false);
+        $checkout->build();
+    }
+
 }

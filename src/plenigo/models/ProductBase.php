@@ -29,6 +29,8 @@ class ProductBase extends ProductId {
     const TYPE_DOWNLOAD = "DOWNLOAD";
     const TYPE_VIDEO = "VIDEO";
     const TYPE_MUSIC = "MUSIC";
+    const TYPE_NEWSPAPER = "NEWSPAPER";
+    const TYPE_BOOK = "BOOK";
 
     /**
      * The price of the product.
@@ -44,6 +46,12 @@ class ProductBase extends ProductId {
      * The currency of the price.
      */
     private $currency;
+
+    /**
+     * The shipping Cost
+     * @var float 
+     */
+    private $shippingCost;
 
     /**
      * Product type.
@@ -190,6 +198,24 @@ class ProductBase extends ProductId {
     }
 
     /**
+     * Gets the Shipping Cost of this product.
+     * 
+     * @return float the shipping cost
+     */
+    public function getShippingCost() {
+        return $this->shippingCost;
+    }
+
+    /**
+     * Sets a new Shipping Cost for this product.
+     * 
+     * @param float $shippingCost the new shipping cost
+     */
+    public function setShippingCost($shippingCost) {
+        $this->shippingCost = $shippingCost;
+    }
+
+    /**
      * Checks if the suscription renewal flag is set.
      *
      * @return bool The subscriptionRenewal.
@@ -243,6 +269,7 @@ class ProductBase extends ProductId {
         ArrayUtils::addIfNotNull($map, 'customAmount', $this->getCustomAmount());
         ArrayUtils::addIfNotNull($map, 'subscriptionRenewal', $this->getSubscriptionRenewal());
         ArrayUtils::addIfNotNull($map, 'failedPayment', $this->getFailedPayment());
+        ArrayUtils::addIfNotNull($map, 'shippingCost', $this->getShippingCost());
 
         return $map;
     }
