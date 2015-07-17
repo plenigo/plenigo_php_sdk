@@ -4,12 +4,14 @@ namespace plenigo\internal\serverInterface\payment;
 
 require_once __DIR__ . '/../ServerInterface.php';
 require_once __DIR__ . '/../../models/Product.php';
+require_once __DIR__ . '/../../../models/ProductBase.php';
 require_once __DIR__ . '/../../utils/ArrayUtils.php';
 require_once __DIR__ . '/../../../PlenigoException.php';
 require_once __DIR__ . '/../../../PlenigoManager.php';
 
 use \plenigo\internal\serverInterface\ServerInterface;
 use \plenigo\internal\models\Product as AbstractProduct;
+use \plenigo\models\ProductBase;
 use \plenigo\internal\utils\ArrayUtils;
 use \plenigo\PlenigoException;
 use \plenigo\PlenigoManager;
@@ -39,6 +41,7 @@ final class Checkout extends ServerInterface {
     const PROD_ID_MAX_LENGTH = 20;
     const ERR_MSG_TITLE_TOO_LONG = "The Product title is too long and it will be truncated (100 chars max.)";
     const ERR_MSG_PROD_ID_TOO_LONG = "The Product ID can be up to 20 chars long!";
+    const ERR_MSG_INVALID_SHIPPING = "This product type doesn't allow shipping cost!";
 
     protected $productId;
     protected $price;
@@ -51,15 +54,19 @@ final class Checkout extends ServerInterface {
     protected $oauth2RedirectUrl;
     protected $csrfToken;
     protected $payWhatYouWant;
+    protected $subscriptionRenewal;
+    protected $failedPayment;
+    protected $shippingCost;
     protected $testMode;
+    private $allowedShippingTypes = array(ProductBase::TYPE_BOOK, ProductBase::TYPE_NEWSPAPER);
 
     /**
      * <p>
      * Default constructor.
-     * Accepts a map with the checkout information
+     * Accepts a map with the checkout information or a Product object
      * </p>
      * 
-     * @param array $map a map with the checkout information
+     * @param mixed $map a map with the checkout information or a Product object
      *
      * @return Checkout an instance of {@link plenigo\internal\serverInterface\payment\Checkout}
      */
@@ -94,7 +101,8 @@ final class Checkout extends ServerInterface {
         ArrayUtils::addIfDefined($map, 'type', $productMap, 'type');
         ArrayUtils::addIfDefined($map, 'subscriptionRenewal', $productMap, 'subscriptionRenewal');
         ArrayUtils::addIfDefined($map, 'failedPayment', $productMap, 'failedPayment');
-        
+        ArrayUtils::addIfDefined($map, 'shippingCost', $productMap, 'shippingCost');
+
         $this->setValuesFromMap($map);
     }
 
@@ -120,7 +128,8 @@ final class Checkout extends ServerInterface {
         $this->setValueFromMapIfNotEmpty('testMode', $map);
         $this->setValueFromMapIfNotEmpty('subscriptionRenewal', $map);
         $this->setValueFromMapIfNotEmpty('failedPayment', $map);
-        
+        $this->setValueFromMapIfNotEmpty('shippingCost', $map);
+
         $this->performValidation();
     }
 
@@ -266,6 +275,35 @@ final class Checkout extends ServerInterface {
     }
 
     /**
+     * Sets the Subscription Renewal flag
+     * 
+     * @param string $sr The flag value.
+     */
+    public function setSubscriptionRenewal($sr) {
+        $this->subscriptionRenewal = safe_boolval($sr);
+    }
+
+    /**
+     * Sets the Failed Payment flag
+     * 
+     * @param string $fp The flag value.
+     */
+    public function setFailedPayment($fp) {
+        $this->failedPayment = safe_boolval($fp);
+    }
+
+    /**
+     * Sets the Shipping Cost ammount
+     * 
+     * @param float $sc The amount of money
+     */
+    public function setShippingCost($sc) {
+        if ($this->validateNumber($sc)) {
+            $this->shippingCost = $sc;
+        }
+    }
+
+    /**
      * Gets the map data to be used for the transaction.
      *
      * @return array The map with the non null values assigned to the instance.
@@ -287,6 +325,7 @@ final class Checkout extends ServerInterface {
         $this->insertIntoMapIfDefined($map, 'testMode', 'ts');
         $this->insertIntoMapIfDefined($map, 'subscriptionRenewal', 'rs');
         $this->insertIntoMapIfDefined($map, 'failedPayment', 'fp');
+        $this->insertIntoMapIfDefined($map, 'shippingCost', 'sc');
 
         return $map;
     }
@@ -303,6 +342,11 @@ final class Checkout extends ServerInterface {
         }
         if (!is_null($this->productId) && strlen($this->productId) > self::PROD_ID_MAX_LENGTH) {
             throw new PlenigoException(self::ERR_MSG_PROD_ID_TOO_LONG);
+        }
+        if (!is_null($this->type) && trim($this->type !== '') && !in_array($this->type, $this->allowedShippingTypes)) {
+            if (!is_null($this->shippingCost) && is_numeric($this->shippingCost) && $this->shippingCost > 0) {
+                throw new PlenigoException(self::ERR_MSG_INVALID_SHIPPING);
+            }
         }
     }
 

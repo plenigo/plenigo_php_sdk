@@ -26,6 +26,7 @@ class PricingData {
     private $amount = 0.0;
     private $type = 'DIGITALNEWSPAPER';
     private $currency = 'EUR';
+    private $shippingCost = 0.0;
 
     /**
      * Pricing Data constructor.
@@ -33,12 +34,14 @@ class PricingData {
      * @param double  $amount The price amount
      * @param string  $type prouct type
      * @param string  $currency The currency iso code
+     * @param double  $shippingCost The shipping cost
      */
-    public function __construct($choosePrice, $amount, $type, $currency) {
+    public function __construct($choosePrice, $amount, $type, $currency, $shippingCost) {
         $this->choosePrice = $choosePrice;
         $this->amount = $amount;
         $this->type = $type;
         $this->currency = $currency;
+        $this->shippingCost = $shippingCost;
     }
 
     /**
@@ -75,6 +78,14 @@ class PricingData {
     }
 
     /**
+     * The shipping cost for this product
+     * @return double the shipping cost
+     */
+    public function getShippingCost() {
+        return $this->shippingCost;
+    }
+
+    /**
      * Creates a PricingData instance from an array map.
      *
      * @param array $map The array map to use for the instance creation.
@@ -85,8 +96,8 @@ class PricingData {
         $amount = isset($map['price']) ? floatval($map['price']) : null;
         $type = isset($map['type']) ? floatval($map['type']) : null;
         $currency = isset($map['currency']) ? $map['currency'] : null;
+        $shippingCost = isset($map['shippingCost']) ? $map['shippingCost'] : null;
 
-        return new PricingData($choosePrice, $amount, $type, $currency);
+        return new PricingData($choosePrice, $amount, $type, $currency, $shippingCost);
     }
-
 }
