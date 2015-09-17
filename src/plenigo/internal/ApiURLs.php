@@ -84,4 +84,14 @@ final class ApiURLs
      * This URL is used to check for paywall disabled
      */
     const PAYWALL_STATE = "/api/v1/paywall/state";
+    
+    /**
+     * This URL is used for 3rd party apps to get access from a customer to a product
+     */
+    const GET_APP_TOKEN = "/api/v1/access/app/token/{USER_ID}";
+
+    /**
+     * This URL is used for 3rd party apps to get all customer apps
+     */
+    const GET_ALL_APPS = "/api/v1/access/app/{USER_ID}";
 }
