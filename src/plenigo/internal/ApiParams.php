@@ -158,4 +158,14 @@ class ApiParams extends BasicEnum
      * The replacement tag for URL directory variable value for the User ID
      */
     const URL_USER_ID_TAG = "{USER_ID}";
+    
+    /**
+     * The replacement tag for URL directory variable value for the Product ID
+     */
+    const URL_PROD_ID_TAG = "{PROD_ID}";
+    
+    /**
+     * The replacement tag for URL directory variable value for the Application ID
+     */
+    const URL_APP_ID_TAG = "{APP_ID}";
 }

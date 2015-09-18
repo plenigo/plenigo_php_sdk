@@ -86,10 +86,10 @@ class AppManagementService extends Service {
         }
 
         $result = AppTokenData::createFromMap((array) $data);
-        
+
         return $result;
     }
-    
+
     /**
      * 
      * 
@@ -103,17 +103,17 @@ class AppManagementService extends Service {
             'secret' => PlenigoManager::get()->getSecret(),
             'testMode' => PlenigoManager::get()->isTestMode()
         );
-        
-        $url = str_ireplace(ApiParams::URL_USER_ID_TAG, $customerId, ApiURLs::GET_ALL_APPS);
-        
+
+        $url = str_ireplace(ApiParams::URL_USER_ID_TAG, $customerId, ApiURLs::GET_APPS_ID);
+
         $request = static::getRequest($url, false, $map);
-        
+
         $appTokenRequest = new static($request);
-        
+
         try {
             $data = $appTokenRequest->execute();
         } catch (Exception $exc) {
-            $errorCode = ErrorCode::getTranslation(ApiURLs::GET_ALL_APPS, $exc->getCode());
+            $errorCode = ErrorCode::getTranslation(ApiURLs::GET_APPS_ID, $exc->getCode());
             if (empty($errorCode) || is_null($errorCode)) {
                 $errorCode = $exc->getCode();
             }
@@ -123,7 +123,7 @@ class AppManagementService extends Service {
         }
 
         $result = AppAccessData::createFromMapArray((array) $data);
-        
+
         return $result;
     }
 
@@ -134,17 +134,17 @@ class AppManagementService extends Service {
             'testMode' => PlenigoManager::get()->isTestMode(),
             'accessToken' => $accessToken
         );
-        
-        $url = str_ireplace(ApiParams::URL_USER_ID_TAG, $customerId, ApiURLs::GET_ALL_APPS);
-        
+
+        $url = str_ireplace(ApiParams::URL_USER_ID_TAG, $customerId, ApiURLs::GET_APPS_ID);
+
         $request = static::postJSONRequest($url, false, $map);
-        
+
         $appTokenRequest = new static($request);
-        
+
         try {
             $data = $appTokenRequest->execute();
         } catch (Exception $exc) {
-            $errorCode = ErrorCode::getTranslation(ApiURLs::GET_ALL_APPS, $exc->getCode());
+            $errorCode = ErrorCode::getTranslation(ApiURLs::GET_APPS_ID, $exc->getCode());
             if (empty($errorCode) || is_null($errorCode)) {
                 $errorCode = $exc->getCode();
             }
@@ -154,10 +154,41 @@ class AppManagementService extends Service {
         }
 
         $result = AppAccessData::createFromMap((array) $data);
-        
+
         return $result;
     }
-    
+
+    public static function hasUserBought($customerId, $productId, $appId) {
+        $map = array(
+            'companyId' => PlenigoManager::get()->getCompanyId(),
+            'secret' => PlenigoManager::get()->getSecret(),
+            'testMode' => PlenigoManager::get()->isTestMode()
+        );
+
+        $url = str_ireplace(ApiParams::URL_USER_ID_TAG, $customerId, ApiURLs::GET_PROD_ACCESS);
+        $url = str_ireplace(ApiParams::URL_PROD_ID_TAG, $productId, $url);
+        $url = str_ireplace(ApiParams::URL_APP_ID_TAG, $appId, $url);
+
+        $request = static::getRequest($url, false, $map);
+
+        $appTokenRequest = new static($request);
+
+        try {
+            $data = $appTokenRequest->execute();
+        } catch (Exception $exc) {
+            $errorCode = ErrorCode::getTranslation(ApiURLs::GET_PROD_ACCESS, $exc->getCode());
+            if (empty($errorCode) || is_null($errorCode)) {
+                $errorCode = $exc->getCode();
+            }
+            $clazz = get_class();
+            PlenigoManager::error($clazz, self::ERR_MSG_ACCESS, $exc);
+            return false;
+        }
+
+        // 200 or  204 will return true
+        return true;
+    }
+
     /**
      * Executes the prepared request and returns
      * the Response object on success.

@@ -23,8 +23,7 @@ use \plenigo\internal\ApiURLs;
  * @author   Sebastian Dieguez <s.dieguez@plenigo.com>
  * @link     https://www.plenigo.com
  */
-abstract class ErrorCode extends BasicEnum
-{
+abstract class ErrorCode extends BasicEnum {
 
     const SERVER_ERROR = 0;
     const INVALID_PARAMETERS = 1;
@@ -40,7 +39,8 @@ abstract class ErrorCode extends BasicEnum
     const PRECONDITION_FAILED = 11;
     const LIMIT_REACHED = 12;
     const TOKEN_PROBLEM = 13;
-
+    const NOT_ALLOWED = 14;
+    
     const HTTP_OK = 200;
     const HTTP_BAD_REQUEST = 400;
     const HTTP_UNAUTHORIZED = 401;
@@ -70,7 +70,8 @@ abstract class ErrorCode extends BasicEnum
         self::INTERNAL_ERROR => 'There was an internal server error',
         self::PRECONDITION_FAILED => 'The product is not owned by the suer',
         self::LIMIT_REACHED => 'The user has reached the limit of parallel app accesses',
-        self::TOKEN_PROBLEM => 'Access Token not valid'
+        self::TOKEN_PROBLEM => 'Access Token not valid',
+        self::NOT_ALLOWED => 'Access is not allowed'
     );
 
     /**
@@ -128,9 +129,15 @@ abstract class ErrorCode extends BasicEnum
             self::HTTP_BAD_REQUEST => self::INVALID_PARAMETERS,
             self::HTTP_INTERNAL_ERROR => self::INTERNAL_ERROR
         ),
-        ApiURLs::GET_ALL_APPS => array(
+        ApiURLs::GET_APPS_ID => array(
             self::HTTP_FORBIDDEN => self::TOKEN_PROBLEM,
             self::HTTP_LOCKED => self::LIMIT_REACHED,
+            self::HTTP_UNAUTHORIZED => self::INVALID_SECRET_OR_COMPANY_ID,
+            self::HTTP_BAD_REQUEST => self::INVALID_PARAMETERS,
+            self::HTTP_INTERNAL_ERROR => self::INTERNAL_ERROR
+        ),
+        ApiURLs::GET_PROD_ACCESS => array(
+            self::HTTP_FORBIDDEN => self::CANNOT_ACCESS_PRODUCT,
             self::HTTP_UNAUTHORIZED => self::INVALID_SECRET_OR_COMPANY_ID,
             self::HTTP_BAD_REQUEST => self::INVALID_PARAMETERS,
             self::HTTP_INTERNAL_ERROR => self::INTERNAL_ERROR
@@ -145,8 +152,7 @@ abstract class ErrorCode extends BasicEnum
      *
      * @param int $code The code to get de Description of this kind of error.
      */
-    public static function getDescription($code)
-    {
+    public static function getDescription($code) {
         $desc = 'no-description';
         if (parent::isValidName($code)) {
             $desc = self::$description[$code];
@@ -162,8 +168,7 @@ abstract class ErrorCode extends BasicEnum
      * @param int    $httpCode The actual HTTP response status code to translate
      * @return int The actual Error Code corresponding to the HTTP status provided or NULL if not found
      */
-    public static function getTranslation($requestString, $httpCode)
-    {
+    public static function getTranslation($requestString, $httpCode) {
         if (isset(self::$errorTranslation[$requestString])) {
             if (isset(self::$errorTranslation[$requestString][$httpCode])) {
                 return self::$errorTranslation[$requestString][$httpCode];

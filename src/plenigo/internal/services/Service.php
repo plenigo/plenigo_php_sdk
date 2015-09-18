@@ -170,7 +170,8 @@ class Service
 
         $statusCode = $this->request->getStatusCode();
 
-        if ($statusCode != 200) {
+        // All 200 codes are good answers
+        if ($statusCode < 200 || $statusCode >= 300) {
             throw new \Exception("Request Status Code: " . $statusCode, $statusCode);
         }
     }
