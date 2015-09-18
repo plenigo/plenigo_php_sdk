@@ -62,6 +62,19 @@ class Service
 
         return RestClient::get($url, $params);
     }
+    
+    protected static function deleteRequest($endPoint, $oauth = false, array $params = array())
+    {
+        if($oauth){
+            $clazz = get_class();
+            PlenigoManager::notice($clazz, "OAUTH DELETE REQUEST");
+            $url = PlenigoManager::get()->getUrlOAuth() . $endPoint;
+        }else{
+            $url = PlenigoManager::get()->getUrl() . $endPoint;
+        }
+
+        return RestClient::delete($url, $params);
+    }
 
     /**
      * Returns a response to a POST RestClient request to a specific

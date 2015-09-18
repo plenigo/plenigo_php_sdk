@@ -37,6 +37,8 @@ class AppManagementService extends Service {
 
     const ERR_MSG_TOKEN = "Error getting App Access Token";
     const ERR_MSG_ALL_APPS = "Error getting All Apps for a customer";
+    const ERR_MSG_ACCESS = "Acces is denied for this App ID";
+    const ERR_MSG_DELETE = "Error trying to delete the App ID";
 
     /**
      * The constructor for the AppManagementService instance.
@@ -53,9 +55,9 @@ class AppManagementService extends Service {
      * Executes the request to get the App Access Token. This allows 3rd party apps to get access from a customer to a product
      * 
      * @param string $customerId the Customer ID to send to the API
-     * @param string $productId 
-     * @param string $description
-     * @return AppTokenData
+     * @param string $productId  the Product ID to send to the API
+     * @param string $description the App Access Description to send to the API
+     * @return AppTokenData the access token to get the App ID
      * @throws PlenigoException
      */
     public static function requestAppToken($customerId, $productId, $description) {
@@ -91,9 +93,9 @@ class AppManagementService extends Service {
     }
 
     /**
+     * Executes the request to get all App IDs for a given customer
      * 
-     * 
-     * @param string $customerId
+     * @param string $customerId the Customer ID to send to the API
      * @return array An array of AppAccessData objects
      * @throws PlenigoException
      */
@@ -127,6 +129,14 @@ class AppManagementService extends Service {
         return $result;
     }
 
+    /**
+     * Executes the request to get App IDs for a given customer and product given its Access Token
+     * 
+     * @param string $customerId The Customer ID to send to the API
+     * @param string $accessToken The Access Token 
+     * @return AppAccessData the access data with the App ID
+     * @throws PlenigoException
+     */
     public static function requestAppId($customerId, $accessToken) {
         $map = array(
             'companyId' => PlenigoManager::get()->getCompanyId(),
@@ -158,6 +168,14 @@ class AppManagementService extends Service {
         return $result;
     }
 
+    /**
+     * 
+     * 
+     * @param string $customerId
+     * @param string $productId
+     * @param string $appId
+     * @return boolean
+     */
     public static function hasUserBought($customerId, $productId, $appId) {
         $map = array(
             'companyId' => PlenigoManager::get()->getCompanyId(),
@@ -185,8 +203,35 @@ class AppManagementService extends Service {
             return false;
         }
 
-        // 200 or  204 will return true
+        // 200 or 204 will return true
         return true;
+    }
+
+    public static function deleteCustomerApp($customerId, $appId) {
+        $map = array(
+            'companyId' => PlenigoManager::get()->getCompanyId(),
+            'secret' => PlenigoManager::get()->getSecret(),
+            'testMode' => PlenigoManager::get()->isTestMode()
+        );
+
+        $url = str_ireplace(ApiParams::URL_USER_ID_TAG, $customerId, ApiURLs::GET_DELETE_APP);
+        $url = str_ireplace(ApiParams::URL_APP_ID_TAG, $appId, $url);
+        
+        $request = static::deleteRequest($url, false, $map);
+
+        $appTokenRequest = new static($request);
+
+        try {
+            $data = $appTokenRequest->execute();
+        } catch (Exception $exc) {
+            $errorCode = ErrorCode::getTranslation(ApiURLs::GET_DELETE_APP, $exc->getCode());
+            if (empty($errorCode) || is_null($errorCode)) {
+                $errorCode = $exc->getCode();
+            }
+            $clazz = get_class();
+            PlenigoManager::error($clazz, self::ERR_MSG_DELETE, $exc);
+            throw new PlenigoException(self::ERR_MSG_DELETE, $errorCode, $exc);
+        }
     }
 
     /**

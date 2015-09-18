@@ -68,6 +68,28 @@ class RestClient {
         $clazz = get_class();
         PlenigoManager::notice($clazz, "GET URL CALL=" . $url);
         $curlRequest = static::createCurlRequest($url);
+        $curlRequest->setOption(CURLOPT_POST, false);
+        $curlRequest->setOption(CURLOPT_PUT, false);
+        $curlRequest->setOption(CURLOPT_CUSTOMREQUEST, "GET");
+
+        return new static($curlRequest);
+    }
+
+    public static function delete($url, array $params = array()) {
+
+        if (count($params) > 0) {
+            $query = http_build_query($params, null, '&');
+            // taking out the brackets because we need to use the very same variable name
+            $queryString = preg_replace('/%5B(?:[0-9]|[1-9][0-9]+)%5D=/', '=', $query);
+
+            $url .= '?' . $queryString;
+        }
+        $clazz = get_class();
+        PlenigoManager::notice($clazz, "GET DELETE URL CALL=" . $url);
+        $curlRequest = static::createCurlRequest($url);
+        $curlRequest->setOption(CURLOPT_POST, false);
+        $curlRequest->setOption(CURLOPT_PUT, false);
+        $curlRequest->setOption(CURLOPT_CUSTOMREQUEST, "DELETE");
 
         return new static($curlRequest);
     }
@@ -87,7 +109,9 @@ class RestClient {
     public static function post($url, array $params = array()) {
         $curlRequest = static::createCurlRequest($url);
 
+        $curlRequest->setOption(CURLOPT_PUT, false);
         $curlRequest->setOption(CURLOPT_POST, true);
+        $curlRequest->setOption(CURLOPT_CUSTOMREQUEST, "POST");
 
         if (count($params) > 0) {
             $queryString = http_build_query($params);
@@ -114,10 +138,10 @@ class RestClient {
         $curlRequest = static::createCurlRequest($url);
         $data_string = json_encode($params);
 
+        $curlRequest->setOption(CURLOPT_PUT, false);
         $curlRequest->setOption(CURLOPT_POST, true);
         $curlRequest->setOption(CURLOPT_CUSTOMREQUEST, "POST");
         $curlRequest->setOption(CURLOPT_POSTFIELDS, $data_string);
-        $curlRequest->setOption(CURLOPT_RETURNTRANSFER, true);
         $curlRequest->setOption(CURLOPT_HTTPHEADER, array(
             'Content-Type: application/json',
             'Content-Length: ' . strlen($data_string))

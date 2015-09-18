@@ -99,4 +99,9 @@ final class ApiURLs
      * This URL is used to verify if 3rd party app has access to certain product
      */
     const GET_PROD_ACCESS = "/api/v1/access/app/{USER_ID}/{PROD_ID}/{APP_ID}";
+
+    /**
+     * This URL is used to delete a 3rd party access from a certain product
+     */   
+    const GET_DELETE_APP = "/api/v1/access/app/{USER_ID}/{APP_ID}";
 }
