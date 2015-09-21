@@ -228,7 +228,7 @@ class MeterService extends Service
      * this is a countermeasure for cookie spoofing to get metered views always active
      * 
      * @param plenigo\internal\models\MeteredUserData $meteredInfo the Metered Info subject to checking
-     * @return boolean true if is a valid cookie, false otherwise
+     * @return bool true if is a valid cookie, false otherwise
      */
     private static function checkCookieValidity(MeteredUserData $meteredInfo)
     {

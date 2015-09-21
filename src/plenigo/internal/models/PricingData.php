@@ -46,7 +46,7 @@ class PricingData {
 
     /**
      * Returns if the price amount can be changed by the user.
-     * @return boolean A bool indicating if the price amount can be changed by the user
+     * @return bool A bool indicating if the price amount can be changed by the user
      */
     public function isChoosePrice() {
         return $this->choosePrice;

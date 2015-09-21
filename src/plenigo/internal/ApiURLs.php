@@ -104,4 +104,14 @@ final class ApiURLs
      * This URL is used to delete a 3rd party access from a certain product
      */   
     const GET_DELETE_APP = "/api/v1/access/app/{USER_ID}/{APP_ID}";
+
+    /**
+     * This URL is used to verify if mobile app has access to certain customer
+     */
+    const MOBILE_SECRET_VERIFY = "/api/v1/access/mobileSecret/verify";
+
+    /**
+     * This URL is used to get, create or delete mobile secret data
+     */
+    const MOBILE_SECRET_URL = "/api/v1/access/mobileSecret/{USER_ID}";
 }

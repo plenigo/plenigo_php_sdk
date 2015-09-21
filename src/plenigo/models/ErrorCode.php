@@ -40,6 +40,8 @@ abstract class ErrorCode extends BasicEnum {
     const LIMIT_REACHED = 12;
     const TOKEN_PROBLEM = 13;
     const NOT_ALLOWED = 14;
+    const MOBILE_SECRET_PROBLEM = 15;
+    const MOBILE_SECRET_NOT_FOUND = 16;
     
     const HTTP_OK = 200;
     const HTTP_BAD_REQUEST = 400;
@@ -71,7 +73,9 @@ abstract class ErrorCode extends BasicEnum {
         self::PRECONDITION_FAILED => 'The product is not owned by the suer',
         self::LIMIT_REACHED => 'The user has reached the limit of parallel app accesses',
         self::TOKEN_PROBLEM => 'Access Token not valid',
-        self::NOT_ALLOWED => 'Access is not allowed'
+        self::NOT_ALLOWED => 'Access is not allowed',
+        self::MOBILE_SECRET_PROBLEM => 'Mobile secret not valid',
+        self::MOBILE_SECRET_NOT_FOUND => 'Mobile secret not found'
     );
 
     /**
@@ -138,6 +142,18 @@ abstract class ErrorCode extends BasicEnum {
         ),
         ApiURLs::GET_PROD_ACCESS => array(
             self::HTTP_FORBIDDEN => self::CANNOT_ACCESS_PRODUCT,
+            self::HTTP_UNAUTHORIZED => self::INVALID_SECRET_OR_COMPANY_ID,
+            self::HTTP_BAD_REQUEST => self::INVALID_PARAMETERS,
+            self::HTTP_INTERNAL_ERROR => self::INTERNAL_ERROR
+        ),
+        ApiURLs::MOBILE_SECRET_VERIFY => array(
+            self::HTTP_FORBIDDEN => self::MOBILE_SECRET_PROBLEM,
+            self::HTTP_UNAUTHORIZED => self::INVALID_SECRET_OR_COMPANY_ID,
+            self::HTTP_BAD_REQUEST => self::INVALID_PARAMETERS,
+            self::HTTP_INTERNAL_ERROR => self::INTERNAL_ERROR
+        ),
+        ApiURLs::MOBILE_SECRET_URL => array(
+            self::HTTP_NOT_FOUND => self::MOBILE_SECRET_NOT_FOUND,
             self::HTTP_UNAUTHORIZED => self::INVALID_SECRET_OR_COMPANY_ID,
             self::HTTP_BAD_REQUEST => self::INVALID_PARAMETERS,
             self::HTTP_INTERNAL_ERROR => self::INTERNAL_ERROR

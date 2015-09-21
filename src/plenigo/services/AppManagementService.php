@@ -169,12 +169,12 @@ class AppManagementService extends Service {
     }
 
     /**
+     * Verify if customer app is having access to a specific product
      * 
-     * 
-     * @param string $customerId
-     * @param string $productId
-     * @param string $appId
-     * @return boolean
+     * @param string $customerId The Customer ID to send to the API
+     * @param string $productId The Product ID to send to the API
+     * @param string $appId The App ID to send to the API
+     * @return bool
      */
     public static function hasUserBought($customerId, $productId, $appId) {
         $map = array(
@@ -207,6 +207,13 @@ class AppManagementService extends Service {
         return true;
     }
 
+    /**
+     * Deletes a customer App ID to allow access with another app
+     * 
+     * @param string $customerId he Customer ID to send to the API
+     * @param string $appId The App ID to send to the API
+     * @throws PlenigoException
+     */
     public static function deleteCustomerApp($customerId, $appId) {
         $map = array(
             'companyId' => PlenigoManager::get()->getCompanyId(),

@@ -1,0 +1,212 @@
+<?php
+
+namespace plenigo\services;
+
+require_once __DIR__ . '/../PlenigoManager.php';
+require_once __DIR__ . '/../PlenigoException.php';
+require_once __DIR__ . '/../internal/ApiURLs.php';
+require_once __DIR__ . '/../internal/ApiParams.php';
+require_once __DIR__ . '/../internal/services/Service.php';
+require_once __DIR__ . '/../models/MobileSecretData.php';
+require_once __DIR__ . '/../models/ErrorCode.php';
+
+use \plenigo\PlenigoManager;
+use \plenigo\PlenigoException;
+use \plenigo\internal\ApiURLs;
+use \plenigo\internal\ApiParams;
+use \plenigo\internal\services\Service;
+use \plenigo\models\MobileSecretData;
+use \plenigo\models\ErrorCode;
+
+/**
+ * MobileService
+ *
+ * <p>
+ * A class used to retrieve Access Tokens from the plenigo API
+ * when given a valid Access Code.
+ * </p>
+ *
+ * @category SDK
+ * @package  PlenigoServices
+ * @author   Sebastian Dieguez <s.dieguez@plenigo.com>
+ * @link     https://www.plenigo.com
+ */
+class MobileService extends Service {
+
+    const ERR_MSG_VERIFY = "Error during mobile secret verification";
+    const ERR_MSG_GET = "Error geting mobile secret";
+    const ERR_MSG_POST = "Error creating mobile secret";
+    const ERR_MSG_DELETE = "Error deleting mobile secret";
+
+    /**
+     * The constructor for the MobileService instance.
+     *
+     * @param RestClient $request   The RestClient request to execute.
+     *
+     * @return MobileService instance.
+     */
+    public function __construct($request) {
+        parent::__construct($request);
+    }
+
+    /**
+     * This method allows to verify if mobile app has access to certain customer
+     * 
+     * @param string $email The user email
+     * @param string $mobileSecret The mobile secret to verify
+     * @return string The Customer ID for that mobile secret
+     * @throws PlenigoException
+     */
+    public static function verifyMobileSecret($email, $mobileSecret) {
+        $map = array(
+            'companyId' => PlenigoManager::get()->getCompanyId(),
+            'secret' => PlenigoManager::get()->getSecret(),
+            'email' => $email,
+            'mobileSecret' => $mobileSecret
+        );
+
+        $url = ApiURLs::MOBILE_SECRET_VERIFY;
+
+        $request = static::getRequest($url, false, $map);
+
+        $appTokenRequest = new static($request);
+
+        try {
+            $data = $appTokenRequest->execute();
+        } catch (Exception $exc) {
+            $errorCode = ErrorCode::getTranslation(ApiURLs::MOBILE_SECRET_VERIFY, $exc->getCode());
+            if (empty($errorCode) || is_null($errorCode)) {
+                $errorCode = $exc->getCode();
+            }
+            $clazz = get_class();
+            PlenigoManager::error($clazz, self::ERR_MSG_VERIFY, $exc);
+            throw new PlenigoException(self::ERR_MSG_VERIFY, $errorCode, $exc);
+        }
+
+        $result = is_array($data) ? $data['customerId'] : "" . $data;
+
+        return $result;
+    }
+
+    /**
+     * Get the mobile secret for a given Customer ID
+     * 
+     * @param string $customerId The Customer ID
+     * @return MobileSecretData the email and secret for the customer mobile
+     * @throws PlenigoException
+     */
+    public static function getMobileSecret($customerId) {
+        $map = array(
+            'companyId' => PlenigoManager::get()->getCompanyId(),
+            'secret' => PlenigoManager::get()->getSecret()
+        );
+
+        $url = str_ireplace(ApiParams::URL_USER_ID_TAG, $customerId, ApiURLs::MOBILE_SECRET_URL);
+
+        $request = static::getRequest($url, false, $map);
+
+        $appTokenRequest = new static($request);
+
+        try {
+            $data = $appTokenRequest->execute();
+        } catch (Exception $exc) {
+            $errorCode = ErrorCode::getTranslation(ApiURLs::MOBILE_SECRET_URL, $exc->getCode());
+            if (empty($errorCode) || is_null($errorCode)) {
+                $errorCode = $exc->getCode();
+            }
+            $clazz = get_class();
+            PlenigoManager::error($clazz, self::ERR_MSG_GET, $exc);
+            throw new PlenigoException(self::ERR_MSG_GET, $errorCode, $exc);
+        }
+
+        $result = MobileSecretData::createFromMap($data);
+
+        return $result;
+    }
+
+    /**
+     * Creates a mobile secret for a given Customer ID
+     * 
+     * @param string $customerId The Customer ID
+     * @return MobileSecretData the email and secret for the customer mobile
+     * @throws PlenigoException
+     */
+    public static function createMobileSecret($customerId) {
+        $map = array(
+            'companyId' => PlenigoManager::get()->getCompanyId(),
+            'secret' => PlenigoManager::get()->getSecret()
+        );
+
+        $url = str_ireplace(ApiParams::URL_USER_ID_TAG, $customerId, ApiURLs::MOBILE_SECRET_URL);
+
+        $request = static::postJSONRequest($url, false, $map);
+
+        $appTokenRequest = new static($request);
+
+        try {
+            $data = $appTokenRequest->execute();
+        } catch (Exception $exc) {
+            $errorCode = ErrorCode::getTranslation(ApiURLs::MOBILE_SECRET_URL, $exc->getCode());
+            if (empty($errorCode) || is_null($errorCode)) {
+                $errorCode = $exc->getCode();
+            }
+            $clazz = get_class();
+            PlenigoManager::error($clazz, self::ERR_MSG_POST, $exc);
+            throw new PlenigoException(self::ERR_MSG_POST, $errorCode, $exc);
+        }
+
+        $result = MobileSecretData::createFromMap($data);
+
+        return $result;
+    }
+
+    /**
+     * Deletes a mobile secret for a given Customer ID
+     * 
+     * @param string $customerId The Customer ID
+     * @throws PlenigoException
+     */
+    public static function deleteMobileSecret($customerId) {
+        $map = array(
+            'companyId' => PlenigoManager::get()->getCompanyId(),
+            'secret' => PlenigoManager::get()->getSecret()
+        );
+
+        $url = str_ireplace(ApiParams::URL_USER_ID_TAG, $customerId, ApiURLs::MOBILE_SECRET_URL);
+
+        $request = static::deleteRequest($url, false, $map);
+
+        $appTokenRequest = new static($request);
+
+        try {
+            $data = $appTokenRequest->execute();
+        } catch (Exception $exc) {
+            $errorCode = ErrorCode::getTranslation(ApiURLs::MOBILE_SECRET_URL, $exc->getCode());
+            if (empty($errorCode) || is_null($errorCode)) {
+                $errorCode = $exc->getCode();
+            }
+            $clazz = get_class();
+            PlenigoManager::error($clazz, self::ERR_MSG_DELETE, $exc);
+            throw new PlenigoException(self::ERR_MSG_DELETE, $errorCode, $exc);
+        }
+    }
+
+    /**
+     * Executes the prepared request and returns
+     * the Response object on success.
+     *
+     * @return The request's response.
+     *
+     * @throws \plenigo\PlenigoException on request error.
+     */
+    public function execute() {
+        try {
+            $response = parent::execute();
+        } catch (\Exception $exc) {
+            throw new PlenigoException('App Management Service execution failed!', $exc->getCode(), $exc);
+        }
+
+        return $response;
+    }
+
+}
