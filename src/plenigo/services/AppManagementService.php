@@ -163,7 +163,7 @@ class AppManagementService extends Service {
             throw new PlenigoException(self::ERR_MSG_TOKEN, $errorCode, $exc);
         }
 
-        $result = AppAccessData::createFromMap((array) $data);
+        $result = AppAccessData::createFromMap($data);
 
         return $result;
     }
@@ -193,7 +193,7 @@ class AppManagementService extends Service {
 
         try {
             $data = $appTokenRequest->execute();
-        } catch (Exception $exc) {
+        } catch (\Exception $exc) {
             $errorCode = ErrorCode::getTranslation(ApiURLs::GET_PROD_ACCESS, $exc->getCode());
             if (empty($errorCode) || is_null($errorCode)) {
                 $errorCode = $exc->getCode();
@@ -230,7 +230,7 @@ class AppManagementService extends Service {
 
         try {
             $data = $appTokenRequest->execute();
-        } catch (Exception $exc) {
+        } catch (\Exception $exc) {
             $errorCode = ErrorCode::getTranslation(ApiURLs::GET_DELETE_APP, $exc->getCode());
             if (empty($errorCode) || is_null($errorCode)) {
                 $errorCode = $exc->getCode();

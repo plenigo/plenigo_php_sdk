@@ -62,6 +62,13 @@ class AppManagementServiceTest extends PlenigoTestCase {
         return array(array($data));
     }
 
+    public function simpleAppServiceProvider() {
+        $data = json_decode('{ "customerId": "' . self::CUSTOMER_ID . '", "customerAppId": "' . self::PROD_APP_ID_1
+                . '", "description": "' . self::PROD_DESC_1 . '", "productId": "' . self::PROD_ID_1 . '" }');
+
+        return array(array($data));
+    }
+
     /**
      * @dataProvider tokenServiceProvider
      */
@@ -99,7 +106,7 @@ class AppManagementServiceTest extends PlenigoTestCase {
 
         $this->assertError(E_USER_NOTICE, "GET URL CALL");
     }
-    
+
     /**
      * @dataProvider multipleAppServiceProvider
      */
@@ -130,4 +137,56 @@ class AppManagementServiceTest extends PlenigoTestCase {
         $this->assertError(E_USER_NOTICE, "GET URL CALL");
     }
 
+    /**
+     * @dataProvider simpleAppServiceProvider
+     */
+    public function testRequestAppId($data) {
+        AppManagementServiceMock::$requestResponse = $data;
+
+        $result = AppManagementServiceMock::requestAppId(self::CUSTOMER_ID, self::TEST_APP_TOKEN);
+
+        $this->assertInstanceOf('plenigo\models\AppAccessData', $result);
+        $this->assertTrue($result->getCustomerAppId() == self::PROD_APP_ID_1);
+        $this->assertTrue($result->getProductId() == self::PROD_ID_1);
+        $this->assertTrue($result->getCustomerId() == self::CUSTOMER_ID);
+        $this->assertTrue($result->getDescription() == self::PROD_DESC_1);
+
+        $this->assertError(E_USER_NOTICE, "GET URL CALL");
+    }
+
+    public function testHasUserBoughtTrue() {
+        $result = AppManagementServiceMock::hasUserBought(self::CUSTOMER_ID, self::PROD_ID_1, self::PROD_APP_ID_1);
+
+        $this->assertFalse(is_null($result));
+        $this->assertTrue(is_bool($result));
+        $this->assertTrue($result);
+
+        $this->assertError(E_USER_NOTICE, "GET URL CALL");
+    }
+
+    public function testHasUserBoughtFalse() {
+        $data = json_decode('{"error":"403","description":"Access is not allowed"}');
+        AppManagementServiceMock::$requestResponse = $data;
+
+        try {
+            $result = AppManagementServiceMock::hasUserBought(self::CUSTOMER_ID, self::PROD_ID_1, self::PROD_APP_ID_1);
+        } catch (Exception $exc) {
+            $this->assertTrue(true);
+        }
+
+        $this->assertError(E_USER_WARNING, "Acces is denied for this App ID");
+    }
+
+        public function testDeleteCustomerAppFalse() {
+        $data = json_decode('{"error":"400","description":"The given parameters were incorrect"}');
+        AppManagementServiceMock::$requestResponse = $data;
+
+        try {
+            $result = AppManagementServiceMock::deleteCustomerApp(self::CUSTOMER_ID, self::PROD_APP_ID_1);
+        } catch (Exception $exc) {
+            $this->assertTrue(true);
+        }
+
+        $this->assertError(E_USER_WARNING, "Error trying to delete the App ID");
+    }
 }
