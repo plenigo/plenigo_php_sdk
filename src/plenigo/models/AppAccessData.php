@@ -60,7 +60,7 @@ class AppAccessData {
      */
     public static function createFromMapArray(array $map = array()) {
         $res = array();
-        foreach ($map as $aData) {
+        foreach ($map['apps'] as $aData) {
             array_push($res, AppAccessData::createFromMap($aData));
         }
 
@@ -73,13 +73,45 @@ class AppAccessData {
      * @param array $map an associative array representing the AppAccessData object
      * @return \plenigo\models\AppAccessData
      */
-    public static function createFromMap(array $map) {
-        $customerId = isset($map['customerId']) ? $map['customerId'] : null;
-        $customerAppId = isset($map['customerAppId']) ? $map['customerAppId'] : null;
-        $productId = isset($map['productId']) ? $map['productId'] : null;
-        $description = isset($map['description']) ? $map['description'] : null;
+    public static function createFromMap($map) {
+        $customerId = isset($map->customerId) ? $map->customerId : null;
+        $customerAppId = isset($map->customerAppId) ? $map->customerAppId : null;
+        $productId = isset($map->productId) ? $map->productId : null;
+        $description = isset($map->description) ? $map->description : null;
 
         return new AppAccessData($customerId, $customerAppId, $productId, $description);
+    }
+
+    public function getCustomerId() {
+        return $this->customerId;
+    }
+
+    public function getCustomerAppId() {
+        return $this->customerAppId;
+    }
+
+    public function getProductId() {
+        return $this->productId;
+    }
+
+    public function getDescription() {
+        return $this->description;
+    }
+
+    public function setCustomerId($customerId) {
+        $this->customerId = $customerId;
+    }
+
+    public function setCustomerAppId($customerAppId) {
+        $this->customerAppId = $customerAppId;
+    }
+
+    public function setProductId($productId) {
+        $this->productId = $productId;
+    }
+
+    public function setDescription($description) {
+        $this->description = $description;
     }
 
 }
