@@ -82,10 +82,14 @@ class RestClient {
             // taking out the brackets because we need to use the very same variable name
             $queryString = preg_replace('/%5B(?:[0-9]|[1-9][0-9]+)%5D=/', '=', $query);
 
-            $url .= '?' . $queryString;
+            if (strpos($url, '?') === FALSE) {
+                $url .= '?' . $queryString;
+            } else {
+                $url .= '&' . $queryString;
+            }
         }
         $clazz = get_class();
-        PlenigoManager::notice($clazz, "GET DELETE URL CALL=" . $url);
+        PlenigoManager::notice($clazz, "DELETE URL CALL=" . $url);
         $curlRequest = static::createCurlRequest($url);
         $curlRequest->setOption(CURLOPT_POST, false);
         $curlRequest->setOption(CURLOPT_PUT, false);

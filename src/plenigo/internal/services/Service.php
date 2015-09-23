@@ -63,6 +63,16 @@ class Service
         return RestClient::get($url, $params);
     }
     
+    /**
+     * Returns a response to a DELETE RestClient request to a specific
+     * end-point on the plenigo REST API.
+     * 
+     * @param string $endPoint The REST end-point to access.
+     * @param bool $oauth TRUE if the needed request is going to the OAuth API.
+     * @param array $params Optional params to pass to the request.
+     * 
+     * @return the request result
+     */
     protected static function deleteRequest($endPoint, $oauth = false, array $params = array())
     {
         if($oauth){
@@ -187,6 +197,36 @@ class Service
         if ($statusCode < 200 || $statusCode >= 300) {
             throw new \Exception("Request Status Code: " . $statusCode, $statusCode);
         }
+    }
+    
+    /**
+     * Executes the fiven RestClient and detects if there is an error, 
+     * gets its code and provides a PlenigoException describing it 
+     * with the error parameters
+     * 
+     * @param RestClient $pRequest The RestClient object to execute for this request
+     * @param string $pErrorSource the URL key for the error translation table
+     * @param string $pErrorMsg the Error message to show in the Plenigo Exception thrown
+     * 
+     * @return mixed The request response or null
+     * 
+     * @throws PlenigoException
+     */
+    protected static function executeRequest($pRequest, $pErrorSource, $pErrorMsg) {
+        $res = null;
+        try {
+            $res = $pRequest->execute();
+        } catch (Exception $exc) {
+            $errorCode = ErrorCode::getTranslation($pErrorSource, $exc->getCode());
+            if (empty($errorCode) || is_null($errorCode)) {
+                $errorCode = $exc->getCode();
+            }
+            $clazz = get_class();
+            PlenigoManager::error($clazz, $pErrorMsg, $exc);
+            throw new PlenigoException($pErrorMsg, $errorCode, $exc);
+        }
+
+        return $res;
     }
 
     /**

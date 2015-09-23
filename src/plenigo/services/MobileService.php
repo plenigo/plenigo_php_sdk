@@ -71,17 +71,7 @@ class MobileService extends Service {
 
         $appTokenRequest = new static($request);
 
-        try {
-            $data = $appTokenRequest->execute();
-        } catch (Exception $exc) {
-            $errorCode = ErrorCode::getTranslation(ApiURLs::MOBILE_SECRET_VERIFY, $exc->getCode());
-            if (empty($errorCode) || is_null($errorCode)) {
-                $errorCode = $exc->getCode();
-            }
-            $clazz = get_class();
-            PlenigoManager::error($clazz, self::ERR_MSG_VERIFY, $exc);
-            throw new PlenigoException(self::ERR_MSG_VERIFY, $errorCode, $exc);
-        }
+        $data = parent::executeRequest($appTokenRequest, ApiURLs::MOBILE_SECRET_VERIFY, self::ERR_MSG_VERIFY);
 
         $result = is_array($data) ? $data['customerId'] : "" . $data;
 
@@ -107,17 +97,7 @@ class MobileService extends Service {
 
         $appTokenRequest = new static($request);
 
-        try {
-            $data = $appTokenRequest->execute();
-        } catch (Exception $exc) {
-            $errorCode = ErrorCode::getTranslation(ApiURLs::MOBILE_SECRET_URL, $exc->getCode());
-            if (empty($errorCode) || is_null($errorCode)) {
-                $errorCode = $exc->getCode();
-            }
-            $clazz = get_class();
-            PlenigoManager::error($clazz, self::ERR_MSG_GET, $exc);
-            throw new PlenigoException(self::ERR_MSG_GET, $errorCode, $exc);
-        }
+        $data = parent::executeRequest($appTokenRequest, ApiURLs::MOBILE_SECRET_URL, self::ERR_MSG_GET);
 
         $result = MobileSecretData::createFromMap($data);
 
@@ -143,17 +123,7 @@ class MobileService extends Service {
 
         $appTokenRequest = new static($request);
 
-        try {
-            $data = $appTokenRequest->execute();
-        } catch (Exception $exc) {
-            $errorCode = ErrorCode::getTranslation(ApiURLs::MOBILE_SECRET_URL, $exc->getCode());
-            if (empty($errorCode) || is_null($errorCode)) {
-                $errorCode = $exc->getCode();
-            }
-            $clazz = get_class();
-            PlenigoManager::error($clazz, self::ERR_MSG_POST, $exc);
-            throw new PlenigoException(self::ERR_MSG_POST, $errorCode, $exc);
-        }
+        $data = parent::executeRequest($appTokenRequest, ApiURLs::MOBILE_SECRET_URL, self::ERR_MSG_POST);
 
         $result = MobileSecretData::createFromMap($data);
 
@@ -178,17 +148,7 @@ class MobileService extends Service {
 
         $appTokenRequest = new static($request);
 
-        try {
-            $data = $appTokenRequest->execute();
-        } catch (Exception $exc) {
-            $errorCode = ErrorCode::getTranslation(ApiURLs::MOBILE_SECRET_URL, $exc->getCode());
-            if (empty($errorCode) || is_null($errorCode)) {
-                $errorCode = $exc->getCode();
-            }
-            $clazz = get_class();
-            PlenigoManager::error($clazz, self::ERR_MSG_DELETE, $exc);
-            throw new PlenigoException(self::ERR_MSG_DELETE, $errorCode, $exc);
-        }
+        parent::executeRequest($appTokenRequest, ApiURLs::MOBILE_SECRET_URL, self::ERR_MSG_DELETE);
     }
 
     /**
@@ -197,7 +157,7 @@ class MobileService extends Service {
      *
      * @return The request's response.
      *
-     * @throws \plenigo\PlenigoException on request error.
+     * @throws PlenigoException on request error.
      */
     public function execute() {
         try {

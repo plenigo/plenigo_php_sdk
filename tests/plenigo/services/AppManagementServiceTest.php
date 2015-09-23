@@ -170,23 +170,26 @@ class AppManagementServiceTest extends PlenigoTestCase {
 
         try {
             $result = AppManagementServiceMock::hasUserBought(self::CUSTOMER_ID, self::PROD_ID_1, self::PROD_APP_ID_1);
-        } catch (Exception $exc) {
+            $this->assertTrue(false);
+        } catch (\Exception $exc) {
             $this->assertTrue(true);
         }
 
-        $this->assertError(E_USER_WARNING, "Acces is denied for this App ID");
+        $this->assertError(E_USER_NOTICE, "GET URL CALL");
     }
 
-        public function testDeleteCustomerAppFalse() {
+    public function testDeleteCustomerAppFalse() {
         $data = json_decode('{"error":"400","description":"The given parameters were incorrect"}');
         AppManagementServiceMock::$requestResponse = $data;
 
         try {
             $result = AppManagementServiceMock::deleteCustomerApp(self::CUSTOMER_ID, self::PROD_APP_ID_1);
-        } catch (Exception $exc) {
+            $this->assertTrue(false);
+        } catch (\Exception $exc) {
             $this->assertTrue(true);
         }
 
-        $this->assertError(E_USER_WARNING, "Error trying to delete the App ID");
+        $this->assertError(E_USER_NOTICE, "DELETE URL CALL");
     }
+
 }

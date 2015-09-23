@@ -86,24 +86,24 @@ final class ApiURLs
     const PAYWALL_STATE = "/api/v1/paywall/state";
     
     /**
-     * This URL is used for 3rd party apps to get access from a customer to a product
+     * This URL is used for merchant apps to get access from a customer to a product
      */
     const GET_APP_TOKEN = "/api/v1/access/app/token/{USER_ID}";
 
     /**
-     * This URL is used for 3rd party apps to get all customer apps
+     * This URL is used for merchant apps to get all customer apps
      */
     const GET_APPS_ID = "/api/v1/access/app/{USER_ID}";
     
     /**
-     * This URL is used to verify if 3rd party app has access to certain product
+     * This URL is used to verify if merchant app has access to certain product
      */
     const GET_PROD_ACCESS = "/api/v1/access/app/{USER_ID}/{PROD_ID}/{APP_ID}";
 
     /**
-     * This URL is used to delete a 3rd party access from a certain product
+     * This URL is used to delete a merchant application access from a certain product
      */   
-    const GET_DELETE_APP = "/api/v1/access/app/{USER_ID}/{APP_ID}";
+    const DELETE_APP_ACCESS = "/api/v1/access/app/{USER_ID}/{APP_ID}";
 
     /**
      * This URL is used to verify if mobile app has access to certain customer

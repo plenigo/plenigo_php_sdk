@@ -57,7 +57,9 @@ class AppManagementService extends Service {
      * @param string $customerId the Customer ID to send to the API
      * @param string $productId  the Product ID to send to the API
      * @param string $description the App Access Description to send to the API
+     * 
      * @return AppTokenData the access token to get the App ID
+     * 
      * @throws PlenigoException
      */
     public static function requestAppToken($customerId, $productId, $description) {
@@ -75,17 +77,7 @@ class AppManagementService extends Service {
 
         $appTokenRequest = new static($request);
 
-        try {
-            $data = $appTokenRequest->execute();
-        } catch (Exception $exc) {
-            $errorCode = ErrorCode::getTranslation(ApiURLs::GET_APP_TOKEN, $exc->getCode());
-            if (empty($errorCode) || is_null($errorCode)) {
-                $errorCode = $exc->getCode();
-            }
-            $clazz = get_class();
-            PlenigoManager::error($clazz, self::ERR_MSG_TOKEN, $exc);
-            throw new PlenigoException(self::ERR_MSG_TOKEN, $errorCode, $exc);
-        }
+        $data = parent::executeRequest($appTokenRequest, ApiURLs::GET_APP_TOKEN, self::ERR_MSG_TOKEN);
 
         $result = AppTokenData::createFromMap((array) $data);
 
@@ -96,7 +88,9 @@ class AppManagementService extends Service {
      * Executes the request to get all App IDs for a given customer
      * 
      * @param string $customerId the Customer ID to send to the API
+     * 
      * @return array An array of AppAccessData objects
+     * 
      * @throws PlenigoException
      */
     public static function getCustomerApps($customerId) {
@@ -112,17 +106,7 @@ class AppManagementService extends Service {
 
         $appTokenRequest = new static($request);
 
-        try {
-            $data = $appTokenRequest->execute();
-        } catch (Exception $exc) {
-            $errorCode = ErrorCode::getTranslation(ApiURLs::GET_APPS_ID, $exc->getCode());
-            if (empty($errorCode) || is_null($errorCode)) {
-                $errorCode = $exc->getCode();
-            }
-            $clazz = get_class();
-            PlenigoManager::error($clazz, self::ERR_MSG_TOKEN, $exc);
-            throw new PlenigoException(self::ERR_MSG_TOKEN, $errorCode, $exc);
-        }
+        $data = parent::executeRequest($appTokenRequest, ApiURLs::GET_APPS_ID, self::ERR_MSG_TOKEN);
 
         $result = AppAccessData::createFromMapArray((array) $data);
 
@@ -134,7 +118,9 @@ class AppManagementService extends Service {
      * 
      * @param string $customerId The Customer ID to send to the API
      * @param string $accessToken The Access Token 
+     * 
      * @return AppAccessData the access data with the App ID
+     * 
      * @throws PlenigoException
      */
     public static function requestAppId($customerId, $accessToken) {
@@ -151,17 +137,7 @@ class AppManagementService extends Service {
 
         $appTokenRequest = new static($request);
 
-        try {
-            $data = $appTokenRequest->execute();
-        } catch (Exception $exc) {
-            $errorCode = ErrorCode::getTranslation(ApiURLs::GET_APPS_ID, $exc->getCode());
-            if (empty($errorCode) || is_null($errorCode)) {
-                $errorCode = $exc->getCode();
-            }
-            $clazz = get_class();
-            PlenigoManager::error($clazz, self::ERR_MSG_TOKEN, $exc);
-            throw new PlenigoException(self::ERR_MSG_TOKEN, $errorCode, $exc);
-        }
+        $data = parent::executeRequest($appTokenRequest, ApiURLs::GET_APPS_ID, self::ERR_MSG_TOKEN);
 
         $result = AppAccessData::createFromMap($data);
 
@@ -174,7 +150,8 @@ class AppManagementService extends Service {
      * @param string $customerId The Customer ID to send to the API
      * @param string $productId The Product ID to send to the API
      * @param string $appId The App ID to send to the API
-     * @return bool
+     * 
+     * @return bool TRUE if the customer can access this product, FALSE otherwise
      */
     public static function hasUserBought($customerId, $productId, $appId) {
         $map = array(
@@ -192,14 +169,8 @@ class AppManagementService extends Service {
         $appTokenRequest = new static($request);
 
         try {
-            $data = $appTokenRequest->execute();
+            parent::executeRequest($appTokenRequest, ApiURLs::GET_PROD_ACCESS, self::ERR_MSG_ACCESS);
         } catch (\Exception $exc) {
-            $errorCode = ErrorCode::getTranslation(ApiURLs::GET_PROD_ACCESS, $exc->getCode());
-            if (empty($errorCode) || is_null($errorCode)) {
-                $errorCode = $exc->getCode();
-            }
-            $clazz = get_class();
-            PlenigoManager::error($clazz, self::ERR_MSG_ACCESS, $exc);
             return false;
         }
 
@@ -212,6 +183,7 @@ class AppManagementService extends Service {
      * 
      * @param string $customerId he Customer ID to send to the API
      * @param string $appId The App ID to send to the API
+     * 
      * @throws PlenigoException
      */
     public static function deleteCustomerApp($customerId, $appId) {
@@ -221,26 +193,18 @@ class AppManagementService extends Service {
             'testMode' => PlenigoManager::get()->isTestMode()
         );
 
-        $url = str_ireplace(ApiParams::URL_USER_ID_TAG, $customerId, ApiURLs::GET_DELETE_APP);
+        $url = str_ireplace(ApiParams::URL_USER_ID_TAG, $customerId, ApiURLs::DELETE_APP_ACCESS);
         $url = str_ireplace(ApiParams::URL_APP_ID_TAG, $appId, $url);
         
         $request = static::deleteRequest($url, false, $map);
 
         $appTokenRequest = new static($request);
 
-        try {
-            $data = $appTokenRequest->execute();
-        } catch (\Exception $exc) {
-            $errorCode = ErrorCode::getTranslation(ApiURLs::GET_DELETE_APP, $exc->getCode());
-            if (empty($errorCode) || is_null($errorCode)) {
-                $errorCode = $exc->getCode();
-            }
-            $clazz = get_class();
-            PlenigoManager::error($clazz, self::ERR_MSG_DELETE, $exc);
-            throw new PlenigoException(self::ERR_MSG_DELETE, $errorCode, $exc);
-        }
+        parent::executeRequest($appTokenRequest, ApiURLs::DELETE_APP_ACCESS, self::ERR_MSG_DELETE);
     }
 
+
+    
     /**
      * Executes the prepared request and returns
      * the Response object on success.

@@ -18,12 +18,14 @@ namespace plenigo\models;
 class MobileSecretData {
 
     /**
+     * The email of the mobile user
      *
      * @var string 
      */
     private $email;
 
     /**
+     * The mobile secret for this user
      *
      * @var string
      */
