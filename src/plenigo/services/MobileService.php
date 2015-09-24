@@ -73,7 +73,11 @@ class MobileService extends Service {
 
         $data = parent::executeRequest($appTokenRequest, ApiURLs::MOBILE_SECRET_VERIFY, self::ERR_MSG_VERIFY);
 
-        $result = is_array($data) ? $data['customerId'] : "" . $data;
+        if (isset($data->customerId)) {
+            $result = $data->customerId;
+        } else {
+            $result = "" . $data;
+        }
 
         return $result;
     }
@@ -99,7 +103,7 @@ class MobileService extends Service {
 
         $data = parent::executeRequest($appTokenRequest, ApiURLs::MOBILE_SECRET_URL, self::ERR_MSG_GET);
 
-        $result = MobileSecretData::createFromMap($data);
+        $result = MobileSecretData::createFromMap((array) $data);
 
         return $result;
     }
@@ -125,7 +129,7 @@ class MobileService extends Service {
 
         $data = parent::executeRequest($appTokenRequest, ApiURLs::MOBILE_SECRET_URL, self::ERR_MSG_POST);
 
-        $result = MobileSecretData::createFromMap($data);
+        $result = MobileSecretData::createFromMap((array) $data);
 
         return $result;
     }
@@ -163,7 +167,7 @@ class MobileService extends Service {
         try {
             $response = parent::execute();
         } catch (\Exception $exc) {
-            throw new PlenigoException('App Management Service execution failed!', $exc->getCode(), $exc);
+            throw new PlenigoException('Mobile Service execution failed!', $exc->getCode(), $exc);
         }
 
         return $response;

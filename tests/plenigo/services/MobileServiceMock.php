@@ -1,15 +1,15 @@
 <?php
 
-require_once __DIR__ . '/../../../src/plenigo/services/AppManagementService.php';
+require_once __DIR__ . '/../../../src/plenigo/services/MobileService.php';
 require_once __DIR__ . '/../internal/utils/RestClientMock.php';
 
-use \plenigo\services\AppManagementService;
+use \plenigo\services\MobileService;
 
 /**
- * AppManagementServiceMock
+ * MobileServiceMock
  * 
  * <b>
- * Mock and override class for AppManagementService
+ * Mock and override class for MobileService
  * </b>
  *
  * @category Test
@@ -17,7 +17,7 @@ use \plenigo\services\AppManagementService;
  * @author   Sebastian Dieguez <s.dieguez@plenigo.com>
  * @link     http://plenigo.com
  */
-class AppManagementServiceMock extends AppManagementService
+class MobileServiceMock extends MobileService
 {
 
     public static $requestResponse;

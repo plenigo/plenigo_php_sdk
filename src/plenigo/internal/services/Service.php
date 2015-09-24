@@ -3,10 +3,14 @@
 namespace plenigo\internal\services;
 
 require_once __DIR__ . '/../../PlenigoManager.php';
+require_once __DIR__ . '/../../PlenigoException.php';
 require_once __DIR__ . '/../../internal/utils/RestClient.php';
+require_once __DIR__ . '/../../models/ErrorCode.php';
 
 use \plenigo\PlenigoManager;
 use \plenigo\internal\utils\RestClient;
+use \plenigo\models\ErrorCode;
+use \plenigo\PlenigoException;
 
 /**
  * Service
