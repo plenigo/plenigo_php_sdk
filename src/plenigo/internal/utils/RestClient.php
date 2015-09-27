@@ -75,6 +75,18 @@ class RestClient {
         return new static($curlRequest);
     }
 
+    /**
+     * Executes a cURL DELETE request at the given URL
+     * with optional get parameters.
+     *
+     * @param string $url    The url to access.
+     * @param array  $params An optional map of params to pass
+     *                       on to the request as a query string.
+     *
+     * @return the request response
+     *
+     * @throws \Exception on request error.
+     */
     public static function delete($url, array $params = array()) {
 
         if (count($params) > 0) {
