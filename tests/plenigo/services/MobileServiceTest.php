@@ -118,7 +118,39 @@ class MobileServiceTest extends PlenigoTestCase {
     public function testPostAppToken($data) {
         MobileServiceMock::$requestResponse = $data;
 
-        $result = MobileServiceMock::createMobileSecret(self::CUSTOMER_ID);
+        $result = MobileServiceMock::createMobileSecret(self::CUSTOMER_ID, 20);
+
+        $this->assertFalse(is_null($result));
+        $this->assertInstanceOf('plenigo\models\MobileSecretData', $result);
+        $this->assertTrue($result->getEmail() == self::USER_EMAIL);
+        $this->assertTrue($result->getMobileSecret() == self::USER_SECRET);
+
+        $this->assertError(E_USER_NOTICE, "POST JSON URL CALL");
+    }
+
+    /**
+     * @dataProvider secretServiceProvider
+     */
+    public function testPostAppTokenLowValue($data) {
+        MobileServiceMock::$requestResponse = $data;
+
+        $result = MobileServiceMock::createMobileSecret(self::CUSTOMER_ID, 2);
+
+        $this->assertFalse(is_null($result));
+        $this->assertInstanceOf('plenigo\models\MobileSecretData', $result);
+        $this->assertTrue($result->getEmail() == self::USER_EMAIL);
+        $this->assertTrue($result->getMobileSecret() == self::USER_SECRET);
+
+        $this->assertError(E_USER_NOTICE, "POST JSON URL CALL");
+    }
+
+    /**
+     * @dataProvider secretServiceProvider
+     */
+    public function testPostAppTokenHighValue($data) {
+        MobileServiceMock::$requestResponse = $data;
+
+        $result = MobileServiceMock::createMobileSecret(self::CUSTOMER_ID, 150);
 
         $this->assertFalse(is_null($result));
         $this->assertInstanceOf('plenigo\models\MobileSecretData', $result);

@@ -112,13 +112,23 @@ class MobileService extends Service {
      * Creates a mobile secret for a given Customer ID
      * 
      * @param string $customerId The Customer ID
+     * @param int $size The size of the mobile secret 8 to 40
+     * 
      * @return MobileSecretData the email and secret for the customer mobile
+     * 
      * @throws PlenigoException
      */
-    public static function createMobileSecret($customerId) {
+    public static function createMobileSecret($customerId, $size) {
+        if ($size < 8) {
+            $size = 8;
+        }
+        if ($size > 40) {
+            $size = 40;
+        }
         $map = array(
             'companyId' => PlenigoManager::get()->getCompanyId(),
-            'secret' => PlenigoManager::get()->getSecret()
+            'secret' => PlenigoManager::get()->getSecret(),
+            'size' => $size
         );
 
         $url = str_ireplace(ApiParams::URL_USER_ID_TAG, $customerId, ApiURLs::MOBILE_SECRET_URL);
