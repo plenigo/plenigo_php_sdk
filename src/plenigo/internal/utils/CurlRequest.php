@@ -76,7 +76,7 @@ final class CurlRequest
         }
         $statusCode = $this->getInfo(CURLINFO_HTTP_CODE);
         if (!empty($statusCode)) {
-            if ($statusCode != 200) {
+            if ($statusCode < 200 || $statusCode >= 300) {
                 throw new \Exception($statusCode . " HTTP Error detected", $statusCode);
             }
         }

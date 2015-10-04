@@ -167,12 +167,16 @@ class Service
      * Validates that the response is a proper object and
      * has no error properties.
      *
-     * @param object $response The request response.
+     * @param mixed $response The request response.
      *
      * @throws \Exception on unexpected response or response with errors.
      */
     protected function checkForErrors($response)
     {
+        //Sanitize a string empty response
+        if(is_string($response) && trim($response)===''){
+            $response=json_decode('{}');
+        }
         if (!is_object($response)) {
             throw new \Exception('Broken response. Expecting JSON Object; Got: ' . gettype($response));
         }

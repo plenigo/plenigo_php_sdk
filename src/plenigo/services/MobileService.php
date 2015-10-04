@@ -54,7 +54,9 @@ class MobileService extends Service {
      * 
      * @param string $email The user email
      * @param string $mobileSecret The mobile secret to verify
+     * 
      * @return string The Customer ID for that mobile secret
+     * 
      * @throws PlenigoException
      */
     public static function verifyMobileSecret($email, $mobileSecret) {
@@ -112,15 +114,15 @@ class MobileService extends Service {
      * Creates a mobile secret for a given Customer ID
      * 
      * @param string $customerId The Customer ID
-     * @param int $size The size of the mobile secret 8 to 40
+     * @param int $size The size of the mobile secret 6 to 40
      * 
      * @return MobileSecretData the email and secret for the customer mobile
      * 
      * @throws PlenigoException
      */
     public static function createMobileSecret($customerId, $size) {
-        if ($size < 8) {
-            $size = 8;
+        if ($size < 6) {
+            $size = 6;
         }
         if ($size > 40) {
             $size = 40;

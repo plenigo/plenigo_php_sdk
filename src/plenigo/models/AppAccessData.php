@@ -61,10 +61,11 @@ class AppAccessData {
      */
     public static function createFromMapArray(array $map = array()) {
         $res = array();
-        foreach ($map['apps'] as $aData) {
-            array_push($res, AppAccessData::createFromMap($aData));
+        if (isset($map['apps'])) {
+            foreach ($map['apps'] as $aData) {
+                array_push($res, AppAccessData::createFromMap($aData));
+            }
         }
-
         return $res;
     }
 
