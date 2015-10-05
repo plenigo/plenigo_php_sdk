@@ -26,8 +26,7 @@ use \plenigo\PlenigoManager;
  * @author   René Olivo <r.olivo@plenigo.com>
  * @link     https://www.plenigo.com
  */
-class RestClient
-{
+class RestClient {
 
     /**
      * The CURL Request object to be executed.
@@ -42,8 +41,7 @@ class RestClient
      *
      * @return RestClient instance.
      */
-    private function __construct($curlRequest)
-    {
+    private function __construct($curlRequest) {
         $this->curlRequest = $curlRequest;
     }
 
@@ -59,8 +57,7 @@ class RestClient
      *
      * @throws \Exception on request error.
      */
-    public static function get($url, array $params = array())
-    {
+    public static function get($url, array $params = array()) {
         if (count($params) > 0) {
             $query = http_build_query($params, null, '&');
             // taking out the brackets because we need to use the very same variable name
@@ -71,6 +68,44 @@ class RestClient
         $clazz = get_class();
         PlenigoManager::notice($clazz, "GET URL CALL=" . $url);
         $curlRequest = static::createCurlRequest($url);
+        $curlRequest->setOption(CURLOPT_POST, false);
+        $curlRequest->setOption(CURLOPT_PUT, false);
+        $curlRequest->setOption(CURLOPT_CUSTOMREQUEST, "GET");
+
+        return new static($curlRequest);
+    }
+
+    /**
+     * Executes a cURL DELETE request at the given URL
+     * with optional get parameters.
+     *
+     * @param string $url    The url to access.
+     * @param array  $params An optional map of params to pass
+     *                       on to the request as a query string.
+     *
+     * @return the request response
+     *
+     * @throws \Exception on request error.
+     */
+    public static function delete($url, array $params = array()) {
+
+        if (count($params) > 0) {
+            $query = http_build_query($params, null, '&');
+            // taking out the brackets because we need to use the very same variable name
+            $queryString = preg_replace('/%5B(?:[0-9]|[1-9][0-9]+)%5D=/', '=', $query);
+
+            if (strpos($url, '?') === FALSE) {
+                $url .= '?' . $queryString;
+            } else {
+                $url .= '&' . $queryString;
+            }
+        }
+        $clazz = get_class();
+        PlenigoManager::notice($clazz, "DELETE URL CALL=" . $url);
+        $curlRequest = static::createCurlRequest($url);
+        $curlRequest->setOption(CURLOPT_POST, false);
+        $curlRequest->setOption(CURLOPT_PUT, false);
+        $curlRequest->setOption(CURLOPT_CUSTOMREQUEST, "DELETE");
 
         return new static($curlRequest);
     }
@@ -87,11 +122,12 @@ class RestClient
      *
      * @throws \Exception on request error.
      */
-    public static function post($url, array $params = array())
-    {
+    public static function post($url, array $params = array()) {
         $curlRequest = static::createCurlRequest($url);
 
+        $curlRequest->setOption(CURLOPT_PUT, false);
         $curlRequest->setOption(CURLOPT_POST, true);
+        $curlRequest->setOption(CURLOPT_CUSTOMREQUEST, "POST");
 
         if (count($params) > 0) {
             $queryString = http_build_query($params);
@@ -104,6 +140,34 @@ class RestClient
     }
 
     /**
+     * Executes a cURL JSON POST request at the given URL
+     * with a body JSON object.
+     *
+     * @param string $url    The url to access.
+     * @param array  $params An array to be represented as a JSON object in the requets body.
+     *
+     * @return the request response
+     *
+     * @throws \Exception on request error.
+     */
+    public static function postJSON($url, array $params = array()) {
+        $curlRequest = static::createCurlRequest($url);
+        $data_string = json_encode($params);
+
+        $curlRequest->setOption(CURLOPT_PUT, false);
+        $curlRequest->setOption(CURLOPT_POST, true);
+        $curlRequest->setOption(CURLOPT_CUSTOMREQUEST, "POST");
+        $curlRequest->setOption(CURLOPT_POSTFIELDS, $data_string);
+        $curlRequest->setOption(CURLOPT_HTTPHEADER, array(
+            'Content-Type: application/json',
+            'Content-Length: ' . strlen($data_string))
+        );
+        $clazz = get_class();
+        PlenigoManager::notice($clazz, "POST JSON URL CALL=" . $url);
+        return new static($curlRequest);
+    }
+
+    /**
      * Creates a new CurlRequest object.
      * This method helps mocking the CurlRequest class.
      *
@@ -111,8 +175,7 @@ class RestClient
      *
      * @return CurlRequest instance.
      */
-    private static function createCurlRequest($url = null)
-    {
+    private static function createCurlRequest($url = null) {
         return new CurlRequest($url);
     }
 
@@ -121,8 +184,7 @@ class RestClient
      *
      * @return The status code.
      */
-    public function getStatusCode()
-    {
+    public function getStatusCode() {
         return $this->curlRequest->getInfo(CURLINFO_HTTP_CODE);
     }
 
@@ -134,8 +196,7 @@ class RestClient
      *
      * @return Returns itself for chaining purposes.
      */
-    public function setOption($name, $value)
-    {
+    public function setOption($name, $value) {
         $this->curlRequest->setOption($name, $value);
 
         return $this;
@@ -149,8 +210,7 @@ class RestClient
      *
      * @throws \Exception on request error.
      */
-    public function execute()
-    {
+    public function execute() {
         $this->setOption(CURLOPT_RETURNTRANSFER, true);
 
         try {

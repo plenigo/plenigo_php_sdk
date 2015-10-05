@@ -84,4 +84,34 @@ final class ApiURLs
      * This URL is used to check for paywall disabled
      */
     const PAYWALL_STATE = "/api/v1/paywall/state";
+    
+    /**
+     * This URL is used for merchant apps to get access from a customer to a product
+     */
+    const GET_APP_TOKEN = "/api/v1/access/app/token/{USER_ID}";
+
+    /**
+     * This URL is used for merchant apps to get all customer apps
+     */
+    const GET_APPS_ID = "/api/v1/access/app/{USER_ID}";
+    
+    /**
+     * This URL is used to verify if merchant app has access to certain product
+     */
+    const GET_PROD_ACCESS = "/api/v1/access/app/{USER_ID}/{PROD_ID}/{APP_ID}";
+
+    /**
+     * This URL is used to delete a merchant application access from a certain product
+     */   
+    const DELETE_APP_ACCESS = "/api/v1/access/app/{USER_ID}/{APP_ID}";
+
+    /**
+     * This URL is used to verify if mobile app has access to certain customer
+     */
+    const MOBILE_SECRET_VERIFY = "/api/v1/access/mobileSecret/verify";
+
+    /**
+     * This URL is used to get, create or delete mobile secret data
+     */
+    const MOBILE_SECRET_URL = "/api/v1/access/mobileSecret/{USER_ID}";
 }
