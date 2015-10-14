@@ -211,7 +211,11 @@ class RestClient {
      * @throws \Exception on request error.
      */
     public function execute() {
+
+        // Mandatory options
         $this->setOption(CURLOPT_RETURNTRANSFER, true);
+        $this->setOption(CURLOPT_TIMEOUT, 10);
+        $this->setOption(CURLOPT_CONNECTTIMEOUT, 10);
 
         try {
             $result = $this->curlRequest->execute();
