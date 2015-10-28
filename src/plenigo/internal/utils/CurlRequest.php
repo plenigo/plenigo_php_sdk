@@ -25,13 +25,13 @@ use \plenigo\internal\utils\CurlRequestInterface;
  * @author   René Olivo <r.olivo@plenigo.com>
  * @link     https://www.plenigo.com
  */
-final class CurlRequest
-{
+final class CurlRequest {
 
     /**
      * The cURL object created using curl_init
      */
     private $curl;
+    private $optCache = array();
 
     /**
      * Initializes the cURL request at the given URL.
@@ -42,8 +42,8 @@ final class CurlRequest
      *
      * @return void
      */
-    public function __construct($url = null)
-    {
+    public function __construct($url = null) {
+        $this->optCache = array();
         $this->curl = curl_init($url);
     }
 
@@ -55,9 +55,19 @@ final class CurlRequest
      *
      * @return void
      */
-    public function setOption($name, $value)
-    {
+    public function setOption($name, $value) {
+        $this->optCache[$name] = $value;
         curl_setopt($this->curl, $name, $value);
+    }
+    
+    /**
+     * Get the option set for this request. This allow adding headers to the request before sending
+     * 
+     * @param string $name
+     * @return mixed
+     */
+    public function getOption($name){
+        return $this->optCache[$name];
     }
 
     /**
@@ -67,8 +77,7 @@ final class CurlRequest
      *
      * @throws \Exception on request error.
      */
-    public function execute()
-    {
+    public function execute() {
         $result = curl_exec($this->curl);
 
         if ($result === false) {
@@ -80,7 +89,7 @@ final class CurlRequest
                 throw new \Exception($statusCode . " HTTP Error detected", $statusCode);
             }
         }
-
+        $this->optCache = array();
         return $result;
     }
 
@@ -91,8 +100,7 @@ final class CurlRequest
      *
      * @return The information requested.
      */
-    public function getInfo($name)
-    {
+    public function getInfo($name) {
         return curl_getinfo($this->curl, $name);
     }
 
@@ -101,8 +109,7 @@ final class CurlRequest
      *
      * @return void
      */
-    public function close()
-    {
+    public function close() {
         curl_close($this->curl);
     }
 

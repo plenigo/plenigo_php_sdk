@@ -51,19 +51,12 @@ class UserService extends Service {
     const INF_MSG_ACCESS = "User tried to access an item!";
 
     /**
-     * Cookie expiration time lapse in milliseconds.
-     * (24*60*60*100)
-     */
-    const TS_EXP_TIME_LAPSE_IN_MILLIS = 86400000; //24hours in millis
-
-    /**
      * Gets the user data using the access token provided.
      *
      * @param string $accessToken the access token to use.
      * @return UserData the UserData object {@link \plenigo\models\UserData}
      * @throws {@link \plenigo\PlenigoException}\ on response error.
      */
-
     public static function getUserData($accessToken) {
         $clazz = get_class();
         PlenigoManager::notice($clazz, "Obtaining Logged In User Data!");
@@ -120,14 +113,15 @@ class UserService extends Service {
      * an array of \plenigo\models\ErrorDetail.
      *
      * @param string $productId The id of the product to be queried against the user
-     * @return TRUE if the user in the cookie has bought the product and the session is not expired, false otherwise
+     * @param string $customerId The customer ID if its not logged in
+     * @return bool TRUE if the user in the cookie has bought the product and the session is not expired, false otherwise
      * @throws \plenigo\PlenigoException whenever an error happens
      */
-    public static function hasUserBought($productId) {
+    public static function hasUserBought($productId, $customerId = null) {
         $clazz = get_class();
         PlenigoManager::notice($clazz, "Checking if user bought Product with ID=" . print_r($productId, true));
 
-        $customer = self::getCustomerInfo();
+        $customer = self::getCustomerInfo($customerId);
         if (is_null($customer)) {
             $clazz = get_class();
             PlenigoManager::notice($clazz, self::ERR_MSG_CUSTOMER);
@@ -221,41 +215,46 @@ class UserService extends Service {
 
     /**
      * Retrieves the user info from the cookie.
+     * @param string $pCustId The customer ID if its not logged in
      * @return The Customer Information from the cookie
      * @throws \plenigo\PlenigoException whenever an error happens
      */
-    public static function getCustomerInfo() {
-        $cookieText = static::getCookieContents(PlenigoManager::PLENIGO_USER_COOKIE_NAME);
-        if (!isset($cookieText) || is_null($cookieText) || !is_string($cookieText) || empty($cookieText)
-        ) {
-            $clazz = get_class();
-            PlenigoManager::notice($clazz, "Plenigo cookie not set!!");
-            return null;
+    public static function getCustomerInfo($pCustId = null) {
+        if (is_null($pCustId)) {
+            $cookieText = static::getCookieContents(PlenigoManager::PLENIGO_USER_COOKIE_NAME);
+            if (!isset($cookieText) || is_null($cookieText) || !is_string($cookieText) || empty($cookieText)
+            ) {
+                $clazz = get_class();
+                PlenigoManager::notice($clazz, "Plenigo cookie not set!!");
+                return null;
+            }
+            // For decryption purposes, the first part of the cookie only is necessary
+            if (stristr($cookieText, '|') !== false) {
+                $cookieText = stristr($cookieText, '|', true);
+            }
+            $data = EncryptionUtils::decryptWithAES(PlenigoManager::get()->getSecret(), $cookieText);
+
+            $dataMap = SdkUtils::getMapFromString($data);
+
+
+            if (!isset($dataMap[ApiResults::TIMESTAMP]) || !isset($dataMap[ApiResults::CUSTOMER_ID])) {
+                $clazz = get_class();
+                PlenigoManager::notice($clazz, "Plenigo cookie has missing components!!");
+                return null;
+            }
+
+            $customerId = $dataMap[ApiResults::CUSTOMER_ID];
+            $timestamp = $dataMap[ApiResults::TIMESTAMP];
+        } else {
+            $customerId = $pCustId;
+            $timestamp = strtotime("+1 day") * 1000;
         }
-        // For decryption purposes, the first part of the cookie only is necessary
-        if (stristr($cookieText, '|') !== false) {
-            $cookieText = stristr($cookieText, '|', true);
-        }
-        $data = EncryptionUtils::decryptWithAES(PlenigoManager::get()->getSecret(), $cookieText);
-
-        $dataMap = SdkUtils::getMapFromString($data);
-
-
-        if (!isset($dataMap[ApiResults::TIMESTAMP]) || !isset($dataMap[ApiResults::CUSTOMER_ID])) {
-            $clazz = get_class();
-            PlenigoManager::notice($clazz, "Plenigo cookie has missing components!!");
-            return null;
-        }
-
-        $timestamp = $dataMap[ApiResults::TIMESTAMP];
 
         if (!is_numeric($timestamp)) {
             $clazz = get_class();
             PlenigoManager::notice($clazz, "Illegal value for the expiration date timestamp!");
             return null;
         }
-
-        $customerId = $dataMap[ApiResults::CUSTOMER_ID];
         if (is_null($customerId) || !is_string($customerId) || empty($customerId)) {
             $clazz = get_class();
             PlenigoManager::notice($clazz, "Plenigo cookie CustomerID invalid!!");

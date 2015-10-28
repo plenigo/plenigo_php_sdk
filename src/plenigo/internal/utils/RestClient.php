@@ -217,6 +217,10 @@ class RestClient {
         $this->setOption(CURLOPT_TIMEOUT, 10);
         $this->setOption(CURLOPT_CONNECTTIMEOUT, 10);
 
+        $headers = $this->curlRequest->getOption(CURLOPT_HTTPHEADER);
+        //$headers[] = 'plenigoToken: ';
+        $this->setOption(CURLOPT_HTTPHEADER, $headers);
+        
         try {
             $result = $this->curlRequest->execute();
         } catch (Exception $exc) {
