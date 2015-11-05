@@ -287,12 +287,13 @@ class UserService extends Service {
      *   ),
      * )</pre>
      * 
+     * @param string $pCustId The customer ID if its not logged in
      * @return array The associative array containing the bought products/subscriptions or an empty array
      * @throws PlenigoException If the compay ID and/or the Secret key is rejected
      */
-    static public function getProductsBought() {
+    static public function getProductsBought($pCustId = null) {
         $res = array();
-        $customer = self::getCustomerInfo();
+        $customer = self::getCustomerInfo($pCustId);
         $clazz = get_class();
         if (is_null($customer)) {
             PlenigoManager::notice($clazz, self::ERR_MSG_CUSTOMER);
