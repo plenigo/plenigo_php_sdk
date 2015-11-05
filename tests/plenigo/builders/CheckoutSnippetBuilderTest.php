@@ -84,7 +84,7 @@ class CheckoutSnippetBuilderTest extends PlenigoTestCase {
             'testMode' => true
         ),"sampleFakeToken");
 
-        $this->assertRegExp("/^plenigo\\.checkout\\('\\w+'\\,'\\w+'\\);$/", $plenigoCheckoutCode);
+        $this->assertRegExp("/^plenigo\\.checkoutWithRemoteLogin\\('\\w+'\\,'\\w+'\\);$/", $plenigoCheckoutCode);
         $this->assertError(E_USER_NOTICE, "Login TOKEN");
     }
 

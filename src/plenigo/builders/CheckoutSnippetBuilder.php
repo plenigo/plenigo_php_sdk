@@ -70,8 +70,8 @@ class CheckoutSnippetBuilder {
         if (is_null($loginToken)) {
             return sprintf("plenigo.checkout('%s');", $encodedData);
         } else {
-        PlenigoManager::get()->notice($clazz, "Login TOKEN:" . $loginToken);
-            return sprintf("plenigo.checkout('%s','%s');", $encodedData,$loginToken);
+            PlenigoManager::get()->notice($clazz, "Login TOKEN:" . $loginToken);
+            return sprintf("plenigo.checkoutWithRemoteLogin('%s','%s');", $encodedData,$loginToken);
         }
     }
 
