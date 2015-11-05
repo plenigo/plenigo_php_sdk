@@ -3,9 +3,11 @@
 namespace plenigo\internal\utils;
 
 require_once __DIR__ . '/CurlRequest.php';
+require_once __DIR__ . '/JWT.php';
 require_once __DIR__ . '/../../PlenigoManager.php';
 
 use \plenigo\internal\utils\CurlRequest;
+use \plenigo\internal\utils\JWT;
 use \plenigo\PlenigoManager;
 
 /**
@@ -212,15 +214,8 @@ class RestClient {
      */
     public function execute() {
 
-        // Mandatory options
-        $this->setOption(CURLOPT_RETURNTRANSFER, true);
-        $this->setOption(CURLOPT_TIMEOUT, 10);
-        $this->setOption(CURLOPT_CONNECTTIMEOUT, 10);
+        $this->setMandatoryOptions();
 
-        $headers = $this->curlRequest->getOption(CURLOPT_HTTPHEADER);
-        //$headers[] = 'plenigoToken: ';
-        $this->setOption(CURLOPT_HTTPHEADER, $headers);
-        
         try {
             $result = $this->curlRequest->execute();
         } catch (Exception $exc) {
@@ -234,6 +229,25 @@ class RestClient {
         } else {
             return $result;
         }
+    }
+
+    public function setMandatoryOptions() {
+        // Mandatory options
+        $this->setOption(CURLOPT_RETURNTRANSFER, true);
+        $this->setOption(CURLOPT_TIMEOUT, 10);
+        $this->setOption(CURLOPT_CONNECTTIMEOUT, 10);
+
+        // Create the JWT token
+        $uuid = uniqid("", true);
+        $expiration = strtotime('+5 minutes');
+        $payload = JWT::jsonDecode('{ "jti": "' . $uuid . '", "aud": "plenigo", "exp": ' . $expiration . ', "companyId": "' . PlenigoManager::get()->getCompanyId() . '" }');
+
+        $token = JWT::encode($payload, PlenigoManager::get()->getSecret());
+
+        // Add the JWT Headers
+        $headers = $this->curlRequest->getOption(CURLOPT_HTTPHEADER);
+        $headers[] = 'plenigoToken: ' . $token;
+        $this->setOption(CURLOPT_HTTPHEADER, $headers);
     }
 
 }

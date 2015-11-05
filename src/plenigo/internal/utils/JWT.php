@@ -70,7 +70,7 @@ class JWT {
      * @uses urlsafeB64Encode
      */
     public static function encode($payload, $key, $algo = 'HS256') {
-        $header = array('typ' => 'JWT', 'alg' => $algo);
+        $header = array('alg' => $algo);
 
         $segments = array();
         $segments[] = JWT::urlsafeB64Encode(JWT::jsonEncode($header));

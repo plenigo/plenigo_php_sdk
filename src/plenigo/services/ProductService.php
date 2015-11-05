@@ -62,12 +62,7 @@ class ProductService extends Service {
         $clazz = get_class();
         PlenigoManager::notice($clazz, "Getting Product data for ProductID=" . $productId);
 
-        $params = array(
-            ApiParams::COMPANY_ID => PlenigoManager::get()->getCompanyId(),
-            ApiParams::SECRET => PlenigoManager::get()->getSecret()
-        );
-
-        $request = static::getRequest(ApiURLs::GET_PRODUCT . "/" . $productId, false, $params);
+        $request = static::getRequest(ApiURLs::GET_PRODUCT . "/" . $productId, false);
 
         $prodDataRequest = new static($request);
 
@@ -162,12 +157,7 @@ class ProductService extends Service {
         $clazz = get_class();
         PlenigoManager::notice($clazz, "Getting Category data for CategoryID=" . $categoryId);
 
-        $params = array(
-            ApiParams::COMPANY_ID => PlenigoManager::get()->getCompanyId(),
-            ApiParams::SECRET => PlenigoManager::get()->getSecret()
-        );
-
-        $request = static::getRequest(ApiURLs::GET_CATEGORY . "/" . $categoryId, false, $params);
+        $request = static::getRequest(ApiURLs::GET_CATEGORY . "/" . $categoryId, false);
 
         $categoryDataRequest = new static($request);
 
@@ -293,7 +283,7 @@ class ProductService extends Service {
     }
 
     /**
-     * Create an array with the Company ID, the Secret, a given page size and an optional Last ID for product
+     * Create an array with a given page size and an optional Last ID for product
      * or category listings.
      *
      * @param int $pageSize The number of items on a single page (min:10, max:100)
@@ -304,8 +294,6 @@ class ProductService extends Service {
         $size = max(min($pageSize, 100), 10);
 
         return array(
-            ApiParams::COMPANY_ID => PlenigoManager::get()->getCompanyId(),
-            ApiParams::SECRET => PlenigoManager::get()->getSecret(),
             'size' => $size,
             'lastId' => (!is_null($lastID)) ? $lastID : ''
         );

@@ -64,8 +64,6 @@ class AppManagementService extends Service {
      */
     public static function requestAppToken($customerId, $productId, $description) {
         $map = array(
-            'companyId' => PlenigoManager::get()->getCompanyId(),
-            'secret' => PlenigoManager::get()->getSecret(),
             'testMode' => PlenigoManager::get()->isTestMode(),
             'productId' => $productId,
             'description' => $description
@@ -95,8 +93,6 @@ class AppManagementService extends Service {
      */
     public static function getCustomerApps($customerId) {
         $map = array(
-            'companyId' => PlenigoManager::get()->getCompanyId(),
-            'secret' => PlenigoManager::get()->getSecret(),
             'testMode' => PlenigoManager::get()->isTestMode()
         );
 
@@ -125,8 +121,6 @@ class AppManagementService extends Service {
      */
     public static function requestAppId($customerId, $accessToken) {
         $map = array(
-            'companyId' => PlenigoManager::get()->getCompanyId(),
-            'secret' => PlenigoManager::get()->getSecret(),
             'testMode' => PlenigoManager::get()->isTestMode(),
             'accessToken' => $accessToken
         );
@@ -155,8 +149,6 @@ class AppManagementService extends Service {
      */
     public static function hasUserBought($customerId, $productId, $appId) {
         $map = array(
-            'companyId' => PlenigoManager::get()->getCompanyId(),
-            'secret' => PlenigoManager::get()->getSecret(),
             'testMode' => PlenigoManager::get()->isTestMode()
         );
 
@@ -188,8 +180,6 @@ class AppManagementService extends Service {
      */
     public static function deleteCustomerApp($customerId, $appId) {
         $map = array(
-            'companyId' => PlenigoManager::get()->getCompanyId(),
-            'secret' => PlenigoManager::get()->getSecret(),
             'testMode' => PlenigoManager::get()->isTestMode()
         );
 

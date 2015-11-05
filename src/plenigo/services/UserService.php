@@ -62,8 +62,6 @@ class UserService extends Service {
         PlenigoManager::notice($clazz, "Obtaining Logged In User Data!");
 
         $params = array(
-            'companyId' => PlenigoManager::get()->getCompanyId(),
-            'secret' => PlenigoManager::get()->getSecret(),
             'token' => $accessToken,
         );
 
@@ -131,8 +129,6 @@ class UserService extends Service {
         $testModeText = (PlenigoManager::get()->isTestMode()) ? 'true' : 'false';
 
         $params = array(
-            ApiParams::COMPANY_ID => PlenigoManager::get()->getCompanyId(),
-            ApiParams::SECRET => PlenigoManager::get()->getSecret(),
             ApiParams::CUSTOMER_ID => $customer->getCustomerId(),
             ApiParams::PRODUCT_ID => $productId,
             ApiParams::TEST_MODE => $testModeText
@@ -174,11 +170,7 @@ class UserService extends Service {
      * @return bool true if Paywall is enabled and we need to check for specific product buy information
      */
     public static function isPaywallEnabled() {
-        $params = array(
-            ApiParams::COMPANY_ID => PlenigoManager::get()->getCompanyId(),
-            ApiParams::SECRET => PlenigoManager::get()->getSecret()
-        );
-        $request = static::getRequest(ApiURLs::PAYWALL_STATE, false, $params);
+        $request = static::getRequest(ApiURLs::PAYWALL_STATE, false);
 
         $userDataRequest = new static($request);
         try {
@@ -303,8 +295,6 @@ class UserService extends Service {
         $testModeText = (PlenigoManager::get()->isTestMode()) ? 'true' : 'false';
 
         $params = array(
-            ApiParams::COMPANY_ID => PlenigoManager::get()->getCompanyId(),
-            ApiParams::SECRET => PlenigoManager::get()->getSecret(),
             ApiParams::TEST_MODE => $testModeText
         );
         $url = str_ireplace(ApiParams::URL_USER_ID_TAG, $customer->getCustomerId(), ApiURLs::USER_PRODUCTS);

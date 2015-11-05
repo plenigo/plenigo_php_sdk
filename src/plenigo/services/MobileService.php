@@ -61,8 +61,6 @@ class MobileService extends Service {
      */
     public static function verifyMobileSecret($email, $mobileSecret) {
         $map = array(
-            'companyId' => PlenigoManager::get()->getCompanyId(),
-            'secret' => PlenigoManager::get()->getSecret(),
             'email' => $email,
             'mobileSecret' => $mobileSecret
         );
@@ -92,14 +90,10 @@ class MobileService extends Service {
      * @throws PlenigoException
      */
     public static function getMobileSecret($customerId) {
-        $map = array(
-            'companyId' => PlenigoManager::get()->getCompanyId(),
-            'secret' => PlenigoManager::get()->getSecret()
-        );
 
         $url = str_ireplace(ApiParams::URL_USER_ID_TAG, $customerId, ApiURLs::MOBILE_SECRET_URL);
 
-        $request = static::getRequest($url, false, $map);
+        $request = static::getRequest($url, false);
 
         $appTokenRequest = new static($request);
 
@@ -128,8 +122,6 @@ class MobileService extends Service {
             $size = 40;
         }
         $map = array(
-            'companyId' => PlenigoManager::get()->getCompanyId(),
-            'secret' => PlenigoManager::get()->getSecret(),
             'size' => $size
         );
 
@@ -153,14 +145,9 @@ class MobileService extends Service {
      * @throws PlenigoException
      */
     public static function deleteMobileSecret($customerId) {
-        $map = array(
-            'companyId' => PlenigoManager::get()->getCompanyId(),
-            'secret' => PlenigoManager::get()->getSecret()
-        );
-
         $url = str_ireplace(ApiParams::URL_USER_ID_TAG, $customerId, ApiURLs::MOBILE_SECRET_URL);
 
-        $request = static::deleteRequest($url, false, $map);
+        $request = static::deleteRequest($url, false);
 
         $appTokenRequest = new static($request);
 
