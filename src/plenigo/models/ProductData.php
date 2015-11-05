@@ -36,6 +36,8 @@ class ProductData {
     private $actionPeriod = null;
     private $images = array();
     private $videoPrequelTime = null;
+    private $maxParallelAppAccess = null;
+    private $customInfo = null;
 
     /**
      * Product Data constructor, must be filled with the required data.
@@ -237,6 +239,42 @@ class ProductData {
     }
 
     /**
+     * Gets the Maximum number of Parallel App Access
+     * 
+     * @return int
+     */
+    public function getMaxParallelAppAccess() {
+        return $this->maxParallelAppAccess;
+    }
+
+    /**
+     * Sets the Maximum number of Parallel App Access
+     * 
+     * @param int $maxParallelAppAccess
+     */
+    public function setMaxParallelAppAccess($maxParallelAppAccess) {
+        $this->maxParallelAppAccess = $maxParallelAppAccess;
+    }
+
+    /**
+     * Gets the Cutom Info number
+     * 
+     * @return int
+     */
+    public function getCustomInfo() {
+        return $this->customInfo;
+    }
+
+    /**
+     * Sets the Cutom Info number
+     * 
+     * @param int $customInfo
+     */
+    public function setCustomInfo($customInfo) {
+        $this->customInfo = $customInfo;
+    }
+
+    /**
      * Creates a ProductData instance from an array map.
      *
      * @param array $map The array map to use for the instance creation.
@@ -258,6 +296,14 @@ class ProductData {
 
         if (isset($map['videoPrequelTime']) && !is_null($map['videoPrequelTime'])) {
             $data->setVideoPrequelTime($map['videoPrequelTime']);
+        }
+
+        if (isset($map['maxParallelAppAccess']) && !is_null($map['maxParallelAppAccess'])) {
+            $data->setMaxParallelAppAccess($map['maxParallelAppAccess']);
+        }
+
+        if (isset($map['customInfo']) && !is_null($map['customInfo'])) {
+            $data->setCustomInfo($map['customInfo']);
         }
 
         return $data;

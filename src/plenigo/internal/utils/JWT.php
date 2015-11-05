@@ -50,7 +50,7 @@ class JWT {
             if (empty($header->alg)) {
                 JWT::_handleRegularError('Empty algorithm');
             }
-            if ($sig != JWT::sign("$headb64.$bodyb64", $key, $header->alg)) {
+            if ($sig != JWT::sign("$headb64.$bodyb64", $key)) {
                 JWT::_handleRegularError('Signature verification failed');
             }
         }
@@ -62,22 +62,20 @@ class JWT {
      *
      * @param object|array $payload PHP object or array
      * @param string       $key     The secret key
-     * @param string       $algo    The signing algorithm. Supported
-     *                              algorithms are 'HS256', 'HS384' and 'HS512'
      *
      * @return string      A signed JWT
      * @uses jsonEncode
      * @uses urlsafeB64Encode
      */
-    public static function encode($payload, $key, $algo = 'HS256') {
-        $header = array('alg' => $algo);
+    public static function encode($payload, $key) {
+        $header = array('alg' => 'HS256');
 
         $segments = array();
         $segments[] = JWT::urlsafeB64Encode(JWT::jsonEncode($header));
         $segments[] = JWT::urlsafeB64Encode(JWT::jsonEncode($payload));
         $signing_input = implode('.', $segments);
 
-        $signature = JWT::sign($signing_input, $key, $algo);
+        $signature = JWT::sign($signing_input, $key);
         $segments[] = JWT::urlsafeB64Encode($signature);
 
         return implode('.', $segments);
@@ -88,22 +86,12 @@ class JWT {
      *
      * @param string $msg    The message to sign
      * @param string $key    The secret key
-     * @param string $method The signing algorithm. Supported
-     *                       algorithms are 'HS256', 'HS384' and 'HS512'
      *
      * @return string          An encrypted message
      * @throws \DomainException Unsupported algorithm was specified
      */
-    public static function sign($msg, $key, $method = 'HS256') {
-        $methods = array(
-            'HS256' => 'sha256',
-            'HS384' => 'sha384',
-            'HS512' => 'sha512',
-        );
-        if (empty($methods[$method])) {
-            JWT::_handleRegularError('Algorithm not supported');
-        }
-        return hash_hmac($methods[$method], $msg, $key, true);
+    public static function sign($msg, $key) {
+        return hash_hmac('sha256', $msg, $key, true);
     }
 
     /**
