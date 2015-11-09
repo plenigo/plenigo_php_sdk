@@ -170,6 +170,34 @@ class RestClient {
     }
 
     /**
+     * Executes a cURL JSON PUT request at the given URL
+     * with a body JSON object.
+     *
+     * @param string $url    The url to access.
+     * @param array  $params An array to be represented as a JSON object in the requets body.
+     *
+     * @return the request response
+     *
+     * @throws \Exception on request error.
+     */
+    public static function putJSON($url, array $params = array()) {
+        $curlRequest = static::createCurlRequest($url);
+        $data_string = json_encode($params);
+
+        $curlRequest->setOption(CURLOPT_PUT, true);
+        $curlRequest->setOption(CURLOPT_POST, false);
+        $curlRequest->setOption(CURLOPT_CUSTOMREQUEST, "PUT");
+        $curlRequest->setOption(CURLOPT_POSTFIELDS, $data_string);
+        $curlRequest->setOption(CURLOPT_HTTPHEADER, array(
+            'Content-Type: application/json',
+            'Content-Length: ' . strlen($data_string))
+        );
+        $clazz = get_class();
+        PlenigoManager::notice($clazz, "PUT JSON URL CALL=" . $url);
+        return new static($curlRequest);
+    }
+
+    /**
      * Creates a new CurlRequest object.
      * This method helps mocking the CurlRequest class.
      *

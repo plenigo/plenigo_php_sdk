@@ -114,4 +114,19 @@ final class ApiURLs
      * This URL is used to get, create or delete mobile secret data
      */
     const MOBILE_SECRET_URL = "/api/v2/access/mobileSecret/{USER_ID}";
+    
+    /**
+     * This URL is used to create a new user bound to the company that registers the user.
+     */
+    const USER_MGMT_REGISTER = "/api/v2/externalUser/register";
+
+    /**
+     * This is the URL used to change email address of an existing user.
+     */
+    const USER_MGMT_CHANGEMAIL = "/api/v2/externalUser/{USER_ID}/changeEmail";
+
+    /**
+     * This URL is used to create a login token for an existing user.
+     */
+    const USER_MGMT_CREATELOGIN = "/api/v2/externalUser/{USER_ID}/createLoginToken";
 }
