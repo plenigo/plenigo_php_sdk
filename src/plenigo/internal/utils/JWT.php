@@ -2,6 +2,9 @@
 
 namespace plenigo\internal\utils;
 
+require_once __DIR__ . '/../../PlenigoManager.php';
+
+use \plenigo\PlenigoManager;
 /**
  * <p>
  * This class implements the generation of JWT Tokens
@@ -173,7 +176,7 @@ class JWT {
         );
         $clazz = get_class();
         $errMsg = isset($messages[$errno]) ? $messages[$errno] : 'Unknown JSON error: ' . $errno;
-        PlenigoManager::warning($clazz, $errMsg);
+        PlenigoManager::warn($clazz, $errMsg);
         throw new \Exception($errMsg);
     }
 
@@ -186,7 +189,7 @@ class JWT {
      */
     private static function _handleRegularError($errText) {
         $clazz = get_class();
-        PlenigoManager::warning($clazz, $errText);
+        PlenigoManager::warn($clazz, $errText);
         throw new \Exception($errText);
     }
 
