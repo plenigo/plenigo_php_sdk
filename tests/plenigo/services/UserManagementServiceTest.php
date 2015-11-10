@@ -14,7 +14,7 @@ use \plenigo\internal\ApiResults;
  * UserManagementServiceTest
  * 
  * <b>
- * TODO Description
+ * Test class for UserManagementService
  * </b>
  *
  * @category SDK

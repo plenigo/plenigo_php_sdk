@@ -7,18 +7,12 @@ require_once __DIR__ . '/../PlenigoException.php';
 require_once __DIR__ . '/../internal/ApiURLs.php';
 require_once __DIR__ . '/../internal/ApiParams.php';
 require_once __DIR__ . '/../internal/services/Service.php';
-require_once __DIR__ . '/../models/AppTokenData.php';
-require_once __DIR__ . '/../models/AppAccessData.php';
-require_once __DIR__ . '/../models/ErrorCode.php';
 
 use \plenigo\PlenigoManager;
 use \plenigo\PlenigoException;
 use \plenigo\internal\ApiURLs;
 use \plenigo\internal\ApiParams;
 use \plenigo\internal\services\Service;
-use \plenigo\models\AppTokenData;
-use \plenigo\models\AppAccessData;
-use \plenigo\models\ErrorCode;
 
 /**
  * UserManagementService
@@ -119,7 +113,7 @@ class UserManagementService extends Service {
 
         return true;
     }
-    
+
     /**
      * Create a login token for an existing user. This functionality is only available for companies with closed user groups.
      * 
@@ -146,7 +140,7 @@ class UserManagementService extends Service {
         return $result;
     }
 
-        /**
+    /**
      * Executes the prepared request and returns
      * the Response object on success.
      *

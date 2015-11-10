@@ -14,7 +14,7 @@ use \plenigo\internal\ApiResults;
  * MobileServiceTest
  * 
  * <b>
- * TODO Description
+ * Test class for MobileService
  * </b>
  *
  * @category SDK
