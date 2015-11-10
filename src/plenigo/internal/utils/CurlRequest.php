@@ -100,6 +100,7 @@ final class CurlRequest {
             $verboseLog = stream_get_contents($verbose);
             $clazz = get_class();
             PlenigoManager::notice($clazz, "cURL verbose:\n" . $verboseLog);
+            fclose($verbose);
         }
 
         if (PlenigoManager::isDebug()) {

@@ -34,6 +34,7 @@ class RestClient {
      * The CURL Request object to be executed.
      */
     private $curlRequest;
+    private $inFile;
 
     /**
      * Default RestClient constructor. Accepts a
@@ -43,8 +44,9 @@ class RestClient {
      *
      * @return RestClient instance.
      */
-    private function __construct($curlRequest) {
+    private function __construct($curlRequest, $inFile = null) {
         $this->curlRequest = $curlRequest;
+        $this->inFile = $inFile;
     }
 
     /**
@@ -189,18 +191,18 @@ class RestClient {
         $curlRequest->setOption(CURLOPT_PUT, true);
         $curlRequest->setOption(CURLOPT_CUSTOMREQUEST, "PUT");
         $curlRequest->setOption(CURLOPT_POSTFIELDS, $data_string);
-        
+
         $infile = fopen('php://temp', 'w+');
         fwrite($infile, $data_string);
         rewind($infile);
         $curlRequest->setOption(CURLOPT_INFILE, $infile);
-        
+
         $curlRequest->setOption(CURLOPT_HTTPHEADER, array(
             'Content-Type: application/json',
             'Content-Length: ' . strlen($data_string))
         );
         PlenigoManager::notice($clazz, "PUT JSON URL CALL=" . $url);
-        return new static($curlRequest);
+        return new static($curlRequest, $infile);
     }
 
     /**
@@ -257,7 +259,9 @@ class RestClient {
         }
 
         $contentType = $this->curlRequest->getInfo(CURLINFO_CONTENT_TYPE);
-
+        if (!is_null($this->inFile)) {
+            fclose($this->inFile);
+        }
         if (preg_match('/^application\/json/', $contentType)) {
             return json_decode($result);
         } else {
