@@ -181,18 +181,24 @@ class RestClient {
      * @throws \Exception on request error.
      */
     public static function putJSON($url, array $params = array()) {
+        $clazz = get_class();
         $curlRequest = static::createCurlRequest($url);
         $data_string = json_encode($params);
+        PlenigoManager::notice($clazz, "PUT JSON URL PARAMS=" . $data_string);
 
         $curlRequest->setOption(CURLOPT_PUT, true);
-        $curlRequest->setOption(CURLOPT_POST, false);
         $curlRequest->setOption(CURLOPT_CUSTOMREQUEST, "PUT");
         $curlRequest->setOption(CURLOPT_POSTFIELDS, $data_string);
+        
+        $infile = fopen('php://temp', 'w+');
+        fwrite($infile, $data_string);
+        rewind($infile);
+        $curlRequest->setOption(CURLOPT_INFILE, $infile);
+        
         $curlRequest->setOption(CURLOPT_HTTPHEADER, array(
             'Content-Type: application/json',
             'Content-Length: ' . strlen($data_string))
         );
-        $clazz = get_class();
         PlenigoManager::notice($clazz, "PUT JSON URL CALL=" . $url);
         return new static($curlRequest);
     }

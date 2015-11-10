@@ -110,7 +110,7 @@ class UserService extends Service {
      * throw am {@link \plenigo\PlenigoException}, in the case of BAD_REQUEST types, the exception will contain
      * an array of \plenigo\models\ErrorDetail.
      *
-     * @param string $productId The id of the product to be queried against the user
+     * @param mixed $productId The ID (or array of IDs) of the product to be queried against the user
      * @param string $customerId The customer ID if its not logged in
      * @return bool TRUE if the user in the cookie has bought the product and the session is not expired, false otherwise
      * @throws \plenigo\PlenigoException whenever an error happens
@@ -283,7 +283,7 @@ class UserService extends Service {
      * @return array The associative array containing the bought products/subscriptions or an empty array
      * @throws PlenigoException If the compay ID and/or the Secret key is rejected
      */
-    static public function getProductsBought($pCustId = null) {
+    public static function getProductsBought($pCustId = null) {
         $res = array();
         $customer = self::getCustomerInfo($pCustId);
         $clazz = get_class();
