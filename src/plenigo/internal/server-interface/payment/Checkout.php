@@ -57,6 +57,7 @@ final class Checkout extends ServerInterface {
     protected $subscriptionRenewal;
     protected $failedPayment;
     protected $shippingCost;
+    protected $overrideMode;
     protected $testMode;
     private $allowedShippingTypes = array(ProductBase::TYPE_BOOK, ProductBase::TYPE_NEWSPAPER);
 
@@ -116,6 +117,7 @@ final class Checkout extends ServerInterface {
     public function setValuesFromMap($map) {
         $this->setValueFromMapIfNotEmpty('productId', $map);
         $this->setValueFromMapIfNotEmpty('price', $map);
+        $this->setValueFromMapIfNotEmpty('overrideMode', $map);
         $this->setValueFromMapIfNotEmpty('currency', $map);
         $this->setValueFromMapIfNotEmpty('type', $map);
         $this->setValueFromMapIfNotEmpty('title', $map);
@@ -304,6 +306,15 @@ final class Checkout extends ServerInterface {
     }
 
     /**
+     * Set to whether or not override the price of the product with the price set in the "price" field
+     * 
+     * @param bool $overrideMode
+     */
+    public function setOverrideMode($overrideMode) {
+        $this->overrideMode = safe_boolval($overrideMode);
+    }
+
+    /**
      * Gets the map data to be used for the transaction.
      *
      * @return array The map with the non null values assigned to the instance.
@@ -326,6 +337,7 @@ final class Checkout extends ServerInterface {
         $this->insertIntoMapIfDefined($map, 'subscriptionRenewal', 'rs');
         $this->insertIntoMapIfDefined($map, 'failedPayment', 'fp');
         $this->insertIntoMapIfDefined($map, 'shippingCost', 'sc');
+        $this->insertIntoMapIfDefined($map, 'overrideMode', 'om');
 
         return $map;
     }
