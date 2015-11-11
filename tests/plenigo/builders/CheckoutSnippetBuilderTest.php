@@ -71,6 +71,22 @@ class CheckoutSnippetBuilderTest extends PlenigoTestCase {
         $this->assertRegExp("/^plenigo\\.checkout\\('\\w+'\\);$/", $plenigoCheckoutCode);
         $this->assertError(E_USER_NOTICE, "Building CHECKOUT");
     }
+    
+    /**
+     * @dataProvider checkoutSnippetBuilderProvider
+     */
+    public function testBuildSettingsAndToken($product) {
+        $checkout = new CheckoutSnippetBuilder($product);
+
+        $plenigoCheckoutCode = $checkout->build(array(
+            'showBuyingAgainScreen' => true,
+            'showCheckoutConfirmationScreen' => true,
+            'testMode' => true
+        ),"sampleFakeToken");
+
+        $this->assertRegExp("/^plenigo\\.checkoutWithRemoteLogin\\('\\w+'\\,'\\w+'\\);$/", $plenigoCheckoutCode);
+        $this->assertError(E_USER_NOTICE, "Login TOKEN");
+    }
 
     /**
      * @dataProvider checkoutSnippetBuilderProvider

@@ -42,7 +42,8 @@ abstract class ErrorCode extends BasicEnum {
     const NOT_ALLOWED = 14;
     const MOBILE_SECRET_PROBLEM = 15;
     const MOBILE_SECRET_NOT_FOUND = 16;
-    
+    const USER_MGMT_INVALID_COMPANY = 17;
+    const USER_MGMT_NOT_FOUND = 18;
     const HTTP_OK = 200;
     const HTTP_BAD_REQUEST = 400;
     const HTTP_UNAUTHORIZED = 401;
@@ -75,7 +76,9 @@ abstract class ErrorCode extends BasicEnum {
         self::TOKEN_PROBLEM => 'Access Token not valid',
         self::NOT_ALLOWED => 'Access is not allowed',
         self::MOBILE_SECRET_PROBLEM => 'Mobile secret not valid',
-        self::MOBILE_SECRET_NOT_FOUND => 'Mobile secret not found'
+        self::MOBILE_SECRET_NOT_FOUND => 'Mobile secret not found',
+        self::USER_MGMT_INVALID_COMPANY => 'The company is not qualified for a closed user group',
+        self::USER_MGMT_NOT_FOUND => 'The customer id was not found',
     );
 
     /**
@@ -154,6 +157,26 @@ abstract class ErrorCode extends BasicEnum {
         ),
         ApiURLs::MOBILE_SECRET_URL => array(
             self::HTTP_NOT_FOUND => self::MOBILE_SECRET_NOT_FOUND,
+            self::HTTP_UNAUTHORIZED => self::INVALID_SECRET_OR_COMPANY_ID,
+            self::HTTP_BAD_REQUEST => self::INVALID_PARAMETERS,
+            self::HTTP_INTERNAL_ERROR => self::INTERNAL_ERROR
+        ),
+        ApiURLs::USER_MGMT_REGISTER => array(
+            self::HTTP_FORBIDDEN => self::USER_MGMT_INVALID_COMPANY,
+            self::HTTP_UNAUTHORIZED => self::INVALID_SECRET_OR_COMPANY_ID,
+            self::HTTP_BAD_REQUEST => self::INVALID_PARAMETERS,
+            self::HTTP_INTERNAL_ERROR => self::INTERNAL_ERROR
+        ),
+        ApiURLs::USER_MGMT_CHANGEMAIL => array(
+            self::HTTP_NOT_FOUND => self::USER_MGMT_NOT_FOUND,
+            self::HTTP_FORBIDDEN => self::USER_MGMT_INVALID_COMPANY,
+            self::HTTP_UNAUTHORIZED => self::INVALID_SECRET_OR_COMPANY_ID,
+            self::HTTP_BAD_REQUEST => self::INVALID_PARAMETERS,
+            self::HTTP_INTERNAL_ERROR => self::INTERNAL_ERROR
+        ),
+        ApiURLs::USER_MGMT_CREATELOGIN => array(
+            self::HTTP_NOT_FOUND => self::USER_MGMT_NOT_FOUND,
+            self::HTTP_FORBIDDEN => self::USER_MGMT_INVALID_COMPANY,
             self::HTTP_UNAUTHORIZED => self::INVALID_SECRET_OR_COMPANY_ID,
             self::HTTP_BAD_REQUEST => self::INVALID_PARAMETERS,
             self::HTTP_INTERNAL_ERROR => self::INTERNAL_ERROR

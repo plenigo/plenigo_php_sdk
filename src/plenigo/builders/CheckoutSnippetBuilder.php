@@ -28,8 +28,7 @@ use \plenigo\internal\exceptions\ProductException;
  * @author   René Olivo <r.olivo@plenigo.com>
  * @link     https://www.plenigo.com
  */
-class CheckoutSnippetBuilder
-{
+class CheckoutSnippetBuilder {
 
     /**
      * The Product object used to build the link.
@@ -41,8 +40,7 @@ class CheckoutSnippetBuilder
      *
      * @param Product $productToChkOut The product object to build the link from
      */
-    public function __construct(Product $productToChkOut)
-    {
+    public function __construct(Product $productToChkOut) {
         $this->product = $productToChkOut;
     }
 
@@ -52,13 +50,12 @@ class CheckoutSnippetBuilder
      * code that can be used as an event on a webpage.
      *
      * @param array $settings A map of settings to pass to the Checkout service interface.
+     * @param string $loginToken A string contianing the loginToken if obtained from the external user management
      *
-     * @return string A Javascript snippet that is compliant with plenigo's Javascript
-     * SDK.
+     * @return string A Javascript snippet that is compliant with plenigo's Javascript SDK.
      * @throws CryptographyException When an error occurs during data encoding
      */
-    public function build($settings = array())
-    {
+    public function build($settings = array(), $loginToken = null) {
         $clazz = get_class();
         PlenigoManager::get()->notice($clazz, "Building CHECKOUT snippet:");
         //Add testMode SDK check
@@ -68,8 +65,13 @@ class CheckoutSnippetBuilder
 
         $requestQueryString = $this->buildCheckoutRequestQueryString($settings);
         $encodedData = $this->buildEncodedData($requestQueryString);
-		PlenigoManager::get()->notice($clazz, "Checkout QUERYSTRING:". $requestQueryString);
-        return sprintf("plenigo.checkout('%s');", $encodedData);
+        PlenigoManager::get()->notice($clazz, "Checkout QUERYSTRING:" . $requestQueryString);
+        if (is_null($loginToken)) {
+            return sprintf("plenigo.checkout('%s');", $encodedData);
+        } else {
+            PlenigoManager::get()->notice($clazz, "Login TOKEN:" . $loginToken);
+            return sprintf("plenigo.checkoutWithRemoteLogin('%s','%s');", $encodedData,$loginToken);
+        }
     }
 
     /**
@@ -79,8 +81,7 @@ class CheckoutSnippetBuilder
      *
      * @return string The encoded data
      */
-    private function buildCheckoutRequestQueryString($settings = array())
-    {
+    private function buildCheckoutRequestQueryString($settings = array()) {
         $request = new Checkout($this->product);
 
         $request->setValuesFromMap($settings);
@@ -95,8 +96,7 @@ class CheckoutSnippetBuilder
      *
      * @return string The encoded data
      */
-    private function buildEncodedData($dataToEncode)
-    {
+    private function buildEncodedData($dataToEncode) {
         $secret = PlenigoManager::get()->getSecret();
 
         return EncryptionUtils::encryptWithAES($secret, $dataToEncode);
@@ -107,8 +107,7 @@ class CheckoutSnippetBuilder
      * 
      * @return Product
      */
-    public function getProduct()
-    {
+    public function getProduct() {
         return $this->product;
     }
 

@@ -137,6 +137,24 @@ class Service
     }
 
     /**
+     * Returns a response to a PUT RestClient request to a specific
+     * end-point on the plenigo REST API.
+     *
+     * @param string $endPoint The REST end-point to access.
+     * @param array  $params   Optional params to pass to the request.
+     *
+     * @return the request result.
+     */
+    protected static function putJSONRequest($endPoint, array $params = array())
+    {
+            $clazz = get_class();
+            PlenigoManager::notice($clazz, "JSON PUT REQUEST");
+            $url = PlenigoManager::get()->getUrl() . $endPoint;
+
+        return RestClient::putJSON($url, $params);
+    }
+
+    /**
      * Sets the request options before execution.
      *
      * @param string $name  The option name.

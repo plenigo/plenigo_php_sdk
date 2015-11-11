@@ -3,9 +3,11 @@
 namespace plenigo\internal\utils;
 
 require_once __DIR__ . '/CurlRequest.php';
+require_once __DIR__ . '/JWT.php';
 require_once __DIR__ . '/../../PlenigoManager.php';
 
 use \plenigo\internal\utils\CurlRequest;
+use \plenigo\internal\utils\JWT;
 use \plenigo\PlenigoManager;
 
 /**
@@ -32,6 +34,7 @@ class RestClient {
      * The CURL Request object to be executed.
      */
     private $curlRequest;
+    private $inFile;
 
     /**
      * Default RestClient constructor. Accepts a
@@ -41,8 +44,9 @@ class RestClient {
      *
      * @return RestClient instance.
      */
-    private function __construct($curlRequest) {
+    private function __construct($curlRequest, $inFile = null) {
         $this->curlRequest = $curlRequest;
+        $this->inFile = $inFile;
     }
 
     /**
@@ -168,6 +172,40 @@ class RestClient {
     }
 
     /**
+     * Executes a cURL JSON PUT request at the given URL
+     * with a body JSON object.
+     *
+     * @param string $url    The url to access.
+     * @param array  $params An array to be represented as a JSON object in the requets body.
+     *
+     * @return the request response
+     *
+     * @throws \Exception on request error.
+     */
+    public static function putJSON($url, array $params = array()) {
+        $clazz = get_class();
+        $curlRequest = static::createCurlRequest($url);
+        $data_string = json_encode($params);
+        PlenigoManager::notice($clazz, "PUT JSON URL PARAMS=" . $data_string);
+
+        $curlRequest->setOption(CURLOPT_PUT, true);
+        $curlRequest->setOption(CURLOPT_CUSTOMREQUEST, "PUT");
+        $curlRequest->setOption(CURLOPT_POSTFIELDS, $data_string);
+
+        $infile = fopen('php://temp', 'w+');
+        fwrite($infile, $data_string);
+        rewind($infile);
+        $curlRequest->setOption(CURLOPT_INFILE, $infile);
+
+        $curlRequest->setOption(CURLOPT_HTTPHEADER, array(
+            'Content-Type: application/json',
+            'Content-Length: ' . strlen($data_string))
+        );
+        PlenigoManager::notice($clazz, "PUT JSON URL CALL=" . $url);
+        return new static($curlRequest, $infile);
+    }
+
+    /**
      * Creates a new CurlRequest object.
      * This method helps mocking the CurlRequest class.
      *
@@ -212,10 +250,7 @@ class RestClient {
      */
     public function execute() {
 
-        // Mandatory options
-        $this->setOption(CURLOPT_RETURNTRANSFER, true);
-        $this->setOption(CURLOPT_TIMEOUT, 10);
-        $this->setOption(CURLOPT_CONNECTTIMEOUT, 10);
+        $this->setMandatoryOptions();
 
         try {
             $result = $this->curlRequest->execute();
@@ -224,12 +259,33 @@ class RestClient {
         }
 
         $contentType = $this->curlRequest->getInfo(CURLINFO_CONTENT_TYPE);
-
+        if (!is_null($this->inFile)) {
+            fclose($this->inFile);
+        }
         if (preg_match('/^application\/json/', $contentType)) {
             return json_decode($result);
         } else {
             return $result;
         }
+    }
+
+    public function setMandatoryOptions() {
+        // Mandatory options
+        $this->setOption(CURLOPT_RETURNTRANSFER, true);
+        $this->setOption(CURLOPT_TIMEOUT, 10);
+        $this->setOption(CURLOPT_CONNECTTIMEOUT, 10);
+
+        // Create the JWT token
+        $uuid = uniqid("", true);
+        $expiration = strtotime('+5 minutes');
+        $payload = JWT::jsonDecode('{ "jti": "' . $uuid . '", "aud": "plenigo", "exp": ' . $expiration . ', "companyId": "' . PlenigoManager::get()->getCompanyId() . '" }');
+
+        $token = JWT::encode($payload, PlenigoManager::get()->getSecret());
+
+        // Add the JWT Headers
+        $headers = $this->curlRequest->getOption(CURLOPT_HTTPHEADER);
+        $headers[] = 'plenigoToken: ' . $token;
+        $this->setOption(CURLOPT_HTTPHEADER, $headers);
     }
 
 }

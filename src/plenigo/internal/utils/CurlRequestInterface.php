@@ -28,6 +28,14 @@ interface CurlRequestInterface
     public function setOption($name, $value);
 
     /**
+     * Obtains a previously set option for the cURL request
+     * 
+     * @param string $name
+     * @return mixed
+     */
+    public function getOption($name);
+    
+    /**
      * Executes the cURL request.
      *
      * @return void

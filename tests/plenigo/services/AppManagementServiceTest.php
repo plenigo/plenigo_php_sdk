@@ -14,7 +14,7 @@ use \plenigo\internal\ApiResults;
  * AppManagementServiceTest
  * 
  * <b>
- * TODO Description
+ * Test class for AppManagementService
  * </b>
  *
  * @category SDK

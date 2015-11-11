@@ -33,7 +33,7 @@ use \plenigo\internal\ApiResults;
     const CUSTOMER_ID = 'MAP27KCA3K2P';
     const SECRET_ID = 'AMXzF7qJ9y0uuz2IawRIk6ZMLVeYKq9yXh7lURXQ';
     const COMPANY_ID = 'h7evZBaXvhaLVHYRTIHD';
-    const ERR_MSG_NOT_SET = "Plenigo cookie not set!!";
+    const ERR_MSG_NOT_SET = "Plenigo cookie not set";
     const ERR_MSG_CUSTOMER = "Plenigo cookie CustomerID invalid!!";
     const ERR_MSG_MISSING = "Plenigo cookie has missing components!!";
     const ERR_MSG_UNCOMMON = "This is an uncommon exception";

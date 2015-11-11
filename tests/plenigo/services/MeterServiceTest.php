@@ -18,7 +18,7 @@ use \plenigo\internal\ApiResults;
  * MeterServiceTest
  * 
  * <b>
- * TODO Description
+ * Test class for  MeterService
  * </b>
  *
  * @category SDK
