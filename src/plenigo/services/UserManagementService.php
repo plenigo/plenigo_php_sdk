@@ -105,7 +105,7 @@ class UserManagementService extends Service {
 
         $url = str_ireplace(ApiParams::URL_USER_ID_TAG, $customerId, ApiURLs::USER_MGMT_CHANGEMAIL);
 
-        $request = static::putJSONRequest($url, false, $map);
+        $request = static::putJSONRequest($url, $map);
 
         $curlRequest = new static($request);
 
