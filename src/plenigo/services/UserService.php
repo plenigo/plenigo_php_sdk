@@ -214,10 +214,9 @@ class UserService extends Service {
     public static function getCustomerInfo($pCustId = null) {
         if (is_null($pCustId)) {
             $cookieText = static::getCookieContents(PlenigoManager::PLENIGO_USER_COOKIE_NAME);
-            if (!isset($cookieText) || is_null($cookieText) || !is_string($cookieText) || empty($cookieText)
-            ) {
+            if (!isset($cookieText) || is_null($cookieText) || !is_string($cookieText) || empty($cookieText)) {
                 $clazz = get_class();
-                PlenigoManager::notice($clazz, "Plenigo cookie not set!!");
+                PlenigoManager::notice($clazz, "Plenigo cookie not set and no customer id given!!");
                 return null;
             }
             // For decryption purposes, the first part of the cookie only is necessary

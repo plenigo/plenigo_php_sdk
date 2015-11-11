@@ -52,8 +52,7 @@ class CheckoutSnippetBuilder {
      * @param array $settings A map of settings to pass to the Checkout service interface.
      * @param string $loginToken A string contianing the loginToken if obtained from the external user management
      *
-     * @return string A Javascript snippet that is compliant with plenigo's Javascript
-     * SDK.
+     * @return string A Javascript snippet that is compliant with plenigo's Javascript SDK.
      * @throws CryptographyException When an error occurs during data encoding
      */
     public function build($settings = array(), $loginToken = null) {
