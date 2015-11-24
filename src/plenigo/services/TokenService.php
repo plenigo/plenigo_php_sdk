@@ -109,8 +109,7 @@ class TokenService extends Service {
     protected static function getToken($type, $code, $redirectUri = null, $csrfToken = null) {
         $map = array(
             'grant_type' => $type,
-            'client_id' => PlenigoManager::get()->getCompanyId(),
-            'client_secret' => PlenigoManager::get()->getSecret()
+            'client_id' => PlenigoManager::get()->getCompanyId()
         );
 
         if ($type == TokenGrantType::REFRESH_TOKEN) {
