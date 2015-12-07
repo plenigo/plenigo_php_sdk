@@ -129,4 +129,9 @@ final class ApiURLs
      * This URL is used to create a login token for an existing user.
      */
     const USER_MGMT_CREATELOGIN = "/api/v2/externalUser/{USER_ID}/createLoginToken";
+    
+    /**
+     * This URL is used to get the paginated list of company users
+     */
+    const COMPANY_USERS = "/api/v2/company/users";
 }

@@ -17,8 +17,7 @@ namespace plenigo\internal\utils;
  * @author   Sebastian Dieguez <s.dieguez@plenigo.com>
  * @link     https://www.plenigo.com
  */
-class SdkUtils
-{
+class SdkUtils {
 
     /**
      * The default entry separator used between key value pairs.
@@ -47,8 +46,7 @@ class SdkUtils
      * @param string $data The data to parse
      * @return the corresponding associative array
      */
-    public static function getMapFromString($data)
-    {
+    public static function getMapFromString($data) {
         $map = array();
 
         if (strpos($data, self::ENTRY_SEPARATOR) !== false) {
@@ -61,6 +59,24 @@ class SdkUtils
         }
 
         return $map;
+    }
+
+    /**
+     * Clamps the value aof a number to its given limits
+     * 
+     * @param number $value The value to clamp
+     * @param number $min The minimum value, any values lower than this will be clamped to the min value
+     * @param number $max The maximum value, any values higher than this will be clamped to the max value
+     * @return number
+     */
+    public static function clampNumber($value, $min = null, $max = null) {
+        if (!is_null($max) && $value > $max) {
+            return $max;
+        }
+        if (!is_null($min) && $value < $min) {
+            return $min;
+        }
+        return $value;
     }
 
 }
