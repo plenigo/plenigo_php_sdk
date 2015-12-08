@@ -46,10 +46,11 @@ class CompanyService extends Service {
     }
 
     /**
+     * Returns a list of users of the specified company
      * 
-     * @param int $page
-     * @param int $size
-     * @return type
+     * @param int $page Number of the page (starting from 0)
+     * @param int $size Size of the page - must be between 10 and 100
+     * @return CompanyUserList A list of users of the specified company
      */
     public static function getUserList($page = 0, $size = 10) {
         $map = array(

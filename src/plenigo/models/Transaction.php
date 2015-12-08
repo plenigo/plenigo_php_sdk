@@ -31,6 +31,7 @@ class Transaction {
     private $shippingCosts;
     private $shippingCostsTaxesPercentage;
     private $shippingCostsTaxesAmount;
+    private $billingId;
 
     private function __construct() {
         
@@ -155,8 +156,15 @@ class Transaction {
     public function setShippingCostsTaxesAmount($shippingCostsTaxesAmount) {
         $this->shippingCostsTaxesAmount = $shippingCostsTaxesAmount;
     }
-        
-    /**
+    public function getBillingId() {
+        return $this->billingId;
+    }
+
+    public function setBillingId($billingId) {
+        $this->billingId = $billingId;
+    }
+
+        /**
      * Creates a CompanyUser instance from an array map.
      *
      * @param array $map The array map to use for the instance creation.
@@ -167,6 +175,7 @@ class Transaction {
         $instance->setTransactionId(isset($map['transactionId']) ? $map['transactionId'] : null);
         $instance->setCustomerId(isset($map['customerId']) ? $map['customerId'] : null);
         $instance->setProductId(isset($map['productId']) ? $map['productId'] : null);
+        $instance->setBillingId(isset($map['billingId']) ? $map['billingId'] : null);
         $instance->setTitle(isset($map['title']) ? $map['title'] : null);
         $instance->setPrice(isset($map['price']) ? $map['price'] : null);
         $instance->setTaxesPercentage(isset($map['taxesPercentage']) ? $map['taxesPercentage'] : null);

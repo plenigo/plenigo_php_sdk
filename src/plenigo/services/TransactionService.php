@@ -46,10 +46,15 @@ class TransactionService extends Service {
     }
 
     /**
+     * Returns a list of transactions of the specified company
      * 
-     * @param int $page
-     * @param int $size
-     * @return type
+     * @param int $page Number of the page (starting from 0)
+     * @param int $size Size of the page - must be between 10 and 100
+     * @param mixed $startDate Start date range of the transaction, must be timestamp (Date range must not exceed 6 months).
+     * @param mixed $endDate End date range of the transaction, must be timestamp (Date range must not exceed 6 months).
+     * @param string $payMethod Payment method used to pay the transaction. See PaymentMethod class
+     * @param string $txStatus Status of the transaction. See TransactionStatus class
+     * @return TransactionList A list of transactions of the specified company
      */
     public static function searchTransactions($page = 0, $size = 10, $startDate = null, $endDate = null, $payMethod = null, $txStatus = null) {
 
@@ -57,7 +62,7 @@ class TransactionService extends Service {
 
         $map = array(
             'startDate' => date("Y-m-d", $arrayDates[0]),
-            'endDate' => date("Y-m-d", $arrayDates[0]),
+            'endDate' => date("Y-m-d", $arrayDates[1]),
             'page' => SdkUtils::clampNumber($page, 0, null),
             'size' => SdkUtils::clampNumber($size, 10, 100)
         );
@@ -106,9 +111,6 @@ class TransactionService extends Service {
         if (is_null($endDate) || !is_numeric($endDate)) {
             $endDate = strtotime('today');
         }
-        if (is_null($startDate) || !is_numeric($startDate)) {
-            $startDate = strtotime("-6 months");
-        }
 
         // 6 month range check
         $morning = strtotime('today');
@@ -117,9 +119,9 @@ class TransactionService extends Service {
         if ($endDate > $morning) {
             $endDate = $morning;
         }
-        //Check the range from the sanitized endDate
+        //Check the range from the sanitized endDate and NULL check for the start date
         $minusSixMonths = strtotime("-6 months", $endDate);
-        if ($startDate < $minusSixMonths) {
+        if ($startDate < $minusSixMonths || is_null($startDate) || !is_numeric($startDate)) {
             $startDate = $minusSixMonths;
         }
 
