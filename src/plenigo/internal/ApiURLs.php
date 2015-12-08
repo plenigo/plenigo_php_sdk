@@ -134,4 +134,9 @@ final class ApiURLs
      * This URL is used to get the paginated list of company users
      */
     const COMPANY_USERS = "/api/v2/company/users";
+
+    /**
+     * This URL is used to search for transactions for the company
+     */
+    const TX_SEARCH = "/api/v2/transactions/search";
 }

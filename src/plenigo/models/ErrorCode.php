@@ -186,6 +186,11 @@ abstract class ErrorCode extends BasicEnum {
             self::HTTP_BAD_REQUEST => self::INVALID_PARAMETERS,
             self::HTTP_INTERNAL_ERROR => self::INTERNAL_ERROR
         ),
+        ApiURLs::TX_SEARCH => array(
+            self::HTTP_UNAUTHORIZED => self::INVALID_SECRET_OR_COMPANY_ID,
+            self::HTTP_BAD_REQUEST => self::INVALID_PARAMETERS,
+            self::HTTP_INTERNAL_ERROR => self::INTERNAL_ERROR
+        ),
     );
 
     /**

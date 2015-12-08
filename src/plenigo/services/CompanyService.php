@@ -22,8 +22,7 @@ use \plenigo\models\ErrorCode;
  * CompanyService
  *
  * <p>
- * A class used to retrieve Access Tokens from the plenigo API
- * when given a valid Access Code.
+ * A class used to retrieve Company specific data like company's users.
  * </p>
  *
  * @category SDK
