@@ -98,9 +98,9 @@ class TransactionList extends IterableBase {
 
         $arrElements = isset($map['elements']) ? $map['elements'] : [];
         $arrResulting = [];
-        foreach ($arrElements as $cpnyUser) {
-            $user = Transaction::createFromMap((array) $cpnyUser);
-            array_push($arrResulting, $user);
+        foreach ($arrElements as $cpnyTransaction) {
+            $transaction = Transaction::createFromMap((array) $cpnyTransaction);
+            array_push($arrResulting, $transaction);
         }
 
         return new TransactionList($arrResulting, $pageNumber, $size, $totalElements, $startDate, $endDate);
