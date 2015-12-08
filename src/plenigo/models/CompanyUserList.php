@@ -55,8 +55,11 @@ class CompanyUserList extends IterableBase {
     public function getElements() {
         return $this->elements;
     }
-
-    /**
+    
+    public function getTotalElements() {
+        return $this->totalElements;
+    }
+        /**
      * Creates a CompanyUserList instance from an array map.
      *
      * @param array $map The array map to use for the instance creation.
