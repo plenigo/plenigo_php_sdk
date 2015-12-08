@@ -23,7 +23,7 @@ use \plenigo\models\CompanyUser;
  */
 class CompanyUserList extends IterableBase {
 
-    private $page = 0;
+    private $pageNumber = 0;
     private $size = 10;
     private $totalElements = 0;
 
@@ -31,21 +31,21 @@ class CompanyUserList extends IterableBase {
      * Private constructor for the CompanyUserList
      * 
      * @param array $array The array of CompanyUser elements if any
-     * @param int $page The Page number  (starting from 0)
+     * @param int $pageNumber The Page number  (starting from 0)
      * @param int $size The Size of the page (minimum 10, maximum 100)
      * @param int $totalElements The Size of the entire result set
      */
-    private function __construct($array, $page = 0, $size = 10, $totalElements = 0) {
+    private function __construct($array, $pageNumber = 0, $size = 10, $totalElements = 0) {
         if (is_array($array)) {
             $this->elements = $array;
         }
-        $this->page = $page;
+        $this->pageNumber = $pageNumber;
         $this->size = $size;
         $this->totalElements = $totalElements;
     }
 
-    public function getPage() {
-        return $this->page;
+    public function getPageNumber() {
+        return $this->pageNumber;
     }
 
     public function getSize() {
@@ -67,7 +67,7 @@ class CompanyUserList extends IterableBase {
      * @return CompanyUserList instance.
      */
     public static function createFromMap(array $map) {
-        $page = isset($map['page']) ? $map['page'] : 0;
+        $pageNumber = isset($map['pageNumber']) ? $map['pageNumber'] : 0;
         $size = isset($map['size']) ? $map['size'] : 10;
         $totalElements = isset($map['totalElements']) ? $map['totalElements'] : 0;
 
@@ -78,7 +78,7 @@ class CompanyUserList extends IterableBase {
             array_push($arrResulting, $user);
         }
 
-        return new CompanyUserList($arrResulting, $page, $size, $totalElements);
+        return new CompanyUserList($arrResulting, $pageNumber, $size, $totalElements);
     }
 
 }
