@@ -65,7 +65,7 @@ class CompanyService extends Service {
         $appTokenRequest = new static($request);
 
         $data = parent::executeRequest($appTokenRequest, ApiURLs::COMPANY_USERS, self::ERR_MSG_GET);
-        var_export((array)$data);
+        
         $result = CompanyUserList::createFromMap((array) $data);
 
         return $result;

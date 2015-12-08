@@ -2,8 +2,10 @@
 
 namespace plenigo\models;
 
+require_once __DIR__ . '/IterableBase.php';
 require_once __DIR__ . '/CompanyUser.php';
 
+use \plenigo\models\IterableBase;
 use \plenigo\models\CompanyUser;
 
 /**
@@ -19,11 +21,10 @@ use \plenigo\models\CompanyUser;
  * @author Sebastian Dieguez <s.dieguez@plenigo.com>
  * @link     https://www.plenigo.com
  */
-class CompanyUserList implements \Iterator {
+class CompanyUserList extends IterableBase {
 
     private $page = 0;
     private $size = 10;
-    private $elements = [];
 
     /**
      * Private constructor for the CompanyUserList
@@ -34,32 +35,10 @@ class CompanyUserList implements \Iterator {
      */
     private function __construct($array, $page = 0, $size = 10) {
         if (is_array($array)) {
-            $this->elements = $array;
+            $this->elements = $array;                    
         }
         $this->page = $page;
         $this->size = $size;
-    }
-
-    public function rewind() {
-        reset($this->elements);
-    }
-
-    public function current() {
-        return current($this->elements);
-    }
-
-    public function key() {
-        return key($this->elements);
-    }
-
-    public function next() {
-        return next($this->elements);
-    }
-
-    public function valid() {
-        $key = key($this->var);
-        $var = ($key !== NULL && $key !== FALSE);
-        return $var;
     }
 
     public function getPage() {
