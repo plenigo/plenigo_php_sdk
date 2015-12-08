@@ -25,6 +25,7 @@ class CompanyUserList extends IterableBase {
 
     private $page = 0;
     private $size = 10;
+    private $totalElements = 0;
 
     /**
      * Private constructor for the CompanyUserList
@@ -32,13 +33,15 @@ class CompanyUserList extends IterableBase {
      * @param array $array The array of CompanyUser elements if any
      * @param int $page The Page number  (starting from 0)
      * @param int $size The Size of the page (minimum 10, maximum 100)
+     * @param int $totalElements The Size of the entire result set
      */
-    private function __construct($array, $page = 0, $size = 10) {
+    private function __construct($array, $page = 0, $size = 10, $totalElements = 0) {
         if (is_array($array)) {
-            $this->elements = $array;                    
+            $this->elements = $array;
         }
         $this->page = $page;
         $this->size = $size;
+        $this->totalElements = $totalElements;
     }
 
     public function getPage() {
@@ -63,6 +66,7 @@ class CompanyUserList extends IterableBase {
     public static function createFromMap(array $map) {
         $page = isset($map['page']) ? $map['page'] : 0;
         $size = isset($map['size']) ? $map['size'] : 10;
+        $totalElements = isset($map['totalElements']) ? $map['totalElements'] : 0;
 
         $arrElements = isset($map['elements']) ? $map['elements'] : [];
         $arrResulting = [];
@@ -71,7 +75,7 @@ class CompanyUserList extends IterableBase {
             array_push($arrResulting, $user);
         }
 
-        return new CompanyUserList($arrResulting, $page, $size);
+        return new CompanyUserList($arrResulting, $page, $size, $totalElements);
     }
 
 }
