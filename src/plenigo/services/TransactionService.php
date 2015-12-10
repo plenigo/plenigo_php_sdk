@@ -107,21 +107,22 @@ class TransactionService extends Service {
     private static function sanitizeDates($startDate = null, $endDate = null) {
         $res = [];
 
+        $morning = strtotime('today');
+
         // Null checks
         if (is_null($endDate) || !is_numeric($endDate)) {
-            $endDate = strtotime('today');
+            $endDate = $morning;
         }
 
         // 6 month range check
-        $morning = strtotime('today');
-
-        // If the date is past this morning or is in the future, we clamp it
+        // If the date is after this morning or is in the future, we clamp it
         if ($endDate > $morning) {
             $endDate = $morning;
         }
         //Check the range from the sanitized endDate and NULL check for the start date
         $minusSixMonths = strtotime("-6 months", $endDate);
-        if ($startDate < $minusSixMonths || is_null($startDate) || !is_numeric($startDate)) {
+
+        if ($startDate < $minusSixMonths || is_null($startDate) || !is_numeric($startDate) || $startDate > $endDate) {
             $startDate = $minusSixMonths;
         }
 
