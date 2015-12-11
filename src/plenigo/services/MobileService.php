@@ -4,6 +4,7 @@ namespace plenigo\services;
 
 require_once __DIR__ . '/../PlenigoManager.php';
 require_once __DIR__ . '/../PlenigoException.php';
+require_once __DIR__ . '/../internal/utils/SdkUtils.php';
 require_once __DIR__ . '/../internal/ApiURLs.php';
 require_once __DIR__ . '/../internal/ApiParams.php';
 require_once __DIR__ . '/../internal/services/Service.php';
@@ -12,6 +13,7 @@ require_once __DIR__ . '/../models/ErrorCode.php';
 
 use \plenigo\PlenigoManager;
 use \plenigo\PlenigoException;
+use plenigo\internal\utils\SdkUtils;
 use \plenigo\internal\ApiURLs;
 use \plenigo\internal\ApiParams;
 use \plenigo\internal\services\Service;
@@ -115,14 +117,8 @@ class MobileService extends Service {
      * @throws PlenigoException
      */
     public static function createMobileSecret($customerId, $size) {
-        if ($size < 6) {
-            $size = 6;
-        }
-        if ($size > 40) {
-            $size = 40;
-        }
         $map = array(
-            'size' => $size
+            'size' => SdkUtils::clampNumber($size, 6, 40)
         );
 
         $url = str_ireplace(ApiParams::URL_USER_ID_TAG, $customerId, ApiURLs::MOBILE_SECRET_URL);
