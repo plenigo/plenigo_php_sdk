@@ -26,6 +26,7 @@ class CompanyUserBillingData {
     private $firstName;
     private $name;
     private $company;
+    private $vat;
     private $street;
     private $additionalAddressInfo;
     private $postCode;
@@ -51,6 +52,10 @@ class CompanyUserBillingData {
 
     public function getCompany() {
         return $this->company;
+    }
+
+    public function getVat() {
+        return $this->vat;
     }
 
     public function getStreet() {
@@ -93,6 +98,10 @@ class CompanyUserBillingData {
         $this->company = $company;
     }
 
+    public function setVat($vat) {
+        $this->vat = $vat;
+    }
+
     public function setStreet($street) {
         $this->street = $street;
     }
@@ -129,6 +138,7 @@ class CompanyUserBillingData {
         $instance->setFirstName(isset($map['firstName']) ? $map['firstName'] : null);
         $instance->setName(isset($map['name']) ? $map['name'] : null);
         $instance->setCompany(isset($map['company']) ? $map['company'] : null);
+        $instance->setVat(isset($map['vat']) ? $map['vat'] : null);
         $instance->setStreet(isset($map['street']) ? $map['street'] : null);
         $instance->setAdditionalAddressInfo(isset($map['additionalAddressInfo']) ? $map['additionalAddressInfo'] : null);
         $instance->setPostCode(isset($map['postCode']) ? $map['postCode'] : null);
