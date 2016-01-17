@@ -32,6 +32,7 @@ class Transaction {
     private $shippingCostsTaxesPercentage;
     private $shippingCostsTaxesAmount;
     private $billingId;
+    private $cancellationTransactionId;
 
     private function __construct() {
         
@@ -156,12 +157,21 @@ class Transaction {
     public function setShippingCostsTaxesAmount($shippingCostsTaxesAmount) {
         $this->shippingCostsTaxesAmount = $shippingCostsTaxesAmount;
     }
+
     public function getBillingId() {
         return $this->billingId;
     }
 
     public function setBillingId($billingId) {
         $this->billingId = $billingId;
+    }
+
+    public function getCancellationTransactionId() {
+        return $this->cancellationTransactionId;
+    }
+
+    public function setCancellationTransactionId($cancellationTransactionId) {
+        $this->cancellationTransactionId = $cancellationTransactionId;
     }
 
         /**
@@ -188,6 +198,7 @@ class Transaction {
         $instance->setShippingCosts(isset($map['shippingCosts']) ? $map['shippingCosts'] : null);
         $instance->setShippingCostsTaxesPercentage(isset($map['shippingCostsTaxesPercentage']) ? $map['shippingCostsTaxesPercentage'] : null);
         $instance->setShippingCostsTaxesAmount(isset($map['shippingCostsTaxesAmount']) ? $map['shippingCostsTaxesAmount'] : null);
+        $instance->setCancellationTransactionId(isset($map['cancellationTransactionId']) ? $map['cancellationTransactionId'] : null);
 
         return $instance;
     }
