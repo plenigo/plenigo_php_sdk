@@ -264,16 +264,36 @@ class UserService extends Service {
      *   'singleProducts' => array (
      *     0 => array(
      *        'productId' => 'xxxx',
+     *        'transactionId' => 'AAAAAAABBBBBBDDDEDDEDEDEDEDEDED'
      *        'title' => 'prod title',
      *        'buyDate' => 'YYYY-MM-DD HH:mm:ss +0100',
+     *        'price' => 4.00,
+     *        'taxesPercentage' => 10,
+     *        'taxesAmount' => 0.4,
+     *        'taxesCountry' => 'DE',
+     *        'currency' => 'EUR',
+     *        'paymentMethod' => 'PAYPAL',
+     *        'status' => 'CANCELED'
+     *        'shippingCosts' => 1.00,
+     *        'shippingCostsTaxesPercentage' => 20,
+     *        'shippingCostsTaxesAmount' => 0.2
+     *        'cancellationTransactionId' => 'AAAAAAABBBBBBDDDEDDEDEDEDEDEDEF'
      *     ),
      *   ),
      *   'subscriptions' => array (
      *     0 => array(
      *        'productId' => 'yyyyyy',
      *        'title' => 'Subscription title',
-     *        'buyDate' => 'YYYY-MM-DD HH:mm:ss +0100',
+     *        'startDate' => 'YYYY-MM-DD HH:mm:ss +0100',
      *        'endDate' => 'YYYY-MM-DD HH:mm:ss +0100',
+     *        'price' => 4.00,
+     *        'taxesPercentage' => 10,
+     *        'taxesCountry' => 'DE',
+     *        'currency' => 'EUR',
+     *        'paymentMethod' => 'PAYPAL',
+     *        'shippingCosts' => 1.00,
+     *        'shippingCostsTaxesPercentage' => 20
+     *        'cancellationDate' => 'YYYY-MM-DD HH:mm:ss +0100'
      *     ),
      *   ),
      * )</pre>
