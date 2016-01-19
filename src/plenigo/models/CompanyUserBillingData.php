@@ -138,7 +138,7 @@ class CompanyUserBillingData {
         $instance->setFirstName(isset($map['firstName']) ? $map['firstName'] : null);
         $instance->setName(isset($map['name']) ? $map['name'] : null);
         $instance->setCompany(isset($map['company']) ? $map['company'] : null);
-        $instance->setVat(isset($map['vat']) ? $map['vat'] : null);
+        $instance->setVat(isset($map['vatNumber']) ? $map['vatNumber'] : null);
         $instance->setStreet(isset($map['street']) ? $map['street'] : null);
         $instance->setAdditionalAddressInfo(isset($map['additionalAddressInfo']) ? $map['additionalAddressInfo'] : null);
         $instance->setPostCode(isset($map['postCode']) ? $map['postCode'] : null);
