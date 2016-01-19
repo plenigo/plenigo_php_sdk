@@ -33,6 +33,7 @@ class Transaction {
     private $shippingCostsTaxesAmount;
     private $billingId;
     private $cancellationTransactionId;
+    private $cancelledTransactionId;
 
     private function __construct() {
         
@@ -174,6 +175,14 @@ class Transaction {
         $this->cancellationTransactionId = $cancellationTransactionId;
     }
 
+    public function getCancelledTransactionId() {
+        return $this->cancelledTransactionId;
+    }
+
+    public function setCancelledTransactionId($cancelledTransactionId) {
+        $this->cancelledTransactionId = $cancelledTransactionId;
+    }
+
         /**
      * Creates a CompanyUser instance from an array map.
      *
@@ -199,6 +208,7 @@ class Transaction {
         $instance->setShippingCostsTaxesPercentage(isset($map['shippingCostsTaxesPercentage']) ? $map['shippingCostsTaxesPercentage'] : null);
         $instance->setShippingCostsTaxesAmount(isset($map['shippingCostsTaxesAmount']) ? $map['shippingCostsTaxesAmount'] : null);
         $instance->setCancellationTransactionId(isset($map['cancellationTransactionId']) ? $map['cancellationTransactionId'] : null);
+        $instance->setCancelledTransactionId(isset($map['cancelledTransactionId']) ? $map['cancelledTransactionId'] : null);
 
         return $instance;
     }
