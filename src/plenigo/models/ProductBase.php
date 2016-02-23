@@ -29,6 +29,7 @@ class ProductBase extends ProductId {
     const TYPE_DOWNLOAD = "DOWNLOAD";
     const TYPE_VIDEO = "VIDEO";
     const TYPE_MUSIC = "MUSIC";
+    const TYPE_DIGITALPRODUCT = "DIGITALPRODUCT";
     const TYPE_NEWSPAPER = "NEWSPAPER";
     const TYPE_BOOK = "BOOK";
 
