@@ -49,7 +49,7 @@ class ProductBase extends ProductId {
 
     /**
      * The shipping cost
-     * @var float 
+     * @var float
      */
     private $shippingCost;
 
@@ -60,8 +60,8 @@ class ProductBase extends ProductId {
 
     /**
      * Category ID for this Product
-     * 
-     * @var string 
+     *
+     * @var string
      */
     private $categoryId;
 
@@ -78,9 +78,15 @@ class ProductBase extends ProductId {
 
     /**
      * Flag indicating if the checkout corresponds to a listing of all failed payments
-     * @var bool 
+     * @var bool
      */
     private $failedPayment;
+
+    /**
+     * The replacement for product id. This is used if the same product should be sold multiple times. The real product id is only used to fill the object
+     * and then replaced by this id. Can only be used in combination with overwrite mode.
+     */
+    private $productIdReplacement;
 
     /**
      * This constructor receives price, title, id and currency as parameters, it
@@ -101,9 +107,9 @@ class ProductBase extends ProductId {
     }
 
     /**
-     * This static builder method allows the creation of the "Failed Payment" ProductBase 
+     * This static builder method allows the creation of the "Failed Payment" ProductBase
      * object needed to cumpliment with the Checkout builder interface
-     * 
+     *
      * @return \plenigo\models\ProductBase the object configured for the Failed Payment checkout workflow
      */
     public static function buildFailedPaymentProduct() {
@@ -199,7 +205,7 @@ class ProductBase extends ProductId {
 
     /**
      * Gets the shipping cost of this product.
-     * 
+     *
      * @return float the shipping cost
      */
     public function getShippingCost() {
@@ -208,7 +214,7 @@ class ProductBase extends ProductId {
 
     /**
      * Sets a new shipping cost for this product.
-     * 
+     *
      * @param float $shippingCost the new shipping cost
      */
     public function setShippingCost($shippingCost) {
@@ -237,7 +243,7 @@ class ProductBase extends ProductId {
 
     /**
      * Gets the Failed Payment flag value
-     * 
+     *
      * @return bool The variable as set
      */
     public function getFailedPayment() {
@@ -246,11 +252,31 @@ class ProductBase extends ProductId {
 
     /**
      * Sets the Failed Payment flag
-     * 
+     *
      * @param bool $failedPayment The variable to set
      */
     public function setFailedPayment($failedPayment) {
         $this->failedPayment = $failedPayment;
+    }
+
+    /**
+     * Set the replacement for product id. This is used if the same product should be sold multiple times. The real product id is only used to fill the object
+     * and then replaced by this id. Can only be used in combination with overwrite mode.
+     *
+     * @param string $productIdReplacement replacement for product id
+     */
+    public function setProductIdReplacement($productIdReplacement) {
+        $this->productIdReplacement = $productIdReplacement;
+    }
+
+    /**
+     * Get the replacement for product id. This is used if the same product should be sold multiple times. The real product id is only used to fill the object
+     * and then replaced by this id. Can only be used in combination with overwrite mode.
+     *
+     * @return string replacement for product id
+     */
+    public function getProductIdReplacement() {
+        return $this->productIdReplacement;
     }
 
     /**
@@ -270,6 +296,7 @@ class ProductBase extends ProductId {
         ArrayUtils::addIfNotNull($map, 'subscriptionRenewal', $this->getSubscriptionRenewal());
         ArrayUtils::addIfNotNull($map, 'failedPayment', $this->getFailedPayment());
         ArrayUtils::addIfNotNull($map, 'shippingCost', $this->getShippingCost());
+        ArrayUtils::addIfNotNull($map, 'productIdReplacement', $this->getProductIdReplacement());
 
         return $map;
     }
