@@ -33,6 +33,7 @@ use \plenigo\models\ErrorCode;
 class TransactionService extends Service {
 
     const ERR_MSG_GET = "Error geting transaction data";
+    const MONTHS_RANGE = 18;
 
     /**
      * The constructor for the TransactionService instance.
@@ -105,7 +106,7 @@ class TransactionService extends Service {
     }
 
     private static function sanitizeDates($startDate = null, $endDate = null) {
-        $res = [];
+        $res = array();
 
         $morning = strtotime('today');
 
@@ -120,7 +121,7 @@ class TransactionService extends Service {
             $endDate = $morning;
         }
         //Check the range from the sanitized endDate and NULL check for the start date
-        $minusSixMonths = strtotime("-6 months", $endDate);
+        $minusSixMonths = strtotime("-" . self::MONTHS_RANGE . " months", $endDate);
 
         if ($startDate < $minusSixMonths || is_null($startDate) || !is_numeric($startDate) || $startDate > $endDate) {
             $startDate = $minusSixMonths;
