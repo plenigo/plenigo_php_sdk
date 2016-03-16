@@ -195,7 +195,7 @@ class Service
         if(is_string($response) && trim($response)===''){
             $response=json_decode('{}');
         }
-        if (!is_object($response)) {
+        if (!is_object($response) && !is_array($response)) {
             throw new \Exception('Broken response. Expecting JSON Object; Got: ' . gettype($response));
         }
 
