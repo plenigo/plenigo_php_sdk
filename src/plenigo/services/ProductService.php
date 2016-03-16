@@ -107,17 +107,17 @@ class ProductService extends Service {
      * Obtain a list of product in a paginated way.
      *
      * @param int $pageSize The size of the page, it will be trimmed to 10...100
-     * @param string $lastID the last id of the page that will set the page number to be requested
+     * @param string $page the page number
      * @return Array an asociative array as a ResultSet with totalElements, page size, last id and the list of products
      * @throws PlenigoException
      */
-    public static function getProductList($pageSize = 10, $lastID = null) {
+    public static function getProductList($pageSize = 10, $page = 0) {
         $clazz = get_class();
         PlenigoManager::notice(
-                $clazz, "Getting Product Listing (page size=" . $pageSize . ' lastID=' . $lastID . ')');
+                $clazz, "Getting Product Listing (page size=" . $pageSize . ' Page=' . $page . ')');
 
 
-        $params = self::configureListParams($pageSize, $lastID);
+        $params = self::configureListParams($pageSize, $page);
 
         $request = static::getRequest(ApiURLs::LIST_PRODUCTS, false, $params);
 
@@ -202,16 +202,16 @@ class ProductService extends Service {
      * Obtain a list of categories in a paginated way.
      *
      * @param int $pageSize The size of the page, it will be trimmed to 10...100
-     * @param string $lastID the last id of the page that will set the page number to be requested
+     * @param string $page the 0-based page number
      * @return Array an asociative array as a ResultSet with totalElements, page size, last id and the list of products
      * @throws PlenigoException
      */
-    public static function getCategoryList($pageSize = 10, $lastID = null) {
+    public static function getCategoryList($pageSize = 10, $page = 0) {
         $clazz = get_class();
         PlenigoManager::notice(
-                $clazz, "Getting Category Listing (page size=" . $pageSize . ' lastID=' . $lastID . ')');
+                $clazz, "Getting Category Listing (page size=" . $pageSize . ' page=' . $page . ')');
 
-        $params = self::configureListParams($pageSize, $lastID);
+        $params = self::configureListParams($pageSize, $page);
 
         $request = static::getRequest(ApiURLs::LIST_CATEGORIES, false, $params);
 
@@ -287,15 +287,15 @@ class ProductService extends Service {
      * or category listings.
      *
      * @param int $pageSize The number of items on a single page (min:10, max:100)
-     * @param string $lastID Optional. A string containing the last ID of the current page
+     * @param string $page Optional. The page number 0-based
      * @return array A key=>value array to convert to queryString for the URL
      */
-    private static function configureListParams($pageSize = 10, $lastID = null) {
+    private static function configureListParams($pageSize = 10, $page = 0) {
         $size = max(min($pageSize, 100), 10);
 
         return array(
             'size' => $size,
-            'lastId' => (!is_null($lastID)) ? $lastID : ''
+            'page' => (!is_null($page)) ? $page : 0
         );
     }
 

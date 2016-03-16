@@ -73,7 +73,7 @@ class ProductServiceTest extends PlenigoTestCase
 
     public function productListProvider()
     {
-        $res = '{"totalElements":"100","size":"10","lastId":"12345610","elements":[';
+        $res = '{"totalElements":"100","size":"10","pageNumber":"0","elements":[';
         $rescont = null;
         for ($i = 0; $i < 10; $i++) {
             if (!is_null($rescont)) {
@@ -89,7 +89,7 @@ class ProductServiceTest extends PlenigoTestCase
 
     public function categoryListProvider()
     {
-        $res = '{"totalElements":"100","size":"10","lastId":"12345610","elements":[';
+        $res = '{"totalElements":"100","size":"10","pageNumber":"0","elements":[';
         $rescont = null;
         for ($i = 0; $i < 10; $i++) {
             if (!is_null($rescont)) {
