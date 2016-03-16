@@ -136,6 +136,11 @@ final class ApiURLs
     const COMPANY_USERS = "/api/v2/company/users";
 
     /**
+     * This URL is used to get a list of company users base on their ids
+     */
+    const COMPANY_USERS_SELECT = "/api/v2/company/users/select";
+
+    /**
      * This URL is used to search for transactions for the company
      */
     const TX_SEARCH = "/api/v2/transactions/search";
