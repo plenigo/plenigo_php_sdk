@@ -138,9 +138,9 @@ class TransactionServiceTest extends PlenigoTestCase {
     public function testSearchBigRangeTrim($data) {
         TransactionServiceMock::$requestResponse = $data;
 
-        $startDate = strtotime("-8 months");
+        $startDate = strtotime("-28 months");
         $endDate = strtotime("today");
-        $resultingStartDate = date("Y-m-d", strtotime("-6 months"));
+        $resultingStartDate = date("Y-m-d", strtotime("-18 months"));
 
         $result = TransactionServiceMock::searchTransactions(0, 10, $startDate, $endDate);
 
@@ -191,7 +191,7 @@ class TransactionServiceTest extends PlenigoTestCase {
 
         $endDate = strtotime("today");
         $startDate = null;
-        $resultingStartDate = date("Y-m-d", strtotime("-6 months"));
+        $resultingStartDate = date("Y-m-d", strtotime("-18 months"));
 
         $result = TransactionServiceMock::searchTransactions(0, 10, $startDate, $endDate);
 

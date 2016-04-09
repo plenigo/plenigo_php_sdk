@@ -68,6 +68,16 @@ class CompanyServiceTest extends PlenigoTestCase {
 
         return array(array($data));
     }
+    
+    public function userListSelectProvider() {
+        $data = json_decode('[{"userState":"ACTIVATED",'
+                . '"agreementState":"AGREE","customerId":"MRFCP1G6I25C","language":"en","email":"rholfeld.plenigo+p1@gmail.com"},'
+                . '{"firstName":"sdf","country":"DE","gender":"male","userState":"ACTIVATED","city":"dsf","agreementState":"DISAGREE",'
+                . '"street":"df","customerId":"0QPHCEIQBNJN","name":"sdf","language":"en","postCode":"dsf",'
+                . '"email":"rholfeld.plenigo+101@gmail.com"}]');
+
+        return array(array($data));
+    }
 
     /**
      * @dataProvider userListProvider
@@ -75,6 +85,27 @@ class CompanyServiceTest extends PlenigoTestCase {
     public function testGetUserList($data) {
         CompanyServiceMock::$requestResponse = $data;
         $result = CompanyServiceMock::getUserList();
+        
+        $this->assertFalse(is_null($result));
+        $this->assertInstanceOf('plenigo\models\CompanyUserList', $result);
+        foreach ($result as $user) {
+            $this->assertInstanceOf('plenigo\models\CompanyUser', $user);
+            $billing = $user->getBillingAddress();
+            if(!is_null($billing)){
+                $this->assertInstanceOf('plenigo\models\CompanyUserBillingData', $billing);
+            }else{
+                $this->assertTrue(is_null($billing));
+            }
+        }
+        $this->assertError(E_USER_NOTICE, "GET URL CALL");
+    }
+    
+    /**
+     * @dataProvider userListSelectProvider
+     */
+    public function testGetUserSelect($data) {
+        CompanyServiceMock::$requestResponse = $data;
+        $result = CompanyServiceMock::getUserByIds("MRFCP1G6I25C,0QPHCEIQBNJN");
         
         $this->assertFalse(is_null($result));
         $this->assertInstanceOf('plenigo\models\CompanyUserList', $result);

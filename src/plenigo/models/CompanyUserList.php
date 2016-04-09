@@ -71,9 +71,29 @@ class CompanyUserList extends IterableBase {
         $size = isset($map['size']) ? $map['size'] : 10;
         $totalElements = isset($map['totalElements']) ? $map['totalElements'] : 0;
 
-        $arrElements = isset($map['elements']) ? $map['elements'] : [];
-        $arrResulting = [];
+        $arrElements = isset($map['elements']) ? $map['elements'] : array();
+        $arrResulting = array();
         foreach ($arrElements as $cpnyUser) {
+            $user = CompanyUser::createFromMap((array) $cpnyUser);
+            array_push($arrResulting, $user);
+        }
+
+        return new CompanyUserList($arrResulting, $pageNumber, $size, $totalElements);
+    }
+    
+    /**
+     * Creates a CompanyUserList instance from an array of maps.
+     * 
+     * @param array $userArray The array of maps to use for the instance creation.
+     * @return \plenigo\models\CompanyUserList instance.
+     */
+    public static function createFromArray(array $userArray) {
+        $pageNumber = 0;
+        $size = count($userArray);
+        $totalElements = count($userArray);
+
+        $arrResulting = array();
+        foreach ($userArray as $cpnyUser) {
             $user = CompanyUser::createFromMap((array) $cpnyUser);
             array_push($arrResulting, $user);
         }

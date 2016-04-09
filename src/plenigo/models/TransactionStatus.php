@@ -20,5 +20,6 @@ final class TransactionStatus {
     const DONE = "DONE";
     const CANCELED = "CANCELED";
     const CHARGEBACK = "CHARGEBACK";
+    const FAILED = "FAILED";
 
 }

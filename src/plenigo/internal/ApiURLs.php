@@ -63,7 +63,7 @@ final class ApiURLs
     /**
      * This URL is used to get all the products
      */
-    const LIST_PRODUCTS = "/api/v2/products";
+    const LIST_PRODUCTS = "/api/v2/products/search";
 
     /**
      * This URL is used to get all the products this user has bouight
@@ -78,7 +78,7 @@ final class ApiURLs
     /**
      * This URL is used to get all the products
      */
-    const LIST_CATEGORIES = "/api/v2/categories";
+    const LIST_CATEGORIES = "/api/v2/categories/search";
     
     /**
      * This URL is used to check for paywall disabled
@@ -134,6 +134,11 @@ final class ApiURLs
      * This URL is used to get the paginated list of company users
      */
     const COMPANY_USERS = "/api/v2/company/users";
+
+    /**
+     * This URL is used to get a list of company users base on their ids
+     */
+    const COMPANY_USERS_SELECT = "/api/v2/company/users/select";
 
     /**
      * This URL is used to search for transactions for the company

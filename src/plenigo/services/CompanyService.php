@@ -70,6 +70,30 @@ class CompanyService extends Service {
 
         return $result;
     }
+    
+    /**
+     * Returns a list of users based on the given ids
+     * 
+     * @param string $userIds a comma separated list if ids
+     * @return CompanyUserList A  list of users of the specified company with the given ids
+     */
+    public static function getUserByIds($userIds = "") {
+        $map = array(
+            'userIds' => $userIds
+        );
+
+        $url = ApiURLs::COMPANY_USERS_SELECT;
+
+        $request = static::getRequest($url, false, $map);
+
+        $appTokenRequest = new static($request);
+
+        $data = parent::executeRequest($appTokenRequest, $url, self::ERR_MSG_GET);
+        
+        $result = CompanyUserList::createFromArray((array) $data);
+
+        return $result;
+    }
 
     /**
      * Executes the prepared request and returns
