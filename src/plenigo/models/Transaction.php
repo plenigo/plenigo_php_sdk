@@ -28,9 +28,6 @@ class Transaction {
     private $paymentMethod;
     private $transactionDate;
     private $status;
-    private $shippingCosts;
-    private $shippingCostsTaxesPercentage;
-    private $shippingCostsTaxesAmount;
     private $billingId;
     private $cancellationTransactionId;
     private $cancelledTransactionId;
@@ -87,18 +84,6 @@ class Transaction {
         return $this->status;
     }
 
-    public function getShippingCosts() {
-        return $this->shippingCosts;
-    }
-
-    public function getShippingCostsTaxesPercentage() {
-        return $this->shippingCostsTaxesPercentage;
-    }
-
-    public function getShippingCostsTaxesAmount() {
-        return $this->shippingCostsTaxesAmount;
-    }
-
     public function setTransactionId($transactionId) {
         $this->transactionId = $transactionId;
     }
@@ -147,18 +132,6 @@ class Transaction {
         $this->status = $status;
     }
 
-    public function setShippingCosts($shippingCosts) {
-        $this->shippingCosts = $shippingCosts;
-    }
-
-    public function setShippingCostsTaxesPercentage($shippingCostsTaxesPercentage) {
-        $this->shippingCostsTaxesPercentage = $shippingCostsTaxesPercentage;
-    }
-
-    public function setShippingCostsTaxesAmount($shippingCostsTaxesAmount) {
-        $this->shippingCostsTaxesAmount = $shippingCostsTaxesAmount;
-    }
-
     public function getBillingId() {
         return $this->billingId;
     }
@@ -204,9 +177,6 @@ class Transaction {
         $instance->setPaymentMethod(isset($map['paymentMethod']) ? $map['paymentMethod'] : null);
         $instance->setTransactionDate(isset($map['transactionDate']) ? $map['transactionDate'] : null);
         $instance->setStatus(isset($map['status']) ? $map['status'] : null);
-        $instance->setShippingCosts(isset($map['shippingCosts']) ? $map['shippingCosts'] : null);
-        $instance->setShippingCostsTaxesPercentage(isset($map['shippingCostsTaxesPercentage']) ? $map['shippingCostsTaxesPercentage'] : null);
-        $instance->setShippingCostsTaxesAmount(isset($map['shippingCostsTaxesAmount']) ? $map['shippingCostsTaxesAmount'] : null);
         $instance->setCancellationTransactionId(isset($map['cancellationTransactionId']) ? $map['cancellationTransactionId'] : null);
         $instance->setCancelledTransactionId(isset($map['cancelledTransactionId']) ? $map['cancelledTransactionId'] : null);
 
