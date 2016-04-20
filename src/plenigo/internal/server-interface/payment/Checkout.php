@@ -50,6 +50,7 @@ final class Checkout extends ServerInterface {
     protected $type;
     protected $title;
     protected $categoryId;
+    protected $segmentId;
     protected $showBuyingAgainScreen;
     protected $showCheckoutConfirmationScreen;
     protected $oauth2RedirectUrl;
@@ -100,6 +101,7 @@ final class Checkout extends ServerInterface {
         ArrayUtils::addIfDefined($map, 'price', $productMap, 'price');
         ArrayUtils::addIfDefined($map, 'title', $productMap, 'title');
         ArrayUtils::addIfDefined($map, 'categoryId', $productMap, 'categoryId');
+        ArrayUtils::addIfDefined($map, 'segmentId', $productMap, 'segmentIds');
         ArrayUtils::addIfDefined($map, 'currency', $productMap, 'currency');
         ArrayUtils::addIfDefined($map, 'type', $productMap, 'type');
         ArrayUtils::addIfDefined($map, 'subscriptionRenewal', $productMap, 'subscriptionRenewal');
@@ -119,6 +121,7 @@ final class Checkout extends ServerInterface {
      */
     public function setValuesFromMap($map) {
         $this->setValueFromMapIfNotEmpty('productId', $map);
+        $this->setValueFromMapIfNotEmpty('segmentId', $map);
         $this->setValueFromMapIfNotEmpty('price', $map);
         $this->setValueFromMapIfNotEmpty('overrideMode', $map);
         $this->setValueFromMapIfNotEmpty('currency', $map);
@@ -263,6 +266,15 @@ final class Checkout extends ServerInterface {
     }
 
     /**
+     * Sets the Segment Id.
+     *
+     * @param string $si The segment ID.
+     */
+    public function setSegmentId($si) {
+        $this->segmentId = $si;
+    }
+
+    /**
      * Sets the Currency.
      *
      * @param string $currency The Currency.
@@ -341,6 +353,7 @@ final class Checkout extends ServerInterface {
         $this->insertIntoMapIfDefined($map, 'type', 'pt');
         $this->insertIntoMapIfDefined($map, 'title', 'ti');
         $this->insertIntoMapIfDefined($map, 'productId', 'pi');
+        $this->insertIntoMapIfDefined($map, 'segmentId', 'si');
         $this->insertIntoMapIfDefined($map, 'showBuyingAgainScreen', 'sab');
         $this->insertIntoMapIfDefined($map, 'showCheckoutConfirmationScreen', 'spf');
         $this->insertIntoMapIfDefined($map, 'oauth2RedirectUrl', 'sso');

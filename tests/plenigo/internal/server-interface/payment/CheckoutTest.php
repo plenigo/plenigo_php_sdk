@@ -13,7 +13,8 @@ class CheckoutTest extends PHPUnit_Framework_Testcase
         $map = array(
             'price'         => 1.5,
             'title'         => 'premium-read',
-            'testMode'      => true
+            'testMode'      => true,
+            'segmentId'      => 'test_seg',
         );
 
         $checkoutRequest = new Checkout($map);
@@ -190,7 +191,8 @@ class CheckoutTest extends PHPUnit_Framework_Testcase
         $expectedResult = array(
             'pr'    => $original['price'],
             'ti'    => $original['title'],
-            'ts'    => $original['testMode']
+            'ts'    => $original['testMode'],
+            'si'    => $original['segmentId']
         );
 
         $checkout->anotherProperty = 'value';
@@ -203,7 +205,7 @@ class CheckoutTest extends PHPUnit_Framework_Testcase
      */
     public function testQueryString($checkout)
     {
-        $expectedResult = 'pr=>1.5&ti=>premium-read&ts=>true';
+        $expectedResult = 'pr=>1.5&ti=>premium-read&si=>test_seg&ts=>true';
 
         $queryString = $checkout->getQueryString();
 
