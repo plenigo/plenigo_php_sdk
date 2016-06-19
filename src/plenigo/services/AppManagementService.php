@@ -63,8 +63,9 @@ class AppManagementService extends Service {
      * @throws PlenigoException
      */
     public static function requestAppToken($customerId, $productId, $description) {
+        $testModeText = (PlenigoManager::get()->isTestMode()) ? 'true' : 'false';
         $map = array(
-            'testMode' => PlenigoManager::get()->isTestMode(),
+            ApiParams::TEST_MODE => $testModeText,
             'productId' => $productId,
             'description' => $description
         );
@@ -92,8 +93,9 @@ class AppManagementService extends Service {
      * @throws PlenigoException
      */
     public static function getCustomerApps($customerId) {
+        $testModeText = (PlenigoManager::get()->isTestMode()) ? 'true' : 'false';
         $map = array(
-            'testMode' => PlenigoManager::get()->isTestMode()
+            ApiParams::TEST_MODE => $testModeText
         );
 
         $url = str_ireplace(ApiParams::URL_USER_ID_TAG, $customerId, ApiURLs::GET_APPS_ID);
@@ -120,8 +122,9 @@ class AppManagementService extends Service {
      * @throws PlenigoException
      */
     public static function requestAppId($customerId, $accessToken) {
+        $testModeText = (PlenigoManager::get()->isTestMode()) ? 'true' : 'false';
         $map = array(
-            'testMode' => PlenigoManager::get()->isTestMode(),
+             ApiParams::TEST_MODE => $testModeText,
             'accessToken' => $accessToken
         );
 
@@ -148,8 +151,9 @@ class AppManagementService extends Service {
      * @return bool TRUE if the customer can access this product, FALSE otherwise
      */
     public static function hasUserBought($customerId, $productId, $appId) {
+        $testModeText = (PlenigoManager::get()->isTestMode()) ? 'true' : 'false';
         $map = array(
-            'testMode' => PlenigoManager::get()->isTestMode()
+            ApiParams::TEST_MODE => $testModeText
         );
 
         $url = str_ireplace(ApiParams::URL_USER_ID_TAG, $customerId, ApiURLs::GET_PROD_ACCESS);
@@ -179,8 +183,9 @@ class AppManagementService extends Service {
      * @throws PlenigoException
      */
     public static function deleteCustomerApp($customerId, $appId) {
+        $testModeText = (PlenigoManager::get()->isTestMode()) ? 'true' : 'false';
         $map = array(
-            'testMode' => PlenigoManager::get()->isTestMode()
+            ApiParams::TEST_MODE => $testModeText
         );
 
         $url = str_ireplace(ApiParams::URL_USER_ID_TAG, $customerId, ApiURLs::DELETE_APP_ACCESS);
