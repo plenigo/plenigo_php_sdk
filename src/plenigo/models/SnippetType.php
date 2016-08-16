@@ -2,7 +2,9 @@
 
 namespace plenigo\models;
 
-use plenigo\internal\utils\BasicEnum;
+require_once __DIR__ . '/../internal/utils/BasicEnum.php';
+
+use \plenigo\internal\utils\BasicEnum;
 
 /**
  * <p>
