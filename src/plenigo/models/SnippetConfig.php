@@ -43,14 +43,14 @@ class SnippetConfig {
     private $loginToken;
 
     /**
-     * Constructor with parameters
+     * Constructor with fields
      * 
      * @param string $elementId
      * @param string $snippetId
      * @param string $loggedOutRedirectUrl
      * @param string $loginToken
      */
-    public function __construct($elementId, $snippetId, $loggedOutRedirectUrl, $loginToken) {
+    public function __construct($elementId=null, $snippetId=null, $loggedOutRedirectUrl=null, $loginToken=null) {
         $this->elementId = $elementId;
         $this->snippetId = $snippetId;
         $this->loggedOutRedirectUrl = $loggedOutRedirectUrl;
