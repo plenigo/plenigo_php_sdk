@@ -212,8 +212,8 @@ class CompanyUser {
         $instance->setState(isset($map['state']) ? $map['state'] : null);
         $instance->setCountry(isset($map['country']) ? $map['country'] : null);
         $instance->setAgreementState(isset($map['agreementState']) ? $map['agreementState'] : null);
-        if (isset($map['billingAddress']) && !is_null($map['billingAddress'])) {
-            $instance->setBillingAddress(CompanyUserBillingData::createFromMap((array)$map['billingAddress']));
+        if (isset($map['billingAddresses']) && !is_null($map['billingAddresses']) && count(($map['billingAddresses'])) > 0) {
+            $instance->setBillingAddress(CompanyUserBillingData::createFromMap((array)$map['billingAddresses'][0]));
         }
         return $instance;
     }
