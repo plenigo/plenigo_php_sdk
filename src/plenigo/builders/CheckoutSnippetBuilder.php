@@ -51,11 +51,12 @@ class CheckoutSnippetBuilder {
      *
      * @param array $settings A map of settings to pass to the Checkout service interface.
      * @param string $loginToken A string contianing the loginToken if obtained from the external user management
+     * @param bool $showRegisterFirst Shows a register screen if the user is not loged in
      *
      * @return string A Javascript snippet that is compliant with plenigo's Javascript SDK.
      * @throws CryptographyException When an error occurs during data encoding
      */
-    public function build($settings = array(), $loginToken = null) {
+    public function build($settings = array(), $loginToken = null, $showRegisterFirst = false) {
         $clazz = get_class();
         PlenigoManager::get()->notice($clazz, "Building CHECKOUT snippet:");
         //Add testMode SDK check
@@ -67,7 +68,11 @@ class CheckoutSnippetBuilder {
         $encodedData = $this->buildEncodedData($requestQueryString);
         PlenigoManager::get()->notice($clazz, "Checkout QUERYSTRING:" . $requestQueryString);
         if (is_null($loginToken)) {
-            return sprintf("plenigo.checkout('%s');", $encodedData);
+            if($showRegisterFirst){
+                return sprintf("plenigo.checkout('%s', true);", $encodedData);
+            }else{
+                return sprintf("plenigo.checkout('%s');", $encodedData);
+            }
         } else {
             PlenigoManager::get()->notice($clazz, "Login TOKEN:" . $loginToken);
             return sprintf("plenigo.checkoutWithRemoteLogin('%s','%s');", $encodedData,$loginToken);
