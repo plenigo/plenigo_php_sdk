@@ -69,13 +69,13 @@ class UserManagementService extends Service {
             'language' => $language
         );
 
-        if (!is_nul($externalUserId) && is_int($externalUserId)) {
+        if (!is_null($externalUserId) && is_int($externalUserId)) {
             $map["externalUserId"] = $externalUserId;
         }
-        if (!is_nul($firstName) && is_string($firstName)) {
+        if (!is_null($firstName) && is_string($firstName)) {
             $map["firstName"] = $firstName;
         }
-        if (!is_nul($name) && is_string($name)) {
+        if (!is_null($name) && is_string($name)) {
             $map["name"] = $name;
         }
 
