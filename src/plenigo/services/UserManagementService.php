@@ -50,10 +50,13 @@ class UserManagementService extends Service {
      * 
      * @param string $email  Email address of the user to register
      * @param string $language Language of the user as two digit ISO code
+     * @param int $externalUserId An integer number that represents the user in the external system
+     * @param string $firstName A given name for the new user
+     * @param string $name A las name for the new user
      * @return string Id of the created customer.
      * @throws PlenigoException In case of communication errors or invalid parameters
      */
-    public static function registerUser($email, $language = "en") {
+    public static function registerUser($email, $language = "en", $externalUserId = null, $firstName = null, $name = null) {
 
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $clazz = get_class();
@@ -65,6 +68,16 @@ class UserManagementService extends Service {
             'email' => $email,
             'language' => $language
         );
+
+        if (!is_null($externalUserId) && is_int($externalUserId)) {
+            $map["externalUserId"] = $externalUserId;
+        }
+        if (!is_null($firstName) && is_string($firstName)) {
+            $map["firstName"] = $firstName;
+        }
+        if (!is_null($name) && is_string($name)) {
+            $map["name"] = $name;
+        }
 
         $url = ApiURLs::USER_MGMT_REGISTER;
 
