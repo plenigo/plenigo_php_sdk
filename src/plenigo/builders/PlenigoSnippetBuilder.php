@@ -15,8 +15,6 @@ use plenigo\models\SnippetType;
  */
 class PlenigoSnippetBuilder {
 
-    const PLENIGO_LOGIN_URL = "https://www.plenigo.com/login";
-
     private $config = null;
 
     /**
@@ -52,7 +50,8 @@ class PlenigoSnippetBuilder {
             $snipId = SnippetType::PERSONAL_DATA;
         }
         if (is_null($loggedOut)) {
-            $loggedOut = self::PLENIGO_LOGIN_URL;
+            $root = (!empty($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/';
+            $loggedOut = $root;
         }
         $loginAddon = "";
         if (!is_null($login)) {
