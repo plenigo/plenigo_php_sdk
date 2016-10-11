@@ -50,7 +50,7 @@ class PlenigoSnippetBuilder {
             $snipId = SnippetType::PERSONAL_DATA;
         }
         if (is_null($loggedOut)) {
-            $root = (!empty($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/';
+            $root = (!empty($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . (isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : "test.plenigo.com") . '/';
             $loggedOut = $root;
         }
         $loginAddon = "";
