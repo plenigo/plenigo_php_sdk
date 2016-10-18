@@ -41,6 +41,14 @@ class SnippetConfig {
      * @var string
      */
     private $loginToken;
+    
+    /**
+     * Tell the vuilder if we want the output to be enclosed in script tags.
+     * Default is true
+     *
+     * @var bool
+     */
+    private $encloseScript;
 
     /**
      * Constructor with fields
@@ -49,12 +57,14 @@ class SnippetConfig {
      * @param string $snippetId
      * @param string $loggedOutRedirectUrl
      * @param string $loginToken
+     * @param bool   $enclose
      */
-    public function __construct($elementId=null, $snippetId=null, $loggedOutRedirectUrl=null, $loginToken=null) {
+    public function __construct($elementId=null, $snippetId=null, $loggedOutRedirectUrl=null, $loginToken=null, $enclose=true) {
         $this->elementId = $elementId;
         $this->snippetId = $snippetId;
         $this->loggedOutRedirectUrl = $loggedOutRedirectUrl;
         $this->loginToken = $loginToken;
+        $this->encloseScript = $enclose;
     }
     
     public function getElementId() {
@@ -87,6 +97,17 @@ class SnippetConfig {
 
     public function setLoginToken($loginToken) {
         $this->loginToken = $loginToken;
+    }
+
+    public function getEncloseScript() {
+        if(!isset($this->encloseScript)){
+            $this->encloseScript=true;
+        }
+        return $this->encloseScript;
+    }
+
+    public function setEncloseScript($encloseScript) {
+        $this->encloseScript = $encloseScript;
     }
 
 }
