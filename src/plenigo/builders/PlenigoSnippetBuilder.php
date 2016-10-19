@@ -58,9 +58,13 @@ class PlenigoSnippetBuilder {
             $loginAddon.=',"' . $login . '"';
         }
 
-        $res.='<script type="application/javascript">\n';
-        $res.='plenigo.renderSnippet("' . $elId . '", ' . $snipId . ', "' . $loggedOut . '"' . $loginAddon . ');\n';
-        $res.='</script>\n\n';
+        if ($this->config->getEncloseScript()) {
+            $res.='<script type="application/javascript">' . "\n";
+        }
+        $res.='plenigo.renderSnippet("' . $elId . '", ' . $snipId . ', "' . $loggedOut . '"' . $loginAddon . ');';
+        if ($this->config->getEncloseScript()) {
+            $res.= "\n</script>\n\n";
+        }
 
         return $res;
     }
