@@ -33,6 +33,8 @@ class UserManagementService extends Service {
     const ERR_MSG_REGISTER = "Error registering a customer";
     const ERR_MSG_CHANGEMAIL = "The Emails address could not be changed for this user";
     const ERR_MSG_CREATELOGIN = "Error creating a login token for the customer";
+    const ERR_MSG_CUSTOMERIDS = "No customer identifiers provided";
+    const ERR_MSG_CUSTOMERIDS_RESP = "Problem assigning customer access";
 
     /**
      * The constructor for the UserManagementService instance.
@@ -151,6 +153,53 @@ class UserManagementService extends Service {
         }
 
         return $result;
+    }
+
+    /**
+     * Provide several (up to 4) access ids to a company customer id (which can be an external Id already).
+     * 
+     * @param string $customerId The plenigo (or external) customer id
+     * @param bool $isExternal TRUE if the previous id was an external id (default: FALSE)
+     * @param array $customIds an array of one to four customer access ids
+     * 
+     * @return boolean TRUE if the transaction was successful
+     * @throws PlenigoException In case of communication errors or invalid parameters
+     */
+    public static function importCustomerAccess($customerId, $isExternal = false, $customIds = array()) {
+        $map = array(
+            'customerId' => $customerId,
+            'useExternalCustomerId' => $isExternal
+        );
+
+        if (!is_array($customIds) || count($customIds) == 0) {
+            $clazz = get_class();
+            PlenigoManager::error($clazz, self::ERR_MSG_CUSTOMERIDS);
+            return false;
+        }
+
+        if (isset($customIds[0])) {
+            $map['yourFirstIdentifier'] = $customIds[0];
+        }
+        if (isset($customIds[1])) {
+            $map['yourSecondIdentifier'] = $customIds[1];
+        }
+        if (isset($customIds[2])) {
+            $map['yourThirdIdentifier'] = $customIds[2];
+        }
+        if (isset($customIds[3])) {
+            $map['yourForthIdentifier'] = $customIds[3];
+        }
+        
+        
+        $url = ApiURLs::USER_MGMT_ACCESS;
+
+        $request = static::postJSONRequest($url, false, $map);
+
+        $curlRequest = new static($request);
+
+        $data = parent::executeRequest($curlRequest, ApiURLs::USER_MGMT_ACCESS, self::ERR_MSG_CUSTOMERIDS_RESP);
+
+        return true;
     }
 
     /**

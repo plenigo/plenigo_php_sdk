@@ -131,6 +131,11 @@ final class ApiURLs
     const USER_MGMT_CREATELOGIN = "/api/v2/externalUser/{USER_ID}/createLoginToken";
     
     /**
+     * This URL is used to assign different customer ids to a plenigo customer.
+     */
+    const USER_MGMT_ACCESS = "/api/v2/import/customerAccess";
+    
+    /**
      * This URL is used to get the paginated list of company users
      */
     const COMPANY_USERS = "/api/v2/company/users";
