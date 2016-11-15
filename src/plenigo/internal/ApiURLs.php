@@ -151,6 +151,11 @@ final class ApiURLs
     const COMPANY_FAILED_PAYMENTS = "/api/v2/company/users/failed/payments";    
 
     /**
+     * This URL is used to get a list of company orders
+     */
+    const COMPANY_ORDERS = "/api/v2/orders/search";    
+
+    /**
      * This URL is used to search for transactions for the company
      */
     const TX_SEARCH = "/api/v2/transactions/search";

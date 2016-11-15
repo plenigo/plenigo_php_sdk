@@ -9,6 +9,7 @@ require_once __DIR__ . '/../internal/services/Service.php';
 require_once __DIR__ . '/../internal/utils/SdkUtils.php';
 require_once __DIR__ . '/../models/CompanyUserList.php';
 require_once __DIR__ . '/../models/FailedPaymentList.php';
+require_once __DIR__ . '/../models/OrderList.php';
 require_once __DIR__ . '/../models/ErrorCode.php';
 
 use \plenigo\PlenigoManager;
@@ -18,6 +19,7 @@ use \plenigo\internal\services\Service;
 use plenigo\internal\utils\SdkUtils;
 use \plenigo\models\CompanyUserList;
 use \plenigo\models\FailedPaymentList;
+use \plenigo\models\OrderList;
 use \plenigo\models\ErrorCode;
 
 /**
@@ -36,6 +38,7 @@ class CompanyService extends Service {
 
     const ERR_MSG_GET = "Error geting company users";
     const ERR_MSG_GET_FAILED = "Error geting failed payments";
+    const ERR_MSG_GET_ORDERS = "Error geting orders";
 
     /**
      * The constructor for the CompanyService instance.
@@ -157,6 +160,51 @@ class CompanyService extends Service {
         return $result;
     }
 
+    /**
+     * Returns a list of orders of the specified company
+     * 
+     * @param string $start Date start of the interval (String format YYYY-MM-DD)
+     * @param string $end Date end of the interval (String format YYYY-MM-DD)
+     * @param bool $testMode Test mode Flag
+     * @param int $page Number of the page (starting from 0)
+     * @param int $size Size of the page - must be between 10 and 100
+     * @return FailedPaymentList A paginated list of FailedPayment objects
+     */
+    public static function getOrders($start = null, $end = null, $testMode = false , $page = 0, $size = 10) {
+        // sanitize dates
+        $end = (!is_null($end)) ? $end : date("Y-m-d"); // if no end date the send today
+        // check end date is not in the future
+        $dFuture = new DateTime($end);
+        $dNow = new DateTime();
+        if ($dFuture > $dNow) {
+            $end = date("Y-m-d");
+        }
+
+        // Check that start date is valid
+        if (is_null($start)) {
+            $dEnd = new DateTime($end);
+            $start = date("Y-m-d", strtotime("-6 MONTH", $dEnd)); // 6 month before end date
+        }
+
+        // parameter array
+        $map = array(
+            'page' => SdkUtils::clampNumber($page, 0, null),
+            'size' => SdkUtils::clampNumber($size, 10, 100),
+            'startDate' => $start,
+            'endDate' => $end,
+            'testMode' =>$testMode
+        );
+
+        $url = ApiURLs::COMPANY_ORDERS;
+
+        $request = static::getRequest($url, false, $map);
+        $fpRequest = new static($request);
+        $data = parent::executeRequest($fpRequest, ApiURLs::COMPANY_ORDERS, self::ERR_MSG_GET_ORDERS);
+        $result = OrderList::createFromMap((array) $data);
+
+        return $result;
+    }
+    
     /**
      * Executes the prepared request and returns
      * the Response object on success.
