@@ -80,16 +80,17 @@ class CompanyServiceTest extends PlenigoTestCase {
     }
 
     public function failedPaymentsProvider() {
-        $data = json_decode('{"pageNumber": 10,"totalElements": 103, "size": 10,"elements": ['
-                . '{"date": "2016-01-01", "customerId": "MAP27KCA3K2P", '
-                . '"productId": "fuwUyCq8281643736141", '
-                . '"title": "This is a test 1", "status": "FAILED" },'
-                . '{ "date": "2016-01-02", '
-                . '"customerId": "MAP27KCA3K2P", '
-                . '"productId": "t7xHNEy6132168075141", "title": "This is a test 2",'
-                . '"status": "FIXED" },{ "date": "2016-01-03",'
-                . '"customerId": "MAP27KCA3K2P","productId": "fuwUyCq8281643736141",'
-                . '"title": "This is a test 1","status": "FIXED_MANUALLY"}]}');
+        $data = json_decode('{"totalElements":4,"size":4,"elements":[{"date":"2016-10-02T00:12:45Z",'
+                . '"productId":"xaKd2yv4912263046641","customerId":"FFCDHTBRZUQR",'
+                . '"title":"Subscription with action","status":"fixed_manually"},'
+                . '{"date":"2016-10-02T00:12:45Z","productId":"3t41fM82422006249641",'
+                . '"customerId":"7B8JEDXXTZ27","title":"12 Month Subscription (Futurama)",'
+                . '"status":"fixed_billing"},{"date":"2016-10-02T00:12:45Z",'
+                . '"productId":"NpVeQv89447653046641","customerId":"RHBNJNEFNLY1",'
+                . '"title":"Subscription with delivery","status":"fixed_manually"},'
+                . '{"date":"2016-10-02T00:12:45Z","productId":"RgKUHT78563991046641",'
+                . '"customerId":"HX21L8F8XXVF","title":"Standard Subscription",'
+                . '"status":"fixed_billing"}],"pageNumber":0}');
 
         return array(array($data));
     }
@@ -234,17 +235,17 @@ class CompanyServiceTest extends PlenigoTestCase {
     public function testFailedPayments($data) {
         CompanyServiceMock::$requestResponse = $data;
 
-        $result = CompanyServiceMock::getFailedPayments("2016-01-01", "2016-01-05", NULL, 10, 10);
+        $result = CompanyServiceMock::getFailedPayments("2016-01-01", "2016-01-05", NULL, 0, 10);
 
         $this->assertNotNull($result, "The result is not correct");
 
-        $this->assertTrue(count($result->getElements()) == 3);
+        $this->assertTrue(count($result->getElements()) == 4);
         
-        $this->assertTrue($result->getPageNumber() == 10);
+        $this->assertTrue($result->getPageNumber() == 0);
         
-        $this->assertTrue($result->getElements()[0]->getCustomerId()== "MAP27KCA3K2P");
+        $this->assertTrue($result->getElements()[0]->getCustomerId()== "FFCDHTBRZUQR");
 
-        $this->assertError(E_USER_NOTICE, "page=10");
+        $this->assertError(E_USER_NOTICE, "page=0");
     }
 
         /**
