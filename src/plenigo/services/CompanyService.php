@@ -117,21 +117,21 @@ class CompanyService extends Service {
         // sanitize dates
         $end = (!is_null($end)) ? $end : date("Y-m-d"); // if no end date the send today
         // check end date is not in the future
-        $dFuture = new DateTime($end);
-        $dNow = new DateTime();
+        $dFuture = new \DateTime($end);
+        $dNow = new \DateTime();
         if ($dFuture > $dNow) {
             $end = date("Y-m-d");
         }
 
         // Check that start date is valid
         if (is_null($start)) {
-            $dEnd = new DateTime($end);
+            $dEnd = new \DateTime($end);
             $start = date("Y-m-d", strtotime("-6 MONTH", $dEnd)); // 6 month before end date
         }
 
         // month diff (max 6 months)
-        $d1 = new DateTime($start);
-        $d2 = new DateTime($end);
+        $d1 = new \DateTime($start);
+        $d2 = new \DateTime($end);
         $months = ($d1->diff($d2)->m + ($d1->diff($d2)->y * 12));
         if ($months > 6) {
             $start = date("Y-m-d", strtotime("-6 MONTH", $d2));
@@ -174,15 +174,15 @@ class CompanyService extends Service {
         // sanitize dates
         $end = (!is_null($end)) ? $end : date("Y-m-d"); // if no end date the send today
         // check end date is not in the future
-        $dFuture = new DateTime($end);
-        $dNow = new DateTime();
+        $dFuture = new \DateTime($end);
+        $dNow = new \DateTime();
         if ($dFuture > $dNow) {
             $end = date("Y-m-d");
         }
 
         // Check that start date is valid
         if (is_null($start)) {
-            $dEnd = new DateTime($end);
+            $dEnd = new \DateTime($end);
             $start = date("Y-m-d", strtotime("-6 MONTH", $dEnd)); // 6 month before end date
         }
 

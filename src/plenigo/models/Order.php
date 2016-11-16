@@ -2,6 +2,10 @@
 
 namespace plenigo\models;
 
+require_once __DIR__ . '/OrderItem.php';
+
+use \plenigo\models\OrderItem;
+
 /**
  * Order
  * 
@@ -16,54 +20,118 @@ namespace plenigo\models;
  */
 class Order {
 
-    private $date;
+    private $orderId;
+    private $orderDate;
     private $customerId;
-    private $productId;
-    private $productTitle;
-    private $status;
-
+    private $currency;
+    private $cumulatedPrice;
+    private $vatNumbe;
+    private $shippingCosts;
+    private $shippingCostsTaxes;
+    private $purchaseOrderIndicator;
+    private $discount;
+    private $discountPercentage;
+    private $orderItems;
+    
+    
     private function __construct() {
         
     }
 
-    public function getDate() {
-        return $this->date;
+    public function getOrderId() {
+        return $this->orderId;
+    }
+
+    public function getOrderDate() {
+        return $this->orderDate;
     }
 
     public function getCustomerId() {
         return $this->customerId;
     }
 
-    public function getProductId() {
-        return $this->productId;
+    public function getCurrency() {
+        return $this->currency;
     }
 
-    public function getProductTitle() {
-        return $this->productTitle;
+    public function getCumulatedPrice() {
+        return $this->cumulatedPrice;
     }
 
-    public function getStatus() {
-        return $this->status;
+    public function getVatNumbe() {
+        return $this->vatNumbe;
     }
 
-    public function setDate($date) {
-        $this->date = $date;
+    public function getShippingCosts() {
+        return $this->shippingCosts;
+    }
+
+    public function getShippingCostsTaxes() {
+        return $this->shippingCostsTaxes;
+    }
+
+    public function getPurchaseOrderIndicator() {
+        return $this->purchaseOrderIndicator;
+    }
+
+    public function getDiscount() {
+        return $this->discount;
+    }
+
+    public function getDiscountPercentage() {
+        return $this->discountPercentage;
+    }
+
+    public function getOrderItems() {
+        return $this->orderItems;
+    }
+
+    public function setOrderId($orderId) {
+        $this->orderId = $orderId;
+    }
+
+    public function setOrderDate($orderDate) {
+        $this->orderDate = $orderDate;
     }
 
     public function setCustomerId($customerId) {
         $this->customerId = $customerId;
     }
 
-    public function setProductId($productId) {
-        $this->productId = $productId;
+    public function setCurrency($currency) {
+        $this->currency = $currency;
     }
 
-    public function setProductTitle($productTitle) {
-        $this->productTitle = $productTitle;
+    public function setCumulatedPrice($cumulatedPrice) {
+        $this->cumulatedPrice = $cumulatedPrice;
     }
 
-    public function setStatus($status) {
-        $this->status = $status;
+    public function setVatNumbe($vatNumbe) {
+        $this->vatNumbe = $vatNumbe;
+    }
+
+    public function setShippingCosts($shippingCosts) {
+        $this->shippingCosts = $shippingCosts;
+    }
+
+    public function setShippingCostsTaxes($shippingCostsTaxes) {
+        $this->shippingCostsTaxes = $shippingCostsTaxes;
+    }
+
+    public function setPurchaseOrderIndicator($purchaseOrderIndicator) {
+        $this->purchaseOrderIndicator = $purchaseOrderIndicator;
+    }
+
+    public function setDiscount($discount) {
+        $this->discount = $discount;
+    }
+
+    public function setDiscountPercentage($discountPercentage) {
+        $this->discountPercentage = $discountPercentage;
+    }
+
+    public function setOrderItems($orderItems) {
+        $this->orderItems = $orderItems;
     }
 
     /**
@@ -74,12 +142,26 @@ class Order {
      */
     public static function createFromMap($map) {
         $instance = new Order();
-        $instance->setDate(isset($map['date']) ? $map['date'] : null);
+        $instance->setOrderId(isset($map['orderId']) ? $map['orderId'] : null);
+        $instance->setOrderDate(isset($map['orderDate']) ? $map['orderDate'] : null);
         $instance->setCustomerId(isset($map['customerId']) ? $map['customerId'] : null);
-        $instance->setProductId(isset($map['productId']) ? $map['productId'] : null);
-        $instance->setProductTitle(isset($map['title']) ? $map['title'] : null);
-        $instance->setStatus(isset($map['status']) ? $map['status'] : null);
-
+        $instance->setCurrency(isset($map['currency']) ? $map['currency'] : null);
+        $instance->setCumulatedPrice(isset($map['cumulatedPrice']) ? $map['cumulatedPrice'] : null);
+        $instance->setVatNumbe(isset($map['vatNumber']) ? $map['vatNumber'] : null);
+        $instance->setShippingCosts(isset($map['shippingCosts']) ? $map['shippingCosts'] : null);
+        $instance->setShippingCostsTaxes(isset($map['shippingCostsTaxes']) ? $map['shippingCostsTaxes'] : null);
+        $instance->setPurchaseOrderIndicator(isset($map['purchaseOrderIndicator']) ? $map['purchaseOrderIndicator'] : null);
+        $instance->setDiscount(isset($map['discount']) ? $map['discount'] : null);
+        $instance->setDiscountPercentage(isset($map['discountPercentage']) ? $map['discountPercentage'] : null);
+        $instance->setOrderItems(isset($map['orderItems']) ? $map['orderItems'] : null);
+        if (isset($map['orderItems']) && !is_null($map['orderItems']) && count(($map['orderItems'])) > 0) {
+            $arrItems = array();
+            foreach ($map['orderItems'] as $oItem) {
+                $arrItems[] = OrderItem::createFromMap((array)$oItem);
+            }
+            $instance->setOrderItems($arrItems);
+        }
+        
         return $instance;
     }
 
