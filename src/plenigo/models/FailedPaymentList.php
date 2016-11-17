@@ -44,22 +44,39 @@ class FailedPaymentList extends IterableBase {
         $this->totalElements = $totalElements;
     }
 
+    /**
+     * Getter method
+     * @return int
+     */
     public function getPageNumber() {
         return $this->pageNumber;
     }
 
+    /**
+     * Getter method
+     * @return int
+     */
     public function getSize() {
         return $this->size;
     }
 
+    /**
+     * Getter method
+     * @return array
+     */
     public function getElements() {
         return $this->elements;
     }
-    
+
+    /**
+     * Getter method
+     * @return int
+     */
     public function getTotalElements() {
         return $this->totalElements;
     }
-        /**
+
+    /**
      * Creates a FailedPaymentList instance from an array map.
      *
      * @param array $map The array map to use for the instance creation.
@@ -80,7 +97,7 @@ class FailedPaymentList extends IterableBase {
 
         return new FailedPaymentList($arrResulting, $pageNumber, $size, $totalElements);
     }
-    
+
     /**
      * Creates a FailedPaymentList instance from an array of maps.
      * 

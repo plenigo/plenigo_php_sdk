@@ -16,98 +16,229 @@ namespace plenigo\models;
  */
 class OrderItem {
 
+    /**
+     * Product Id
+     * @var string 
+     */
     private $productId;
+
+    /**
+     * Order item title 
+     * @var string 
+     */
     private $title;
+
+    /**
+     * Order item price
+     * @var number 
+     */
     private $price;
+
+    /**
+     * Shipping costs
+     * @var number 
+     */
     private $shippingCosts;
+
+    /**
+     * Taxes 
+     * @var number 
+     */
     private $taxes;
+
+    /**
+     * Tax Country
+     * @var string 
+     */
     private $taxCountry;
+
+    /**
+     * Amount of order item
+     * @var int 
+     */
     private $quantity;
+
+    /**
+     * Order item cost center
+     * @var string
+     */
     private $costCenter;
+
+    /**
+     * The revenue account 
+     * @var string
+     */
     private $revenueAccount;
+
+    /**
+     * Order Item status
+     * @var string 
+     */
     private $status;
-    
-    
+
+    /**
+     * Default constructor
+     */
     private function __construct() {
         
     }
-    
+
+    /**
+     * Getter method
+     * @return string
+     */
     public function getProductId() {
         return $this->productId;
     }
 
+    /**
+     * Getter method
+     * @return string
+     */
     public function getTitle() {
         return $this->title;
     }
 
+    /**
+     * Getter method
+     * @return number
+     */
     public function getPrice() {
         return $this->price;
     }
 
+    /**
+     * Getter method
+     * @return number
+     */
     public function getShippingCosts() {
         return $this->shippingCosts;
     }
 
+    /**
+     * Getter method
+     * @return number
+     */
     public function getTaxes() {
         return $this->taxes;
     }
 
+    /**
+     * Getter method
+     * @return string
+     */
     public function getTaxCountry() {
         return $this->taxCountry;
     }
 
+    /**
+     * Getter method
+     * @return int
+     */
     public function getQuantity() {
         return $this->quantity;
     }
 
+    /**
+     * Getter method
+     * @return string
+     */
     public function getCostCenter() {
         return $this->costCenter;
     }
 
+    /**
+     * Getter method
+     * @return string
+     */
     public function getRevenueAccount() {
         return $this->revenueAccount;
     }
 
+    /**
+     * Getter method
+     * @return string
+     */
     public function getStatus() {
         return $this->status;
     }
 
+    /**
+     * Setter method
+     * @param string $productId
+     */
     public function setProductId($productId) {
         $this->productId = $productId;
     }
 
+    /**
+     * Setter method
+     * @param string $title
+     */
     public function setTitle($title) {
         $this->title = $title;
     }
 
+    /**
+     * Setter method
+     * @param number $price
+     */
     public function setPrice($price) {
         $this->price = $price;
     }
 
+    /**
+     * Setter method
+     * @param number $shippingCosts
+     */
     public function setShippingCosts($shippingCosts) {
         $this->shippingCosts = $shippingCosts;
     }
 
+    /**
+     * Setter method
+     * @param number $taxes
+     */
     public function setTaxes($taxes) {
         $this->taxes = $taxes;
     }
 
+    /**
+     * Setter method
+     * @param string $taxCountry
+     */
     public function setTaxCountry($taxCountry) {
         $this->taxCountry = $taxCountry;
     }
 
+    /**
+     * Setter method
+     * @param int $quantity
+     */
     public function setQuantity($quantity) {
         $this->quantity = $quantity;
     }
 
+    /**
+     * Setter method
+     * @param string $costCenter
+     */
     public function setCostCenter($costCenter) {
         $this->costCenter = $costCenter;
     }
 
+    /**
+     * Setter method
+     * @param string $revenueAccount
+     */
     public function setRevenueAccount($revenueAccount) {
         $this->revenueAccount = $revenueAccount;
     }
 
+    /**
+     * Setter method
+     * @param string $status
+     */
     public function setStatus($status) {
         $this->status = $status;
     }

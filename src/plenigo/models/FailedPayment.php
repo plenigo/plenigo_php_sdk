@@ -16,52 +16,119 @@ namespace plenigo\models;
  */
 class FailedPayment {
 
+    /**
+     * Failed Payment Date 
+     * @var string 
+     */
     private $date;
+
+    /**
+     * Customer Id
+     * @var string 
+     */
     private $customerId;
+
+    /**
+     * Product Id
+     * @var string 
+     */
     private $productId;
+
+    /**
+     * Title 
+     * @var string 
+     */
     private $productTitle;
+
+    /**
+     * Failed Payment Status (failed, fixed, fixed_manually)
+     * @var string
+     */
     private $status;
 
+    /**
+     * Default Constructor
+     */
     private function __construct() {
         
     }
 
+    /**
+     * Getter method for date variable
+     * @return string
+     */
     public function getDate() {
         return $this->date;
     }
 
+    /**
+     * Getter method for customerId variable
+     * @return string
+     */
     public function getCustomerId() {
         return $this->customerId;
     }
 
+    /**
+     * Getter method for productId variable
+     * @return string
+     */
     public function getProductId() {
         return $this->productId;
     }
 
+    /**
+     * Getter method for productTitle variable
+     * @return string
+     */
     public function getProductTitle() {
         return $this->productTitle;
     }
 
+    /**
+     * Getter method for status variable
+     * @return string
+     */
     public function getStatus() {
         return $this->status;
     }
 
+    /**
+     * Setter method
+     * @param string $date
+     */
     public function setDate($date) {
         $this->date = $date;
     }
 
+    /**
+     * Setter method
+     * @param string $customerId
+     */
     public function setCustomerId($customerId) {
         $this->customerId = $customerId;
     }
 
+    /**
+     * Setter method
+     * @param string $productId
+     */
     public function setProductId($productId) {
         $this->productId = $productId;
     }
 
+    /**
+     * Setter method
+     * @param string $productTitle
+     */
     public function setProductTitle($productTitle) {
         $this->productTitle = $productTitle;
     }
 
+    /**
+     * Setter method
+     * @param string $status
+     */
     public function setStatus($status) {
         $this->status = $status;
     }
