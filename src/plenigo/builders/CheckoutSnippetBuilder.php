@@ -50,7 +50,7 @@ class CheckoutSnippetBuilder {
      * code that can be used as an event on a webpage.
      *
      * @param array $settings A map of settings to pass to the Checkout service interface
-     * @param string $loginToken A string contianing the loginToken (if obtained from the external user management) or null
+     * @param string $loginToken A string containing the loginToken (if obtained from the external user management) or null
      * @param bool $showRegisterFirst Shows a register screen if the user is not loged in (default: false)
      * @param string $sourceUrl URL of the page that lead to that checkout
      * @param string $targetUrl URL of the page the process should redirect to after successful payment
