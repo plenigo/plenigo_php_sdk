@@ -13,12 +13,12 @@ use \plenigo\models\Order;
  * 
  * <p>
  * This class constitutes the data resulting from the getOrders call. 
- * This implementas Iterator so it can be userd in a foreach statement
+ * This implementas Iterator so it can be userd in a foreach statement.
  * </p>
  *
  * @category SDK
  * @package  PlenigoModels
- * @author Sebastian Dieguez <s.dieguez@plenigo.com>
+ * @author   Sebastian Dieguez <s.dieguez@plenigo.com>
  * @link     https://www.plenigo.com
  */
 class OrderList extends IterableBase {
@@ -28,7 +28,7 @@ class OrderList extends IterableBase {
     private $totalElements = 0;
 
     /**
-     * Private constructor for the OrderList
+     * Private constructor for the OrderList.
      * 
      * @param array $array The array of Order elements if any
      * @param int $pageNumber The Page number  (starting from 0)
@@ -45,7 +45,8 @@ class OrderList extends IterableBase {
     }
 
     /**
-     * Getter method
+     * Getter method.
+     * 
      * @return int
      */
     public function getPageNumber() {
@@ -53,7 +54,8 @@ class OrderList extends IterableBase {
     }
 
     /**
-     * Getter method
+     * Getter method.
+     * 
      * @return int
      */
     public function getSize() {
@@ -61,7 +63,8 @@ class OrderList extends IterableBase {
     }
 
     /**
-     * Getter method
+     * Getter method.
+     * 
      * @return array
      */
     public function getElements() {
@@ -69,7 +72,8 @@ class OrderList extends IterableBase {
     }
 
     /**
-     * Getter method
+     * Getter method.
+     * 
      * @return int
      */
     public function getTotalElements() {
@@ -90,9 +94,9 @@ class OrderList extends IterableBase {
 
         $arrElements = isset($map['elements']) ? $map['elements'] : array();
         $arrResulting = array();
-        foreach ($arrElements as $cpnyUser) {
-            $user = Order::createFromMap((array) $cpnyUser);
-            array_push($arrResulting, $user);
+        foreach ($arrElements as $cpnyOrder) {
+            $order = Order::createFromMap((array) $cpnyOrder);
+            array_push($arrResulting, $order);
         }
 
         return new OrderList($arrResulting, $pageNumber, $size, $totalElements);
@@ -101,18 +105,19 @@ class OrderList extends IterableBase {
     /**
      * Creates a OrderList instance from an array of maps.
      * 
-     * @param array $userArray The array of maps to use for the instance creation.
+     * @param array $orderArray The array of maps to use for the instance creation.
+     * 
      * @return \plenigo\models\OrderList instance.
      */
-    public static function createFromArray(array $userArray) {
+    public static function createFromArray(array $orderArray) {
         $pageNumber = 0;
-        $size = count($userArray);
-        $totalElements = count($userArray);
+        $size = count($orderArray);
+        $totalElements = count($orderArray);
 
         $arrResulting = array();
-        foreach ($userArray as $cpnyUser) {
-            $user = Order::createFromMap((array) $cpnyUser);
-            array_push($arrResulting, $user);
+        foreach ($orderArray as $cpnyOrder) {
+            $order = Order::createFromMap((array) $cpnyOrder);
+            array_push($arrResulting, $order);
         }
 
         return new OrderList($arrResulting, $pageNumber, $size, $totalElements);

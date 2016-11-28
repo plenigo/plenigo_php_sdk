@@ -50,11 +50,11 @@ class FailedPayment {
      * Default Constructor
      */
     private function __construct() {
-        
     }
 
     /**
-     * Getter method for date variable
+     * Getter method for date variable.
+     * 
      * @return string
      */
     public function getDate() {
@@ -62,7 +62,8 @@ class FailedPayment {
     }
 
     /**
-     * Getter method for customerId variable
+     * Getter method for customerId variable.
+     * 
      * @return string
      */
     public function getCustomerId() {
@@ -70,7 +71,8 @@ class FailedPayment {
     }
 
     /**
-     * Getter method for productId variable
+     * Getter method for productId variable.
+     * 
      * @return string
      */
     public function getProductId() {
@@ -78,7 +80,8 @@ class FailedPayment {
     }
 
     /**
-     * Getter method for productTitle variable
+     * Getter method for productTitle variable.
+     * 
      * @return string
      */
     public function getProductTitle() {
@@ -86,7 +89,8 @@ class FailedPayment {
     }
 
     /**
-     * Getter method for status variable
+     * Getter method for status variable.
+     * 
      * @return string
      */
     public function getStatus() {
@@ -94,7 +98,8 @@ class FailedPayment {
     }
 
     /**
-     * Setter method
+     * Setter method for date.
+     * 
      * @param string $date
      */
     public function setDate($date) {
@@ -102,7 +107,8 @@ class FailedPayment {
     }
 
     /**
-     * Setter method
+     * Setter method customer id.
+     * 
      * @param string $customerId
      */
     public function setCustomerId($customerId) {
@@ -110,7 +116,8 @@ class FailedPayment {
     }
 
     /**
-     * Setter method
+     * Setter method for product id.
+     * 
      * @param string $productId
      */
     public function setProductId($productId) {
@@ -118,7 +125,8 @@ class FailedPayment {
     }
 
     /**
-     * Setter method
+     * Setter method product title.
+     * 
      * @param string $productTitle
      */
     public function setProductTitle($productTitle) {
@@ -126,7 +134,8 @@ class FailedPayment {
     }
 
     /**
-     * Setter method
+     * Setter method status.
+     * 
      * @param string $status
      */
     public function setStatus($status) {
@@ -137,6 +146,7 @@ class FailedPayment {
      * Creates a FailedPayment instance from an array map.
      *
      * @param array $map The array map to use for the instance creation.
+     * 
      * @return FailedPayment instance.
      */
     public static function createFromMap($map) {

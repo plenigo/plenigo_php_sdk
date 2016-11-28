@@ -77,14 +77,14 @@ class OrderItem {
     private $status;
 
     /**
-     * Default constructor
+     * Default constructor.
      */
     private function __construct() {
-        
     }
 
     /**
-     * Getter method
+     * Getter method.
+     * 
      * @return string
      */
     public function getProductId() {
@@ -92,7 +92,8 @@ class OrderItem {
     }
 
     /**
-     * Getter method
+     * Getter method.
+     * 
      * @return string
      */
     public function getTitle() {
@@ -100,7 +101,8 @@ class OrderItem {
     }
 
     /**
-     * Getter method
+     * Getter method.
+     * 
      * @return number
      */
     public function getPrice() {
@@ -108,7 +110,8 @@ class OrderItem {
     }
 
     /**
-     * Getter method
+     * Getter method.
+     * 
      * @return number
      */
     public function getShippingCosts() {
@@ -116,7 +119,8 @@ class OrderItem {
     }
 
     /**
-     * Getter method
+     * Getter method.
+     * 
      * @return number
      */
     public function getTaxes() {
@@ -124,7 +128,8 @@ class OrderItem {
     }
 
     /**
-     * Getter method
+     * Getter method.
+     * 
      * @return string
      */
     public function getTaxCountry() {
@@ -132,7 +137,8 @@ class OrderItem {
     }
 
     /**
-     * Getter method
+     * Getter method.
+     * 
      * @return int
      */
     public function getQuantity() {
@@ -140,7 +146,8 @@ class OrderItem {
     }
 
     /**
-     * Getter method
+     * Getter method.
+     * 
      * @return string
      */
     public function getCostCenter() {
@@ -148,7 +155,8 @@ class OrderItem {
     }
 
     /**
-     * Getter method
+     * Getter method.
+     * 
      * @return string
      */
     public function getRevenueAccount() {
@@ -156,7 +164,8 @@ class OrderItem {
     }
 
     /**
-     * Getter method
+     * Getter method.
+     * 
      * @return string
      */
     public function getStatus() {
@@ -164,7 +173,8 @@ class OrderItem {
     }
 
     /**
-     * Setter method
+     * Setter method for product id.
+     * 
      * @param string $productId
      */
     public function setProductId($productId) {
@@ -172,7 +182,8 @@ class OrderItem {
     }
 
     /**
-     * Setter method
+     * Setter method for title.
+     * 
      * @param string $title
      */
     public function setTitle($title) {
@@ -180,7 +191,8 @@ class OrderItem {
     }
 
     /**
-     * Setter method
+     * Setter method for price.
+     * 
      * @param number $price
      */
     public function setPrice($price) {
@@ -188,7 +200,8 @@ class OrderItem {
     }
 
     /**
-     * Setter method
+     * Setter method shipping costs.
+     * 
      * @param number $shippingCosts
      */
     public function setShippingCosts($shippingCosts) {
@@ -196,7 +209,8 @@ class OrderItem {
     }
 
     /**
-     * Setter method
+     * Setter method taxes.
+     * 
      * @param number $taxes
      */
     public function setTaxes($taxes) {
@@ -204,7 +218,8 @@ class OrderItem {
     }
 
     /**
-     * Setter method
+     * Setter method tax country.
+     * 
      * @param string $taxCountry
      */
     public function setTaxCountry($taxCountry) {
@@ -212,7 +227,8 @@ class OrderItem {
     }
 
     /**
-     * Setter method
+     * Setter method for quantity.
+     * 
      * @param int $quantity
      */
     public function setQuantity($quantity) {
@@ -220,7 +236,8 @@ class OrderItem {
     }
 
     /**
-     * Setter method
+     * Setter method for cost center.
+     * 
      * @param string $costCenter
      */
     public function setCostCenter($costCenter) {
@@ -228,7 +245,8 @@ class OrderItem {
     }
 
     /**
-     * Setter method
+     * Setter method for revenue account.
+     * 
      * @param string $revenueAccount
      */
     public function setRevenueAccount($revenueAccount) {
@@ -236,7 +254,8 @@ class OrderItem {
     }
 
     /**
-     * Setter method
+     * Setter method for status.
+     * 
      * @param string $status
      */
     public function setStatus($status) {
@@ -244,10 +263,11 @@ class OrderItem {
     }
 
     /**
-     * Creates an OrderItem array from an array of maps containing the fields
+     * Creates an OrderItem array from an array of maps containing the fields.
      * 
-     * @param array $arrParam the array of maps containning the fields
-     * @return array an array of OrderItem objects 
+     * @param array $arrParam the array of maps containning the fields.
+     * 
+     * @return array an array of OrderItem objects .
      */
     public static function createFromArray($arrParam = array()) {
         $res = array();
@@ -257,7 +277,6 @@ class OrderItem {
                 $res[] = static::createFromMap($oItem);
             }
         }
-
         return $res;
     }
 
@@ -265,6 +284,7 @@ class OrderItem {
      * Creates a OrderItem instance from an array map.
      *
      * @param array $map The array map to use for the instance creation.
+     * 
      * @return OrderItem instance.
      */
     public static function createFromMap($map) {
@@ -279,7 +299,6 @@ class OrderItem {
         $instance->setCostCenter(isset($map['costCenter']) ? $map['costCenter'] : null);
         $instance->setRevenueAccount(isset($map['revenueAccount']) ? $map['revenueAccount'] : null);
         $instance->setStatus(isset($map['status']) ? $map['status'] : null);
-
         return $instance;
     }
 

@@ -13,12 +13,12 @@ use \plenigo\models\FailedPayment;
  * 
  * <p>
  * This class constitutes the data resulting from the getFailedPayments call. 
- * This implementas Iterator so it can be userd in a foreach statement
+ * This implementas Iterator so it can be used in a foreach statement.
  * </p>
  *
  * @category SDK
  * @package  PlenigoModels
- * @author Sebastian Dieguez <s.dieguez@plenigo.com>
+ * @author   Sebastian Dieguez <s.dieguez@plenigo.com>  
  * @link     https://www.plenigo.com
  */
 class FailedPaymentList extends IterableBase {
@@ -28,7 +28,7 @@ class FailedPaymentList extends IterableBase {
     private $totalElements = 0;
 
     /**
-     * Private constructor for the FailedPaymentList
+     * Private constructor for the FailedPaymentList.
      * 
      * @param array $array The array of FailedPayment elements if any
      * @param int $pageNumber The Page number  (starting from 0)
@@ -45,7 +45,8 @@ class FailedPaymentList extends IterableBase {
     }
 
     /**
-     * Getter method
+     * Getter method.
+     * 
      * @return int
      */
     public function getPageNumber() {
@@ -53,7 +54,8 @@ class FailedPaymentList extends IterableBase {
     }
 
     /**
-     * Getter method
+     * Getter method.
+     * 
      * @return int
      */
     public function getSize() {
@@ -61,7 +63,8 @@ class FailedPaymentList extends IterableBase {
     }
 
     /**
-     * Getter method
+     * Getter method.
+     * 
      * @return array
      */
     public function getElements() {
@@ -69,7 +72,8 @@ class FailedPaymentList extends IterableBase {
     }
 
     /**
-     * Getter method
+     * Getter method.
+     * 
      * @return int
      */
     public function getTotalElements() {
@@ -102,13 +106,13 @@ class FailedPaymentList extends IterableBase {
      * Creates a FailedPaymentList instance from an array of maps.
      * 
      * @param array $userArray The array of maps to use for the instance creation.
+     * 
      * @return \plenigo\models\FailedPaymentList instance.
      */
     public static function createFromArray(array $userArray) {
         $pageNumber = 0;
         $size = count($userArray);
         $totalElements = count($userArray);
-
         $arrResulting = array();
         foreach ($userArray as $cpnyUser) {
             $user = FailedPayment::createFromMap((array) $cpnyUser);

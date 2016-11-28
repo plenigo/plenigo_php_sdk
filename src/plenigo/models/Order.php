@@ -92,12 +92,15 @@ class Order {
      */
     private $orderItems;
 
+    /**
+     * Default constructor.
+     */
     private function __construct() {
-        
     }
 
     /**
-     * Getter method
+     * Getter method.
+     * 
      * @return string
      */
     public function getOrderId() {
@@ -105,7 +108,8 @@ class Order {
     }
 
     /**
-     * Getter method
+     * Getter method.
+     * 
      * @return string
      */
     public function getOrderDate() {
@@ -113,7 +117,8 @@ class Order {
     }
 
     /**
-     * Getter method
+     * Getter method.
+     * 
      * @return string
      */
     public function getCustomerId() {
@@ -121,7 +126,8 @@ class Order {
     }
 
     /**
-     * Getter method
+     * Getter method.
+     * 
      * @return string
      */
     public function getCurrency() {
@@ -129,7 +135,8 @@ class Order {
     }
 
     /**
-     * Getter method
+     * Getter method.
+     * 
      * @return number
      */
     public function getCumulatedPrice() {
@@ -137,7 +144,8 @@ class Order {
     }
 
     /**
-     * Getter method
+     * Getter method.
+     * 
      * @return string
      */
     public function getVatNumber() {
@@ -145,7 +153,8 @@ class Order {
     }
 
     /**
-     * Getter method
+     * Getter method.
+     * 
      * @return number
      */
     public function getShippingCosts() {
@@ -153,7 +162,8 @@ class Order {
     }
 
     /**
-     * Getter method
+     * Getter method.
+     * 
      * @return number
      */
     public function getShippingCostsTaxes() {
@@ -161,7 +171,8 @@ class Order {
     }
 
     /**
-     * Getter method
+     * Getter method.
+     * 
      * @return number
      */
     public function getPurchaseOrderIndicator() {
@@ -169,7 +180,8 @@ class Order {
     }
 
     /**
-     * Getter method
+     * Getter method.
+     * 
      * @return number
      */
     public function getDiscount() {
@@ -177,7 +189,8 @@ class Order {
     }
 
     /**
-     * Getter method
+     * Getter method.
+     * 
      * @return int
      */
     public function getDiscountPercentage() {
@@ -185,7 +198,8 @@ class Order {
     }
 
     /**
-     * Getter method
+     * Getter method.
+     * 
      * @return array
      */
     public function getOrderItems() {
@@ -193,7 +207,8 @@ class Order {
     }
 
     /**
-     * Setter method
+     * Setter method for order id.
+     * 
      * @param string $orderId
      */
     public function setOrderId($orderId) {
@@ -201,7 +216,8 @@ class Order {
     }
 
     /**
-     * Setter method
+     * Setter method for order date.
+     * 
      * @param string $orderDate
      */
     public function setOrderDate($orderDate) {
@@ -209,7 +225,8 @@ class Order {
     }
 
     /**
-     * Setter method
+     * Setter method for customer id.
+     * 
      * @param string $customerId
      */
     public function setCustomerId($customerId) {
@@ -217,7 +234,8 @@ class Order {
     }
 
     /**
-     * Setter method
+     * Setter method for currency.
+     * 
      * @param string $currency
      */
     public function setCurrency($currency) {
@@ -225,7 +243,8 @@ class Order {
     }
 
     /**
-     * Setter method
+     * Setter method for cumulated price.
+     * 
      * @param number $cumulatedPrice
      */
     public function setCumulatedPrice($cumulatedPrice) {
@@ -233,7 +252,8 @@ class Order {
     }
 
     /**
-     * Setter method
+     * Setter method for VAT number.
+     * 
      * @param string $vatNumber
      */
     public function setVatNumber($vatNumber) {
@@ -241,7 +261,8 @@ class Order {
     }
 
     /**
-     * Setter method
+     * Setter method for shipping costs.
+     * 
      * @param number $shippingCosts
      */
     public function setShippingCosts($shippingCosts) {
@@ -249,7 +270,8 @@ class Order {
     }
 
     /**
-     * Setter method
+     * Setter method for shipping costs taxes.
+     * 
      * @param number $shippingCostsTaxes
      */
     public function setShippingCostsTaxes($shippingCostsTaxes) {
@@ -257,7 +279,8 @@ class Order {
     }
 
     /**
-     * Setter method
+     * Setter method purchased order indicator.
+     * 
      * @param number $purchaseOrderIndicator
      */
     public function setPurchaseOrderIndicator($purchaseOrderIndicator) {
@@ -265,7 +288,8 @@ class Order {
     }
 
     /**
-     * Setter method
+     * Setter method for discount.
+     * 
      * @param number $discount
      */
     public function setDiscount($discount) {
@@ -273,7 +297,8 @@ class Order {
     }
 
     /**
-     * Setter method
+     * Setter method for discount percentage.
+     * 
      * @param int $discountPercentage
      */
     public function setDiscountPercentage($discountPercentage) {
@@ -281,7 +306,8 @@ class Order {
     }
 
     /**
-     * Setter method
+     * Setter method for order items.
+     * 
      * @param array $orderItems
      */
     public function setOrderItems($orderItems) {
@@ -292,6 +318,7 @@ class Order {
      * Creates a Order instance from an array map.
      *
      * @param array $map The array map to use for the instance creation.
+     * 
      * @return Order instance.
      */
     public static function createFromMap($map) {
@@ -307,7 +334,6 @@ class Order {
         $instance->setPurchaseOrderIndicator(isset($map['purchaseOrderIndicator']) ? $map['purchaseOrderIndicator'] : null);
         $instance->setDiscount(isset($map['discount']) ? $map['discount'] : null);
         $instance->setDiscountPercentage(isset($map['discountPercentage']) ? $map['discountPercentage'] : null);
-        $instance->setOrderItems(isset($map['orderItems']) ? $map['orderItems'] : null);
         if (isset($map['orderItems']) && !is_null($map['orderItems']) && count(($map['orderItems'])) > 0) {
             $arrItems = array();
             foreach ($map['orderItems'] as $oItem) {
@@ -315,7 +341,6 @@ class Order {
             }
             $instance->setOrderItems($arrItems);
         }
-
         return $instance;
     }
 
