@@ -81,11 +81,11 @@ class CheckoutSnippetBuilder {
             $strFunction = "plenigo.checkoutWithRemoteLogin";
             $strFirstParam = ", '" . $loginToken . "'";
         }
-        $strSurceURL = "";
+        $strSourceURL = "";
         $strTargetURL = "";
         if (!is_null($sourceUrl)) {
             PlenigoManager::get()->notice($clazz, "Source URL:" . $sourceUrl);
-            $strSurceURL = ", '" . $sourceUrl . "'";
+            $strSourceURL = ", '" . $sourceUrl . "'";
             if (!$showRegisterFirst && is_null($loginToken)) {
                 $strFirstParam = ", false";
             }
@@ -94,7 +94,7 @@ class CheckoutSnippetBuilder {
             PlenigoManager::get()->notice($clazz, "Target URL:" . $targetUrl);
             $strTargetURL = ", '" . $targetUrl . "'";
             if (is_null($sourceUrl)) {
-                $strSurceURL = ", null";
+                $strSourceURL = ", null";
             }
         }
         $strAffiliate = "";
@@ -102,14 +102,14 @@ class CheckoutSnippetBuilder {
             PlenigoManager::get()->notice($clazz, "Affiliate ID:" . $affiliateId);
             $strAffiliate = ", '" . $affiliateId . "'";
             if (is_null($sourceUrl)) {
-                $strSurceURL = ", null";
+                $strSourceURL = ", null";
             }
             if (is_null($targetUrl)) {
                 $strTargetURL = ", null";
             }
         }
 
-        $strFunctionFormula = $strFunction . "('%s'" . $strFirstParam . $strSurceURL . $strTargetURL . $strAffiliate . ");";
+        $strFunctionFormula = $strFunction . "('%s'" . $strFirstParam . $strSourceURL . $strTargetURL . $strAffiliate . ");";
         return sprintf($strFunctionFormula, $encodedData);
     }
 
