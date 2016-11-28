@@ -96,10 +96,26 @@ class CheckoutSnippetBuilderTest extends PlenigoTestCase {
             'testMode' => true
                 ), "sampleFakeToken");
 
-        $this->assertRegExp("/^plenigo\\.checkoutWithRemoteLogin\\('\\w+'\\,'\\w+'\\);$/", $plenigoCheckoutCode);
+        $this->assertRegExp("/^plenigo\\.checkoutWithRemoteLogin\\('\\w+'\\, '\\w+'\\);$/", $plenigoCheckoutCode);
         $this->assertError(E_USER_NOTICE, "Login TOKEN");
     }
 
+    /**
+     * @dataProvider checkoutSnippetBuilderProvider
+     */
+    public function testBuildUrlAndAffiliate($product) {
+        $checkout = new CheckoutSnippetBuilder($product);
+
+        $plenigoCheckoutCode = $checkout->build(array(
+            'testMode' => true
+                ), null, true, "http://www.google.com","http://www.google.com","GOOGL");
+
+        $this->assertRegExp("/^plenigo\\.checkout\\('\\w+'\\, true\\, '.*'\\, '.*'\\, '.*'\\);$/", $plenigoCheckoutCode);
+        $this->assertError(E_USER_NOTICE, "Source URL");
+        $this->assertError(E_USER_NOTICE, "Target URL");
+        $this->assertError(E_USER_NOTICE, "Affiliate ID");
+    }
+    
     /**
      * @dataProvider checkoutSnippetBuilderProvider
      */
