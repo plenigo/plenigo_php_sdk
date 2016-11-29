@@ -197,7 +197,6 @@ class UserManagementService extends Service {
             $map['yourForthIdentifier'] = $customIds[3];
         }
         
-        
         $url = ApiURLs::USER_MGMT_ACCESS;
 
         $request = static::postJSONRequest($url, false, $map);
@@ -223,8 +222,6 @@ class UserManagementService extends Service {
         } catch (\Exception $exc) {
             throw new PlenigoException('User Management Service execution failed!', $exc->getCode(), $exc);
         }
-
         return $response;
     }
-
 }

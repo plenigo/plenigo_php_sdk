@@ -343,5 +343,4 @@ class Order {
         }
         return $instance;
     }
-
 }
