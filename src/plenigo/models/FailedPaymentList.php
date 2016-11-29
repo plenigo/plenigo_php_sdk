@@ -118,8 +118,6 @@ class FailedPaymentList extends IterableBase {
             $user = FailedPayment::createFromMap((array) $cpnyUser);
             array_push($arrResulting, $user);
         }
-
         return new FailedPaymentList($arrResulting, $pageNumber, $size, $totalElements);
     }
-
 }

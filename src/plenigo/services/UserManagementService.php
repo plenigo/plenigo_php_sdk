@@ -52,11 +52,13 @@ class UserManagementService extends Service {
      * 
      * @param string $email  Email address of the user to register
      * @param string $language Language of the user as two digit ISO code
-     * @param int $externalUserId An integer number that represents the user in the external system
+     * @param int    $externalUserId An integer number that represents the user in the external system
      * @param string $firstName A given name for the new user
      * @param string $name A las name for the new user
+     * 
      * @return string Id of the created customer.
-     * @throws PlenigoException In case of communication errors or invalid parameters
+     * 
+     * @throws PlenigoException In case of communication errors or invalid parameters.
      */
     public static function registerUser($email, $language = "en", $externalUserId = null, $firstName = null, $name = null) {
 
@@ -103,7 +105,9 @@ class UserManagementService extends Service {
      * 
      * @param string $customerId Customer id of the user to change email address for
      * @param string $email New email address of user
+     * 
      * @return bool TRUE Email address changed
+     * 
      * @throws PlenigoException In case of communication errors or invalid parameters
      */
     public static function changeEmail($customerId, $email) {
@@ -133,7 +137,9 @@ class UserManagementService extends Service {
      * Create a login token for an existing user. This functionality is only available for companies with closed user groups.
      * 
      * @param string $customerId Customer id of the user to create login token for
+     * 
      * @return string One time token used to create a valid user session
+     * 
      * @throws PlenigoException In case of communication errors or invalid parameters
      */
     public static function createLoginToken($customerId) {
@@ -163,6 +169,7 @@ class UserManagementService extends Service {
      * @param array $customIds an array of one to four customer access ids
      * 
      * @return boolean TRUE if the transaction was successful
+     * 
      * @throws PlenigoException In case of communication errors or invalid parameters
      */
     public static function importCustomerAccess($customerId, $isExternal = false, $customIds = array()) {
