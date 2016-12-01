@@ -181,12 +181,23 @@ abstract class ErrorCode extends BasicEnum {
             self::HTTP_BAD_REQUEST => self::INVALID_PARAMETERS,
             self::HTTP_INTERNAL_ERROR => self::INTERNAL_ERROR
         ),
+        ApiURLs::USER_MGMT_ACCESS => array(
+            self::HTTP_NOT_FOUND => self::USER_MGMT_NOT_FOUND,
+            self::HTTP_UNAUTHORIZED => self::INVALID_SECRET_OR_COMPANY_ID,
+            self::HTTP_BAD_REQUEST => self::INVALID_PARAMETERS,
+            self::HTTP_INTERNAL_ERROR => self::INTERNAL_ERROR
+        ),
         ApiURLs::COMPANY_USERS => array(
             self::HTTP_UNAUTHORIZED => self::INVALID_SECRET_OR_COMPANY_ID,
             self::HTTP_BAD_REQUEST => self::INVALID_PARAMETERS,
             self::HTTP_INTERNAL_ERROR => self::INTERNAL_ERROR
         ),
         ApiURLs::COMPANY_USERS_SELECT => array(
+            self::HTTP_UNAUTHORIZED => self::INVALID_SECRET_OR_COMPANY_ID,
+            self::HTTP_BAD_REQUEST => self::INVALID_PARAMETERS,
+            self::HTTP_INTERNAL_ERROR => self::INTERNAL_ERROR
+        ),
+        ApiURLs::COMPANY_FAILED_PAYMENTS=> array(
             self::HTTP_UNAUTHORIZED => self::INVALID_SECRET_OR_COMPANY_ID,
             self::HTTP_BAD_REQUEST => self::INVALID_PARAMETERS,
             self::HTTP_INTERNAL_ERROR => self::INTERNAL_ERROR
