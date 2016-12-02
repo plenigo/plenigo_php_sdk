@@ -159,5 +159,4 @@ class FailedPayment {
 
         return $instance;
     }
-
 }

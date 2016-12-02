@@ -122,5 +122,4 @@ class OrderList extends IterableBase {
 
         return new OrderList($arrResulting, $pageNumber, $size, $totalElements);
     }
-
 }

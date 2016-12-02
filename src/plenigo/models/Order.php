@@ -10,7 +10,7 @@ use \plenigo\models\OrderItem;
  * Order
  * 
  * <p>
- * This class contains the failed payment information.
+ * This class contains the order information.
  * </p>
  *
  * @category SDK
@@ -99,7 +99,7 @@ class Order {
     }
 
     /**
-     * Getter method.
+     * Get the order id.
      * 
      * @return string
      */
@@ -108,7 +108,7 @@ class Order {
     }
 
     /**
-     * Getter method.
+     * Get the Order Date.
      * 
      * @return string
      */
@@ -117,7 +117,7 @@ class Order {
     }
 
     /**
-     * Getter method.
+     * Get the Customer Id.
      * 
      * @return string
      */
@@ -126,7 +126,7 @@ class Order {
     }
 
     /**
-     * Getter method.
+     * Get the Currency.
      * 
      * @return string
      */
@@ -135,7 +135,7 @@ class Order {
     }
 
     /**
-     * Getter method.
+     * Get the cumulated price.
      * 
      * @return number
      */
@@ -144,7 +144,7 @@ class Order {
     }
 
     /**
-     * Getter method.
+     * Get the VAT Number.
      * 
      * @return string
      */
@@ -153,7 +153,7 @@ class Order {
     }
 
     /**
-     * Getter method.
+     * Get the ShippingCosts.
      * 
      * @return number
      */
@@ -162,7 +162,7 @@ class Order {
     }
 
     /**
-     * Getter method.
+     * Get the Shipping Costs Taxes.
      * 
      * @return number
      */
@@ -171,7 +171,7 @@ class Order {
     }
 
     /**
-     * Getter method.
+     * The the Purchased Order Indicator.
      * 
      * @return number
      */
@@ -180,7 +180,7 @@ class Order {
     }
 
     /**
-     * Getter method.
+     * Get the Discount.
      * 
      * @return number
      */
@@ -189,7 +189,7 @@ class Order {
     }
 
     /**
-     * Getter method.
+     * Get the Discount Percentage.
      * 
      * @return int
      */
@@ -198,7 +198,7 @@ class Order {
     }
 
     /**
-     * Getter method.
+     * Get all Order Items.
      * 
      * @return array
      */
@@ -306,7 +306,7 @@ class Order {
     }
 
     /**
-     * Setter method for order items.
+     * Setter method for all order items.
      * 
      * @param array $orderItems
      */

@@ -83,7 +83,7 @@ class OrderItem {
     }
 
     /**
-     * Getter method.
+     * Get the product id.
      * 
      * @return string
      */
@@ -92,7 +92,7 @@ class OrderItem {
     }
 
     /**
-     * Getter method.
+     * Get the title.
      * 
      * @return string
      */
@@ -101,7 +101,7 @@ class OrderItem {
     }
 
     /**
-     * Getter method.
+     * Get the price.
      * 
      * @return number
      */
@@ -110,7 +110,7 @@ class OrderItem {
     }
 
     /**
-     * Getter method.
+     * Get the shipping costs.
      * 
      * @return number
      */
@@ -119,7 +119,7 @@ class OrderItem {
     }
 
     /**
-     * Getter method.
+     * Get the taxes.
      * 
      * @return number
      */
@@ -128,7 +128,7 @@ class OrderItem {
     }
 
     /**
-     * Getter method.
+     * Get the tax country.
      * 
      * @return string
      */
@@ -137,7 +137,7 @@ class OrderItem {
     }
 
     /**
-     * Getter method.
+     * Get the quantity.
      * 
      * @return int
      */
@@ -146,7 +146,7 @@ class OrderItem {
     }
 
     /**
-     * Getter method.
+     * Get the cost center.
      * 
      * @return string
      */
@@ -155,7 +155,7 @@ class OrderItem {
     }
 
     /**
-     * Getter method.
+     * Get the revenue account.
      * 
      * @return string
      */
@@ -164,7 +164,7 @@ class OrderItem {
     }
 
     /**
-     * Getter method.
+     * Get the status.
      * 
      * @return string
      */
@@ -200,7 +200,7 @@ class OrderItem {
     }
 
     /**
-     * Setter method shipping costs.
+     * Setter method for shipping costs.
      * 
      * @param number $shippingCosts
      */
@@ -209,7 +209,7 @@ class OrderItem {
     }
 
     /**
-     * Setter method taxes.
+     * Setter method for taxes.
      * 
      * @param number $taxes
      */
@@ -218,7 +218,7 @@ class OrderItem {
     }
 
     /**
-     * Setter method tax country.
+     * Setter method for tax country.
      * 
      * @param string $taxCountry
      */
@@ -301,5 +301,4 @@ class OrderItem {
         $instance->setStatus(isset($map['status']) ? $map['status'] : null);
         return $instance;
     }
-
 }
