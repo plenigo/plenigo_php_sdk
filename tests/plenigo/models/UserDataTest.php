@@ -23,14 +23,15 @@ class UserDataTest extends PHPUnit_Framework_Testcase
             'additionalAddressInfo' => 'more information',
             'postCode' => '12345',
             'city' => 'some city',
-            'country' => 'some country'
+            'country' => 'some country',
+            'externalUserId' => '123456'
         );
 
         $address = Address::createFromMap($data);
 
         $userData = new UserData(
             $data['userId'], $data['email'], $data['name'], $data['username'], $data['gender'], $data['lastName'],
-            $data['firstName'], $address
+            $data['firstName'], $address, $data['externalUserId']
         );
 
         return array(array($userData, $data, $address));
@@ -48,6 +49,7 @@ class UserDataTest extends PHPUnit_Framework_Testcase
         $this->assertEquals($data['gender'], $userData->getGender());
         $this->assertEquals($data['lastName'], $userData->getLastName());
         $this->assertEquals($data['firstName'], $userData->getFirstName());
+        $this->assertEquals($data['externalUserId'], $userData->getExternalUserId());
         $this->assertEquals($address, $userData->getAddress());
     }
 
@@ -70,6 +72,7 @@ class UserDataTest extends PHPUnit_Framework_Testcase
         $this->assertEquals($data['postCode'], $map['postCode']);
         $this->assertEquals($data['city'], $map['city']);
         $this->assertEquals($data['country'], $map['country']);
+        $this->assertEquals($data['externalUserId'], $map['externalUserId']);
     }
 
     /**
