@@ -64,20 +64,26 @@ class UserData {
     private $address;
 
     /**
+     * The external user's ID.
+     */
+    private $externalUserId;
+
+    /**
      * The default constructor with all required parameters.
      *
-     * @param string  $id        The user's id.
-     * @param string  $email     The user's email.
-     * @param string  $name      The user's name.
-     * @param string  $username  The username/nickname.
-     * @param string  $gender    The user's gender.
-     * @param string  $lastName  The user's last name.
-     * @param string  $firstName The user's first name.
-     * @param Address $address   The user's address {@link \plenigo\internal\models\Address}
+     * @param string  $id             The user's id.
+     * @param string  $email          The user's email.
+     * @param string  $name           The user's name.
+     * @param string  $username       The username/nickname.
+     * @param string  $gender         The user's gender.
+     * @param string  $lastName       The user's last name.
+     * @param string  $firstName      The user's first name.
+     * @param Address $address        The user's address {@link \plenigo\internal\models\Address}
+     * @param string  $externalUserId The external user's ID.
      *
      * @return UserData instance
      */
-    public function __construct($id, $email, $name, $username, $gender, $lastName, $firstName, Address $address) {
+    public function __construct($id, $email, $name, $username, $gender, $lastName, $firstName, Address $address, $externalUserId) {
         $this->id = $id;
         $this->email = $email;
         $this->name = $name;
@@ -86,6 +92,7 @@ class UserData {
         $this->lastName = $lastName;
         $this->firstName = $firstName;
         $this->address = $address;
+        $this->externalUserId = $externalUserId;
     }
 
     /**
@@ -161,6 +168,15 @@ class UserData {
     }
 
     /**
+     * Returns the external user's ID.
+     *
+     * @return external user's ID.
+     */
+    public function getExternalUserId() {
+        return $this->externalUserId;
+    }
+
+    /**
      * Generates a map with the UserData properties.
      *
      * @return UserData map.
@@ -174,6 +190,7 @@ class UserData {
             'gender' => $this->getGender(),
             'lastName' => $this->getLastName(),
             'firstName' => $this->getFirstName(),
+            'externalUserId' => $this->getExternalUserId(),
         );
 
         $addressMap = $this->getAddress()->getMap();
@@ -203,8 +220,9 @@ class UserData {
         $currName = isset($map['name']) ? $map['name'] : null;
         $currUserName = isset($map['username']) ? $map['username'] : null;
         $currGender = isset($map['gender']) ? $map['gender'] : null;
+        $externalUserId  = isset($map['externalUserId']) ? $map['externalUserId'] : null;
 
-        return new UserData($userId, $currEmail, $currName, $currUserName, $currGender, $lastName, $currFirstName, $address);
+        return new UserData($userId, $currEmail, $currName, $currUserName, $currGender, $lastName, $currFirstName, $address, $externalUserId);
     }
 
 }
