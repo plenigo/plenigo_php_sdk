@@ -37,7 +37,7 @@ class TokenServiceTest extends PlenigoTestCase
 
         $data = (object) array(
                 'accessCode' => '2345',
-                'redirectUri' => 'http://example.com/redirect',
+                'redirectUri' => 'http://example.com/redirect?id=1&L=232&other=asd',
                 'csrfToken' => 'token-value'
         );
 

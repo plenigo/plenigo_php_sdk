@@ -13,7 +13,7 @@ class LoginSnippetBuilderTest extends PHPUnit_Framework_Testcase
     public function loginSnippetBuilderProvider()
     {
         $data       = array(
-            'redirectUri'   => 'http://example.com/redirect',
+            'redirectUri'   => 'http://example.com/redirect?id=7&L=32&asd=123',
             'accessScope'   => AccessScope::PROFILE,
             'csrfToken'     => md5(uniqid())
         );
@@ -37,7 +37,7 @@ class LoginSnippetBuilderTest extends PHPUnit_Framework_Testcase
         );
 
         $snippetString = $loginSnippet->build();
-
+        
         $this->assertEquals($expectedString, $snippetString);
     }
 
