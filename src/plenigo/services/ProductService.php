@@ -107,19 +107,36 @@ class ProductService extends Service {
      * Obtain a list of product in a paginated way.
      *
      * @param int $pageSize The size of the page, it will be trimmed to 10...100
-     * @param string $page the page number
-     * @return Array an asociative array as a ResultSet with totalElements, page size, last id and the list of products
+     * @param int $page the page number
+     *
+     * @return array an asociative array as a ResultSet with totalElements, page size, last id and the list of products
+     *
      * @throws PlenigoException
      */
     public static function getProductList($pageSize = 10, $page = 0) {
+        return self::getProductListFromServer($pageSize, $page, ApiURLs::LIST_PRODUCTS);
+    }
+
+    /**
+     * Get a list of all products.
+     *
+     * @param int $pageSize The size of the page, it will be trimmed to 10...100
+     * @param int $page the page number
+     * @param string $url url to request
+     *
+     * @return array an asociative array as a ResultSet with totalElements, page size, last id and the list of products
+     *
+     * @throws PlenigoException
+     */
+    private static final function getProductListFromServer($pageSize, $page, $url) {
         $clazz = get_class();
         PlenigoManager::notice(
-                $clazz, "Getting Product Listing (page size=" . $pageSize . ' Page=' . $page . ')');
+            $clazz, "Getting Product Listing (page size=" . $pageSize . ' Page=' . $page . ')');
 
 
         $params = self::configureListParams($pageSize, $page);
 
-        $request = static::getRequest(ApiURLs::LIST_PRODUCTS, false, $params);
+        $request = static::getRequest($url, false, $params);
 
         $prodDataRequest = new static($request);
 
@@ -146,11 +163,27 @@ class ProductService extends Service {
     }
 
     /**
+     * Obtain a list of product with full product details in a paginated way.
+     *
+     * @param int $pageSize The size of the page, it will be trimmed to 10...100
+     * @param int $page the page number
+     *
+     * @return array an asociative array as a ResultSet with totalElements, page size, last id and the list of products
+     *
+     * @throws PlenigoException
+     */
+    public static function getProductListWithDetails($pageSize = 10, $page = 0) {
+        return self::getProductListFromServer($pageSize, $page, ApiURLs::LIST_PRODUCTS_FULL_DETAILS);
+    }
+
+    /**
      * This method retrieves the category data of a provided category id.
      * This can only be used for plenigo managed categories.
      *
      * @param string $categoryId The category id to use.
-     * @return the category data related to the access token
+     *
+     * @return CategoryData
+     *
      * @throws PlenigoException whenever an error happens
      */
     public static function getCategoryData($categoryId) {
@@ -192,6 +225,7 @@ class ProductService extends Service {
      * Constructs a CategoryData object populated fom a response object
      *
      * @param mixed $response the response object from the cURL call
+     *
      * @return CategoryData the resulting CategoryData object
      */
     private static function buildCategoryData($response) {
@@ -202,8 +236,10 @@ class ProductService extends Service {
      * Obtain a list of categories in a paginated way.
      *
      * @param int $pageSize The size of the page, it will be trimmed to 10...100
-     * @param string $page the 0-based page number
-     * @return Array an asociative array as a ResultSet with totalElements, page size, last id and the list of products
+     * @param int $page the 0-based page number
+     *
+     * @return array an asociative array as a ResultSet with totalElements, page size, last id and the list of products
+     *
      * @throws PlenigoException
      */
     public static function getCategoryList($pageSize = 10, $page = 0) {

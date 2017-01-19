@@ -66,6 +66,11 @@ final class ApiURLs
     const LIST_PRODUCTS = "/api/v2/products/search";
 
     /**
+     * This URL is used to get all the products with full details
+     */
+    const LIST_PRODUCTS_FULL_DETAILS = "/api/v2/products/search/full";
+
+    /**
      * This URL is used to get all the products this user has bouight
      */
     const USER_PRODUCTS = "/api/v2/user/{USER_ID}/products";

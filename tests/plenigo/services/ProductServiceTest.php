@@ -203,6 +203,20 @@ class ProductServiceTest extends PlenigoTestCase
     }
 
     /**
+     * @dataProvider productListProvider
+     */
+    public function testGetProductListWithDetails($data)
+    {
+        ProductServiceMock::$requestResponse = $data;
+
+        $pData = ProductServiceMock::getProductListWithDetails(10);
+
+        $this->assertEquals(10, count($pData['elements']));
+
+        $this->assertError(E_USER_NOTICE, "URL CALL=http");
+    }
+
+    /**
      * @dataProvider categoryServiceProvider
      */
     public function testGetCategoryDataSuccess($data)
