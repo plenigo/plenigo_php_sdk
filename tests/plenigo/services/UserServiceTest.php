@@ -74,6 +74,15 @@ use \plenigo\internal\ApiResults;
         return array(array($data));
     }
 
+    public function userBoughtProvider()
+    {
+        UserServiceMock::$requestResponse = null;
+
+        $data = json_decode('{"accessGranted": true}');
+
+        return array(array($data));
+    }
+
     public function cookieSetProvider()
     {
         $nextWeek = time() + (7 * 24 * 60 * 60 * 100);
@@ -200,9 +209,6 @@ use \plenigo\internal\ApiResults;
         $this->assertError(E_USER_NOTICE, "URL CALL");
     }
 
-    /**
-     * @dataProvider userServiceProvider
-     */
     public function testPaywallDisabled()
     {
         $response = json_decode('{"enabled":"false"}');
@@ -246,11 +252,11 @@ use \plenigo\internal\ApiResults;
      * This will check for a bought product, the mocked service will return 200 code and thus granting access to the item
      * 
      * @param object $prodData given by the Provider method
+     *
      * @dataProvider productProvider
      */
     public function testSuccessfulHasUserBought($prodData)
     {
-
         UserServiceMock::$requestResponse = $prodData;
 
         $cookieText = $this->getValidCookie();
@@ -259,6 +265,26 @@ use \plenigo\internal\ApiResults;
         $hasBought = UserServiceMock::hasUserBought($prodData->{'id'});
 
         $this->assertTrue($hasBought);
+        $this->assertError(E_USER_NOTICE, "Checking if user bought Product");
+    }
+
+    /**
+     * This will check for a bought product, the mocked service will return 200 code and thus granting access to the item
+     *
+     * @param object $userBoughtData given by the Provider method
+     *
+     * @dataProvider userBoughtProvider
+     */
+    public function testSuccessfulHasBoughtProductWithProducts($userBoughtData)
+    {
+        UserServiceMock::$requestResponse = $userBoughtData;
+
+        $cookieText = $this->getValidCookie();
+        UserServiceMock::setCookie(PlenigoManager::PLENIGO_USER_COOKIE_NAME, $cookieText);
+
+        $accessDetails = UserServiceMock::hasBoughtProductWithProducts('2345');
+
+        $this->assertTrue($accessDetails["accessGranted"]);
         $this->assertError(E_USER_NOTICE, "Checking if user bought Product");
     }
 
