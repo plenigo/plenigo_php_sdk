@@ -87,6 +87,12 @@ class Order {
     private $discountPercentage;
 
     /**
+     * Voucher code used
+     * @var string
+     */
+    private $voucherCode;
+
+    /**
      * Array of order items
      * @var array 
      */
@@ -198,6 +204,16 @@ class Order {
     }
 
     /**
+     * Get voucher code.
+     *
+     * @return string
+     */
+    public function getVoucherCode()
+    {
+        return $this->voucherCode;
+    }
+
+    /**
      * Get all Order Items.
      * 
      * @return array
@@ -306,6 +322,16 @@ class Order {
     }
 
     /**
+     * Set voucher code used.
+     *
+     * @param string $voucherCode
+     */
+    public function setVoucherCode($voucherCode)
+    {
+        $this->voucherCode = $voucherCode;
+    }
+
+    /**
      * Setter method for all order items.
      * 
      * @param array $orderItems
@@ -334,6 +360,7 @@ class Order {
         $instance->setPurchaseOrderIndicator(isset($map['purchaseOrderIndicator']) ? $map['purchaseOrderIndicator'] : null);
         $instance->setDiscount(isset($map['discount']) ? $map['discount'] : null);
         $instance->setDiscountPercentage(isset($map['discountPercentage']) ? $map['discountPercentage'] : null);
+        $instance->setVoucherCode(isset($map['voucherCode']) ? $map['voucherCode'] : null);
         if (isset($map['orderItems']) && !is_null($map['orderItems']) && count(($map['orderItems'])) > 0) {
             $arrItems = array();
             foreach ($map['orderItems'] as $oItem) {
