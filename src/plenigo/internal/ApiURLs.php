@@ -164,4 +164,9 @@ final class ApiURLs
      * This URL is used to search for transactions for the company
      */
     const TX_SEARCH = "/api/v2/transactions/search";
+    
+    /**
+     * Creates a voucher campaign and returns the amount of vouchers
+     */
+    const VOUCHER_CREATE = "/api/v2/voucher/create";
 }
