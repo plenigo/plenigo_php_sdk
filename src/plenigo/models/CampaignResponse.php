@@ -85,9 +85,9 @@ class CampaignResponse {
         foreach ($data AS $key => $value) {
             if (is_array($value)) {
                 foreach ($value as $valueObj) {
-                    if(is_array($valueObj)) {
+                    if (is_array($valueObj)) {
                         $sub = new ChannelVouchers();
-                        $sub->fromJSON($valueObj);
+                        $sub->fromJSON((array) $valueObj);
                         $valueObj = $sub;
                     }
                     $this->{$key}[] = $valueObj;
