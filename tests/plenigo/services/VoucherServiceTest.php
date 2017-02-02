@@ -56,8 +56,8 @@ class VoucherServiceTest extends PlenigoTestCase {
         print_r($result);
         $this->assertTrue($result->getName() == self::PROD_DESC_1);
         $this->assertTrue($result->getProductId() == self::PROD_ID_1);
-        $this->assertTrue(count($result->getChannelVouchers()) == 1);
-        $this->assertTrue(count($result->getChannels()) == 1);
+        $this->assertTrue(count($result->getChannelVouchers()) == 2);
+        $this->assertTrue(count($result->getChannels()) == 2);
         $arrCVouchers=$result->getChannelVouchers();
         $this->assertTrue(count($arrCVouchers[0]->getIds()) == $amount);
 
