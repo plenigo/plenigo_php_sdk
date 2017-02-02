@@ -169,4 +169,15 @@ final class ApiURLs
      * Creates a voucher campaign and returns the amount of vouchers
      */
     const VOUCHER_CREATE = "/api/v2/voucher/create";
+
+    /**
+     * Execute a voucher checkout for a free product
+     */
+    const CHECKOUT_VOUCHER = "/api/v2/checkout/free/voucher/{VOUCHER_ID}/{USER_ID}";
+
+        /**
+     * Execute a voucher checkout for a free product
+     */
+    const CHECKOUT_PRODUCT = "/api/v2/checkout/free/product/{PROD_ID}/{USER_ID}";
+
 }

@@ -44,6 +44,8 @@ abstract class ErrorCode extends BasicEnum {
     const MOBILE_SECRET_NOT_FOUND = 16;
     const USER_MGMT_INVALID_COMPANY = 17;
     const USER_MGMT_NOT_FOUND = 18;
+    const ID_DATA_NOT_FOUND = 19;
+    const PRODUCT_NOT_FREE = 20;
     const HTTP_OK = 200;
     const HTTP_BAD_REQUEST = 400;
     const HTTP_UNAUTHORIZED = 401;
@@ -79,6 +81,8 @@ abstract class ErrorCode extends BasicEnum {
         self::MOBILE_SECRET_NOT_FOUND => 'Mobile secret not found',
         self::USER_MGMT_INVALID_COMPANY => 'The company is not qualified for a closed user group',
         self::USER_MGMT_NOT_FOUND => 'The customer id was not found',
+        self::ID_DATA_NOT_FOUND => 'Company id, customer id or product id is not valid',
+        self::PRODUCT_NOT_FREE => 'The Product is not for free',
     );
 
     /**
@@ -215,6 +219,20 @@ abstract class ErrorCode extends BasicEnum {
         ApiURLs::VOUCHER_CREATE => array(
             self::HTTP_BAD_REQUEST => self::INVALID_PARAMETERS,
             self::HTTP_UNAUTHORIZED => self::INVALID_SECRET_OR_COMPANY_ID,
+            self::HTTP_INTERNAL_ERROR => self::INTERNAL_ERROR
+        ),
+        ApiURLs::CHECKOUT_VOUCHER => array(
+            self::HTTP_BAD_REQUEST => self::INVALID_PARAMETERS,
+            self::HTTP_UNAUTHORIZED => self::INVALID_SECRET_OR_COMPANY_ID,
+            self::HTTP_NOT_FOUND => self::ID_DATA_NOT_FOUND,
+            self::HTTP_PRECONDITION_FAILED => self::PRODUCT_NOT_FREE,
+            self::HTTP_INTERNAL_ERROR => self::INTERNAL_ERROR
+        ),
+        ApiURLs::CHECKOUT_PRODUCT=> array(
+            self::HTTP_BAD_REQUEST => self::INVALID_PARAMETERS,
+            self::HTTP_UNAUTHORIZED => self::INVALID_SECRET_OR_COMPANY_ID,
+            self::HTTP_NOT_FOUND => self::ID_DATA_NOT_FOUND,
+            self::HTTP_PRECONDITION_FAILED => self::PRODUCT_NOT_FREE,
             self::HTTP_INTERNAL_ERROR => self::INTERNAL_ERROR
         ),
     );

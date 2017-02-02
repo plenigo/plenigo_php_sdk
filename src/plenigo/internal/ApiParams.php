@@ -167,5 +167,9 @@ class ApiParams extends BasicEnum {
      * The replacement tag for URL directory variable value for the Application ID
      */
     const URL_APP_ID_TAG = "{APP_ID}";
-
+    
+    /**
+     * The replacement tag for the Voucher ID
+     */
+    const URL_VOUCHER_ID_TAG = "{VOUCHER_ID}";
 }
