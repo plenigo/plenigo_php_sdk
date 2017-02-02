@@ -53,7 +53,6 @@ class VoucherServiceTest extends PlenigoTestCase {
 
         $this->assertFalse(is_null($result));
         $this->assertInstanceOf('plenigo\models\CampaignResponse', $result);
-        print_r($result);
         $this->assertTrue($result->getName() == self::PROD_DESC_1);
         $this->assertTrue($result->getProductId() == self::PROD_ID_1);
         $this->assertTrue(count($result->getChannelVouchers()) == 2);
@@ -61,7 +60,7 @@ class VoucherServiceTest extends PlenigoTestCase {
         $arrCVouchers=$result->getChannelVouchers();
         $this->assertTrue(count($arrCVouchers[0]->getIds()) == $amount);
 
-        //$this->assertError(E_USER_NOTICE, "POST JSON URL");
+        $this->assertError(E_USER_NOTICE, "POST JSON URL");
     }
 
 }
