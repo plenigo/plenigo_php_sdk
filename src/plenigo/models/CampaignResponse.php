@@ -42,7 +42,7 @@ class CampaignResponse {
      */
     public function __construct($json = false) {
         if ($json) {
-            $this->fromJSON(json_decode($json, true));
+            $this->fromJSON((array)$json);
         }
     }
 
