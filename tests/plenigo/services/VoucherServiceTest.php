@@ -27,6 +27,7 @@ class VoucherServiceTest extends PlenigoTestCase {
     const PROD_ID_1 = "fuwUyCq8281643736141";
     const PROD_DESC_1 = "This is a test 1";
     const PROD_CHAN_1 = "Channel Test 1";
+    const PROD_CHAN_2 = "Channel Test 2";
     const SECRET_ID = 'AMXzF7qJ9y0uuz2IawRIk6ZMLVeYKq9yXh7lURXQ';
     const COMPANY_ID = 'h7evZBaXvhaLVHYRTIHD';
 
@@ -37,7 +38,7 @@ class VoucherServiceTest extends PlenigoTestCase {
     }
     
     public function voucherServiceProvider() {
-        $data = json_decode('{ "name": "' . self::PROD_DESC_1 . '", "productId": "' . self::PROD_ID_1 . '", "channels": [ "' . self::PROD_CHAN_1 . '" ], "channelVouchers": [ { "channel": "' . self::PROD_CHAN_1 . '", "ids": [ "ABC","CDE","EFG" ] } ] }');
+        $data = json_decode('{ "name": "' . self::PROD_DESC_1 . '", "productId": "' . self::PROD_ID_1 . '", "channels": [ "' . self::PROD_CHAN_1 . '","' . self::PROD_CHAN_2 . '" ], "channelVouchers": [ { "channel": "' . self::PROD_CHAN_1 . '", "ids": [ "ABC","CDE","EFG" ] }, { "channel": "' . self::PROD_CHAN_2 . '", "ids": [ "ABC","CDE","EFG" ] } ] }');
 
         return array(array($data));
     }
@@ -57,7 +58,8 @@ class VoucherServiceTest extends PlenigoTestCase {
         $this->assertTrue($result->getProductId() == self::PROD_ID_1);
         $this->assertTrue(count($result->getChannelVouchers()) == 1);
         $this->assertTrue(count($result->getChannels()) == 1);
-        $this->assertTrue(count($result->getChannelVouchers()[0]->getIds()) == $amount);
+        $arrCVouchers=$result->getChannelVouchers();
+        $this->assertTrue(count($arrCVouchers[0]->getIds()) == $amount);
 
         //$this->assertError(E_USER_NOTICE, "POST JSON URL");
     }

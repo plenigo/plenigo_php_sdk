@@ -42,7 +42,7 @@ class CampaignResponse {
      */
     public function __construct($json = false) {
         if ($json) {
-            $this->fromJSON((array)$json);
+            $this->fromJSON((array) $json);
         }
     }
 
@@ -84,11 +84,17 @@ class CampaignResponse {
     public function fromJSON($data) {
         foreach ($data AS $key => $value) {
             if (is_array($value)) {
-                $sub = new ChannelVouchers();
-                $sub->fromJSON($value);
-                $value = $sub;
+                foreach ($value as $valueObj) {
+                    if(is_array($valueObj)) {
+                        $sub = new ChannelVouchers();
+                        $sub->fromJSON($valueObj);
+                        $valueObj = $sub;
+                    }
+                    $this->{$key}[] = $valueObj;
+                }
+            } else {
+                $this->{$key} = $value;
             }
-            $this->{$key} = $value;
         }
     }
 
