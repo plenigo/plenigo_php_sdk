@@ -71,7 +71,7 @@ class VoucherService extends Service {
             $amount = 1;
         }
 
-        if ($type != 'SINGLE' && $this->type != 'MULTIPLE') {
+        if ($type != 'SINGLE' && $type != 'MULTIPLE') {
             if ($amount == 1) {
                 $type = 'SINGLE';
             } else {
