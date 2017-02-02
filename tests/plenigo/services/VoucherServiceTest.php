@@ -27,7 +27,15 @@ class VoucherServiceTest extends PlenigoTestCase {
     const PROD_ID_1 = "fuwUyCq8281643736141";
     const PROD_DESC_1 = "This is a test 1";
     const PROD_CHAN_1 = "Channel Test 1";
+    const SECRET_ID = 'AMXzF7qJ9y0uuz2IawRIk6ZMLVeYKq9yXh7lURXQ';
+    const COMPANY_ID = 'h7evZBaXvhaLVHYRTIHD';
 
+    public static function setUpBeforeClass()
+    {
+        PlenigoManager::configure(self::SECRET_ID, self::COMPANY_ID, true);
+        PlenigoManager::setDebug(true);
+    }
+    
     public function voucherServiceProvider() {
         $data = json_decode('{ "name": "' . self::PROD_DESC_1 . '", "productId": "' . self::PROD_ID_1 . '", "channels": [ "' . self::PROD_CHAN_1 . '" ], "channelVouchers": [ { "channel": "' . self::PROD_CHAN_1 . '", "ids": [ "ABC","CDE","EFG" ] } ] }');
 
@@ -44,6 +52,7 @@ class VoucherServiceTest extends PlenigoTestCase {
 
         $this->assertFalse(is_null($result));
         $this->assertInstanceOf('plenigo\models\CampaignResponse', $result);
+        print_r($result);
         $this->assertTrue($result->getName() == self::PROD_DESC_1);
         $this->assertTrue($result->getProductId() == self::PROD_ID_1);
         $this->assertTrue(count($result->getChannelVouchers()) == 1);

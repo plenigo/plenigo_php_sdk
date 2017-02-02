@@ -95,7 +95,7 @@ class CompanyServiceTest extends PlenigoTestCase {
         return array(array($data));
     }
     
-    public function testOrdersProvider() {
+    public function mockOrdersProvider() {
         $data = json_decode('{"totalElements":179,"size":10,"elements":['
                 . '{"discountPercentage":"0","orderId":"jYsFxpA7B9t4y1h2J5g272e2i94714V1",'
                 . '"purchaseOrderIndicator":"test","customerId":"56200075",'
@@ -249,7 +249,7 @@ class CompanyServiceTest extends PlenigoTestCase {
     }
 
         /**
-     * @dataProvider testOrdersProvider
+     * @dataProvider mockOrdersProvider
      */
     public function testOrdersList($data) {
         CompanyServiceMock::$requestResponse = $data;
