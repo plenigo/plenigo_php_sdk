@@ -41,7 +41,7 @@ class CheckoutServiceTest extends PlenigoTestCase {
     }
 
     public function testBuyFreeProductTrue() {
-        AppManagementServiceMock::$requestResponse = "";
+        CheckoutServiceMock::$requestResponse = "";
         $result = CheckoutServiceMock::buyFreeProduct(self::PROD_ID_1, self::CUSTOMER_ID, false);
 
         $this->assertFalse(is_null($result));
