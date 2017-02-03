@@ -25,9 +25,7 @@ use \plenigo\internal\ApiResults;
 class CheckoutServiceTest extends PlenigoTestCase {
 
     const PROD_ID_1 = "fuwUyCq8281643736141";
-    const PROD_DESC_1 = "This is a test 1";
-    const PROD_CHAN_1 = "Channel Test 1";
-    const PROD_CHAN_2 = "Channel Test 2";
+    const CUSTOMER_ID = 'MAP27KCA3K2P';
     const SECRET_ID = 'AMXzF7qJ9y0uuz2IawRIk6ZMLVeYKq9yXh7lURXQ';
     const COMPANY_ID = 'h7evZBaXvhaLVHYRTIHD';
 
