@@ -47,13 +47,13 @@ class CheckoutService extends Service {
      * 
      * @param string $voucherCode Voucher code to use
      * @param string $customerId Customer id of the user to checkout the voucher for
-     * @param boolean $externalUserid Flag indicating if customer id sent is the external customer id
+     * @param boolean $externalUserId Flag indicating if customer id sent is the external customer id
      * 
      * @return boolean TRUE if the Checkout succeeded 
      * 
      * @throws PlenigoException
      */
-    public static function redeemVoucher($voucherCode = null, $customerId = null, $externalUserid = true) {
+    public static function redeemVoucher($voucherCode = null, $customerId = null, $externalUserId = false) {
         if (is_null($customerId)) {
             throw new PlenigoException('Customer ID is mandatory!');
         }
@@ -73,14 +73,14 @@ class CheckoutService extends Service {
 
         $url = str_ireplace(ApiParams::URL_USER_ID_TAG, $customerId, ApiURLs::CHECKOUT_VOUCHER);
         $url = str_ireplace(ApiParams::URL_VOUCHER_ID_TAG, $voucherCode, $url);
-        $external = ($externalUserid) ? 'true' : 'false';
+        $external = ($externalUserId) ? 'true' : 'false';
         $url .= "?ipAddress=" . $ipAddress . "&useExternalCustomerId=" . $external;
         
         $request = static::postRequest($url, false);
 
         $objRequest = new static($request);
 
-        $data = parent::executeRequest($objRequest, ApiURLs::CHECKOUT_VOUCHER, self::ERR_MSG_VOUCHER);
+        parent::executeRequest($objRequest, ApiURLs::CHECKOUT_VOUCHER, self::ERR_MSG_VOUCHER);
 
         return true;
     }
@@ -90,13 +90,13 @@ class CheckoutService extends Service {
      * 
      * @param string $productId Product id to use
      * @param string $customerId Customer id of the user to checkout the voucher for
-     * @param boolean $externalUserid Flag indicating if customer id sent is the external customer id
+     * @param boolean $externalUserId Flag indicating if customer id sent is the external customer id
      * 
      * @return boolean TRUE if the Checkout succeeded 
      * 
      * @throws PlenigoException
      */
-    public static function buyFreeProduct($productId = null, $customerId = null, $externalUserid = true) {
+    public static function buyFreeProduct($productId = null, $customerId = null, $externalUserId = false) {
         if (is_null($customerId)) {
             throw new PlenigoException('Customer ID is mandatory!');
         }
@@ -116,14 +116,14 @@ class CheckoutService extends Service {
 
         $url = str_ireplace(ApiParams::URL_USER_ID_TAG, $customerId, ApiURLs::CHECKOUT_PRODUCT);
         $url = str_ireplace(ApiParams::URL_PROD_ID_TAG, $productId, $url);
-        $external = ($externalUserid) ? 'true' : 'false';
+        $external = ($externalUserId) ? 'true' : 'false';
         $url .= "?ipAddress=" . $ipAddress . "&useExternalCustomerId=" . $external;
         
         $request = static::postRequest($url, false);
 
         $objRequest = new static($request);
 
-        $data = parent::executeRequest($objRequest, ApiURLs::CHECKOUT_PRODUCT, self::ERR_MSG_VOUCHER);
+        parent::executeRequest($objRequest, ApiURLs::CHECKOUT_PRODUCT, self::ERR_MSG_VOUCHER);
 
         return true;
     }
