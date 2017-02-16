@@ -74,7 +74,8 @@ class CheckoutService extends Service {
         $url = str_ireplace(ApiParams::URL_USER_ID_TAG, $customerId, ApiURLs::CHECKOUT_VOUCHER);
         $url = str_ireplace(ApiParams::URL_VOUCHER_ID_TAG, $voucherCode, $url);
         $external = ($externalUserId) ? 'true' : 'false';
-        $url .= "?ipAddress=" . $ipAddress . "&useExternalCustomerId=" . $external;
+        $testModeText = (PlenigoManager::get()->isTestMode()) ? 'true' : 'false';
+        $url .= "?ipAddress=" . $ipAddress . "&useExternalCustomerId=" . $external . "&testMode=" . $testModeText;
         
         $request = static::postRequest($url, false);
 
@@ -117,7 +118,8 @@ class CheckoutService extends Service {
         $url = str_ireplace(ApiParams::URL_USER_ID_TAG, $customerId, ApiURLs::CHECKOUT_PRODUCT);
         $url = str_ireplace(ApiParams::URL_PROD_ID_TAG, $productId, $url);
         $external = ($externalUserId) ? 'true' : 'false';
-        $url .= "?ipAddress=" . $ipAddress . "&useExternalCustomerId=" . $external;
+        $testModeText = (PlenigoManager::get()->isTestMode()) ? 'true' : 'false';
+        $url .= "?ipAddress=" . $ipAddress . "&useExternalCustomerId=" . $external . "&testMode=" . $testModeText;
         
         $request = static::postRequest($url, false);
 
