@@ -7,12 +7,13 @@ require_once __DIR__ . '/../internal/ApiURLs.php';
 require_once __DIR__ . '/../internal/ApiParams.php';
 require_once __DIR__ . '/../internal/services/Service.php';
 require_once __DIR__ . '/../models/CampaignResponse.php';
+require_once __DIR__ . '/../PlenigoManager.php';
 
 use \plenigo\PlenigoException;
 use \plenigo\internal\ApiURLs;
 use \plenigo\internal\ApiParams;
 use \plenigo\internal\services\Service;
-use \plenigo\models\CampaignResponse;
+use \plenigo\PlenigoManager;
 
 /**
  * CheckoutService
