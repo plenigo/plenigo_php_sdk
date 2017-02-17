@@ -82,7 +82,24 @@ class CheckoutService extends Service {
 
         $objRequest = new static($request);
 
-        parent::executeRequest($objRequest, ApiURLs::CHECKOUT_VOUCHER, self::ERR_MSG_VOUCHER);
+        try {
+            parent::executeRequest($objRequest, ApiURLs::CHECKOUT_VOUCHER, self::ERR_MSG_VOUCHER);
+        } catch(PlenigoException $ex) {
+            switch ($ex->getCode()) {
+                case 400:
+                    throw new PlenigoException("Parameters passed are not correct.", $ex->getCode(), $ex->getPrevious());
+                case 401:
+                    throw new PlenigoException("Company id and/or company secret is not correct.", $ex->getCode(), $ex->getPrevious());
+                case 404:
+                    throw new PlenigoException("Company id, customer id or product id cannot be found.", $ex->getCode(), $ex->getPrevious());
+                case 412:
+                    throw new PlenigoException("Voucher represents a product that is not zero payment.", $ex->getCode(), $ex->getPrevious());
+                case 500:
+                    throw new PlenigoException("Internal server error.", $ex->getCode(), $ex->getPrevious());
+                default:
+                    throw $ex;
+            }
+        }
 
         return true;
     }
@@ -126,7 +143,24 @@ class CheckoutService extends Service {
 
         $objRequest = new static($request);
 
-        parent::executeRequest($objRequest, ApiURLs::CHECKOUT_PRODUCT, self::ERR_MSG_VOUCHER);
+        try {
+            parent::executeRequest($objRequest, ApiURLs::CHECKOUT_PRODUCT, self::ERR_MSG_VOUCHER);
+        } catch(PlenigoException $ex) {
+            switch ($ex->getCode()) {
+                case 400:
+                    throw new PlenigoException("Parameters passed are not correct.", $ex->getCode(), $ex->getPrevious());
+                case 401:
+                    throw new PlenigoException("Company id and/or company secret is not correct.", $ex->getCode(), $ex->getPrevious());
+                case 404:
+                    throw new PlenigoException("Company id, customer id or product id cannot be found.", $ex->getCode(), $ex->getPrevious());
+                case 412:
+                    throw new PlenigoException("Product is not a zero payment product.", $ex->getCode(), $ex->getPrevious());
+                case 500:
+                    throw new PlenigoException("Internal server error.", $ex->getCode(), $ex->getPrevious());
+                default:
+                    throw $ex;
+            }
+        }
 
         return true;
     }

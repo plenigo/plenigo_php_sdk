@@ -29,8 +29,8 @@ class PlenigoException extends \Exception
      * This constructor is used when an error code
      * has been obtained from the server.
      *
-     * @param type $message The response message
-     * @param type $code The response code
+     * @param string $message The response message
+     * @param int $code The response code
      * @param type $previous The previous Exception
      */
     public function __construct($message, $code = 0, $previous = null)
