@@ -38,6 +38,7 @@ class ProductData {
     private $videoPrequelTime = null;
     private $maxParallelAppAccess = null;
     private $customInfo = null;
+    private $validityTimeInDays = null;
 
     /**
      * Product Data constructor, must be filled with the required data.
@@ -257,6 +258,26 @@ class ProductData {
     }
 
     /**
+     * Get validity time of the bought product in days.
+     *
+     * @return string validity time of the bought product in days
+     */
+    public function getValidityTimeInDays()
+    {
+        return $this->validityTimeInDays;
+    }
+
+    /**
+     * Set validity time of the bought product in days.
+     *
+     * @param string $validityTimeInDays validity time of the bought product in days
+     */
+    public function setValidityTimeInDays($validityTimeInDays)
+    {
+        $this->validityTimeInDays = $validityTimeInDays;
+    }
+
+    /**
      * Gets the Cutom Info number
      * 
      * @return int
@@ -304,6 +325,10 @@ class ProductData {
 
         if (isset($map['customInfo']) && !is_null($map['customInfo'])) {
             $data->setCustomInfo($map['customInfo']);
+        }
+
+        if (isset($map['validityTimeInDays']) && !is_null($map['validityTimeInDays'])) {
+            $data->setValidityTimeInDays($map['validityTimeInDays']);
         }
 
         return $data;
