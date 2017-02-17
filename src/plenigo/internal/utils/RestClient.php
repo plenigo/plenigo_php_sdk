@@ -57,7 +57,7 @@ class RestClient {
      * @param array  $params An optional map of params to pass
      *                       on to the request as a query string.
      *
-     * @return the request response
+     * @return \plenigo\internal\utils\RestClient request response
      *
      * @throws \Exception on request error.
      */
@@ -87,7 +87,7 @@ class RestClient {
      * @param array  $params An optional map of params to pass
      *                       on to the request as a query string.
      *
-     * @return the request response
+     * @return \plenigo\internal\utils\RestClient request response
      *
      * @throws \Exception on request error.
      */
@@ -122,7 +122,7 @@ class RestClient {
      * @param array  $params An optional map of params to pass
      *                       on to the request as post values.
      *
-     * @return the request response
+     * @return \plenigo\internal\utils\RestClient request response
      *
      * @throws \Exception on request error.
      */
@@ -150,7 +150,7 @@ class RestClient {
      * @param string $url    The url to access.
      * @param array  $params An array to be represented as a JSON object in the requets body.
      *
-     * @return the request response
+     * @return \plenigo\internal\utils\RestClient request response
      *
      * @throws \Exception on request error.
      */
@@ -178,7 +178,7 @@ class RestClient {
      * @param string $url    The url to access.
      * @param array  $params An array to be represented as a JSON object in the requets body.
      *
-     * @return the request response
+     * @return \plenigo\internal\utils\RestClient request response
      *
      * @throws \Exception on request error.
      */

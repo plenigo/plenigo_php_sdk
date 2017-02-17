@@ -50,7 +50,7 @@ class Service {
      * @param bool $oauth TRUE if the needed request is going to the OAuth API.
      * @param array  $params   Optional params to pass to the request.
      *
-     * @return the request result.
+     * @return \plenigo\internal\utils\RestClient request result.
      */
     protected static function getRequest($endPoint, $oauth = false, array $params = array()) {
         if ($oauth) {
@@ -72,7 +72,7 @@ class Service {
      * @param bool $oauth TRUE if the needed request is going to the OAuth API.
      * @param array $params Optional params to pass to the request.
      * 
-     * @return the request result
+     * @return \plenigo\internal\utils\RestClient request result
      */
     protected static function deleteRequest($endPoint, $oauth = false, array $params = array()) {
         if ($oauth) {
@@ -94,7 +94,7 @@ class Service {
      * @param bool $oauth TRUE if the needed request is going to the OAuth API.
      * @param array  $params   Optional params to pass to the request.
      *
-     * @return the request result.
+     * @return \plenigo\internal\utils\RestClient the request result.
      */
     protected static function postRequest($endPoint, $oauth = false, array $params = array()) {
         if ($oauth) {
@@ -116,7 +116,7 @@ class Service {
      * @param bool $oauth TRUE if the needed request is going to the OAuth API.
      * @param array  $params   Optional params to pass to the request.
      *
-     * @return the request result.
+     * @return \plenigo\internal\utils\RestClient request result.
      */
     protected static function postJSONRequest($endPoint, $oauth = false, array $params = array()) {
         if ($oauth) {
@@ -137,7 +137,7 @@ class Service {
      * @param string $endPoint The REST end-point to access.
      * @param array  $params   Optional params to pass to the request.
      *
-     * @return the request result.
+     * @return \plenigo\internal\utils\RestClient request result.
      */
     protected static function putJSONRequest($endPoint, array $params = array()) {
         $clazz = get_class();
@@ -153,7 +153,7 @@ class Service {
      * @param string $name  The option name.
      * @param mixed  $value The option value.
      *
-     * @return Returns itself for chaining purposes.
+     * @return Service Returns itself for chaining purposes.
      */
     public function setOption($name, $value) {
         $this->request->setOption($name, $value);
@@ -220,7 +220,7 @@ class Service {
      * gets its code and provides a PlenigoException describing it 
      * with the error parameters
      * 
-     * @param RestClient $pRequest The RestClient object to execute for this request
+     * @param \plenigo\internal\utils\RestClient $pRequest The RestClient object to execute for this request
      * @param string $pErrorSource the URL key for the error translation table
      * @param string $pErrorMsg the Error message to show in the Plenigo Exception thrown
      * 
