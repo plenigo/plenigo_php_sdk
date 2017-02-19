@@ -39,6 +39,7 @@ class ProductData {
     private $maxParallelAppAccess = null;
     private $customInfo = null;
     private $validityTimeInDays = null;
+    private $categoryId = null;
 
     /**
      * Product Data constructor, must be filled with the required data.
@@ -296,6 +297,28 @@ class ProductData {
     }
 
     /**
+     * Get category id.
+     *
+     * @return string category id
+     */
+    public function getCategoryId()
+    {
+        return $this->categoryId;
+    }
+
+    /**
+     * Set category id.
+     *
+     * @param string $categoryId category id
+     */
+    public function setCategoryId($categoryId)
+    {
+        $this->categoryId = $categoryId;
+    }
+
+
+
+    /**
      * Creates a ProductData instance from an array map.
      *
      * @param array $map The array map to use for the instance creation.
@@ -329,6 +352,11 @@ class ProductData {
 
         if (isset($map['validityTimeInDays']) && !is_null($map['validityTimeInDays'])) {
             $data->setValidityTimeInDays($map['validityTimeInDays']);
+        }
+
+
+        if (isset($map['categoryId']) && !is_null($map['categoryId'])) {
+            $data->setCategoryId($map['categoryId']);
         }
 
         return $data;
