@@ -172,7 +172,7 @@ class CompanyService extends Service {
      * @param int $page Number of the page (starting from 0)
      * @param int $size Size of the page - must be between 10 and 100
      * 
-     * @return FailedPaymentList A paginated list of FailedPayment objects
+     * @return mixed list of orders
      */
     public static function getOrders($start = null, $end = null, $testMode = false , $page = 0, $size = 10) {
         // sanitize dates

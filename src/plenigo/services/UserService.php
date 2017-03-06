@@ -321,13 +321,14 @@ class UserService extends Service {
     }
 
     /**
-     * <p>Retrieves the product and suscriptions list for the current (logged in) 
-     * user, then returns it as an associative array with this sintax</p>
+     * <p>Retrieves the product and subscriptions list for the current (logged in)
+     * user, then returns it as an associative array with this syntax</p>
      * <pre>
      * array (
      *   'singleProducts' => array (
      *     0 => array(
      *        'productId' => 'xxxx',
+     *        'originalProductId' => 'xxxx',
      *        'transactionId' => 'AAAAAAABBBBBBDDDEDDEDEDEDEDEDED'
      *        'title' => 'prod title',
      *        'buyDate' => 'YYYY-MM-DD HH:mm:ss +0100',
@@ -347,6 +348,7 @@ class UserService extends Service {
      *   'subscriptions' => array (
      *     0 => array(
      *        'productId' => 'yyyyyy',
+     *        'originalProductId' => 'yyyyyy',
      *        'title' => 'Subscription title',
      *        'startDate' => 'YYYY-MM-DD HH:mm:ss +0100',
      *        'endDate' => 'YYYY-MM-DD HH:mm:ss +0100',
