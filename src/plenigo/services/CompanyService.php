@@ -12,6 +12,7 @@ require_once __DIR__ . '/../models/FailedPaymentList.php';
 require_once __DIR__ . '/../models/OrderList.php';
 require_once __DIR__ . '/../models/ErrorCode.php';
 
+use plenigo\models\SubscriptionList;
 use \plenigo\PlenigoManager;
 use \plenigo\PlenigoException;
 use \plenigo\internal\ApiURLs;
@@ -187,7 +188,7 @@ class CompanyService extends Service {
         // Check that start date is valid
         if (is_null($start)) {
             $dEnd = new \DateTime($end);
-            $start = date("Y-m-d", strtotime("-6 MONTH", $dEnd)); // 6 month before end date
+            $start = date("Y-m-d", strtotime("-12 MONTH", $dEnd)); // 6 month before end date
         }
 
         // parameter array
@@ -205,6 +206,43 @@ class CompanyService extends Service {
         $fpRequest = new static($request);
         $data = parent::executeRequest($fpRequest, ApiURLs::COMPANY_ORDERS, self::ERR_MSG_GET_ORDERS);
         $result = OrderList::createFromMap((array) $data);
+
+        return $result;
+    }
+
+    /**
+     * Returns a list of subscriptions of the specified company.
+     *
+     * @param string $start Date start of the interval (String format YYYY-MM-DD)
+     * @param string $end Date end of the interval (String format YYYY-MM-DD)
+     * @param bool $testMode Test mode Flag
+     * @param int $page Number of the page (starting from 0)
+     * @param int $size Size of the page - must be between 10 and 100
+     *
+     * @return mixed list of subscriptions
+     */
+    public static function getSubscriptions($start = null, $end = null, $testMode = false , $page = 0, $size = 10) {
+        // check end date is not in the future
+        $dFuture = new \DateTime($end);
+        $dNow = new \DateTime();
+        if ($dFuture > $dNow) {
+            $end = date("Y-m-d");
+        }
+        // parameter array
+        $map = array(
+            'page' => SdkUtils::clampNumber($page, 0, null),
+            'size' => SdkUtils::clampNumber($size, 10, 100),
+            'startDate' => $start,
+            'endDate' => $end,
+            'testMode' =>$testMode
+        );
+
+        $url = ApiURLs::COMPANY_ORDERS;
+
+        $request = static::getRequest($url, false, $map);
+        $fpRequest = new static($request);
+        $data = parent::executeRequest($fpRequest, ApiURLs::COMPANY_SUBSCRIPTIONS, self::ERR_MSG_GET_ORDERS);
+        $result = SubscriptionList::createFromMap((array) $data);
 
         return $result;
     }
