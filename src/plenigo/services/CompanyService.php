@@ -237,7 +237,7 @@ class CompanyService extends Service {
             'testMode' =>$testMode
         );
 
-        $url = ApiURLs::COMPANY_ORDERS;
+        $url = ApiURLs::COMPANY_SUBSCRIPTIONS;
 
         $request = static::getRequest($url, false, $map);
         $fpRequest = new static($request);
