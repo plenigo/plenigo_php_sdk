@@ -158,7 +158,12 @@ final class ApiURLs
     /**
      * This URL is used to get a list of company orders
      */
-    const COMPANY_ORDERS = "/api/v2/orders/search";    
+    const COMPANY_ORDERS = "/api/v2/orders/search";
+
+    /**
+     * This URL is used to get a list of company subscriptions
+     */
+    const COMPANY_SUBSCRIPTIONS = "/api/v2/subscriptions/search";
 
     /**
      * This URL is used to search for transactions for the company
