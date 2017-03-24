@@ -6,7 +6,7 @@ require_once __DIR__ . '/IterableBase.php';
 require_once __DIR__ . '/Subscription.php';
 
 use \plenigo\models\IterableBase;
-use \plenigo\models\Order;
+use \plenigo\models\Subscription;
 
 /**
  * <p>
@@ -91,9 +91,9 @@ class SubscriptionList extends IterableBase {
 
         $arrElements = isset($map['elements']) ? $map['elements'] : array();
         $arrResulting = array();
-        foreach ($arrElements as $cpnyOrder) {
-            $order = Order::createFromMap((array) $cpnyOrder);
-            array_push($arrResulting, $order);
+        foreach ($arrElements as $cpnySubscription) {
+            $subscription = Subscription::createFromMap((array) $cpnySubscription);
+            array_push($arrResulting, $subscription);
         }
 
         return new SubscriptionList($arrResulting, $pageNumber, $size, $totalElements);
