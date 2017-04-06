@@ -206,7 +206,7 @@ class UserData {
      *
      * @param array $map The map with the properties to pass onto UserData.
      *
-     * @return a UserData instance.
+     * @return UserData UserData instance.
      */
     public static function createFromMap(array $map) {
         $address = Address::createFromMap($map);
