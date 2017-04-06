@@ -45,7 +45,7 @@ final class ApiURLs
     /**
      * This URL is used to get user information by the session cookie.
      */
-    const USER_PROFILE_BY_SESSION_COOKIE = "/user/profile/sessionCookie";
+    const USER_PROFILE_BY_SESSION_COOKIE = "/api/v2/user/profile/sessionCookie";
 
     /**
      * This URL is used to retrieve an access token,
