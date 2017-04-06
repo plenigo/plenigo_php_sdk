@@ -15,17 +15,17 @@ require_once __DIR__ . '/../internal/ApiResults.php';
 require_once __DIR__ . '/../internal/ApiParams.php';
 require_once __DIR__ . '/../models/ErrorCode.php';
 
-use \plenigo\PlenigoManager;
-use \plenigo\PlenigoException;
-use \plenigo\internal\ApiURLs;
-use \plenigo\models\UserData;
-use \plenigo\internal\services\Service;
-use \plenigo\internal\models\Customer;
-use \plenigo\internal\utils\EncryptionUtils;
-use \plenigo\internal\utils\SdkUtils;
-use \plenigo\internal\ApiResults;
-use \plenigo\internal\ApiParams;
-use \plenigo\models\ErrorCode;
+use plenigo\internal\ApiParams;
+use plenigo\internal\ApiResults;
+use plenigo\internal\ApiURLs;
+use plenigo\internal\models\Customer;
+use plenigo\internal\services\Service;
+use plenigo\internal\utils\EncryptionUtils;
+use plenigo\internal\utils\SdkUtils;
+use plenigo\models\ErrorCode;
+use plenigo\models\UserData;
+use plenigo\PlenigoException;
+use plenigo\PlenigoManager;
 
 /**
  * UserService
@@ -40,7 +40,8 @@ use \plenigo\models\ErrorCode;
  * @author   René Olivo <r.olivo@plenigo.com>
  * @link     https://www.plenigo.com
  */
-class UserService extends Service {
+class UserService extends Service
+{
 
     const ERR_MSG_USER_DATA = "Could not retrieve User Data!";
     const ERR_MSG_CUSTOMER = "Could not retrieve Customer Information!";
@@ -57,7 +58,8 @@ class UserService extends Service {
      * @return UserData the UserData object {@link \plenigo\models\UserData}
      * @throws {@link \plenigo\PlenigoException}\ on response error.
      */
-    public static function getUserData($accessToken) {
+    public static function getUserData($accessToken)
+    {
         $clazz = get_class();
         PlenigoManager::notice($clazz, "Obtaining Logged In User Data!");
 
@@ -82,7 +84,7 @@ class UserService extends Service {
 
         PlenigoManager::notice($clazz, "User Data returned!\n" . print_r($response, true));
 
-        $result = UserData::createFromMap((array) $response);
+        $result = UserData::createFromMap((array)$response);
 
         return $result;
     }
@@ -95,7 +97,8 @@ class UserService extends Service {
      *
      * @throws \plenigo\PlenigoException on request error.
      */
-    public function execute() {
+    public function execute()
+    {
         try {
             $response = parent::execute();
         } catch (\Exception $exc) {
@@ -117,7 +120,8 @@ class UserService extends Service {
      *
      * @throws \plenigo\PlenigoException whenever an error happens
      */
-    public static function hasUserBought($productId, $customerId = null) {
+    public static function hasUserBought($productId, $customerId = null)
+    {
         $clazz = get_class();
         PlenigoManager::notice($clazz, "Checking if user bought Product with ID=" . print_r($productId, true));
 
@@ -178,7 +182,8 @@ class UserService extends Service {
      *
      * @throws \plenigo\PlenigoException whenever an error happens
      */
-    public static function hasBoughtProductWithProducts($productId, $customerId = null) {
+    public static function hasBoughtProductWithProducts($productId, $customerId = null)
+    {
         $clazz = get_class();
         PlenigoManager::notice($clazz, "Checking if user bought Product with ID=" . print_r($productId, true));
 
@@ -228,12 +233,13 @@ class UserService extends Service {
     }
 
     /**
-     * Calls the paywall service to check if the entire paywall service is enabled, if disabled, 
+     * Calls the paywall service to check if the entire paywall service is enabled, if disabled,
      * all product paywall should be disabled and access should be granted
-     * 
+     *
      * @return bool true if Paywall is enabled and we need to check for specific product buy information
      */
-    public static function isPaywallEnabled() {
+    public static function isPaywallEnabled()
+    {
         $request = static::getRequest(ApiURLs::PAYWALL_STATE, false);
 
         $userDataRequest = new static($request);
@@ -256,10 +262,11 @@ class UserService extends Service {
 
     /**
      * Check if the user has been logged in (cookie is found and valid)
-     * 
+     *
      * @return bool TRUE if the user has been logged in
      */
-    public static function isLoggedIn() {
+    public static function isLoggedIn()
+    {
         $customer = self::getCustomerInfo();
         $clazz = get_class();
         if (is_null($customer) || !($customer instanceof \plenigo\internal\models\Customer)) {
@@ -275,7 +282,8 @@ class UserService extends Service {
      * @return The Customer Information from the cookie
      * @throws \plenigo\PlenigoException whenever an error happens
      */
-    public static function getCustomerInfo($pCustId = null) {
+    public static function getCustomerInfo($pCustId = null)
+    {
         if (is_null($pCustId)) {
             $cookieText = static::getCookieContents(PlenigoManager::PLENIGO_USER_COOKIE_NAME);
             if (!isset($cookieText) || is_null($cookieText) || !is_string($cookieText) || empty($cookieText)) {
@@ -363,12 +371,13 @@ class UserService extends Service {
      *     ),
      *   ),
      * )</pre>
-     * 
+     *
      * @param string $pCustId The customer ID if its not logged in
      * @return array The associative array containing the bought products/subscriptions or an empty array
      * @throws PlenigoException If the compay ID and/or the Secret key is rejected
      */
-    public static function getProductsBought($pCustId = null) {
+    public static function getProductsBought($pCustId = null)
+    {
         $res = array();
         $customer = self::getCustomerInfo($pCustId);
         $clazz = get_class();
@@ -396,7 +405,7 @@ class UserService extends Service {
 
             $clazz = get_class();
             PlenigoManager::error($clazz, self::ERR_MSG_USER_LIST, $exc);
-            throw new PlenigoException(self::ERR_MSG_USER_LIST, $exc->getCode(), $exc);
+            throw new PlenigoException(self::ERR_MSG_USER_LIST, $errorCode, $exc);
         }
         if (!is_null($response)) {
             PlenigoManager::notice($clazz, "Product list is accessible=" . print_r($response, true));
@@ -407,4 +416,46 @@ class UserService extends Service {
         return $res;
     }
 
+    /**
+     * Gets the user data using the current plenigo session cookie.
+     *
+     * @return UserData the UserData object {@link \plenigo\models\UserData}
+     * @throws {@link \plenigo\PlenigoException} on response error.
+     */
+    public static function getCurrentUserFromSessionCookie()
+    {
+        $clazz = get_class();
+        PlenigoManager::notice($clazz, "Obtaining Logged In User Data!");
+        $cookieText = static::getCookieContents(PlenigoManager::PLENIGO_USER_COOKIE_NAME);
+        if (!isset($cookieText) || is_null($cookieText) || !is_string($cookieText) || empty($cookieText)) {
+            $clazz = get_class();
+            PlenigoManager::notice($clazz, "Plenigo cookie not set and no customer id given!!");
+            return null;
+        }
+
+        $params = array(
+            'sessionCookie' => $cookieText,
+        );
+
+        $request = static::getRequest(ApiURLs::USER_PROFILE_BY_SESSION_COOKIE, false, $params);
+
+        $userDataRequest = new static($request);
+        try {
+            $response = $userDataRequest->execute();
+        } catch (PlenigoException $exc) {
+            $errorCode = ErrorCode::getTranslation(ApiURLs::USER_PROFILE_BY_SESSION_COOKIE, $exc->getCode());
+            if (empty($errorCode) || is_null($errorCode)) {
+                $errorCode = $exc->getCode();
+            }
+            $clazz = get_class();
+            PlenigoManager::error($clazz, self::ERR_MSG_USER_DATA, $exc);
+            throw new PlenigoException(self::ERR_MSG_USER_DATA, $errorCode, $exc);
+        }
+
+        PlenigoManager::notice($clazz, "User Data returned!\n" . print_r($response, true));
+
+        $result = UserData::createFromMap((array)$response);
+
+        return $result;
+    }
 }

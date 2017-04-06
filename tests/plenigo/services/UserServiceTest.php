@@ -354,7 +354,7 @@ use \plenigo\internal\ApiResults;
      * This will check for a NOT bought product
      * 
      */
-    public function testHasUserNOTBought()
+    public function testHasUserNotBought()
     {
         $response = json_decode('{"error":"403","description":"The product is not found"}');
         UserServiceMock::$requestResponse = $response;
@@ -387,6 +387,24 @@ use \plenigo\internal\ApiResults;
         }
 
         $this->assertFalse($hasBought);
+    }
+
+    /**
+     * @dataProvider userServiceProvider
+     */
+    public function testGetCurrentUserFromSessionCookie($userData)
+    {
+        UserServiceMock::$requestResponse = $userData;
+
+        $cookieText = $this->getValidCookie();
+        UserServiceMock::setCookie(PlenigoManager::PLENIGO_USER_COOKIE_NAME, $cookieText);
+
+        $userResult = UserServiceMock::getCurrentUserFromSessionCookie();
+
+        $this->assertInstanceOf('\plenigo\models\UserData', $userResult);
+
+        $this->assertEquals($userData->id, $userResult->getId());
+        $this->assertError(E_USER_NOTICE, "Obtaining Logged In User");
     }
 
     /**
