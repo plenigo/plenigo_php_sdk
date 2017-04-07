@@ -21,6 +21,7 @@ use \plenigo\models\CompanyUserBillingData;
 class CompanyUser {
 
     private $customerId;
+    private $externalCustomerId;
     private $email;
     private $username;
     private $language;
@@ -45,6 +46,11 @@ class CompanyUser {
 
     public function getCustomerId() {
         return $this->customerId;
+    }
+
+    public function getExternalCustomerId()
+    {
+        return $this->externalCustomerId;
     }
 
     public function getEmail() {
@@ -117,6 +123,11 @@ class CompanyUser {
 
     public function setCustomerId($customerId) {
         $this->customerId = $customerId;
+    }
+
+    public function setExternalCustomerId($externalCustomerId)
+    {
+        $this->externalCustomerId = $externalCustomerId;
     }
 
     public function setEmail($email) {
@@ -196,6 +207,7 @@ class CompanyUser {
     public static function createFromMap($map) {
         $instance = new CompanyUser();
         $instance->setCustomerId(isset($map['customerId']) ? $map['customerId'] : null);
+        $instance->setExternalCustomerId(isset($map['externalCustomerId']) ? $map['externalCustomerId'] : null);
         $instance->setEmail(isset($map['email']) ? $map['email'] : null);
         $instance->setUsername(isset($map['username']) ? $map['username'] : null);
         $instance->setLanguage(isset($map['language']) ? $map['language'] : null);
