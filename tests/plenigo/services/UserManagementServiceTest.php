@@ -69,6 +69,13 @@ class UserManagementServiceTest extends PlenigoTestCase {
         $this->assertTrue(is_null($result));
         $this->assertError(E_USER_WARNING, "Invalid email");
     }
+
+    public function testAddExternalUserId() {
+        $result = UserManagementServiceMock::addExternalCustomerId(self::CUSTOMER_ID, "externalUserId");
+
+        $this->assertTrue($result);
+        $this->assertError(E_USER_NOTICE, "PUT JSON URL");
+    }
     
     public function testValidChangeEmail() {
         $result = UserManagementServiceMock::changeEmail(self::CUSTOMER_ID, self::VALID_CUSTOMER_EMAIL);

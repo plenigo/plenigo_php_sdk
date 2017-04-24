@@ -136,6 +136,11 @@ final class ApiURLs
     const USER_MGMT_CHANGEMAIL = "/api/v2/externalUser/{USER_ID}/changeEmail";
 
     /**
+     * This is the URL used to add an external user id to an existing user.
+     */
+    const USER_MGMT_ADDEXTERNALUSERID = "/api/v2/externalUser/{USER_ID}/addExternalUserId";
+
+    /**
      * This URL is used to create a login token for an existing user.
      */
     const USER_MGMT_CREATELOGIN = "/api/v2/externalUser/{USER_ID}/createLoginToken";
