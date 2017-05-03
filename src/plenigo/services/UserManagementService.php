@@ -151,7 +151,7 @@ class UserManagementService extends Service
     public static function addExternalCustomerId($customerId, $externalCustomerId)
     {
         $map = array(
-            'externalCustomerId' => $externalCustomerId
+            'externalUserId' => $externalCustomerId
         );
 
         $url = str_ireplace(ApiParams::URL_USER_ID_TAG, $customerId, ApiURLs::USER_MGMT_ADDEXTERNALUSERID);
