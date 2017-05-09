@@ -76,7 +76,7 @@ class PlenigoSnippetBuilderTest extends PlenigoTestCase {
 
         $this->assertContains($expectedString, $snippetString, "The snippet doesn't look right");
         $this->assertContains($expectedTag, $snippetString, "The snippet doesn't even contains the tag");
-        $this->assertContains("http://test.plenigo.com/", $snippetString, "The default login URL is not present");
+        $this->assertContains("http://www.google.com/", $snippetString, "The default login URL is not present");
     }
 
     /**
