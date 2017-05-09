@@ -48,4 +48,49 @@ class SnippetType extends BasicEnum {
      */
     const ADDRESS_DATA = "plenigo.Snippet.ADDRESS_DATA";
 
+    /**
+     * Billing address information snippet
+     */
+    const BILLING_ADDRESS_DATA_DATA = "plenigo.Snippet.BILLING_ADDRESS_DATA";
+
+    /**
+     * Delivery address information snippet
+     */
+    const DELIVERY_ADDRESS_DATA = "plenigo.Snippet.DELIVERY_ADDRESS_DATA";
+
+    /**
+     * Bank account snippet
+     */
+    const BANK_ACCOUNT = "plenigo.Snippet.BANK_ACCOUNT";
+
+    /**
+     * Credit card snippet
+     */
+    const CREDIT_CARD = "plenigo.Snippet.CREDIT_CARD";
+
+    /**
+     * Personal data settings snippet
+     */
+    const PERSONAL_DATA_SETTINGS = "plenigo.Snippet.PERSONAL_DATA_SETTINGS";
+
+    /**
+     * Personal data address snippet
+     */
+    const PERSONAL_DATA_ADDRESS = "plenigo.Snippet.PERSONAL_DATA_ADDRESS";
+
+    /**
+     * Personal data protection snippet
+     */
+    const PERSONAL_DATA_PROTECTION = "plenigo.Snippet.PERSONAL_DATA_PROTECTION";
+
+
+    /**
+     * Personal data social media snippet
+     */
+    const PERSONAL_DATA_SOCIAL_MEDIA = "plenigo.Snippet.PERSONAL_DATA_SOCIAL_MEDIA";
+
+    /**
+     * Personal data password snippet
+     */
+    const PERSONAL_DATA_PASSWORD = "plenigo.Snippet.PERSONAL_DATA_PASSWORD";
 }

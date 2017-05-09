@@ -20,7 +20,7 @@ class SnippetConfig {
      * The snippet type that should be rendered.
      *
      * @var string
-     * @see plenigo\models\SnippetType
+     * @see \plenigo\models\SnippetType
      */
     private $snippetId;
 
