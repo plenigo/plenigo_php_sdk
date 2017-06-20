@@ -6,11 +6,6 @@ namespace plenigo\models;
  * <p>
  * This object represents an invalid parameter that was sent to the plenigo API.
  * </p>
- *
- * @category SDK
- * @package  PlenigoModels
- * @author   Sebastian Dieguez <s.dieguez@plenigo.com>
- * @link     https://www.plenigo.com
  */
 class ErrorDetail
 {

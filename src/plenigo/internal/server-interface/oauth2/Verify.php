@@ -4,7 +4,7 @@ namespace plenigo\internal\serverInterface\oauth2;
 
 require_once __DIR__ . '/../ServerInterface.php';
 
-use \plenigo\internal\serverInterface\ServerInterface;
+use plenigo\internal\serverInterface\ServerInterface;
 
 /**
  * Verify

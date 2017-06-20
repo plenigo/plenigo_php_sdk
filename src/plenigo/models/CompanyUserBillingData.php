@@ -3,22 +3,9 @@
 namespace plenigo\models;
 
 /**
- * Description of CompanyUserBillingData
- *
- * @author Sebastian Dieguez <s.dieguez@plenigo.com>
- */
-
-/**
- * CompanyUserBillingData
- * 
  * <p>
  * This class contains the company user billing information.
  * </p>
- *
- * @category SDK
- * @package  PlenigoModels
- * @author   Sebastian Dieguez <s.dieguez@plenigo.com>
- * @link     https://www.plenigo.com
  */
 class CompanyUserBillingData {
 

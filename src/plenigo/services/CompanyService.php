@@ -12,28 +12,19 @@ require_once __DIR__ . '/../models/FailedPaymentList.php';
 require_once __DIR__ . '/../models/OrderList.php';
 require_once __DIR__ . '/../models/ErrorCode.php';
 
-use plenigo\models\SubscriptionList;
-use \plenigo\PlenigoManager;
-use \plenigo\PlenigoException;
-use \plenigo\internal\ApiURLs;
-use \plenigo\internal\services\Service;
+use plenigo\internal\ApiURLs;
+use plenigo\internal\services\Service;
 use plenigo\internal\utils\SdkUtils;
-use \plenigo\models\CompanyUserList;
-use \plenigo\models\FailedPaymentList;
-use \plenigo\models\OrderList;
-use \plenigo\models\ErrorCode;
+use plenigo\models\CompanyUserList;
+use plenigo\models\FailedPaymentList;
+use plenigo\models\OrderList;
+use plenigo\models\SubscriptionList;
+use plenigo\PlenigoException;
 
 /**
- * CompanyService
- *
  * <p>
  * A class used to retrieve Company specific data like company's users.
  * </p>
- *
- * @category SDK
- * @package  PlenigoServices
- * @author   Sebastian Dieguez <s.dieguez@plenigo.com>
- * @link     https://www.plenigo.com
  */
 class CompanyService extends Service {
 

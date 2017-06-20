@@ -7,23 +7,15 @@ require_once __DIR__ . '/../internal/models/Subscription.php';
 require_once __DIR__ . '/../internal/models/ActionPeriod.php';
 require_once __DIR__ . '/Image.php';
 
-use \plenigo\internal\models\PricingData;
-use \plenigo\internal\models\Subscription;
-use \plenigo\internal\models\ActionPeriod;
-use \plenigo\models\Image;
+use plenigo\internal\models\ActionPeriod;
+use plenigo\internal\models\PricingData;
+use plenigo\internal\models\Subscription;
 
 /**
- * ProductData
- * 
  * <b>
  * This class contains product information from a plenigo defined product. A product can be any
  * digital content.
  * </b>
- *
- * @category SDK
- * @package  PlenigoModels
- * @author   Sebastian Dieguez <s.dieguez@plenigo.com>
- * @link     https://www.plenigo.com
  */
 class ProductData {
 

@@ -11,27 +11,18 @@ require_once __DIR__ . '/../internal/services/Service.php';
 require_once __DIR__ . '/../models/MobileSecretData.php';
 require_once __DIR__ . '/../models/ErrorCode.php';
 
-use \plenigo\PlenigoManager;
-use \plenigo\PlenigoException;
+use plenigo\internal\ApiParams;
+use plenigo\internal\ApiURLs;
+use plenigo\internal\services\Service;
 use plenigo\internal\utils\SdkUtils;
-use \plenigo\internal\ApiURLs;
-use \plenigo\internal\ApiParams;
-use \plenigo\internal\services\Service;
-use \plenigo\models\MobileSecretData;
-use \plenigo\models\ErrorCode;
+use plenigo\models\MobileSecretData;
+use plenigo\PlenigoException;
 
 /**
- * MobileService
- *
  * <p>
  * A class used to retrieve Access Tokens from the plenigo API
  * when given a valid Access Code.
  * </p>
- *
- * @category SDK
- * @package  PlenigoServices
- * @author   Sebastian Dieguez <s.dieguez@plenigo.com>
- * @link     https://www.plenigo.com
  */
 class MobileService extends Service {
 

@@ -4,7 +4,7 @@ namespace plenigo\models;
 
 require_once __DIR__ . '/../internal/models/PricingData.php';
 
-use \plenigo\internal\models\PricingData;
+use plenigo\internal\models\PricingData;
 
 /**
  * CategoryData

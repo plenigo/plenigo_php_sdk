@@ -22,11 +22,6 @@ use \plenigo\internal\ApiResults;
  * <b>
  * Test class for ProductService
  * </b>
- *
- * @category Test
- * @package  
- * @author   Sebastian Dieguez <s.dieguez@plenigo.com>
- * @link     http://plenigo.com
  */
 class ProductServiceTest extends PlenigoTestCase
 {

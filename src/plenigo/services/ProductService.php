@@ -15,7 +15,6 @@ require_once __DIR__ . '/../internal/ApiResults.php';
 require_once __DIR__ . '/../internal/ApiParams.php';
 require_once __DIR__ . '/../models/ErrorCode.php';
 
-use plenigo\internal\ApiParams;
 use plenigo\internal\ApiURLs;
 use plenigo\internal\services\Service;
 use plenigo\models\CategoryData;
@@ -25,16 +24,9 @@ use plenigo\PlenigoException;
 use plenigo\PlenigoManager;
 
 /**
- * ProductService
- *
  * <b>
  * This contains the services required  for Product management with plenigo.
  * </b>
- *
- * @category SDK
- * @package  PlenigoServices
- * @author   Sebastian Dieguez <s.dieguez@plenigo.com>
- * @link     https://www.plenigo.com
  */
 class ProductService extends Service {
 

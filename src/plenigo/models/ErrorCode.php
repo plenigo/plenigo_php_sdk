@@ -5,8 +5,8 @@ namespace plenigo\models;
 require_once __DIR__ . '/../internal/utils/BasicEnum.php';
 require_once __DIR__ . '/../internal/ApiURLs.php';
 
-use \plenigo\internal\utils\BasicEnum;
-use \plenigo\internal\ApiURLs;
+use plenigo\internal\ApiURLs;
+use plenigo\internal\utils\BasicEnum;
 
 /**
  * <p>
@@ -17,11 +17,6 @@ use \plenigo\internal\ApiURLs;
  * be removed in future versions of the SDK or access to such elements could
  * be changed from 'public' to 'protected' or less.
  * </p>
- *
- * @category SDK
- * @package  PlenigoModels
- * @author   Sebastian Dieguez <s.dieguez@plenigo.com>
- * @link     https://www.plenigo.com
  */
 abstract class ErrorCode extends BasicEnum {
 

@@ -11,27 +11,19 @@ require_once __DIR__ . '/../models/AppTokenData.php';
 require_once __DIR__ . '/../models/AppAccessData.php';
 require_once __DIR__ . '/../models/ErrorCode.php';
 
-use \plenigo\PlenigoManager;
-use \plenigo\PlenigoException;
-use \plenigo\internal\ApiURLs;
-use \plenigo\internal\ApiParams;
-use \plenigo\internal\services\Service;
-use \plenigo\models\AppTokenData;
-use \plenigo\models\AppAccessData;
-use \plenigo\models\ErrorCode;
+use plenigo\internal\ApiParams;
+use plenigo\internal\ApiURLs;
+use plenigo\internal\services\Service;
+use plenigo\models\AppAccessData;
+use plenigo\models\AppTokenData;
+use plenigo\PlenigoException;
+use plenigo\PlenigoManager;
 
 /**
- * AppManagementService
- *
  * <p>
  * A class used to retrieve Access Tokens from the plenigo API
  * when given a valid Access Code.
  * </p>
- *
- * @category SDK
- * @package  PlenigoServices
- * @author   Sebastian Dieguez <s.dieguez@plenigo.com>
- * @link     https://www.plenigo.com
  */
 class AppManagementService extends Service {
 

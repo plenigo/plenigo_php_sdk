@@ -11,11 +11,6 @@ use \plenigo\services\VoucherService;
  * <b>
  * Mock and override class for VoucherService
  * </b>
- *
- * @category Test
- * @package  
- * @author   Sebastian Dieguez <s.dieguez@plenigo.com>
- * @link     http://plenigo.com
  */
 class VoucherServiceMock extends VoucherService
 {

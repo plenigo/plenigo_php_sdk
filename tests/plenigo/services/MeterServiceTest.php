@@ -20,11 +20,6 @@ use \plenigo\internal\ApiResults;
  * <b>
  * Test class for  MeterService
  * </b>
- *
- * @category SDK
- * @package  
- * @author   Sebastian Dieguez <s.dieguez@plenigo.com>
- * @link     https://plenigo.com
  */
 class MeterServiceTest extends PlenigoTestCase
 {

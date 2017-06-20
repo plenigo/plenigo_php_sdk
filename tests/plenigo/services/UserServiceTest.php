@@ -22,12 +22,8 @@ use \plenigo\internal\ApiResults;
  * <b>
  * Test class for UserService
  * </b>
- *
- * @category Test
- * @package  
- * @author   Sebastian Dieguez <s.dieguez@plenigo.com>
- * @link     http://plenigo.com
- */class UserServiceTest extends PlenigoTestCase
+ */
+class UserServiceTest extends PlenigoTestCase
 {
 
     const CUSTOMER_ID = 'MAP27KCA3K2P';

@@ -3,16 +3,9 @@
 namespace plenigo\models;
 
 /**
- * IterableBase
- * 
  * <p>
  * This is a base class for all iterable object models
  * </p>
- *
- * @category SDK
- * @package  PlenigoModels
- * @author Sebastian Dieguez <s.dieguez@plenigo.com>
- * @link     https://www.plenigo.com
  */
 class IterableBase implements \Iterator {
 

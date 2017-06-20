@@ -4,7 +4,7 @@ namespace plenigo\models;
 
 require_once __DIR__ . '/../internal/utils/BasicEnum.php';
 
-use \plenigo\internal\utils\BasicEnum;
+use plenigo\internal\utils\BasicEnum;
 
 /**
  * <p>
@@ -15,11 +15,6 @@ use \plenigo\internal\utils\BasicEnum;
  * be removed in future versions of the SDK or access to such elements could
  * be changed from 'public' to 'protected' or less.
  * </p>
- *
- * @category SDK
- * @package  PlenigoModels
- * @author Sebastian Dieguez <sebastian.dieguez@plenigo.com>
- * @link     https://www.plenigo.com
  */
 class SnippetType extends BasicEnum {
 

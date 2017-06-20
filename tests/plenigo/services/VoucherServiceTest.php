@@ -16,11 +16,6 @@ use \plenigo\internal\ApiResults;
  * <b>
  * Test class for VoucherService
  * </b>
- *
- * @category SDK
- * @package  
- * @author   Sebastian Dieguez <s.dieguez@plenigo.com>
- * @link     https://plenigo.com
  */
 class VoucherServiceTest extends PlenigoTestCase {
 

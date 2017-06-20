@@ -12,11 +12,6 @@ namespace plenigo\internal;
  * be removed in future versions of the SDK or access to such elements could
  * be changed from 'public' to 'protected' or less.
  * </p>
- *
- * @category SDK
- * @package  PlenigoInternal
- * @author   Sebastian Dieguez <s.dieguez@plenigo.com>
- * @link     https://www.plenigo.com
  */
 final class PlenigoLogger {
 

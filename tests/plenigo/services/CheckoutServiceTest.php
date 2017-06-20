@@ -16,11 +16,6 @@ use \plenigo\internal\ApiResults;
  * <b>
  * Test class for CheckoutService
  * </b>
- *
- * @category SDK
- * @package  
- * @author   Sebastian Dieguez <s.dieguez@plenigo.com>
- * @link     https://plenigo.com
  */
 class CheckoutServiceTest extends PlenigoTestCase {
 

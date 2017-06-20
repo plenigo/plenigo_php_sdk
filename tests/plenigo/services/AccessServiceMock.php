@@ -1,18 +1,16 @@
 <?php
 
-require_once __DIR__ . '/../../../src/plenigo/services/UserManagementService.php';
+require_once __DIR__ . '/../../../src/plenigo/services/AccessService.php';
 require_once __DIR__ . '/../internal/utils/RestClientMock.php';
 
-use \plenigo\services\UserManagementService;
+use \plenigo\services\AccessService;
 
 /**
- * UserManagementServiceMock
- * 
  * <b>
- * Mock and override class for UserManagementService
+ * Mock and override class for AccessService
  * </b>
  */
-class UserManagementServiceMock extends UserManagementService
+class AccessServiceMock extends AccessService
 {
 
     public static $requestResponse;

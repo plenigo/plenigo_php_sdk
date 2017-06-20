@@ -11,11 +11,6 @@ use \plenigo\services\UserService;
  * <b>
  * Mock and override class for UserService
  * </b>
- *
- * @category Test
- * @package  
- * @author   Sebastian Dieguez <s.dieguez@plenigo.com>
- * @link     http://plenigo.com
  */
 class UserServiceMock extends UserService
 {

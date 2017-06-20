@@ -18,11 +18,6 @@ use \plenigo\PlenigoException;
  * <b>
  * Test class for TokenService
  * </b>
- *
- * @category Test
- * @package  
- * @author   Sebastian Dieguez <s.dieguez@plenigo.com>
- * @link     http://plenigo.com
  */
 class TokenServiceTest extends PlenigoTestCase
 {

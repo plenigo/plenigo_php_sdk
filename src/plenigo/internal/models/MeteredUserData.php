@@ -13,11 +13,6 @@ namespace plenigo\internal\models;
  * be removed in future versions of the SDK or access to such elements could
  * be changed from 'public' to 'default' or less.
  * </p>
- *
- * @category SDK
- * @package  PlenigoInternalModels
- * @author   Sebastian Dieguez <s.dieguez@plenigo.com>
- * @link     https://plenigo.com
  */
 class MeteredUserData
 {

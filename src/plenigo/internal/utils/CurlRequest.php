@@ -5,8 +5,7 @@ namespace plenigo\internal\utils;
 require_once __DIR__ . '/CurlRequestInterface.php';
 require_once __DIR__ . '/../../PlenigoManager.php';
 
-use \plenigo\internal\utils\CurlRequestInterface;
-use \plenigo\PlenigoManager;
+use plenigo\PlenigoManager;
 
 /**
  * CurlRequest

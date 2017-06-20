@@ -8,11 +8,10 @@ require_once __DIR__ . '/../internal/utils/EncryptionUtils.php';
 require_once __DIR__ . '/../internal/server-interface/payment/Checkout.php';
 require_once __DIR__ . '/../internal/exceptions/ProductException.php';
 
-use \plenigo\PlenigoManager;
-use \plenigo\internal\models\Product;
-use \plenigo\internal\utils\EncryptionUtils;
-use \plenigo\internal\serverInterface\payment\Checkout;
-use \plenigo\internal\exceptions\ProductException;
+use plenigo\internal\models\Product;
+use plenigo\internal\serverInterface\payment\Checkout;
+use plenigo\internal\utils\EncryptionUtils;
+use plenigo\PlenigoManager;
 
 /**
  * CheckoutSnippetBuilder

@@ -9,24 +9,15 @@ require_once __DIR__ . '/../PlenigoManager.php';
 require_once __DIR__ . '/../PlenigoException.php';
 require_once __DIR__ . '/../internal/utils/EncryptionUtils.php';
 
-use \plenigo\internal\services\Service;
-use \plenigo\internal\models\MeteredUserData;
-use \plenigo\PlenigoManager;
-use \plenigo\services\UserService;
-use \plenigo\PlenigoException;
-use \plenigo\internal\utils\EncryptionUtils;
+use plenigo\internal\models\MeteredUserData;
+use plenigo\internal\services\Service;
+use plenigo\internal\utils\EncryptionUtils;
+use plenigo\PlenigoManager;
 
 /**
- * MeterService
- * 
  * <b>
  * This contains the services related to metering user views with plenigo,
  * </b>
- *
- * @category SDK
- * @package  PlenigoServices
- * @author   Sebastian Dieguez <s.dieguez@plenigo.com>
- * @link     https://plenigo.com
  */
 class MeterService extends Service
 {

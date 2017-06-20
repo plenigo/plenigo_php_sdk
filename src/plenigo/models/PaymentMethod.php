@@ -3,16 +3,9 @@
 namespace plenigo\models;
 
 /**
- * PaymentMethod
- *
  * <p>
  * An enum of the payment methods used to filter trabsactions
  * </p>
- *
- * @category SDK
- * @package  PlenigoServices
- * @author   Sebastian Dieguez <s.dieguez@plenigo.com>
- * @link     https://www.plenigo.com
  */
 final class PaymentMethod {
 

@@ -11,11 +11,6 @@ use \plenigo\services\CheckoutService;
  * <b>
  * Mock and override class for CheckoutService
  * </b>
- *
- * @category Test
- * @package  
- * @author   Sebastian Dieguez <s.dieguez@plenigo.com>
- * @link     http://plenigo.com
  */
 class CheckoutServiceMock extends CheckoutService
 {

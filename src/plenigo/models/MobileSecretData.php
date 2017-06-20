@@ -3,17 +3,10 @@
 namespace plenigo\models;
 
 /**
- * MobileSecretData
- * 
  * <p>
  * This class contains the returned
  * mobile secret information.
  * </p>
- *
- * @category SDK
- * @package  PlenigoModels
- * @author   Sebastian Dieguez <s.dieguez@plenigo.com>
- * @link     https://www.plenigo.com
  */
 class MobileSecretData {
 

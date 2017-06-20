@@ -5,21 +5,11 @@ namespace plenigo\models;
 require_once __DIR__ . '/IterableBase.php';
 require_once __DIR__ . '/CompanyUser.php';
 
-use \plenigo\models\IterableBase;
-use \plenigo\models\CompanyUser;
-
 /**
- * CompanyUserList
- * 
  * <p>
  * This class constitutes the data resulting from the getCompanyUsers call. 
  * This implementas Iterator so it can be userd in a foreach statement
  * </p>
- *
- * @category SDK
- * @package  PlenigoModels
- * @author Sebastian Dieguez <s.dieguez@plenigo.com>
- * @link     https://www.plenigo.com
  */
 class CompanyUserList extends IterableBase {
 

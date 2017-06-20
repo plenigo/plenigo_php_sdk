@@ -4,19 +4,10 @@ namespace plenigo\models;
 
 require_once __DIR__ . '/OrderItem.php';
 
-use \plenigo\models\OrderItem;
-
 /**
- * Order
- * 
  * <p>
  * This class contains the order information.
  * </p>
- *
- * @category SDK
- * @package  PlenigoModels
- * @author   Sebastian Dieguez <s.dieguez@plenigo.com>
- * @link     https://www.plenigo.com
  */
 class Order {
 

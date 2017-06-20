@@ -5,9 +5,6 @@ namespace plenigo\models;
 require_once __DIR__ . '/IterableBase.php';
 require_once __DIR__ . '/Subscription.php';
 
-use \plenigo\models\IterableBase;
-use \plenigo\models\Subscription;
-
 /**
  * <p>
  * This class constitutes the data resulting from the getSubscriptions call.

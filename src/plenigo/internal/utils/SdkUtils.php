@@ -11,11 +11,6 @@ namespace plenigo\internal\utils;
  * be removed in future versions of the SDK or access to such elements could
  * be changed from 'public' to 'protected' or less.
  * </p>
- *
- * @category SDK
- * @package  PlenigoInternalUtils
- * @author   Sebastian Dieguez <s.dieguez@plenigo.com>
- * @link     https://www.plenigo.com
  */
 class SdkUtils {
 

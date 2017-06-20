@@ -3,9 +3,9 @@
 namespace plenigo\models;
 
 /**
+ * <p>
  * Description of AppAccessData
- *
- * @author Sebastian Dieguez <s.dieguez@plenigo.com>
+ * </p>
  */
 class AppAccessData {
 

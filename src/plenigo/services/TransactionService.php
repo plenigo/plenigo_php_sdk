@@ -10,25 +10,16 @@ require_once __DIR__ . '/../internal/utils/SdkUtils.php';
 require_once __DIR__ . '/../models/TransactionList.php';
 require_once __DIR__ . '/../models/ErrorCode.php';
 
-use \plenigo\PlenigoManager;
-use \plenigo\PlenigoException;
-use \plenigo\internal\ApiURLs;
-use \plenigo\internal\services\Service;
+use plenigo\internal\ApiURLs;
+use plenigo\internal\services\Service;
 use plenigo\internal\utils\SdkUtils;
-use \plenigo\models\TransactionList;
-use \plenigo\models\ErrorCode;
+use plenigo\models\TransactionList;
+use plenigo\PlenigoException;
 
 /**
- * TransactionService
- *
  * <p>
  * A class used to retrieve Transaction data for a company
  * </p>
- *
- * @category SDK
- * @package  PlenigoServices
- * @author   Sebastian Dieguez <s.dieguez@plenigo.com>
- * @link     https://www.plenigo.com
  */
 class TransactionService extends Service {
 

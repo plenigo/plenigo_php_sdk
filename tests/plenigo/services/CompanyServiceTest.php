@@ -22,11 +22,6 @@ use \plenigo\models\CompanyUserBillingData;
  * <b>
  * Test class for CompanyService
  * </b>
- *
- * @category SDK
- * @package  
- * @author   Sebastian Dieguez <s.dieguez@plenigo.com>
- * @link     https://plenigo.com
  */
 class CompanyServiceTest extends PlenigoTestCase {
 

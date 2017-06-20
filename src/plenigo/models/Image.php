@@ -3,16 +3,9 @@
 namespace plenigo\models;
 
 /**
- * Image
- * 
  * <b>
  * This object contains image information related to a product
  * </b>
- *
- * @category SDK
- * @package  PlenigoModels
- * @author   Sebastian Dieguez <s.dieguez@plenigo.com>
- * @link     https://www.plenigo.com
  */
 class Image {
 

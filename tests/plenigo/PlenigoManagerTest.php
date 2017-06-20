@@ -5,7 +5,6 @@ require_once __DIR__ . '/internal/utils/PlenigoLoggerStaticHelper.php';
 require_once __DIR__ . '/internal/utils/PlenigoTestCase.php';
 
 use plenigo\PlenigoManager;
-use plenigo\internal\ApiURLs;
 
 class PlenigoManagerTest extends PlenigoTestCase
 {

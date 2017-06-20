@@ -11,11 +11,6 @@ use \plenigo\services\CompanyService;
  * <b>
  * Mock and override class for CompanyService
  * </b>
- *
- * @category Test
- * @package  
- * @author   Sebastian Dieguez <s.dieguez@plenigo.com>
- * @link     http://plenigo.com
  */
 class CompanyServiceMock extends CompanyService
 {

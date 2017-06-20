@@ -11,11 +11,6 @@ use plenigo\models\ErrorDetail;
  * This represents any exception that can come from
  * the plenigo API or SDK.
  * </p>
- *
- * @category SDK
- * @package  Plenigo
- * @author   Sebastian Dieguez <s.dieguez@plenigo.com>
- * @link     https://www.plenigo.com
  */
 class PlenigoException extends \Exception
 {

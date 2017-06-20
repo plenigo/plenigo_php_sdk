@@ -3,16 +3,9 @@
 namespace plenigo\models;
 
 /**
- * Transaction
- * 
  * <p>
  * This class contains the transaction information.
  * </p>
- *
- * @category SDK
- * @package  PlenigoModels
- * @author   Sebastian Dieguez <s.dieguez@plenigo.com>
- * @link     https://www.plenigo.com
  */
 class Transaction {
 

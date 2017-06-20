@@ -11,28 +11,20 @@ require_once __DIR__ . '/../models/TokenGrantType.php';
 require_once __DIR__ . '/../models/TokenData.php';
 require_once __DIR__ . '/../models/ErrorCode.php';
 
-use \plenigo\PlenigoManager;
+use plenigo\internal\ApiURLs;
+use plenigo\internal\serverInterface\oauth2\Verify;
+use plenigo\internal\services\Service;
+use plenigo\models\ErrorCode;
+use plenigo\models\TokenData;
+use plenigo\models\TokenGrantType;
 use plenigo\PlenigoException;
-use \plenigo\internal\ApiURLs;
-use \plenigo\internal\services\Service;
-use \plenigo\internal\serverInterface\oauth2\Verify;
-use \plenigo\models\TokenGrantType;
-use \plenigo\models\TokenData;
-use \plenigo\models\ErrorCode;
+use plenigo\PlenigoManager;
 
 /**
- * TokenService
- *
  * <p>
  * A class used to retrieve Access Tokens from the plenigo API
  * when given a valid Access Code.
  * </p>
- *
- * @category SDK
- * @package  PlenigoServices
- * @author   Rene Olivo <r.olivo@plenigo.com>
- * @author   Sebastian Dieguez <s.dieguez@plenigo.com>
- * @link     https://www.plenigo.com
  */
 class TokenService extends Service {
 

@@ -5,9 +5,6 @@ namespace plenigo\models;
 require_once __DIR__ . '/IterableBase.php';
 require_once __DIR__ . '/FailedPayment.php';
 
-use \plenigo\models\IterableBase;
-use \plenigo\models\FailedPayment;
-
 /**
  * FailedPaymentList
  * 
@@ -15,11 +12,6 @@ use \plenigo\models\FailedPayment;
  * This class constitutes the data resulting from the getFailedPayments call. 
  * This implementas Iterator so it can be used in a foreach statement.
  * </p>
- *
- * @category SDK
- * @package  PlenigoModels
- * @author   Sebastian Dieguez <s.dieguez@plenigo.com>  
- * @link     https://www.plenigo.com
  */
 class FailedPaymentList extends IterableBase {
 

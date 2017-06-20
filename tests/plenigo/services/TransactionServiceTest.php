@@ -20,11 +20,6 @@ use \plenigo\models\Transaction;
  * <b>
  * Test class for TransactionService
  * </b>
- *
- * @category SDK
- * @package  
- * @author   Sebastian Dieguez <s.dieguez@plenigo.com>
- * @link     https://plenigo.com
  */
 class TransactionServiceTest extends PlenigoTestCase {
 

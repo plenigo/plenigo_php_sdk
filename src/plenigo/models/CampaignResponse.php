@@ -3,16 +3,9 @@
 namespace plenigo\models;
 
 /**
- * CampaignResponse
- * 
  * <p>
  * The response object of the creation of a Voucher Campaign.
  * </p>
- *
- * @category SDK
- * @package  PlenigoModels
- * @author   Sebastian Dieguez <s.dieguez@plenigo.com>
- * @link     https://www.plenigo.com
  */
 class CampaignResponse {
 

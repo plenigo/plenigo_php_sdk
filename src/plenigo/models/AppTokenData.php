@@ -9,11 +9,6 @@ namespace plenigo\models;
  * This class contains the returned
  * access token information.
  * </p>
- *
- * @category SDK
- * @package  PlenigoModels
- * @author   Sebastian Dieguez <s.dieguez@plenigo.com>
- * @link     https://www.plenigo.com
  */
 class AppTokenData {
 

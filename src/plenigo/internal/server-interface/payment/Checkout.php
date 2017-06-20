@@ -9,13 +9,12 @@ require_once __DIR__ . '/../../utils/ArrayUtils.php';
 require_once __DIR__ . '/../../../PlenigoException.php';
 require_once __DIR__ . '/../../../PlenigoManager.php';
 
-use \plenigo\internal\serverInterface\ServerInterface;
-use \plenigo\internal\models\Product as AbstractProduct;
-use \plenigo\models\ProductBase;
-use \plenigo\internal\utils\ArrayUtils;
-use \plenigo\PlenigoException;
-use \plenigo\PlenigoManager;
-use \Exception;
+use Exception;
+use plenigo\internal\models\Product as AbstractProduct;
+use plenigo\internal\serverInterface\ServerInterface;
+use plenigo\internal\utils\ArrayUtils;
+use plenigo\models\ProductBase;
+use plenigo\PlenigoException;
 
 /**
  * Checkout

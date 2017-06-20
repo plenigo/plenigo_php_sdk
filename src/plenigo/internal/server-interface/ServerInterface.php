@@ -2,8 +2,6 @@
 
 namespace plenigo\internal\serverInterface;
 
-use \Exception;
-
 /**
  * ServerInterface
  *

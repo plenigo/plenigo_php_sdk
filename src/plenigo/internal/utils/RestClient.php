@@ -6,9 +6,7 @@ require_once __DIR__ . '/CurlRequest.php';
 require_once __DIR__ . '/JWT.php';
 require_once __DIR__ . '/../../PlenigoManager.php';
 
-use \plenigo\internal\utils\CurlRequest;
-use \plenigo\internal\utils\JWT;
-use \plenigo\PlenigoManager;
+use plenigo\PlenigoManager;
 
 /**
  * RestClient

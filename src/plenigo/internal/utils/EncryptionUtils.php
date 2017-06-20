@@ -4,7 +4,7 @@ namespace plenigo\internal\utils;
 
 require_once __DIR__ . '/../exceptions/EncryptionException.php';
 
-use \plenigo\internal\exceptions\EncryptionException;
+use plenigo\internal\exceptions\EncryptionException;
 
 /**
  * EncryptionUtils

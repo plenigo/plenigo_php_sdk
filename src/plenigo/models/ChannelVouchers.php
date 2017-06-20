@@ -3,16 +3,9 @@
 namespace plenigo\models;
 
 /**
- * ChannelVouchers
- * 
  * <p>
  * The response object that represent a channel with vouchers.
  * </p>
- *
- * @category SDK
- * @package  PlenigoModels
- * @author   Sebastian Dieguez <s.dieguez@plenigo.com>
- * @link     https://www.plenigo.com
  */
 class ChannelVouchers {
 

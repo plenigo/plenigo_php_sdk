@@ -8,24 +8,17 @@ require_once __DIR__ . '/../internal/ApiURLs.php';
 require_once __DIR__ . '/../internal/ApiParams.php';
 require_once __DIR__ . '/../internal/services/Service.php';
 
-use \plenigo\PlenigoManager;
-use \plenigo\PlenigoException;
-use \plenigo\internal\ApiURLs;
-use \plenigo\internal\ApiParams;
-use \plenigo\internal\services\Service;
+use plenigo\internal\ApiParams;
+use plenigo\internal\ApiURLs;
+use plenigo\internal\services\Service;
+use plenigo\PlenigoException;
+use plenigo\PlenigoManager;
 
 /**
- * UserManagementService
- *
  * <p>
  * A class used to retrieve Access Tokens from the plenigo API
  * when given a valid Access Code.
  * </p>
- *
- * @category SDK
- * @package  PlenigoServices
- * @author   Sebastian Dieguez <s.dieguez@plenigo.com>
- * @link     https://www.plenigo.com
  */
 class UserManagementService extends Service
 {

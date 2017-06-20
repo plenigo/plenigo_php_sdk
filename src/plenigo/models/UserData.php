@@ -4,7 +4,7 @@ namespace plenigo\models;
 
 require_once __DIR__ . '/../internal/models/Address.php';
 
-use \plenigo\internal\models\Address;
+use plenigo\internal\models\Address;
 
 /**
  * UserData

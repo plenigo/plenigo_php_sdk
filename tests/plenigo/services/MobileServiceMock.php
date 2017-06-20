@@ -11,11 +11,6 @@ use \plenigo\services\MobileService;
  * <b>
  * Mock and override class for MobileService
  * </b>
- *
- * @category Test
- * @package  
- * @author   Sebastian Dieguez <s.dieguez@plenigo.com>
- * @link     http://plenigo.com
  */
 class MobileServiceMock extends MobileService
 {

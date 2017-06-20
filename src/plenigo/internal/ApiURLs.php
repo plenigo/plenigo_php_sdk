@@ -14,7 +14,6 @@ namespace plenigo\internal;
  *
  * @category SDK
  * @package  PlenigoInternal
- * @author   René Olivo <r.olivo@plenigo.com>
  * @link     https://www.plenigo.com
  *
  */
@@ -30,6 +29,16 @@ final class ApiURLs
      * OAuth2 plenigo URL.
      */
     const OAUTH_PLENIGO_URL = "https://www.plenigo.com";
+
+    /**
+     * This URL is used to add user access rights.
+     */
+    const PRODUCT_ACCESS_RIGHTS_ADDITION_URL = "/api/v2/access/{USER_ID}/add";
+
+    /**
+     * This URL is used to remove user access rights.
+     */
+    const PRODUCT_ACCESS_RIGHTS_REMOVAL_URL = "/api/v2/access/{USER_ID}/remove";
 
     /**
      * This URL is used to check if an user has access to a product.

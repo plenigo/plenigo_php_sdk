@@ -9,23 +9,16 @@ require_once __DIR__ . '/../internal/services/Service.php';
 require_once __DIR__ . '/../models/CampaignResponse.php';
 require_once __DIR__ . '/../PlenigoManager.php';
 
-use \plenigo\PlenigoException;
-use \plenigo\internal\ApiURLs;
-use \plenigo\internal\ApiParams;
-use \plenigo\internal\services\Service;
-use \plenigo\PlenigoManager;
+use plenigo\internal\ApiParams;
+use plenigo\internal\ApiURLs;
+use plenigo\internal\services\Service;
+use plenigo\PlenigoException;
+use plenigo\PlenigoManager;
 
 /**
- * CheckoutService
- *
  * <p>
  * A class used to manage generated vouchers
  * </p>
- *
- * @category SDK
- * @package  PlenigoServices
- * @author   Sebastian Dieguez <s.dieguez@plenigo.com>
- * @link     https://www.plenigo.com
  */
 class CheckoutService extends Service {
 

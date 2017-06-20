@@ -5,8 +5,7 @@ namespace plenigo\builders;
 require_once __DIR__ . '/../models/AccessScope.php';
 require_once __DIR__ . '/../models/LoginConfig.php';
 
-use \plenigo\models\AccessScope;
-use \plenigo\models\LoginConfig;
+use plenigo\models\LoginConfig;
 
 /**
  * CheckoutSnippetBuilder

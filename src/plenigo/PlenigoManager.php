@@ -7,7 +7,6 @@ require_once __DIR__ . '/internal/ApiURLs.php';
 require_once __DIR__ . '/internal/PlenigoLogger.php';
 
 use plenigo\internal\models\Configuration;
-use plenigo\internal\ApiURLs;
 use plenigo\internal\PlenigoLogger;
 
 /**

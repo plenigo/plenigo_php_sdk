@@ -11,16 +11,9 @@ use \plenigo\PlenigoException;
 use \plenigo\internal\ApiResults;
 
 /**
- * AppManagementServiceTest
- * 
  * <b>
  * Test class for AppManagementService
  * </b>
- *
- * @category SDK
- * @package  
- * @author   Sebastian Dieguez <s.dieguez@plenigo.com>
- * @link     https://plenigo.com
  */
 class AppManagementServiceTest extends PlenigoTestCase {
 

@@ -4,19 +4,10 @@ namespace plenigo\models;
 
 require_once __DIR__ . '/CompanyUserBillingData.php';
 
-use \plenigo\models\CompanyUserBillingData;
-
 /**
- * CompanyUser
- * 
  * <p>
  * This class contains the company user information.
  * </p>
- *
- * @category SDK
- * @package  PlenigoModels
- * @author   Sebastian Dieguez <s.dieguez@plenigo.com>
- * @link     https://www.plenigo.com
  */
 class CompanyUser {
 
