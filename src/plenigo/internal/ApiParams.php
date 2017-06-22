@@ -167,4 +167,9 @@ class ApiParams extends BasicEnum {
      * The replacement tag for the Voucher ID
      */
     const URL_VOUCHER_ID_TAG = "{VOUCHER_ID}";
+
+    /**
+     * Flag indicating if customer id sent is the external customer id
+     */
+    const URL_USE_EXTERNAL_ID_TAG = "{USE_EXTERNAL_ID}";
 }

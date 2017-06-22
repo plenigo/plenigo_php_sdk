@@ -163,14 +163,17 @@ class UserManagementService extends Service
      *
      * @param string $customerId Customer id of the user to create login token for
      *
+     * @param bool $useExternalCustomerId Flag indicating if customer id sent is the external customer id
+     *
      * @return string One time token used to create a valid user session
      *
      * @throws PlenigoException In case of communication errors or invalid parameters
      */
-    public static function createLoginToken($customerId)
+    public static function createLoginToken($customerId, $useExternalCustomerId=false)
     {
 
         $url = str_ireplace(ApiParams::URL_USER_ID_TAG, $customerId, ApiURLs::USER_MGMT_CREATELOGIN);
+        $url = str_ireplace(ApiParams::URL_USE_EXTERNAL_ID_TAG, var_export($useExternalCustomerId, true), $url);
 
         $request = static::postRequest($url);
 

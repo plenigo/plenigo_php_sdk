@@ -152,7 +152,7 @@ final class ApiURLs
     /**
      * This URL is used to create a login token for an existing user.
      */
-    const USER_MGMT_CREATELOGIN = "/api/v2/externalUser/{USER_ID}/createLoginToken";
+    const USER_MGMT_CREATELOGIN = "/api/v2/externalUser/{USER_ID}/createLoginToken?useExternalCustomerId={USE_EXTERNAL_ID}";
     
     /**
      * This URL is used to assign different customer ids to a plenigo customer.
