@@ -102,12 +102,13 @@ class UserManagementService extends Service
      *
      * @param string $customerId Customer id of the user to change email address for
      * @param string $email New email address of user
+     * @param bool $useExternalCustomerId Flag indicating if customer id sent is the external customer id
      *
      * @return bool TRUE Email address changed
      *
      * @throws PlenigoException In case of communication errors or invalid parameters
      */
-    public static function changeEmail($customerId, $email)
+    public static function changeEmail($customerId, $email, $useExternalCustomerId = false)
     {
 
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -121,6 +122,7 @@ class UserManagementService extends Service
         );
 
         $url = str_ireplace(ApiParams::URL_USER_ID_TAG, $customerId, ApiURLs::USER_MGMT_CHANGEMAIL);
+        $url = str_ireplace(ApiParams::URL_USE_EXTERNAL_ID_TAG, var_export($useExternalCustomerId, true), $url);
 
         $request = static::putJSONRequest($url, $map);
 
@@ -162,14 +164,13 @@ class UserManagementService extends Service
      * Create a login token for an existing user. This functionality is only available for companies with closed user groups.
      *
      * @param string $customerId Customer id of the user to create login token for
-     *
      * @param bool $useExternalCustomerId Flag indicating if customer id sent is the external customer id
      *
      * @return string One time token used to create a valid user session
      *
      * @throws PlenigoException In case of communication errors or invalid parameters
      */
-    public static function createLoginToken($customerId, $useExternalCustomerId=false)
+    public static function createLoginToken($customerId, $useExternalCustomerId = false)
     {
 
         $url = str_ireplace(ApiParams::URL_USER_ID_TAG, $customerId, ApiURLs::USER_MGMT_CREATELOGIN);
