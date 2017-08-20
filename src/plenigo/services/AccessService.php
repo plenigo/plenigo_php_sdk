@@ -50,17 +50,19 @@ class AccessService extends Service
      *
      * @param string $customerId The Customer ID
      * @param boolean $useExternalCustomerId flag indicating if customer id is an external customer id
+     * @param \DateTime $startTime time when access should start
      * @param \DateTime $endTime time when access should end
      * @param array $productIds ids of the products to grant customer access to
      *
      * @throws PlenigoException
      */
-    public static function grantUserAccess($customerId, $useExternalCustomerId, $endTime, $productIds)
+    public static function grantUserAccess($customerId, $useExternalCustomerId, $startTime, $endTime, $productIds)
     {
         $testModeText = (PlenigoManager::get()->isTestMode()) ? 'true' : 'false';
         $map = array(
             'useExternalCustomerId' => $useExternalCustomerId,
             ApiParams::TEST_MODE => $testModeText,
+            'startTime' => new \DateTime($startTime),
             'endTime' => new \DateTime($endTime),
             'productIds' => $productIds
         );
