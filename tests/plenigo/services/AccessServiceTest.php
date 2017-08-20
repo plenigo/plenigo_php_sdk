@@ -28,7 +28,7 @@ class AccessServiceTest extends PlenigoTestCase {
     public function testAddUserAccess() {
         AccessServiceMock::$requestResponse = '';
 
-        AccessServiceMock::grantUserAccess(self::CUSTOMER_ID, false, null, array(self::PROD_ID_1));
+        AccessServiceMock::grantUserAccess(self::CUSTOMER_ID, false, null, null, array(self::PROD_ID_1));
         $this->assertError(E_USER_NOTICE, "POST JSON URL");
     }
 
