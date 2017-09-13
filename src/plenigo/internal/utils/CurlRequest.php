@@ -76,7 +76,7 @@ final class CurlRequest {
     /**
      * Executes the cURL request.
      *
-     * @return void
+     * @return mixed
      *
      * @throws \Exception on request error.
      */
@@ -130,7 +130,7 @@ final class CurlRequest {
      *
      * @param string $name The name of the information to retrieve.
      *
-     * @return The information requested.
+     * @return string The information requested.
      */
     public function getInfo($name) {
         return curl_getinfo($this->curl, $name);

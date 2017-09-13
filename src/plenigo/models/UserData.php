@@ -69,6 +69,11 @@ class UserData {
     private $externalUserId;
 
     /**
+     * The user's birthday
+     */
+    private $birthday;
+
+    /**
      * The default constructor with all required parameters.
      *
      * @param string  $id             The user's id.
@@ -80,10 +85,11 @@ class UserData {
      * @param string  $firstName      The user's first name.
      * @param Address $address        The user's address {@link \plenigo\internal\models\Address}
      * @param string  $externalUserId The external user's ID.
+     * @param string  $birthday       The user's birthday.
      *
      * @return UserData instance
      */
-    public function __construct($id, $email, $name, $username, $gender, $lastName, $firstName, Address $address, $externalUserId) {
+    public function __construct($id, $email, $name, $username, $gender, $lastName, $firstName, Address $address, $externalUserId, $birthday) {
         $this->id = $id;
         $this->email = $email;
         $this->name = $name;
@@ -93,12 +99,13 @@ class UserData {
         $this->firstName = $firstName;
         $this->address = $address;
         $this->externalUserId = $externalUserId;
+        $this->birthday = $birthday;
     }
 
     /**
      * Returns the user's id.
      *
-     * @return user's id.
+     * @return string user's id.
      */
     public function getId() {
         return $this->id;
@@ -107,7 +114,7 @@ class UserData {
     /**
      * Returns the user's email.
      *
-     * @return user's email.
+     * @return string user's email.
      */
     public function getEmail() {
         return $this->email;
@@ -116,7 +123,7 @@ class UserData {
     /**
      * Returns the user's name.
      *
-     * @return user's name.
+     * @return string user's name.
      */
     public function getName() {
         return $this->name;
@@ -125,7 +132,7 @@ class UserData {
     /**
      * Returns the username/nickname.
      *
-     * @return username/nickname.
+     * @return string username/nickname.
      */
     public function getUsername() {
         return $this->username;
@@ -134,7 +141,7 @@ class UserData {
     /**
      * Returns the user's gender.
      *
-     * @return user's gender.
+     * @return string user's gender.
      */
     public function getGender() {
         return $this->gender;
@@ -143,7 +150,7 @@ class UserData {
     /**
      * Returns the user's last name.
      *
-     * @return user's last name. 
+     * @return string user's last name.
      */
     public function getLastName() {
         return $this->lastName;
@@ -152,7 +159,7 @@ class UserData {
     /**
      * Returns the user's first name.
      *
-     * @return user's first name.
+     * @return string user's first name.
      */
     public function getFirstName() {
         return $this->firstName;
@@ -161,7 +168,7 @@ class UserData {
     /**
      * Returns the user's addres.
      *
-     * @return user's address {@link \plenigo\internal\Address}.
+     * @return Address user's address {@link \plenigo\internal\Address}.
      */
     public function getAddress() {
         return $this->address;
@@ -170,16 +177,33 @@ class UserData {
     /**
      * Returns the external user's ID.
      *
-     * @return external user's ID.
+     * @return string user's ID.
      */
     public function getExternalUserId() {
         return $this->externalUserId;
     }
 
     /**
+     * @return string the user's birthday
+     */
+    public function getBirthday()
+    {
+        return $this->birthday;
+    }
+
+    /**
+     * @param string $birthday
+     */
+    public function setBirthday($birthday)
+    {
+        $this->birthday = $birthday;
+    }
+
+
+    /**
      * Generates a map with the UserData properties.
      *
-     * @return UserData map.
+     * @return array UserData map.
      */
     public function getMap() {
         $map = array(
@@ -191,6 +215,7 @@ class UserData {
             'lastName' => $this->getLastName(),
             'firstName' => $this->getFirstName(),
             'externalUserId' => $this->getExternalUserId(),
+            'birthday' => $this->getBirthday(),
         );
 
         $addressMap = $this->getAddress()->getMap();
@@ -221,8 +246,9 @@ class UserData {
         $currUserName = isset($map['username']) ? $map['username'] : null;
         $currGender = isset($map['gender']) ? $map['gender'] : null;
         $externalUserId  = isset($map['externalUserId']) ? $map['externalUserId'] : null;
+        $birthday  = isset($map['birthay']) ? $map['birthday'] : null;
 
-        return new UserData($userId, $currEmail, $currName, $currUserName, $currGender, $lastName, $currFirstName, $address, $externalUserId);
+        return new UserData($userId, $currEmail, $currName, $currUserName, $currGender, $lastName, $currFirstName, $address, $externalUserId, $birthday);
     }
 
 }

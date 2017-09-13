@@ -65,7 +65,7 @@ class Address
     /**
      * Gets the address' street.
      *
-     * @return The address' street.
+     * @return string The address' street.
      */
     public function getStreet()
     {
@@ -75,7 +75,7 @@ class Address
     /**
      * Gets the address' additional information.
      *
-     * @return The address' additional information.
+     * @return string The address' additional information.
      */
     public function getAdditionalAddressInfo()
     {
@@ -85,7 +85,7 @@ class Address
     /**
      * Gets the address' post code.
      *
-     * @return The address' post code.
+     * @return string The address' post code.
      */
     public function getPostCode()
     {
@@ -95,7 +95,7 @@ class Address
     /**
      * Gets the address' city.
      *
-     * @return The address' city.
+     * @return string The address' city.
      */
     public function getCity()
     {
@@ -105,7 +105,7 @@ class Address
     /**
      * Gets the address' country.
      *
-     * @return The address' country.
+     * @return string The address' country.
      */
     public function getCountry()
     {
@@ -115,7 +115,7 @@ class Address
     /**
      * Generates a map from the Address instance properties.
      *
-     * @return A map with the instance properties.
+     * @return array A map with the instance properties.
      */
     public function getMap()
     {
@@ -135,7 +135,7 @@ class Address
      *
      * @param array $map The map of properties to create the Address instance.
      *
-     * @return The Address instance.
+     * @return Address The Address instance.
      */
     public static function createFromMap(array $map)
     {

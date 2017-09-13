@@ -93,7 +93,7 @@ class UserService extends Service
      * Executes the prepared request and returns
      * the Response object on success.
      *
-     * @return The request's response.
+     * @return mixed The request's response.
      *
      * @throws \plenigo\PlenigoException on request error.
      */
@@ -279,7 +279,7 @@ class UserService extends Service
     /**
      * Retrieves the user info from the cookie.
      * @param string $pCustId The customer ID if its not logged in
-     * @return The Customer Information from the cookie
+     * @return Customer The Customer Information from the cookie
      * @throws \plenigo\PlenigoException whenever an error happens
      */
     public static function getCustomerInfo($pCustId = null)

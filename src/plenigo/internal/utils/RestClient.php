@@ -242,7 +242,7 @@ class RestClient {
      * Carries out the actual request and returns a response result
      * depending on the response's content type.
      *
-     * @return the request response
+     * @return mixed the request response
      *
      * @throws \Exception on request error.
      */

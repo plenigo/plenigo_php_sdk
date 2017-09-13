@@ -164,7 +164,7 @@ class Service {
     /**
      * Executes the request and returns the response.
      *
-     * @return The request's response.
+     * @return mixed The request's response.
      *
      * @throws \Exception on request error.
      */
@@ -259,7 +259,7 @@ class Service {
             throw new \Exception('Error checking the response', $exc->getCode(), $exc);
         }
 
-        return $response;
+        return  $response;
     }
 
     /**
