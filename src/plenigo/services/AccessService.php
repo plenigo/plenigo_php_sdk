@@ -50,8 +50,8 @@ class AccessService extends Service
      *
      * @param string $customerId The Customer ID
      * @param boolean $useExternalCustomerId flag indicating if customer id is an external customer id
-     * @param \DateTime $startTime time when access should start in the format Y-m-d H:i
-     * @param \DateTime $endTime time when access should end in the format Y-m-d H:i
+     * @param \DateTime $startTime time when access should start in the format Y-m-d
+     * @param \DateTime $endTime time when access should end in the format Y-m-d
      * @param array $productIds ids of the products to grant customer access to
      *
      * @throws PlenigoException
@@ -62,8 +62,8 @@ class AccessService extends Service
         $map = array(
             'useExternalCustomerId' => $useExternalCustomerId,
             ApiParams::TEST_MODE => $testModeText,
-            'startTime' => date('Y-m-d H:i', strtotime($startTime)),
-            'endTime' => date('Y-m-d H:i', strtotime($endTime)),
+            'startTime' => date('Y-m-d', strtotime($startTime)),
+            'endTime' => date('Y-m-d', strtotime($endTime)),
             'productIds' => $productIds
         );
 
