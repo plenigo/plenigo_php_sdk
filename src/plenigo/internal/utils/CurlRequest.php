@@ -51,7 +51,7 @@ final class CurlRequest {
      * Adds an option to the cURL request.
      *
      * @param string $name  The option name.
-     * @param any    $value The option value.
+     * @param string any    $value The option value.
      *
      * @return void
      */
@@ -118,7 +118,7 @@ final class CurlRequest {
         $statusCode = $this->getInfo(CURLINFO_HTTP_CODE);
         if (!empty($statusCode)) {
             if ($statusCode < 200 || $statusCode >= 300) {
-                throw new \Exception($statusCode . " HTTP Error detected", $statusCode);
+                throw new \Exception($statusCode . " HTTP Error detected with message: {$result}", $statusCode);
             }
         }
         $this->optCache = array();
