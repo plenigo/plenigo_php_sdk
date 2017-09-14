@@ -4,7 +4,9 @@ namespace plenigo\internal\utils;
 
 require_once __DIR__ . '/CurlRequestInterface.php';
 require_once __DIR__ . '/../../PlenigoManager.php';
+require_once __DIR__ . '/../exceptions/ConfigException.php';
 
+use plenigo\internal\exceptions\ConfigException;
 use plenigo\PlenigoManager;
 
 /**
@@ -44,6 +46,11 @@ final class CurlRequest {
      */
     public function __construct($url = null) {
         $this->optCache = array();
+
+        if (!function_exists('curl_init')) {
+            throw new ConfigException("Failed to init curl! Please install php-curl first");
+        }
+
         $this->curl = curl_init($url);
     }
 
