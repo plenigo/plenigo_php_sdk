@@ -248,16 +248,17 @@ class UserService extends Service
         } catch (PlenigoException $exc) {
             $clazz = get_class();
             PlenigoManager::error($clazz, self::ERR_MSG_PAYWALL, $exc);
-            // Default state for the paywall is ENABLED
-            return true;
+
+            throw new PlenigoException(self::ERR_MSG_PAYWALL);
         }
+
         $resArray = get_object_vars($response);
 
-        if (isset($resArray['enabled']) && $resArray['enabled'] === 'false') {
-            return false;
-        } else {
-            return true;
+        if (isset($resArray['enabled'])) {
+            return !!$resArray['enabled'];
         }
+
+        throw new PlenigoException(self::ERR_MSG_PAYWALL);
     }
 
     /**
