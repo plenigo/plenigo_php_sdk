@@ -211,7 +211,7 @@ class Service {
 
         // All 200 codes are good answers
         if ($statusCode < 200 || $statusCode >= 300) {
-            throw new \Exception("Request Status Code: " . $statusCode, $statusCode);
+            throw new \Exception("Request Status Code: {$statusCode}, {$response->error}", $statusCode);
         }
     }
 
