@@ -2,9 +2,10 @@
 
 require_once __DIR__ . '/../../../../src/plenigo/internal/utils/CurlRequest.php';
 
+use PHPUnit\Framework\TestCase;
 use \plenigo\internal\utils\CurlRequest;
 
-class CurlRequestTest extends PHPUnit_Framework_Testcase
+class CurlRequestTest extends TestCase
 {
 
     public function testConstructor()

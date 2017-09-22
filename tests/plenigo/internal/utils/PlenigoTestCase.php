@@ -1,5 +1,7 @@
 <?php
 
+use PHPUnit\Framework\TestCase;
+
 /**
  * <p>
  * This abstract class provides capabilities extending the PHPUnit_Framework_TestCase ones. 
@@ -12,7 +14,7 @@
  * @author   Sebastian Dieguez <s.dieguez@plenigo.com>
  * @link     http://plenigo.com
  */
-abstract class PlenigoTestCase extends PHPUnit_Framework_TestCase
+abstract class PlenigoTestCase extends TestCase
 {
 
     protected $errors = array();

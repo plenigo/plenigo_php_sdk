@@ -4,10 +4,11 @@ require_once __DIR__ . '/../../../../src/plenigo/internal/models/Configuration.p
 require_once __DIR__ . '/../../../../src/plenigo/internal/ApiURLs.php';
 require_once __DIR__ . '/../../../../src/plenigo/Plenigo.php';
 
+use PHPUnit\Framework\TestCase;
 use plenigo\internal\models\Configuration;
 use plenigo\internal\ApiURLs;
 
-class ConfigurationTest extends PHPUnit_Framework_Testcase
+class ConfigurationTest extends TestCase
 {
     public function configurationProvider()
     {

@@ -2,9 +2,9 @@
 
 require_once __DIR__ . '/../../../../src/plenigo/internal/server-interface/ServerInterface.php';
 
-use plenigo\internal\serverInterface\ServerInterface;
+use PHPUnit\Framework\TestCase;
 
-class ServerInterfaceTest extends PHPUnit_Framework_Testcase
+class ServerInterfaceTest extends TestCase
 {
 
     public function interfaceProvider()

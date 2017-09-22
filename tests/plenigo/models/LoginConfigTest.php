@@ -3,10 +3,11 @@
 require_once __DIR__ . '/../../../src/plenigo/models/LoginConfig.php';
 require_once __DIR__ . '/../../../src/plenigo/models/AccessScope.php';
 
+use PHPUnit\Framework\TestCase;
 use \plenigo\models\LoginConfig;
 use \plenigo\models\AccessScope;
 
-class LoginConfigTest extends PHPUnit_Framework_Testcase
+class LoginConfigTest extends TestCase
 {
     public function loginConfigProvider()
     {

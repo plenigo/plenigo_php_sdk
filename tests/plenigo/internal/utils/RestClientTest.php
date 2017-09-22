@@ -6,7 +6,6 @@ require_once __DIR__ . '/CurlRequestMockProvider.php';
 
 class RestClientTest extends CurlRequestMockProvider
 {
-
     /**
      * @dataProvider curlClientProvider
      */

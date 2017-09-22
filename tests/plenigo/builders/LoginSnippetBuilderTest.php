@@ -4,11 +4,12 @@ require_once __DIR__ . '/../../../src/plenigo/models/LoginConfig.php';
 require_once __DIR__ . '/../../../src/plenigo/models/AccessScope.php';
 require_once __DIR__ . '/../../../src/plenigo/builders/LoginSnippetBuilder.php';
 
+use PHPUnit\Framework\TestCase;
 use \plenigo\models\LoginConfig;
 use \plenigo\models\AccessScope;
 use \plenigo\builders\LoginSnippetBuilder;
 
-class LoginSnippetBuilderTest extends PHPUnit_Framework_Testcase
+class LoginSnippetBuilderTest extends TestCase
 {
     public function loginSnippetBuilderProvider()
     {

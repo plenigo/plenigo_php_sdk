@@ -2,9 +2,10 @@
 
 require_once __DIR__ . '/../../../../src/plenigo/internal/utils/ArrayUtils.php';
 
+use PHPUnit\Framework\TestCase;
 use \plenigo\internal\utils\ArrayUtils;
 
-class ArrayUtilsTest extends PHPUnit_Framework_Testcase
+class ArrayUtilsTest extends TestCase
 {
 
     public function testAddIfDefined()

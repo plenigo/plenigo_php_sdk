@@ -3,10 +3,11 @@
 require_once __DIR__ . '/../../../src/plenigo/models/TokenData.php';
 require_once __DIR__ . '/../../../src/plenigo/models/TokenGrantType.php';
 
+use PHPUnit\Framework\TestCase;
 use \plenigo\models\TokenData;
 use \plenigo\models\TokenGrantType;
 
-class TokenDataTest extends PHPUnit_Framework_Testcase
+class TokenDataTest extends TestCase
 {
 	public function tokenDataProvider()
 	{

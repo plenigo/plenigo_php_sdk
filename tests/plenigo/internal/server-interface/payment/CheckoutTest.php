@@ -3,10 +3,11 @@
 require_once __DIR__ . '/../../../../../src/plenigo/internal/server-interface/payment/Checkout.php';
 require_once __DIR__ . '/../../../../../src/plenigo/models/ProductBase.php';
 
+use PHPUnit\Framework\TestCase;
 use plenigo\internal\serverInterface\payment\Checkout;
 use plenigo\models\ProductBase;
 
-class CheckoutTest extends PHPUnit_Framework_Testcase
+class CheckoutTest extends TestCase
 {
     public function checkoutRequestProvider()
     {

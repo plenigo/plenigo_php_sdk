@@ -3,10 +3,11 @@
 require_once __DIR__ . '/../../../src/plenigo/models/UserData.php';
 require_once __DIR__ . '/../../../src/plenigo/internal/models/Address.php';
 
+use PHPUnit\Framework\TestCase;
 use \plenigo\models\UserData;
 use \plenigo\internal\models\Address;
 
-class UserDataTest extends PHPUnit_Framework_Testcase
+class UserDataTest extends TestCase
 {
 
     public function userDataProvider()
@@ -34,7 +35,7 @@ class UserDataTest extends PHPUnit_Framework_Testcase
 
         $userData = new UserData(
             $data['userId'], $data['email'], $data['name'], $data['username'], $data['gender'], $data['lastName'],
-            $data['firstName'], $address, $data['externalUserId']
+            $data['firstName'], $address, $data['externalUserId'], $data['birthday'], $data['phoneNumber'], $data['mobileNumber']
         );
 
         return array(array($userData, $data, $address));

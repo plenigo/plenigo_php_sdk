@@ -2,9 +2,10 @@
 
 require_once __DIR__ . '/../../../src/plenigo/models/ProductId.php';
 
+use PHPUnit\Framework\TestCase;
 use \plenigo\models\ProductId;
 
-class ProductIdTest extends PHPUnit_Framework_Testcase
+class ProductIdTest extends TestCase
 {
     public function productProvider()
     {

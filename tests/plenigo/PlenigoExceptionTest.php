@@ -2,9 +2,10 @@
 
 require_once __DIR__ . '/../../src/plenigo/PlenigoException.php';
 
+use PHPUnit\Framework\TestCase;
 use plenigo\PlenigoException;
 
-class PlenigoExceptionTest extends PHPUnit_Framework_Testcase
+class PlenigoExceptionTest extends TestCase
 {
 
     public function dataProvider()

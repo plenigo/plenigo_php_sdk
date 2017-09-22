@@ -3,15 +3,15 @@
 require_once( __DIR__ . '/../../../../src/plenigo/internal/utils/EncryptionUtils.php' );
 require_once( __DIR__ . '/../../../../src/plenigo/internal/exceptions/EncryptionException.php' );
 
+use PHPUnit\Framework\TestCase;
 use \plenigo\internal\utils\EncryptionUtils;
-use \plenigo\internal\exceptions\EncryptionException;
 
 /**
  * <p>
  * Test for {@link plenigo.utils.EncryptionUtils }
  * </p>
  */
-class EncryptionUtilsTest extends PHPUnit_Framework_Testcase
+class EncryptionUtilsTest extends TestCase
 {
 
     /**

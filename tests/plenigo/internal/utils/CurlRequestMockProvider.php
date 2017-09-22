@@ -11,7 +11,7 @@ class CurlRequestMockProvider extends PlenigoTestCase
 
     public function curlClientProvider()
     {
-        $curlRequest = $this->getMock('\plenigo\internal\utils\CurlRequestInterface');
+        $curlRequest = $this->getMockBuilder('\plenigo\internal\utils\CurlRequestInterface')->getMock();
 
         $curlRequest->expects($this->any())
             ->method('getInfo')
