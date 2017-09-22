@@ -162,7 +162,7 @@ class MobileServiceTest extends PlenigoTestCase {
         MobileServiceMock::$requestResponse = $data;
 
         try {
-            $result = MobileServiceMock::createMobileSecret(self::CUSTOMER_ID);
+            MobileServiceMock::createMobileSecret(self::CUSTOMER_ID, 150);
         } catch (\Exception $ex) {
             $this->assertEquals($ex->getMessage(), "Mobile Service execution failed!");
         }
