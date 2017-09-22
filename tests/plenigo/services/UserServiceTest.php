@@ -191,7 +191,7 @@ class UserServiceTest extends PlenigoTestCase
      */
     public function testPaywallEnabled()
     {
-        $response = json_decode('{"enabled":"true"}');
+        $response = json_decode('{"enabled": true}');
 
         UserServiceMock::$requestResponse = $response;
 
@@ -207,7 +207,7 @@ class UserServiceTest extends PlenigoTestCase
 
     public function testPaywallDisabled()
     {
-        $response = json_decode('{"enabled":"false"}');
+        $response = json_decode('{"enabled": false}');
 
         UserServiceMock::$requestResponse = $response;
 

@@ -24,7 +24,10 @@ class UserDataTest extends PHPUnit_Framework_Testcase
             'postCode' => '12345',
             'city' => 'some city',
             'country' => 'some country',
-            'externalUserId' => '123456'
+            'externalUserId' => '123456',
+            'birthday' => '2017-04-01',
+            'phoneNumber' => '08000000',
+            'mobileNumber' => '08000000'
         );
 
         $address = Address::createFromMap($data);
