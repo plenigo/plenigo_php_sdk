@@ -1,9 +1,16 @@
 <?php
+
 /**
- * Created by IntelliJ IDEA.
- * User: soenke
- * Date: 24.09.17
- * Time: 16:49
+ * Model
+ *
+ * <p>
+ * Main model to be extended
+ * </p>
+ *
+ * @category SDK
+ * @package  PlenigoInternalModels
+ * @author   plenigo support@plenigo.com
+ * @link     https://www.plenigo.com
  */
 
 namespace plenigo\models;
