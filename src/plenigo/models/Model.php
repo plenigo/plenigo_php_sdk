@@ -28,7 +28,7 @@ class Model
 
     /**
      * Model constructor.
-     * @param $data
+     * @param array $data
      */
     public function __construct($data)
     {
@@ -36,6 +36,7 @@ class Model
     }
 
     /**
+     * returns a Model property
      * @param string $key of return value
      * @return string value
      */
@@ -44,6 +45,7 @@ class Model
     }
 
     /**
+     * sets a model property
      * @param string $key
      * @param mixed $value
      */
@@ -52,6 +54,7 @@ class Model
     }
 
     /**
+     * magic function to set and get properties
      * @param string $name
      * @param array $arguments
      * @return mixed
@@ -75,7 +78,7 @@ class Model
     }
 
     /**
-     *
+     * returns all Model-Data as array
      * @return array
      */
     public function getMap() {
