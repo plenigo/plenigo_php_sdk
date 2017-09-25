@@ -8,7 +8,7 @@
  * </p>
  *
  * @category SDK
- * @package  PlenigoInternalModels
+ * @package  PlenigoModels
  * @author   plenigo support@plenigo.com
  * @link     https://www.plenigo.com
  */
