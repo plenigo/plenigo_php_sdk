@@ -3,6 +3,7 @@
 namespace plenigo\models;
 
 require_once __DIR__ . '/ProductId.php';
+require_once __DIR__ . '/../Plenigo.php';
 require_once __DIR__ . '/../internal/utils/ArrayUtils.php';
 
 use plenigo\internal\utils\ArrayUtils;

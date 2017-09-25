@@ -38,7 +38,7 @@ class Subscription {
 
     /**
      * Flag indicating if the product represents a subscription.
-     * @return A bool indicating if the product represents a subscription
+     * @return bool indicating if the product represents a subscription
      */
     public function isSubscribable() {
         return ($this->subscribable === true);
@@ -46,7 +46,7 @@ class Subscription {
 
     /**
      * The subscription term.
-     * @return The subscription term
+     * @return int The subscription term
      */
     public function getTerm() {
         return $this->term;
@@ -54,7 +54,7 @@ class Subscription {
 
     /**
      * The cancellation period.
-     * @return The cancellation period
+     * @return int The cancellation period
      */
     public function getCancellationPeriod() {
         return $this->cancellationPeriod;

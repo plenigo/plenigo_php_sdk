@@ -33,10 +33,12 @@ class UserDataTest extends TestCase
 
         $address = Address::createFromMap($data);
 
-        $userData = new UserData(
-            $data['userId'], $data['email'], $data['name'], $data['username'], $data['gender'], $data['lastName'],
-            $data['firstName'], $address, $data['externalUserId'], $data['birthday'], $data['phoneNumber'], $data['mobileNumber']
-        );
+//        $userData = new UserData(
+//            $data['userId'], $data['email'], $data['name'], $data['username'], $data['gender'], $data['lastName'],
+//            $data['firstName'], $address, $data['externalUserId'], $data['birthday'], $data['phoneNumber'], $data['mobileNumber']
+//        );
+
+        $userData = UserData::createFromMap($data);
 
         return array(array($userData, $data, $address));
     }
@@ -44,7 +46,7 @@ class UserDataTest extends TestCase
     /**
      * @dataProvider userDataProvider
      */
-    public function testGetters($userData, $data, $address)
+    public function testGetters(UserData $userData, $data, $address)
     {
         $this->assertEquals($data['userId'], $userData->getId());
         $this->assertEquals($data['email'], $userData->getEmail());

@@ -34,7 +34,7 @@ class Customer
     /**
      * Returns the customer id.
      *
-     * @return The id of the customer
+     * @return string The id of the customer
      */
     public function getCustomerId()
     {
@@ -44,7 +44,7 @@ class Customer
     /**
      * Returns the current timestamp of the cookie in milliseconds.
      *
-     * @return The cookie timestamp
+     * @return int The cookie timestamp
      */
     public function getTimestamp()
     {

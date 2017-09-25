@@ -35,7 +35,7 @@ class ActionPeriod {
 
     /**
      * The name of the action period.
-     * @return The name of the action period
+     * @return string The name of the action period
      */
     public function getName() {
         return $this->name;
@@ -43,7 +43,7 @@ class ActionPeriod {
 
     /**
      * The term of the action period.
-     * @return The term of the action period
+     * @return int The term of the action period
      */
     public function getTerm() {
         return $this->term;
@@ -51,7 +51,7 @@ class ActionPeriod {
 
     /**
      * The price of the action period.
-     * @return The price of the action period
+     * @return double The price of the action period
      */
     public function getPrice() {
         return $this->price;

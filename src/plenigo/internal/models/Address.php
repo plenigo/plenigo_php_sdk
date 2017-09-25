@@ -51,7 +51,7 @@ class Address
      * @param string $city                  The address' city.
      * @param string $country               The address' country.
      *
-     * @return Address instance
+     * @return void
      */
     public function __construct($street, $additionalAddressInfo, $postCode, $city, $country)
     {
@@ -135,7 +135,7 @@ class Address
      *
      * @param array $map The map of properties to create the Address instance.
      *
-     * @return Address The Address instance.
+     * @return Address The new Address instance.
      */
     public static function createFromMap(array $map)
     {
