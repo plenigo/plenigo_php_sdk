@@ -97,6 +97,7 @@ class CheckoutSnippetBuilder {
                 $strSourceURL = ", null";
             }
         }
+        $strAffiliate = null;
         if (!is_null($affiliateId)) {
             PlenigoManager::get()->notice($clazz, "Affiliate ID:" . $affiliateId);
             $strAffiliate = ", '" . $affiliateId . "'";
