@@ -119,7 +119,7 @@ class CheckoutSnippetBuilder {
                 $strTargetURL = ", null";
             }
             if (is_null($strAffiliate)) {
-                $strTargetURL = ", null";
+                $strAffiliate = ", null";
             }
         }
 
