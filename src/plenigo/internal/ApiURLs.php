@@ -52,6 +52,11 @@ final class ApiURLs
     const USER_PROFILE = "/api/v2/user/profile";
 
     /**
+     * This URL is used to verify the user's login
+     */
+    const USER_LOGIN = "/api/v2/user/verifyLogin";
+
+    /**
      * This URL is used to get user information by the session cookie.
      */
     const USER_PROFILE_BY_SESSION_COOKIE = "/api/v2/user/profile/sessionCookie";

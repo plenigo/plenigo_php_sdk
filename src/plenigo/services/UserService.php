@@ -49,6 +49,7 @@ class UserService extends Service
     const ERR_MSG_USER_BOUGHT = "Error while determining if the user bought an item!";
     const ERR_MSG_USER_LIST = "Error while retrieving bought product listing!";
     const ERR_MSG_PAYWALL = "Error while determining if the paywall is enabled!";
+    const ERR_USER_LOGIN = "Error while verifying user";
     const INF_MSG_ACCESS = "User tried to access an item!";
 
     /**
@@ -87,6 +88,36 @@ class UserService extends Service
         $result = UserData::createFromMap((array)$response);
 
         return $result;
+    }
+
+
+    /**
+     * Verify the combination of email and password
+     * and returns the user object if successfull.
+     * @param string $email the user's email
+     * @param string $password the users password
+     * @return array user data
+     */
+    public static function login($email, $password) {
+
+        $clazz = get_class();
+        PlenigoManager::notice($clazz, "Obtaining Logged In User Data!");
+
+        $testModeText = (PlenigoManager::get()->isTestMode()) ? 'true' : 'false';
+        $params = array(
+            'email' => $email,
+            'password' => $password,
+            ApiParams::TEST_MODE => $testModeText,
+        );
+
+        $request = static::postJSONRequest(ApiURLs::USER_LOGIN, false, $params);
+
+        $LoginRequest = new static($request);
+
+        $result = parent::executeRequest($LoginRequest, ApiURLs::USER_LOGIN, self::ERR_USER_LOGIN);
+
+        return $result;
+
     }
 
     /**
