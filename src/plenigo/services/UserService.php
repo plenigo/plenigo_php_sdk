@@ -15,6 +15,7 @@ require_once __DIR__ . '/../internal/ApiResults.php';
 require_once __DIR__ . '/../internal/ApiParams.php';
 require_once __DIR__ . '/../models/ErrorCode.php';
 
+use PHPUnit\Runner\Exception;
 use plenigo\internal\ApiParams;
 use plenigo\internal\ApiResults;
 use plenigo\internal\ApiURLs;
@@ -96,7 +97,7 @@ class UserService extends Service
      * and returns the user object if successfull.
      * @param string $email the user's email
      * @param string $password the users password
-     * @return array user data
+     * @return array|boolean user data or boolean false
      */
     public static function login($email, $password) {
 
@@ -114,10 +115,14 @@ class UserService extends Service
 
         $LoginRequest = new static($request);
 
-        $result = parent::executeRequest($LoginRequest, ApiURLs::USER_LOGIN, self::ERR_USER_LOGIN);
+        try {
+            $result = parent::executeRequest($LoginRequest, ApiURLs::USER_LOGIN, self::ERR_USER_LOGIN);
+            return $result;
+        } catch(\Exception $exception) {
+            $LoginRequest->getErrorMsg();
+        }
 
-        return $result;
-
+        return false;
     }
 
     /**
@@ -146,12 +151,13 @@ class UserService extends Service
      *
      * @param mixed $productId The ID (or array of IDs) of the product to be queried against the user
      * @param string $customerId The customer ID if its not logged in
+     * @param boolean $useExternalCustomerId Flag indicating if customer id sent is the external customer id
      *
      * @return bool TRUE if the user in the cookie has bought the product and the session is not expired, false otherwise
      *
      * @throws \plenigo\PlenigoException whenever an error happens
      */
-    public static function hasUserBought($productId, $customerId = null)
+    public static function hasUserBought($productId, $customerId = null, $useExternalCustomerId = false)
     {
         $clazz = get_class();
         PlenigoManager::notice($clazz, "Checking if user bought Product with ID=" . print_r($productId, true));
@@ -168,7 +174,8 @@ class UserService extends Service
         $params = array(
             ApiParams::CUSTOMER_ID => $customer->getCustomerId(),
             ApiParams::PRODUCT_ID => $productId,
-            ApiParams::TEST_MODE => $testModeText
+            ApiParams::TEST_MODE => $testModeText,
+            ApiParams::USE_EXTERNAL_CUSTOMER_ID => ($useExternalCustomerId ? 'true' : 'false')
         );
         $request = static::getRequest(ApiURLs::USER_PRODUCT_ACCESS, false, $params);
 
@@ -208,12 +215,13 @@ class UserService extends Service
      *
      * @param mixed $productId The ID (or array of IDs) of the product to be queried against the user
      * @param string $customerId The customer ID if its not logged in
+     * @param boolean $useExternalCustomerId Flag indicating if customer id sent is the external customer id
      *
      * @return array
      *
      * @throws \plenigo\PlenigoException whenever an error happens
      */
-    public static function hasBoughtProductWithProducts($productId, $customerId = null)
+    public static function hasBoughtProductWithProducts($productId, $customerId = null, $useExternalCustomerId = false)
     {
         $clazz = get_class();
         PlenigoManager::notice($clazz, "Checking if user bought Product with ID=" . print_r($productId, true));
@@ -230,7 +238,8 @@ class UserService extends Service
         $params = array(
             ApiParams::CUSTOMER_ID => $customer->getCustomerId(),
             ApiParams::PRODUCT_ID => $productId,
-            ApiParams::TEST_MODE => $testModeText
+            ApiParams::TEST_MODE => $testModeText,
+            ApiParams::USE_EXTERNAL_CUSTOMER_ID => ($useExternalCustomerId ? 'true' : 'false')
         );
         $request = static::getRequest(ApiURLs::USER_PRODUCT_ACCESS, false, $params);
 
@@ -405,10 +414,11 @@ class UserService extends Service
      * )</pre>
      *
      * @param string $pCustId The customer ID if its not logged in
+     * @param boolean $useExternalCustomerId Flag indicating if customer id sent is the external customer id
      * @return array The associative array containing the bought products/subscriptions or an empty array
      * @throws PlenigoException If the compay ID and/or the Secret key is rejected
      */
-    public static function getProductsBought($pCustId = null)
+    public static function getProductsBought($pCustId = null, $useExternalCustomerId)
     {
         $res = array();
         $customer = self::getCustomerInfo($pCustId);
@@ -421,7 +431,9 @@ class UserService extends Service
         $testModeText = (PlenigoManager::get()->isTestMode()) ? 'true' : 'false';
 
         $params = array(
-            ApiParams::TEST_MODE => $testModeText
+            ApiParams::TEST_MODE => $testModeText,
+            ApiParams::USE_EXTERNAL_CUSTOMER_ID => ($useExternalCustomerId ? 'true' : 'false')
+
         );
         $url = str_ireplace(ApiParams::URL_USER_ID_TAG, $customer->getCustomerId(), ApiURLs::USER_PRODUCTS);
         $request = static::getRequest($url, false, $params);

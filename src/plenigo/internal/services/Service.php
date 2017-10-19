@@ -215,6 +215,14 @@ class Service {
         }
     }
 
+
+    /**
+     * Returns the last ErrorMsg from Api
+     */
+    public function getErrorMsg() {
+
+    }
+
     /**
      * Executes the fiven RestClient and detects if there is an error, 
      * gets its code and provides a PlenigoException describing it 

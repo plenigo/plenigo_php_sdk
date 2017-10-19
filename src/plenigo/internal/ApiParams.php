@@ -109,6 +109,11 @@ class ApiParams extends BasicEnum {
     const TEST_MODE = "testMode";
 
     /**
+     * Flag indicating if customer id sent is the external customer id
+     */
+    const USE_EXTERNAL_CUSTOMER_ID = "useExternalCustomerId";
+
+    /**
      * Access token parameter.
      */
     const ACCESS_TOKEN = "token";
