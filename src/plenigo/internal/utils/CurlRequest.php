@@ -34,6 +34,7 @@ final class CurlRequest {
      */
     private $curl;
     private $optCache = array();
+    private static $lastResult = '';
 
     /**
      * Initializes the cURL request at the given URL.
@@ -101,6 +102,8 @@ final class CurlRequest {
             throw new \Exception(curl_error($this->curl), curl_errno($this->curl));
         }
 
+        self::$lastResult = $result;
+
         if (PlenigoManager::isDebug()) {
             rewind($verbose);
             $verboseLog = stream_get_contents($verbose);
@@ -150,6 +153,15 @@ final class CurlRequest {
      */
     public function close() {
         curl_close($this->curl);
+    }
+
+    /**
+     * Get the result from the very last request
+     * @return mixed|string last request as object or json
+     */
+    public static function getLastResult() {
+        $json = json_decode(self::$lastResult, true);
+        return (json_last_error() === JSON_ERROR_NONE ? $json : self::$lastResult);
     }
 
 }

@@ -21,6 +21,7 @@ use plenigo\internal\ApiResults;
 use plenigo\internal\ApiURLs;
 use plenigo\internal\models\Customer;
 use plenigo\internal\services\Service;
+use plenigo\internal\utils\CurlRequest;
 use plenigo\internal\utils\EncryptionUtils;
 use plenigo\internal\utils\SdkUtils;
 use plenigo\models\ErrorCode;
@@ -95,14 +96,17 @@ class UserService extends Service
     /**
      * Verify the combination of email and password
      * and returns the user object if successfull.
+     * @see https://plenigo.github.io/sdks/php#verify-users-login
+     *
      * @param string $email the user's email
      * @param string $password the users password
+     * @param string $error (optional) error message
      * @return array|boolean user data or boolean false
      */
-    public static function login($email, $password) {
+    public static function verifyLogin($email, $password, &$error = '') {
 
         $clazz = get_class();
-        PlenigoManager::notice($clazz, "Obtaining Logged In User Data!");
+        PlenigoManager::notice($clazz, "Verifying the user's login");
 
         $testModeText = (PlenigoManager::get()->isTestMode()) ? 'true' : 'false';
         $params = array(
@@ -118,8 +122,19 @@ class UserService extends Service
         try {
             $result = parent::executeRequest($LoginRequest, ApiURLs::USER_LOGIN, self::ERR_USER_LOGIN);
             return $result;
-        } catch(\Exception $exception) {
-            $LoginRequest->getErrorMsg();
+        }
+        // we only catch one specific Exception
+        catch (PlenigoException $exception) {
+            $result = CurlRequest::getLastResult();
+
+            // something else is broken
+            if (!is_array($result) || !key_exists('error', $result) || !$result['error']) {
+                // throwing it outside
+                throw $exception;
+            }
+
+            // our errorMsg from API
+            $error = $result['error'];
         }
 
         return false;
@@ -413,12 +428,12 @@ class UserService extends Service
      *   ),
      * )</pre>
      *
-     * @param string $pCustId The customer ID if its not logged in
-     * @param boolean $useExternalCustomerId Flag indicating if customer id sent is the external customer id
+     * @param string $pCustId (optional) The customer ID if its not logged in
+     * @param boolean $useExternalCustomerId (optional) Flag indicating if customer id sent is the external customer id
      * @return array The associative array containing the bought products/subscriptions or an empty array
      * @throws PlenigoException If the compay ID and/or the Secret key is rejected
      */
-    public static function getProductsBought($pCustId = null, $useExternalCustomerId)
+    public static function getProductsBought($pCustId = null, $useExternalCustomerId = false)
     {
         $res = array();
         $customer = self::getCustomerInfo($pCustId);

@@ -26,7 +26,7 @@ class PlenigoException extends \Exception
      *
      * @param string $message The response message
      * @param int $code The response code
-     * @param type $previous The previous Exception
+     * @param \Exception $previous The previous Exception
      */
     public function __construct($message, $code = 0, $previous = null)
     {

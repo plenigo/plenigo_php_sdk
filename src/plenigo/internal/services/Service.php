@@ -211,17 +211,12 @@ class Service {
 
         // All 200 codes are good answers
         if ($statusCode < 200 || $statusCode >= 300) {
-            throw new \Exception("Request Status Code: {$statusCode}, {$response->error}", $statusCode);
+            $exception = new PlenigoException("Request Status Code: {$statusCode}, {$response->error}", $statusCode);
+            $exception->addErrorDetail($statusCode, $response->error);
+            throw $exception;
         }
     }
 
-
-    /**
-     * Returns the last ErrorMsg from Api
-     */
-    public function getErrorMsg() {
-
-    }
 
     /**
      * Executes the fiven RestClient and detects if there is an error, 
