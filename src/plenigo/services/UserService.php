@@ -98,21 +98,27 @@ class UserService extends Service
      * and returns the user object if successfull.
      * @see https://plenigo.github.io/sdks/php#verify-users-login
      *
+     * array['os']          string Operation System of the User (max 40)
+     *      ['browser']     string browser of the user (max 40)
+     *      ['source']      string source of the user (max 255)
+     *      ['ipAddress']   string IP-Address of the user (max 45)
+     *
      * @param string $email the user's email
      * @param string $password the users password
+     * @param array $data (optional) additional data to track login information (See above)
      * @param string $error (optional) error message
      *
      * @return array|boolean user data or boolean false
      */
-    public static function verifyLogin($email, $password, &$error = '') {
+    public static function verifyLogin($email, $password, $data = array(), &$error = '') {
 
         $clazz = get_class();
         PlenigoManager::notice($clazz, "Verifying the user's login");
 
-        $params = array(
+        $params = array_merge($data, array(
             'email' => $email,
             'password' => $password,
-        );
+        ));
 
         $request = static::postJSONRequest(ApiURLs::USER_LOGIN, false, $params);
 
