@@ -101,6 +101,7 @@ class UserService extends Service
      * @param string $email the user's email
      * @param string $password the users password
      * @param string $error (optional) error message
+     *
      * @return array|boolean user data or boolean false
      */
     public static function verifyLogin($email, $password, &$error = '') {
@@ -108,11 +109,9 @@ class UserService extends Service
         $clazz = get_class();
         PlenigoManager::notice($clazz, "Verifying the user's login");
 
-        $testModeText = (PlenigoManager::get()->isTestMode()) ? 'true' : 'false';
         $params = array(
             'email' => $email,
             'password' => $password,
-            ApiParams::TEST_MODE => $testModeText,
         );
 
         $request = static::postJSONRequest(ApiURLs::USER_LOGIN, false, $params);
@@ -165,8 +164,8 @@ class UserService extends Service
      * an array of \plenigo\models\ErrorDetail.
      *
      * @param mixed $productId The ID (or array of IDs) of the product to be queried against the user
-     * @param string $customerId The customer ID if its not logged in
-     * @param boolean $useExternalCustomerId Flag indicating if customer id sent is the external customer id
+     * @param string $customerId (optional) The customer ID if its not logged in
+     * @param boolean $useExternalCustomerId (optional) Flag indicating if customer id sent is the external customer id
      *
      * @return bool TRUE if the user in the cookie has bought the product and the session is not expired, false otherwise
      *
