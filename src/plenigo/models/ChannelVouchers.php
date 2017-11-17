@@ -47,8 +47,8 @@ class ChannelVouchers {
      */
     public function fromJSON($data) {
         foreach ($data AS $key => $value) {
-            $this->{$key} = $value;
+            $this->channel = $key;
+            $this->ids = $value;
         }
     }
-
 }
