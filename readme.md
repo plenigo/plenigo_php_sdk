@@ -2,12 +2,12 @@
 
 plenigo PHP SDK
 ===============
-Plenigo is a Software-As-A-Service  that allows everyone to easily monitarize his digital content.
-
-The plenigo PHP SDK encapsulates the plenigo RESTful API and provides the user with all necessary functionality to implement the server side plenigo paywall.
+> **Disclaimer**
+> The plenigo SDK is an open source wrapper around the [plenigo API](https://api.plenigo.com).
+> It is not guaranteed to be feature complete. We try to keep it as current as possible, but it is still possible that features are missing. We are happy to accept push requests for missing functionality.
 
 A detailed usage guide can be found in our [documentation](https://plenigo.github.io/sdks/php).
 
-If you find any problems or bugs please feel free to open up a ticket in the [tracker](https://github.com/plenigo/plenigo_php_sdk/issues).
+If you find any problems or bugs please feel free to open up a ticket in the [tracker](https://github.com/plenigo/plenigo_php_sdk/issues). Bugs regarding the SDK are only handled if they are inserted there.
 
 A composer package can be found on [packagist.org](https://packagist.org/packages/plenigo/plenigo-php-sdk).
