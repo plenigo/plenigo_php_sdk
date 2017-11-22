@@ -34,7 +34,7 @@ final class LoginConfig
      * used with at least these parameters.
      *
      * @param string $redUri          The redirect URL
-     * @param const  $dataAccessScope The data access scope
+     * @param string $dataAccessScope The data access scope
      */
     public function __construct($redUri, $dataAccessScope)
     {
@@ -47,7 +47,7 @@ final class LoginConfig
      * The given URL (or at least the starting part) must be registered in the plenigo backend.
      * Otherwise an error is returned.
      *
-     * @return The redirect URL
+     * @return string The redirect URL
      */
     public function getRedirectUri()
     {
@@ -57,7 +57,7 @@ final class LoginConfig
     /**
      * The data access accessScope.
      *
-     * @return The data access scope
+     * @return string The data access scope
      */
     public function getAccessScope()
     {
