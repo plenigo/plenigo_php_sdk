@@ -8,7 +8,7 @@ require_once __DIR__ . '/../models/LoginConfig.php';
 use plenigo\PlenigoManager;
 
 /**
- * CheckoutSnippetBuilder
+ * RegisterSnippetBuilder
  *
  * <p>
  * This class builds a plenigo's Javascript API register function that is
@@ -33,11 +33,11 @@ class RegisterSnippetBuilder
 
     /**
      * <p>
-     * Constructor of the snippet builder, this requires a {@link \plenigo\models\LoginConfig} object.
+     * Constructor of the snippet builder
      * </p>
      *
      * <p>
-     * If no LoginConfig is passed, the SDK will try to login the user without using single sign on.
+     * If no LoginConfig is passed, the SDK will try to register the user without using single sign on.
      * </p>
      *
      * @param array $config config-data for the register function
