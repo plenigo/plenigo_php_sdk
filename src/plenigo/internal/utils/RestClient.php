@@ -48,6 +48,28 @@ class RestClient {
     }
 
     /**
+     * Generate URL-encoded query string.
+     *
+     * Replace http_build_query due to an error in this method.
+     *
+     * Token from https://davidwalsh.name/curl-post
+     *
+     * @param array $params parameter array to pass to webservice.
+     * @return string query-string
+     */
+    private static function buildQuery($params = array()) {
+        $fields_string = '';
+        //url-ify the data for the POST
+        foreach($params as $key=>$value) { $fields_string .= $key.'='.$value.'&'; }
+        rtrim($fields_string, '&');
+
+        // taking out the brackets because we need to use the very same variable name
+        $fields_string = preg_replace('/%5B(?:[0-9]|[1-9][0-9]+)%5D=/', '=', $fields_string);
+
+        return $fields_string;
+    }
+
+    /**
      * Executes a cURL GET request at the given URL
      * with optional get parameters.
      *
@@ -61,9 +83,7 @@ class RestClient {
      */
     public static function get($url, array $params = array()) {
         if (count($params) > 0) {
-            $query = http_build_query($params, null, '&');
-            // taking out the brackets because we need to use the very same variable name
-            $queryString = preg_replace('/%5B(?:[0-9]|[1-9][0-9]+)%5D=/', '=', $query);
+            $queryString = self::buildQuery($params);
 
             $url .= '?' . $queryString;
         }
@@ -92,9 +112,7 @@ class RestClient {
     public static function delete($url, array $params = array()) {
 
         if (count($params) > 0) {
-            $query = http_build_query($params, null, '&');
-            // taking out the brackets because we need to use the very same variable name
-            $queryString = preg_replace('/%5B(?:[0-9]|[1-9][0-9]+)%5D=/', '=', $query);
+            $queryString = self::buildQuery($params);
 
             if (strpos($url, '?') === FALSE) {
                 $url .= '?' . $queryString;
@@ -132,7 +150,10 @@ class RestClient {
         $curlRequest->setOption(CURLOPT_CUSTOMREQUEST, "POST");
 
         if (count($params) > 0) {
-            $queryString = http_build_query($params);
+
+            $queryString = '';
+            foreach($params as $key=>$value) { $queryString .= $key.'='.$value.'&'; }
+            rtrim($queryString, '&');
 
             $curlRequest->setOption(CURLOPT_POSTFIELDS, $queryString);
         }
