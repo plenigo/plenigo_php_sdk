@@ -61,7 +61,7 @@ class RestClient {
         $fields_string = '';
         //url-ify the data for the POST
         foreach($params as $key=>$value) { $fields_string .= $key.'='.$value.'&'; }
-        rtrim($fields_string, '&');
+        $fields_string = rtrim($fields_string, '&');
 
         // taking out the brackets because we need to use the very same variable name
         $fields_string = preg_replace('/%5B(?:[0-9]|[1-9][0-9]+)%5D=/', '=', $fields_string);
