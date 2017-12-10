@@ -52,7 +52,7 @@ class RestClient {
      *
      * Replace http_build_query due to an error in this method.
      *
-     * Token from https://davidwalsh.name/curl-post
+     * Taken from https://davidwalsh.name/curl-post
      *
      * @param array $params parameter array to pass to webservice.
      * @return string query-string
@@ -60,7 +60,9 @@ class RestClient {
     private static function buildQuery($params = array()) {
         $fields_string = '';
         //url-ify the data for the POST
-        foreach($params as $key=>$value) { $fields_string .= $key.'='.$value.'&'; }
+        foreach($params as $key=>$value) {
+            $fields_string .= $key.'='. rawurldecode($value) .'&';
+        }
         $fields_string = rtrim($fields_string, '&');
 
         // taking out the brackets because we need to use the very same variable name
