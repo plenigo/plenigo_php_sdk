@@ -4,9 +4,9 @@ require_once __DIR__ . '/../../src/plenigo/models/Loggable.php';
 require_once __DIR__ . '/../../src/plenigo/PlenigoManager.php';
 require_once __DIR__ . '/internal/utils/PlenigoLoggerStaticHelper.php';
 require_once __DIR__ . '/internal/utils/PlenigoTestCase.php';
+require_once __DIR__ . '/StringLoggable.php';
 
 use plenigo\PlenigoManager;
-use plenigo\models\Loggable;
 
 class PlenigoManagerTest extends PlenigoTestCase {
 
@@ -136,23 +136,12 @@ class PlenigoManagerTest extends PlenigoTestCase {
         $this->assertFalse(PlenigoManager::error($this, null));
     }
 
-
     public function testLoggingInterface() {
         PlenigoManager::configure("", "");
-        $loggable = new class implements Loggable {
-            private $logLines = null;
-
-            public function logData($msg) {
-                $this->logLines .= $msg;
-            }
-
-            public function getLogLines() {
-                return $this->logLines;
-            }
-        };
+        $loggable = new StringLoggable();
         PlenigoManager::get()->setLoggable($loggable);
-        $this->assertTrue(is_null($loggable->getLogLines()));
+        $this->assertTrue(empty($loggable->getLogLines()));
         PlenigoManager::get()->logError("", "");
-        $this->assertFalse(is_null($loggable->getLogLines()));
+        $this->assertFalse(empty($loggable->getLogLines()));
     }
 }
