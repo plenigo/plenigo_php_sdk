@@ -51,6 +51,11 @@ final class PlenigoManager {
     private $config;
 
     /**
+     * Loggable interface variable.
+     */
+    private $loggable;
+
+    /**
      * Debug variable for PlenigoLogger commands
      *
      * @var bool
@@ -63,11 +68,11 @@ final class PlenigoManager {
      * Sets the configuration parameters
      * </p>
      *
-     * @param string $secret    the application secret
+     * @param string $secret the application secret
      * @param string $companyId the application company ID
-     * @param bool   $testMode  specifies the mode of operation
-     * @param string $url       the URL to use for communication end-points
-     * @param string $urlOAuth       the URL to use for OAuth API calls
+     * @param bool $testMode specifies the mode of operation
+     * @param string $url the URL to use for communication end-points
+     * @param string $urlOAuth the URL to use for OAuth API calls
      *
      * @return void
      */
@@ -78,11 +83,11 @@ final class PlenigoManager {
     /**
      * Configuration method that instantiate the PlenigoManager class.
      *
-     * @param string $secret    a String that represents the secret key for your specific company
+     * @param string $secret a String that represents the secret key for your specific company
      * @param string $companyId a String that represents the company ID used
-     * @param bool   $testMode  specifies the mode of operation
-     * @param string $url       the URL to use for communication end-points
-     * @param string $urlOAuth       the URL to use for OAuth API calls
+     * @param bool $testMode specifies the mode of operation
+     * @param string $url the URL to use for communication end-points
+     * @param string $urlOAuth the URL to use for OAuth API calls
      *
      * @return PlenigoManager Singleton instance of {@link plenigo.PlenigoManager}
      */
@@ -156,7 +161,7 @@ final class PlenigoManager {
 
     /**
      * Checks if debug mode is active or not.
-     * 
+     *
      * @return bool debug mode
      */
     public static function isDebug() {
@@ -165,7 +170,7 @@ final class PlenigoManager {
 
     /**
      * Sets debug mode active or not.
-     * 
+     *
      * @param bool $debug debug mode
      */
     public static function setDebug($debug) {
@@ -174,10 +179,10 @@ final class PlenigoManager {
 
     /**
      * Convenience method for calling NOTICE info messages. The object reference is needed to show the referenced
-     * class that is calling this method. An optional Exception can be sent so it outputs the entire stacktrace. 
-     * 
-     * @param mixed     $obj can be an object, a string or any other variable, if its an object, it's class is shown
-     * @param string    $msg the NOTICE message to send
+     * class that is calling this method. An optional Exception can be sent so it outputs the entire stacktrace.
+     *
+     * @param mixed $obj can be an object, a string or any other variable, if its an object, it's class is shown
+     * @param string $msg the NOTICE message to send
      * @param Exception $exc an optional Exception object to show its stacktrace and messages
      * @return bool returns FALSE only if the object reference or message are NULL
      */
@@ -190,11 +195,12 @@ final class PlenigoManager {
 
     /**
      * Convenience method for calling WARNING messages. The object reference is needed to show the referenced
-     * class that is calling this method. An optional Exception can be sent so it outputs the entire stacktrace. 
-     * 
-     * @param mixed     $obj can be an object, a string or any other variable, if its an object, it's class is shown
-     * @param string    $msg the WARNING message to send
+     * class that is calling this method. An optional Exception can be sent so it outputs the entire stacktrace.
+     *
+     * @param mixed $obj can be an object, a string or any other variable, if its an object, it's class is shown
+     * @param string $msg the WARNING message to send
      * @param Exception $exc an optional Exception object to show its stacktrace and messages
+     *
      * @return bool returns FALSE only if the object reference or message are NULL
      */
     public static function warn($obj, $msg, $exc = null) {
@@ -206,11 +212,12 @@ final class PlenigoManager {
 
     /**
      * Convenience method for calling ERROR messages. The object reference is needed to show the referenced
-     * class that is calling this method. An optional Exception can be sent so it outputs the entire stacktrace. 
-     * 
-     * @param mixed     $obj can be an object, a string or any other variable, if its an object, it's class is shown
-     * @param string    $msg the ERROR message to send
+     * class that is calling this method. An optional Exception can be sent so it outputs the entire stacktrace.
+     *
+     * @param mixed $obj can be an object, a string or any other variable, if its an object, it's class is shown
+     * @param string $msg the ERROR message to send
      * @param Exception $exc an optional Exception object to show its stacktrace and messages
+     *
      * @return bool returns FALSE only if the object reference or message are NULL
      */
     public static function error($obj, $msg, $exc = null) {
@@ -220,4 +227,28 @@ final class PlenigoManager {
         PlenigoLogger::error($obj, $msg, $exc);
     }
 
+    /**
+     * Set the loggable interface.
+     *
+     * @param $loggable loggable interface to set
+     */
+    public function setLoggable($loggable) {
+        if (is_object($loggable)) {
+            $this->loggable = $loggable;
+        }
+    }
+
+    /**
+     * Logs an error through the loggable interface.
+     *
+     * @param $msg message to log
+     * @param $obj object to log
+     */
+    public function logError($msg, $obj) {
+        if (is_object($this->loggable) && method_exists($this->loggable, "logData")) {
+            $date = new \DateTime();
+            $date = $date->format("Y-m-d h:i:s");
+            $this->loggable->logData($date . " - " . $msg . ", Data: [" . print_r($obj, true) . "]" . PHP_EOL);
+        }
+    }
 }

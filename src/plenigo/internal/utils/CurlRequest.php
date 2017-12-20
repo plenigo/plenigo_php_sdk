@@ -33,6 +33,7 @@ final class CurlRequest {
      * The cURL object created using curl_init
      */
     private $curl;
+    private $urlPath;
     private $optCache = array();
     private static $lastResult = '';
 
@@ -53,12 +54,13 @@ final class CurlRequest {
         }
 
         $this->curl = curl_init($url);
+        $this->urlPath = $url;
     }
 
     /**
      * Adds an option to the cURL request.
      *
-     * @param string $name  The option name.
+     * @param string $name The option name.
      * @param string any    $value The option value.
      *
      * @return void
@@ -70,7 +72,7 @@ final class CurlRequest {
 
     /**
      * Get the option set for this request. This allow adding headers to the request before sending
-     * 
+     *
      * @param string $name
      * @return mixed
      */
@@ -122,12 +124,16 @@ final class CurlRequest {
                     . "Time...: $total_time Start @ $starttransfer_time (DNS: $namelookup_time Connect: $connect_time Request: $pretransfer_time)\n"
                     . "Speed..: Down: $speed_download (avg.) Up: $speed_upload (avg.)\n"
                     . "Curl...: v{$version['version']}\n";
-            PlenigoManager::notice($clazz, "cURL report:\n" . $metrics);   
+            PlenigoManager::notice($clazz, "cURL report:\n" . $metrics);
         }
 
         $statusCode = $this->getInfo(CURLINFO_HTTP_CODE);
         if (!empty($statusCode)) {
             if ($statusCode < 200 || $statusCode >= 300) {
+                $url = $this->urlPath;
+                $postParams = $this->getOption(CURLOPT_POSTFIELDS);
+                $msg = "An error occured while executing a [$url] request, post params?[$postParams], http response code was [$statusCode]";
+                PlenigoManager::get()->logError($msg, $result);
                 throw new \Exception($statusCode . " HTTP Error detected with message: {$result}", $statusCode);
             }
         }
