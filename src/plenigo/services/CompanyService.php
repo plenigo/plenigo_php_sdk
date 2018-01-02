@@ -71,6 +71,38 @@ class CompanyService extends Service {
     }
 
     /**
+     * Returns a list of users of the specified company.
+     *
+     * @param string $startDate date od the startdate of selection (format YYYY-MM-DD)
+     * @param string $endDate date od the enddate of selection (format YYYY-MM-DD)
+     * @param int $page Number of the page (starting from 0)
+     * @param int $size Size of the page - must be between 10 and 100
+     *
+     * @return CompanyUserList A list of users of the specified company
+     */
+    public static function getChangedUsers($startDate = 'now', $endDate = '-5 days', $page = 0, $size = 10) {
+
+        $map = array(
+            'startDate' => date("Y-m-d H:i", strtotime($startDate)),
+            'endDate' => date("Y-m-d H:i",strtotime($endDate)),
+            'page' => SdkUtils::clampNumber($page, 0, null),
+            'size' => SdkUtils::clampNumber($size, 10, 100)
+        );
+
+        $url = ApiURLs::COMPANY_USERS_CHANGED;
+
+        $request = static::getRequest($url, false, $map);
+
+        $appTokenRequest = new static($request);
+
+        $data = parent::executeRequest($appTokenRequest, ApiURLs::COMPANY_USERS_CHANGED, self::ERR_MSG_GET);
+
+        $result = (array) $data;
+
+        return $result;
+    }
+
+    /**
      * Returns a list of users based on the given ids.
      * 
      * @param string $userIds a comma separated list if ids
