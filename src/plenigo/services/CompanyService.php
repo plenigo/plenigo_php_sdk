@@ -74,13 +74,13 @@ class CompanyService extends Service {
      * Returns a list of users of the specified company.
      *
      * @param string $startDate date od the startdate of selection (format YYYY-MM-DD)
-     * @param string $endDate date od the enddate of selection (format YYYY-MM-DD)
+     * @param string $endDate date od the enddate of selection - must be greater then $startDate (format YYYY-MM-DD)
      * @param int $page Number of the page (starting from 0)
      * @param int $size Size of the page - must be between 10 and 100
      *
-     * @return CompanyUserList A list of users of the specified company
+     * @return array  A list of users (Objects) of the specified company
      */
-    public static function getChangedUsers($startDate = 'now', $endDate = '-5 days', $page = 0, $size = 10) {
+    public static function getChangedUsers($startDate = '-1 week', $endDate = 'now', $page = 0, $size = 10) {
 
         $map = array(
             'startDate' => date("Y-m-d H:i", strtotime($startDate)),
