@@ -49,7 +49,6 @@ class RestClient {
 
     /**
      * Generate URL-encoded query string.
-     *
      * Replace http_build_query due to an error in this method.
      *
      * Taken from https://davidwalsh.name/curl-post
@@ -61,7 +60,7 @@ class RestClient {
         $fields_string = '';
         //url-ify the data for the POST
         foreach($params as $key=>$value) {
-            $fields_string .= $key.'='. rawurldecode($value) .'&';
+            $fields_string .= $key.'='. rawurlencode($value) .'&';
         }
         $fields_string = rtrim($fields_string, '&');
 
@@ -241,7 +240,7 @@ class RestClient {
     /**
      * Gets the status code returned by the response.
      *
-     * @return The status code.
+     * @return int The status code.
      */
     public function getStatusCode() {
         return $this->curlRequest->getInfo(CURLINFO_HTTP_CODE);
@@ -253,7 +252,7 @@ class RestClient {
      * @param string $name  The option name.
      * @param mixed  $value The option value.
      *
-     * @return Returns itself for chaining purposes.
+     * @return RestClient Returns itself for chaining purposes.
      */
     public function setOption($name, $value) {
         $this->curlRequest->setOption($name, $value);

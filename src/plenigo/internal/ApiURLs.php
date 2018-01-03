@@ -165,6 +165,11 @@ final class ApiURLs
     const USER_MGMT_ACCESS = "/api/v2/import/customerAccess";
     
     /**
+     * This URL is used to get the paginated list of changed users in a given time frame
+     */
+    const COMPANY_USERS_CHANGED = "/api/v2/company/users/search/changes";
+
+    /**
      * This URL is used to get the paginated list of company users
      */
     const COMPANY_USERS = "/api/v2/company/users";
