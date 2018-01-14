@@ -220,7 +220,7 @@ class CompanyService extends Service {
             'size' => SdkUtils::clampNumber($size, 10, 100),
             'startDate' => $start,
             'endDate' => $end,
-            'testMode' =>$testMode
+            'testMode' => $testMode ? 'true' : 'false'
         );
 
         $url = ApiURLs::COMPANY_ORDERS;
@@ -257,7 +257,7 @@ class CompanyService extends Service {
             'size' => SdkUtils::clampNumber($size, 10, 100),
             'startDate' => $start,
             'endDate' => $end,
-            'testMode' =>$testMode
+            'testMode' => $testMode ? 'true' : 'false'
         );
 
         $url = ApiURLs::COMPANY_SUBSCRIPTIONS;
