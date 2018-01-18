@@ -6,6 +6,7 @@ require_once __DIR__ . '/internal/models/Configuration.php';
 require_once __DIR__ . '/internal/ApiURLs.php';
 require_once __DIR__ . '/internal/PlenigoLogger.php';
 
+use plenigo\internal\Cache;
 use plenigo\internal\models\Configuration;
 use plenigo\internal\PlenigoLogger;
 
@@ -170,6 +171,19 @@ final class PlenigoManager {
      */
     public static function setDebug($debug) {
         self::$debug = $debug;
+    }
+
+    /**
+     * Configure Cache. Each engine may have their own set of settings.
+     * To choose an engine use $settings['engine']
+     * Engines Memcache, Memcached and APCu are implemented yet.
+     * If not set, we will use APCu if enabled or none
+     * If you want to go without any cache, set $settings['engine'] to 'None'
+     *
+     * @param array $settings
+     */
+    public static function configureCache(array $settings) {
+        Cache::configure($settings);
     }
 
     /**
