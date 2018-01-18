@@ -60,7 +60,7 @@ class Cache
      */
     private static function fromJSON($string) {
         if (empty($string)) {
-            return false;
+            return NULL;
         }
         try {
             $data = json_decode($string);
@@ -72,7 +72,7 @@ class Cache
             return $data->data;
 
         } catch (\Exception $e) {
-            return false;
+            return NULL;
         }
     }
 
