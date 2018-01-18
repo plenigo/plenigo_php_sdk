@@ -56,12 +56,12 @@ class Cache
         switch ($settings['engine']) {
             case 'Memcache':
                 if (ApiMemcache::isEnabled()) {
-                    self::$engine = new ApiMemcache( isset($settings['host']) ? $settings['host'] : 'localhost', isset($settings['port']) ? $settings['port'] : 11211);
+                    self::$engine = new ApiMemcache( !empty($settings['host']) ? $settings['host'] : 'localhost', !empty($settings['port']) ? $settings['port'] : 11211);
                 }
                 break;
             case 'Memcached':
                 if (ApiMemcached::isEnabled()) {
-                    self::$engine = new ApiMemcached( isset($settings['host']) ? $settings['host'] : 'localhost', isset($settings['port']) ? $settings['port'] : 11211);
+                    self::$engine = new ApiMemcached( !empty($settings['host']) ? $settings['host'] : 'localhost', !empty($settings['port']) ? $settings['port'] : 11211);
                 }
                 break;
             case 'APCu':
