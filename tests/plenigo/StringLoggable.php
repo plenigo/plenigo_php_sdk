@@ -2,21 +2,15 @@
 
 
 use plenigo\models\Loggable;
-/**
- * VoucherServiceMock
- * 
- * <b>
- * Mock and override class for VoucherService
- * </b>
- */
+
 class StringLoggable implements Loggable {
-    private $logLines = "";
+	private $logLines = "";
 
-    public function logData($msg) {
-        $this->logLines .= $msg;
-    }
+	public function logData( $msg ) {
+		$this->logLines .= $msg;
+	}
 
-    public function getLogLines() {
-        return $this->logLines;
-    }
+	public function getLogLines() {
+		return $this->logLines;
+	}
 }
