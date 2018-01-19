@@ -32,21 +32,22 @@ class ApiMemcache extends ApiDefault
 
 
     /**
-     * @param $key
-     * @param $value
+     * @param string $key
+     * @param string $value
+     * @param int $ttl
      * @return array|bool
      */
-    public static function store($key, $value) {
+    public static function store($key, $value, $ttl) {
         try {
-            return self::$connection->set($key, $value, false, 10);
+            return self::$connection->set($key, $value, false, $ttl);
         } catch (\Exception $exception) {
             return false;
         }
     }
 
     /**
-     * @param $key
-     * @return bool|string[]
+     * @param string $key
+     * @return bool
      */
     public static function delete($key) {
         try {
@@ -57,7 +58,7 @@ class ApiMemcache extends ApiDefault
     }
 
     /**
-     * @param $key
+     * @param string $key
      * @return bool|mixed
      */
     public static function get($key) {

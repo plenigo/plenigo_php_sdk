@@ -7,10 +7,6 @@ namespace plenigo\internal\cache;
  * Class ApiMemcached
  * @package plenigo\internal\cache
  */
-/**
- * Class ApiMemcache
- * @package plenigo\internal\cache
- */
 class ApiMemcached extends ApiDefault
 {
 
@@ -21,32 +17,37 @@ class ApiMemcached extends ApiDefault
 
     /**
      * ApiMemcached constructor.
-     * @param string $host
+     * @param string|array $host
      * @param int $port
      */
     public function __construct($host, $port)
     {
         self::$connection = new \Memcached();
-        self::$connection->addServer($host, $port);
+        if (is_array($host)) {
+            self::$connection->addServers($host);
+        } else {
+            self::$connection->addServer($host, $port);
+        }
     }
 
 
     /**
      * @param string $key
      * @param string $value
+     * @param int $ttl
      * @return bool
      */
-    public static function store($key, $value) {
+    public static function store($key, $value, $ttl) {
         try {
-            return self::$connection->set($key, $value, 10);
+            return self::$connection->set($key, $value, $ttl);
         } catch (\Exception $exception) {
             return false;
         }
     }
 
     /**
-     * @param $key
-     * @return bool|string[]
+     * @param string $key
+     * @return bool
      */
     public static function delete($key) {
         try {
@@ -57,7 +58,7 @@ class ApiMemcached extends ApiDefault
     }
 
     /**
-     * @param $key
+     * @param string $key
      * @return bool|mixed
      */
     public static function get($key) {

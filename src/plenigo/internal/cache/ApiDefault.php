@@ -3,15 +3,24 @@
 namespace plenigo\internal\cache;
 
 
+/**
+ * Class ApiDefault
+ *
+ * Basic Class for extending
+ * Default class to disable Caching
+ *
+ * @package plenigo\internal\cache
+ */
 class ApiDefault
 {
 
     /**
      * @param $key
      * @param $value
+     * @param int $ttl Time to live
      * @return array|bool
      */
-    public static function store($key, $value) {
+    public static function store($key, $value, $ttl) {
        return true;
     }
 
@@ -28,7 +37,7 @@ class ApiDefault
      * @return bool|mixed
      */
     public static function get($key) {
-        return false;
+        return null;
     }
 
     /**

@@ -113,7 +113,7 @@ class UserService extends Service
      */
     public static function verifyLogin($email, $password, $data = array(), &$error = '') {
 
-        $result = $result = Cache::get(md5($email.$password));
+        $result = Cache::get(md5($email.$password));
 
         if (null !== $result) {
             return $result;
