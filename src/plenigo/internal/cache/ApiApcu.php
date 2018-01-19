@@ -11,21 +11,23 @@ class ApiApcu extends ApiDefault
 {
 
     /**
-     * @param $key
-     * @param $value
+     * @param string $key
+     * @param string $value
+     * @param int $ttl
+     *
      * @return array|bool
      */
-    public static function store($key, $value) {
+    public static function store($key, $value, $ttl) {
         try {
-            return apcu_store($key, $value, 10);
+            return apcu_store($key, $value, $ttl);
         } catch (\Exception $exception) {
             return false;
         }
     }
 
     /**
-     * @param $key
-     * @return bool|string[]
+     * @param string $key
+     * @return bool
      */
     public static function delete($key) {
         try {
@@ -36,8 +38,8 @@ class ApiApcu extends ApiDefault
     }
 
     /**
-     * @param $key
-     * @return bool|mixed
+     * @param string $key
+     * @return bool|mixed a cached JSON of bool false
      */
     public static function get($key) {
         try {

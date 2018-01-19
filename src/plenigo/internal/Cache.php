@@ -157,10 +157,13 @@ class Cache
      * Writes data into a cache. Returns success
      * @param string $key
      * @param mixed $value
+     * @param int $ttl Time to live in the Cache
+     *
+     * @return bool Success
      */
-    public static function set($key, $value) {
+    public static function set($key, $value, $ttl = 10) {
         $engine = self::getEngine();
-        return $engine::store($key, self::toJSON($value));
+        return $engine::store($key, self::toJSON($value), $ttl);
     }
 
 
