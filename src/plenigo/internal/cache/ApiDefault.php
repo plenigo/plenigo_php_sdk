@@ -37,7 +37,7 @@ class ApiDefault
      * @return bool|mixed
      */
     public static function get($key) {
-        return false;
+        return null;
     }
 
     /**
