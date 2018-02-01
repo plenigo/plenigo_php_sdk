@@ -106,6 +106,7 @@ final class Checkout extends ServerInterface {
         ArrayUtils::addIfDefined($map, 'subscriptionRenewal', $productMap, 'subscriptionRenewal');
         ArrayUtils::addIfDefined($map, 'failedPayment', $productMap, 'failedPayment');
         ArrayUtils::addIfDefined($map, 'shippingCost', $productMap, 'shippingCost');
+	    ArrayUtils::addIfDefined($map, 'overrideMode', $productMap, 'customAmount');
         ArrayUtils::addIfDefined($map, 'productIdReplacement', $productMap, 'productIdReplacement');
 
         $this->setValuesFromMap($map);
