@@ -3,6 +3,12 @@
 
 use plenigo\models\Loggable;
 
+
+/**
+ * <b>
+ * Test class for the loggable interface for testing purposes.
+ * </b>
+ */
 class StringLoggable implements Loggable {
 	private $logLines = "";
 
