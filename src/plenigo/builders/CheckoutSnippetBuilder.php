@@ -96,6 +96,9 @@ class CheckoutSnippetBuilder {
             if (is_null($sourceUrl)) {
                 $strSourceURL = ", null";
             }
+	        if (empty($strFirstParam) && !$showRegisterFirst && is_null($loginToken)) {
+		        $strFirstParam = ", false";
+	        }
         }
         $strAffiliate = null;
         if (!is_null($affiliateId)) {
