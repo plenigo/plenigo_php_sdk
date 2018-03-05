@@ -133,7 +133,9 @@ final class CurlRequest {
                 $url = $this->urlPath;
                 $postParams = $this->getOption(CURLOPT_POSTFIELDS);
                 $msg = "An error occured while executing a [$url] request, post params?[$postParams], http response code was [$statusCode]";
-                PlenigoManager::get()->logError($msg, $result);
+                if($statusCode != 403)    {
+                    PlenigoManager::get()->logError($msg, $result);
+                }
                 throw new \Exception($statusCode . " HTTP Error detected with message: {$result}", $statusCode);
             }
         }
