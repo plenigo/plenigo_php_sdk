@@ -47,6 +47,7 @@ class TransactionService extends Service {
      * @param string $payMethod Payment method used to pay the transaction. See PaymentMethod class
      * @param string $txStatus Status of the transaction. See TransactionStatus class
      * @return TransactionList A list of transactions of the specified company
+     * @throws \Exception
      */
     public static function searchTransactions($page = 0, $size = 10, $startDate = null, $endDate = null, $payMethod = null, $txStatus = null) {
 

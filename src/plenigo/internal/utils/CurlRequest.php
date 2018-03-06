@@ -44,6 +44,7 @@ final class CurlRequest {
      *
      * @param string $url The URL where the request should take place.
      *
+     * @throws ConfigException
      * @return void
      */
     public function __construct($url = null) {

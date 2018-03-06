@@ -71,6 +71,7 @@ final class Checkout extends ServerInterface {
      * 
      * @param mixed $map a map with the checkout information or a Product object
      *
+     * @throws Exception
      * @return Checkout an instance of {@link plenigo\internal\serverInterface\payment\Checkout}
      */
     public function __construct($map = array()) {
@@ -91,6 +92,7 @@ final class Checkout extends ServerInterface {
      * @param AbstractProduct $product The product instance to extract values from.
      *
      * @return void
+     * @throws PlenigoException
      */
     public function setProduct(AbstractProduct $product) {
         $productMap = $product->getMap();
@@ -118,6 +120,7 @@ final class Checkout extends ServerInterface {
      * @param array $map The array to extract values from.
      *
      * @return void
+     * @throws PlenigoException
      */
     public function setValuesFromMap($map) {
         $this->setValueFromMapIfNotEmpty('productId', $map);

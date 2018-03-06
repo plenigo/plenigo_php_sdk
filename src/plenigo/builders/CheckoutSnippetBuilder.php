@@ -8,6 +8,7 @@ require_once __DIR__ . '/../internal/utils/EncryptionUtils.php';
 require_once __DIR__ . '/../internal/server-interface/payment/Checkout.php';
 require_once __DIR__ . '/../internal/exceptions/ProductException.php';
 
+use plenigo\internal\exceptions\EncryptionException;
 use plenigo\internal\models\Product;
 use plenigo\internal\serverInterface\payment\Checkout;
 use plenigo\internal\utils\EncryptionUtils;
@@ -57,7 +58,7 @@ class CheckoutSnippetBuilder {
      * @param string $elementId id of the element the checkout should be inserted into, if this parameter is passed the checkout will be embedded
      * 
      * @return string A Javascript snippet that is compliant with plenigo's Javascript SDK.
-     * @throws CryptographyException When an error occurs during data encoding
+     * @throws \Exception When an error occurs during data encoding
      */
     public function build($settings = array(), $loginToken = null, $showRegisterFirst = false, $sourceUrl = null, $targetUrl = null, $affiliateId = null, $elementId = null) {
         $clazz = get_class();
@@ -136,6 +137,7 @@ class CheckoutSnippetBuilder {
      * @param array $settings A map of settings to pass to the Checkout service interface.
      *
      * @return string The encoded data
+     * @throws \Exception
      */
     private function buildCheckoutRequestQueryString($settings = array()) {
         $request = new Checkout($this->product);
@@ -151,6 +153,8 @@ class CheckoutSnippetBuilder {
      * @param string $dataToEncode the string data to encode.
      *
      * @return string The encoded data
+     * @throws \Exception
+     * @throws EncryptionException
      */
     private function buildEncodedData($dataToEncode) {
         $secret = PlenigoManager::get()->getSecret();

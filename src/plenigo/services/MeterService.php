@@ -97,6 +97,8 @@ class MeterService extends Service
      * This method parses the metered view data from the user in the cookie.
      *
      * @return MeteredUserData The metered user data
+     * @throws \Exception
+     * @throws \plenigo\internal\exceptions\EncryptionException
      */
 
     private static function getMeteredUserData()
@@ -123,6 +125,8 @@ class MeterService extends Service
      * Returns a flag indicating if the user still has free views left.
      * 
      * @return True if the user still has free views left, false otherwise
+     * @throws \Exception
+     * @throws \plenigo\internal\exceptions\EncryptionException
      */
     public static function hasFreeViews()
     {

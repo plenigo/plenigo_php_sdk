@@ -110,6 +110,8 @@ class UserService extends Service
      * @param string $error (optional) error message
      *
      * @return array|boolean user data or boolean false
+     * @throws PlenigoException
+     * @throws \Exception
      */
     public static function verifyLogin($email, $password, $data = array(), &$error = '') {
 
@@ -195,6 +197,7 @@ class UserService extends Service
      * @return bool TRUE if the user in the cookie has bought the product and the session is not expired, false otherwise
      *
      * @throws \plenigo\PlenigoException whenever an error happens
+     * @throws \Exception
      */
     public static function hasUserBought($productId, $customerId = null, $useExternalCustomerId = false)
     {
@@ -259,6 +262,7 @@ class UserService extends Service
      * @return array
      *
      * @throws \plenigo\PlenigoException whenever an error happens
+     * @throws \Exception
      */
     public static function hasBoughtProductWithProducts($productId, $customerId = null, $useExternalCustomerId = false)
     {
@@ -316,6 +320,8 @@ class UserService extends Service
      * all product paywall should be disabled and access should be granted
      *
      * @return bool true if Paywall is enabled and we need to check for specific product buy information
+     * @throws PlenigoException
+     * @throws \Exception
      */
     public static function isPaywallEnabled()
     {
@@ -344,6 +350,8 @@ class UserService extends Service
      * Check if the user has been logged in (cookie is found and valid)
      *
      * @return bool TRUE if the user has been logged in
+     * @throws \Exception
+     * @throws \plenigo\internal\exceptions\EncryptionException
      */
     public static function isLoggedIn()
     {
@@ -360,7 +368,8 @@ class UserService extends Service
      * Retrieves the user info from the cookie.
      * @param string $pCustId The customer ID if its not logged in
      * @return Customer The Customer Information from the cookie
-     * @throws \plenigo\PlenigoException whenever an error happens
+     * @throws \Exception whenever an error happens
+     * @throws \plenigo\internal\exceptions\EncryptionException
      */
     public static function getCustomerInfo($pCustId = null)
     {
@@ -456,6 +465,7 @@ class UserService extends Service
      * @param boolean $useExternalCustomerId (optional) Flag indicating if customer id sent is the external customer id
      * @return array The associative array containing the bought products/subscriptions or an empty array
      * @throws PlenigoException If the compay ID and/or the Secret key is rejected
+     * @throws \Exception
      */
     public static function getProductsBought($pCustId = null, $useExternalCustomerId = false)
     {

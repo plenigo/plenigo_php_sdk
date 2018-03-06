@@ -51,6 +51,7 @@ class CompanyService extends Service {
      * @param int $size Size of the page - must be between 10 and 100
      * 
      * @return CompanyUserList A list of users of the specified company
+     * @throws \Exception
      */
     public static function getUserList($page = 0, $size = 10) {
         $map = array(
@@ -110,6 +111,7 @@ class CompanyService extends Service {
      * @param boolean $useExternalCustomerId (optional) Flag indicating if customer id sent is the external customer id
      *
      * @return CompanyUserList A  list of users of the specified company with the given ids
+     * @throws \Exception
      */
     public static function getUserByIds($userIds = "", $useExternalCustomerId = false) {
 
@@ -143,6 +145,7 @@ class CompanyService extends Service {
      * @param int $size Size of the page - must be between 10 and 100
      * 
      * @return FailedPaymentList A paginated list of FailedPayment objects
+     * @throws \Exception
      */
     public static function getFailedPayments($start = null, $end = null, $status = null, $page = 0, $size = 10) {
         // sanitize dates
@@ -201,6 +204,7 @@ class CompanyService extends Service {
      * @param int $size Size of the page - must be between 10 and 100
      * 
      * @return mixed list of orders
+     * @throws \Exception
      */
     public static function getOrders($start = null, $end = null, $testMode = false , $page = 0, $size = 10) {
         // sanitize dates
@@ -247,6 +251,7 @@ class CompanyService extends Service {
      * @param int $size Size of the page - must be between 10 and 100
      *
      * @return mixed list of subscriptions
+     * @throws \Exception
      */
     public static function getSubscriptions($start = null, $end = null, $testMode = false , $page = 0, $size = 10) {
         // check end date is not in the future

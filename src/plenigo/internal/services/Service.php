@@ -51,6 +51,7 @@ class Service {
      * @param array  $params   Optional params to pass to the request.
      *
      * @return \plenigo\internal\utils\RestClient request result.
+     * @throws \Exception
      */
     protected static function getRequest($endPoint, $oauth = false, array $params = array()) {
         if ($oauth) {
@@ -73,6 +74,7 @@ class Service {
      * @param array $params Optional params to pass to the request.
      * 
      * @return \plenigo\internal\utils\RestClient request result
+     * @throws \Exception
      */
     protected static function deleteRequest($endPoint, $oauth = false, array $params = array()) {
         if ($oauth) {
@@ -95,6 +97,7 @@ class Service {
      * @param array  $params   Optional params to pass to the request.
      *
      * @return \plenigo\internal\utils\RestClient the request result.
+     * @throws \Exception
      */
     protected static function postRequest($endPoint, $oauth = false, array $params = array()) {
         if ($oauth) {
@@ -117,6 +120,7 @@ class Service {
      * @param array  $params   Optional params to pass to the request.
      *
      * @return \plenigo\internal\utils\RestClient request result.
+     * @throws \Exception
      */
     protected static function postJSONRequest($endPoint, $oauth = false, array $params = array()) {
         if ($oauth) {
@@ -138,6 +142,7 @@ class Service {
      * @param array  $params   Optional params to pass to the request.
      *
      * @return \plenigo\internal\utils\RestClient request result.
+     * @throws \Exception
      */
     protected static function putJSONRequest($endPoint, array $params = array()) {
         $clazz = get_class();
@@ -229,13 +234,13 @@ class Service {
      * 
      * @return mixed The request response or null
      * 
-     * @throws PlenigoException
+     * @throws \Exception
      */
     protected static function executeRequest($pRequest, $pErrorSource, $pErrorMsg) {
         $res = null;
         try {
             $res = $pRequest->execute();
-        } catch (Exception $exc) {
+        } catch (\Exception $exc) {
             $errorCode = ErrorCode::getTranslation($pErrorSource, $exc->getCode());
             if (empty($errorCode) || is_null($errorCode)) {
                 $errorCode = $exc->getCode();
@@ -253,6 +258,7 @@ class Service {
      * and returns the response.
      *
      * @return The request's response.
+     * @throws \Exception
      */
     public function execute() {
         try {

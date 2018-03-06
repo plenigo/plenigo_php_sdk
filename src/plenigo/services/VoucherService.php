@@ -46,6 +46,7 @@ class VoucherService extends Service {
      * @return CampaignResponse the campaign 
      * 
      * @throws PlenigoException
+     * @throws \Exception
      */
     public static function generateCampaign($name = null, $productId = null, $startDate = null, $expirationDate = null, $type = 'SINGLE', $amount = 1, $channels = array()) {
         if (is_null($productId)) {

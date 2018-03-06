@@ -64,6 +64,7 @@ class JWT {
      * @return string      A signed JWT
      * @uses jsonEncode
      * @uses urlsafeB64Encode
+     * @throws \Exception
      */
     public static function encode($payload, $key) {
         $header = array('alg' => 'HS256');

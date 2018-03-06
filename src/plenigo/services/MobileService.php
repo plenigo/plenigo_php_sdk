@@ -50,7 +50,7 @@ class MobileService extends Service {
      * 
      * @return string The Customer ID for that mobile secret
      * 
-     * @throws PlenigoException
+     * @throws \Exception
      */
     public static function verifyMobileSecret($email, $mobileSecret) {
         $map = array(
@@ -80,7 +80,7 @@ class MobileService extends Service {
      * 
      * @param string $customerId The Customer ID
      * @return MobileSecretData the email and secret for the customer mobile
-     * @throws PlenigoException
+     * @throws \Exception
      */
     public static function getMobileSecret($customerId) {
 
@@ -105,7 +105,7 @@ class MobileService extends Service {
      * 
      * @return MobileSecretData the email and secret for the customer mobile
      * 
-     * @throws PlenigoException
+     * @throws \Exception
      */
     public static function createMobileSecret($customerId, $size) {
         $map = array(
@@ -129,7 +129,7 @@ class MobileService extends Service {
      * Deletes a mobile secret for a given Customer ID
      * 
      * @param string $customerId The Customer ID
-     * @throws PlenigoException
+     * @throws \Exception
      */
     public static function deleteMobileSecret($customerId) {
         $url = str_ireplace(ApiParams::URL_USER_ID_TAG, $customerId, ApiURLs::MOBILE_SECRET_URL);

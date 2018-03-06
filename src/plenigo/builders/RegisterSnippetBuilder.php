@@ -55,6 +55,7 @@ class RegisterSnippetBuilder
      *
      * @param bool $wrapWithScriptTag
      * @return string
+     * @throws \Exception
      */
     public function writeOptions($wrapWithScriptTag = true) {
 

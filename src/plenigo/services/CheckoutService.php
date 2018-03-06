@@ -46,6 +46,7 @@ class CheckoutService extends Service {
      * @return boolean TRUE if the Checkout succeeded 
      * 
      * @throws PlenigoException
+     * @throws \Exception
      */
     public static function redeemVoucher($voucherCode = null, $customerId = null, $externalUserId = false) {
         if (is_null($customerId)) {
@@ -107,6 +108,7 @@ class CheckoutService extends Service {
      * @return boolean TRUE if the Checkout succeeded 
      * 
      * @throws PlenigoException
+     * @throws \Exception
      */
     public static function buyFreeProduct($productId = null, $customerId = null, $externalUserId = false) {
         if (is_null($customerId)) {
@@ -164,7 +166,7 @@ class CheckoutService extends Service {
      *
      * @return The request's response.
      *
-     * @throws \plenigo\PlenigoException on request error.
+     * @throws PlenigoException on request error.
      */
     public function execute() {
         try {

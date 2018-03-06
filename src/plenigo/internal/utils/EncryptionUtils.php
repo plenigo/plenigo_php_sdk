@@ -57,7 +57,7 @@ final class EncryptionUtils
      *
      * @return string Encrypted string.
      *
-     * @throws CryptographyException When an error occurs during data encoding
+     * @throws EncryptionException When an error occurs during data encoding
      */
     public static function encryptWithAES($key, $data, $customIV = null)
     {
@@ -87,7 +87,7 @@ final class EncryptionUtils
      * @param string $customIV      [optional]If provided this initialization vector will be used.
      * @return string Decrypted string
      *
-     * @throws CryptographyException When an error occurs during data encoding
+     * @throws EncryptionException When an error occurs during data encoding
      */
     public static function decryptWithAES($key, $encryptedData, $customIV = null)
     {
@@ -165,6 +165,7 @@ final class EncryptionUtils
      * @param string $key The key to prepare.
      *
      * @return string The prepared key.
+     * @throws EncryptionException
      */
     private static function prepareKey($key)
     {
@@ -226,6 +227,7 @@ if (!function_exists('hex2bin')) {
      * @param mixed $data an hexadecimal string presented in pairs of characters
      * @staticvar bool $old a variable to hold if this PHP version is prior to 5.2
      * @return string a string representing the binary data...
+     * @throws EncryptionException
      */
     function hex2bin($data)
     {

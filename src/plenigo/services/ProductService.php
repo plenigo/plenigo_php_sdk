@@ -48,7 +48,7 @@ class ProductService extends Service {
      *
      * @param string $productId The product id to use.
      * @return ProductData the product data related to the access token
-     * @throws PlenigoException whenever an error happens
+     * @throws \Exception whenever an error happens
      */
     public static function getProductData($productId) {
         $clazz = get_class();
@@ -103,7 +103,7 @@ class ProductService extends Service {
      *
      * @return array an asociative array as a ResultSet with totalElements, page size, last id and the list of products
      *
-     * @throws PlenigoException
+     * @throws \Exception
      */
     public static function getProductList($pageSize = 10, $page = 0) {
         return self::getProductListFromServer($pageSize, $page, ApiURLs::LIST_PRODUCTS);
@@ -118,7 +118,7 @@ class ProductService extends Service {
      *
      * @return array an asociative array as a ResultSet with totalElements, page size, last id and the list of products
      *
-     * @throws PlenigoException
+     * @throws \Exception
      */
     private static final function getProductListFromServer($pageSize, $page, $url) {
         $clazz = get_class();
@@ -162,7 +162,7 @@ class ProductService extends Service {
      *
      * @return array an asociative array as a ResultSet with totalElements, page size, last id and the list of products
      *
-     * @throws PlenigoException
+     * @throws \Exception
      */
     public static function getProductListWithDetails($pageSize = 10, $page = 0) {
         return self::getProductListFromServer($pageSize, $page, ApiURLs::LIST_PRODUCTS_FULL_DETAILS);
@@ -176,7 +176,7 @@ class ProductService extends Service {
      *
      * @return CategoryData
      *
-     * @throws PlenigoException whenever an error happens
+     * @throws \Exception whenever an error happens
      */
     public static function getCategoryData($categoryId) {
         $clazz = get_class();
@@ -232,7 +232,7 @@ class ProductService extends Service {
      *
      * @return array an asociative array as a ResultSet with totalElements, page size, last id and the list of products
      *
-     * @throws PlenigoException
+     * @throws \Exception
      */
     public static function getCategoryList($pageSize = 10, $page = 0) {
         $clazz = get_class();
@@ -290,7 +290,7 @@ class ProductService extends Service {
      * This method can't actually throw aan Exception because it will be called from inside a catch
      * block and the Exception would be occluded by a run-time error.
      *
-     * @param Exception $exc the previous exception thrown
+     * @param \Exception $exc the previous exception thrown
      * @param int $errorCode the error code for the exception
      * @param string $defaultMsg the error message for default error
      * @return PlenigoException the exception that needs to be thrown

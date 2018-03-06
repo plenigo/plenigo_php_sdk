@@ -51,8 +51,8 @@ class AppManagementService extends Service {
      * @param string $description the App Access Description to send to the API
      * 
      * @return AppTokenData the access token to get the App ID
-     * 
-     * @throws PlenigoException
+     *
+     * @throws \Exception
      */
     public static function requestAppToken($customerId, $productId, $description) {
         $testModeText = (PlenigoManager::get()->isTestMode()) ? 'true' : 'false';
@@ -82,7 +82,7 @@ class AppManagementService extends Service {
      * 
      * @return array An array of AppAccessData objects
      * 
-     * @throws PlenigoException
+     * @throws \Exception
      */
     public static function getCustomerApps($customerId) {
         $testModeText = (PlenigoManager::get()->isTestMode()) ? 'true' : 'false';
@@ -111,7 +111,7 @@ class AppManagementService extends Service {
      * 
      * @return AppAccessData the access data with the App ID
      * 
-     * @throws PlenigoException
+     * @throws \Exception
      */
     public static function requestAppId($customerId, $accessToken) {
         $testModeText = (PlenigoManager::get()->isTestMode()) ? 'true' : 'false';
@@ -141,6 +141,7 @@ class AppManagementService extends Service {
      * @param string $appId The App ID to send to the API
      * 
      * @return bool TRUE if the customer can access this product, FALSE otherwise
+     * @throws \Exception
      */
     public static function hasUserBought($customerId, $productId, $appId) {
         $testModeText = (PlenigoManager::get()->isTestMode()) ? 'true' : 'false';
@@ -172,7 +173,7 @@ class AppManagementService extends Service {
      * @param string $customerId he Customer ID to send to the API
      * @param string $appId The App ID to send to the API
      * 
-     * @throws PlenigoException
+     * @throws \Exception
      */
     public static function deleteCustomerApp($customerId, $appId) {
         $testModeText = (PlenigoManager::get()->isTestMode()) ? 'true' : 'false';

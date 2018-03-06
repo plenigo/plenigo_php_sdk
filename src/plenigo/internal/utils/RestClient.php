@@ -232,6 +232,7 @@ class RestClient {
      * @param string $url The URL to access.
      *
      * @return CurlRequest instance.
+     * @throws \plenigo\internal\exceptions\ConfigException
      */
     private static function createCurlRequest($url = null) {
         return new CurlRequest($url);

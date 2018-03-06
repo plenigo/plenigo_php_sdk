@@ -36,6 +36,7 @@ abstract class ServerInterface
      * @param array  $methodArguments The list of arguments passed to the method.
      *
      * @return void
+     * @throws \Exception
      */
     public function __call($methodName, $methodArguments)
     {

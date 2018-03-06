@@ -54,7 +54,7 @@ class AccessService extends Service
      * @param string $endTime time when access should end in the format Y-m-d
      * @param array $productIds ids of the products to grant customer access to
      *
-     * @throws PlenigoException
+     * @throws \Exception
      */
     public static function grantUserAccess($customerId, $useExternalCustomerId, $startTime, $endTime, $productIds)
     {
@@ -89,7 +89,7 @@ class AccessService extends Service
      * @param boolean $useExternalCustomerId flag indicating if customer id is an external customer id
      * @param array $productIds ids of the products to grant customer access to
      *
-     * @throws PlenigoException
+     * @throws \Exception
      */
     public static function removeUserAccess($customerId, $useExternalCustomerId, $productIds)
     {
