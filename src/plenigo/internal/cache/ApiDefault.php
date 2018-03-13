@@ -2,7 +2,6 @@
 
 namespace plenigo\internal\cache;
 
-
 /**
  * Class ApiDefault
  *
@@ -15,36 +14,46 @@ class ApiDefault
 {
 
     /**
-     * @param $key
-     * @param $value
-     * @param int $ttl Time to live
+     * Stores a key with the provided value.
+     *
+     * @param $key store a key
+     * @param $value value related to the key
+     * @param int $ttl Time to live time to live for the key-value pair
+     *
      * @return array|bool
      */
     public static function store($key, $value, $ttl) {
-       return true;
+        return true;
     }
 
     /**
-     * @param $key
-     * @return bool|string[]
+     * Delete the provided key.
+     *
+     * @param $key key to delete
+     *
+     * @return bool|string[] a flag indicating if it was deleted
      */
     public static function delete($key) {
         return true;
     }
 
     /**
-     * @param $key
-     * @return bool|mixed
+     * Get the value of the provided key.
+     *
+     * @param $key key to get
+     *
+     * @return bool|mixed value of the key
      */
     public static function get($key) {
         return null;
     }
 
     /**
-     * @return bool
+     * Flag indicating if the Api is enabled.
+     *
+     * @return bool true if its enabled, false otherwise
      */
     public static function isEnabled() {
         return true;
     }
-
 }

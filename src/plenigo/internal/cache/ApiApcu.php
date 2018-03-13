@@ -2,18 +2,18 @@
 
 namespace plenigo\internal\cache;
 
-
 /**
  * Class ApiApcu
  * @package plenigo\internal\cache
  */
 class ApiApcu extends ApiDefault
 {
-
     /**
-     * @param string $key
-     * @param string $value
-     * @param int $ttl
+     * Stores a key with the provided value.
+     *
+     * @param $key store a key
+     * @param $value value related to the key
+     * @param int $ttl Time to live time to live for the key-value pair
      *
      * @return array|bool
      */
@@ -26,8 +26,11 @@ class ApiApcu extends ApiDefault
     }
 
     /**
-     * @param string $key
-     * @return bool
+     * Delete the provided key.
+     *
+     * @param $key key to delete
+     *
+     * @return bool|string[] a flag indicating if it was deleted
      */
     public static function delete($key) {
         try {
@@ -38,8 +41,11 @@ class ApiApcu extends ApiDefault
     }
 
     /**
-     * @param string $key
-     * @return bool|mixed a cached JSON of bool false
+     * Get the value of the provided key.
+     *
+     * @param $key key to get
+     *
+     * @return bool|mixed value of the key
      */
     public static function get($key) {
         try {
@@ -50,10 +56,11 @@ class ApiApcu extends ApiDefault
     }
 
     /**
-     * @return bool
+     * Flag indicating if the Api is enabled.
+     *
+     * @return bool true if its enabled, false otherwise
      */
     public static function isEnabled() {
         return extension_loaded('apcu') && function_exists('apcu_store');
     }
-
 }
