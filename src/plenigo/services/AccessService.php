@@ -62,10 +62,16 @@ class AccessService extends Service
         $map = array(
             'useExternalCustomerId' => $useExternalCustomerId,
             ApiParams::TEST_MODE => $testModeText,
-            'startTime' => date('Y-m-d', strtotime($startTime)),
-            'endTime' => date('Y-m-d', strtotime($endTime)),
             'productIds' => $productIds
         );
+
+        if(!empty($startTime)) {
+            $map['startTime'] = date('Y-m-d', strtotime($startTime));
+        }
+
+        if(!empty($endTime)) {
+            $map['endTime'] = date('Y-m-d', strtotime($endTime));
+        }
 
         $url = str_ireplace(ApiParams::URL_USER_ID_TAG, $customerId, ApiURLs::PRODUCT_ACCESS_RIGHTS_ADDITION_URL);
 
