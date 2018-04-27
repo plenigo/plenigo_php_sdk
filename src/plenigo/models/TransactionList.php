@@ -86,8 +86,8 @@ class TransactionList extends IterableBase {
         $startDate = isset($map['startDate']) ? $map['startDate'] : null;
         $endDate = isset($map['endDate']) ? $map['endDate'] : null;
 
-        $arrElements = isset($map['elements']) ? $map['elements'] : [];
-        $arrResulting = [];
+        $arrElements = isset($map['elements']) ? $map['elements'] : array();
+        $arrResulting = array();
         foreach ($arrElements as $cpnyTransaction) {
             $transaction = Transaction::createFromMap((array) $cpnyTransaction);
             array_push($arrResulting, $transaction);

@@ -9,7 +9,7 @@ namespace plenigo\models;
  */
 class IterableBase implements \Iterator {
 
-    protected $elements = [];
+    protected $elements = array();
 
     public function rewind() {
         reset($this->elements);
