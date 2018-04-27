@@ -13,6 +13,7 @@ require_once __DIR__ . '/../models/OrderList.php';
 require_once __DIR__ . '/../models/ErrorCode.php';
 
 use plenigo\internal\ApiURLs;
+use plenigo\internal\ApiParams;
 use plenigo\internal\services\Service;
 use plenigo\internal\utils\SdkUtils;
 use plenigo\models\CompanyUserList;
@@ -106,17 +107,20 @@ class CompanyService extends Service {
      * Returns a list of users based on the given ids.
      * 
      * @param string $userIds a comma separated list if ids
-     * 
+     * @param boolean $useExternalCustomerId (optional) Flag indicating if customer id sent is the external customer id
+     *
      * @return CompanyUserList A  list of users of the specified company with the given ids
      */
-    public static function getUserByIds($userIds = "") {
-        $map = array(
-            'userIds' => $userIds
+    public static function getUserByIds($userIds = "", $useExternalCustomerId = false) {
+
+        $params = array(
+            'userIds' => $userIds,
+            ApiParams::USE_EXTERNAL_CUSTOMER_ID => ($useExternalCustomerId ? 'true' : 'false')
         );
 
         $url = ApiURLs::COMPANY_USERS_SELECT;
 
-        $request = static::getRequest($url, false, $map);
+        $request = static::getRequest($url, false, $params);
 
         $appTokenRequest = new static($request);
 
