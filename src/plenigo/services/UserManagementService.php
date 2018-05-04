@@ -202,7 +202,7 @@ class UserManagementService extends Service
      *
      * @return boolean TRUE if the transaction was successful
      *
-     * @throws \Exception
+     * @throws \Exception In case of communication errors or invalid parameters
      */
     public static function importCustomerAccess($customerId, $isExternal = false, $customIds = array())
     {
