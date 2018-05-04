@@ -58,7 +58,8 @@ class CheckoutSnippetBuilder {
      * @param string $elementId id of the element the checkout should be inserted into, if this parameter is passed the checkout will be embedded
      * 
      * @return string A Javascript snippet that is compliant with plenigo's Javascript SDK.
-     * @throws \Exception When an error occurs during data encoding
+     * @throws \Exception When the PlenigoManager has not been previously configured.
+     * @throws EncryptionException When an error occurs during data encoding
      */
     public function build($settings = array(), $loginToken = null, $showRegisterFirst = false, $sourceUrl = null, $targetUrl = null, $affiliateId = null, $elementId = null) {
         $clazz = get_class();
