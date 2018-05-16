@@ -4,6 +4,12 @@
     "description": "Plenigo PHP SDK",
     "keywords": ["paywall","pay"],
     "homepage": "https://www.plenigo.com",
+    "autoload": {
+        "files": ["src/plenigo/Plenigo.php"],
+        "psr-4": {
+            "plenigo\\": "src/plenigo/"
+        }
+    },
     "require": {
         "php": ">=5.6.0"
     },
