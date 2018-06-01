@@ -60,6 +60,9 @@ class RestClient {
         $fields_string = '';
         //url-ify the data for the POST
         foreach($params as $key=>$value) {
+            if (is_array($value)) {
+                $value = implode(",", $value);
+            }
             $fields_string .= $key.'='. rawurlencode($value) .'&';
         }
         $fields_string = rtrim($fields_string, '&');
