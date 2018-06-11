@@ -171,7 +171,7 @@ class MeterService extends Service
         $viewsUsedToCheck = $viewsUsed;
 
         //if login views enabled
-        if ($loggedIn === true && $loginViewsAvailable > 0) {
+        if ($loggedIn === true) {
             $limitToCheck = $loginLimitReached;
             $viewsToCheck = $loginViewsAvailable;
             $viewsUsedToCheck = $loginViewsUsed;
