@@ -52,7 +52,7 @@ class CheckoutSnippetBuilderTest extends PlenigoTestCase {
 
         $plenigoCheckoutCode = $checkout->build();
 
-        $this->assertRegExp("/^plenigo\\.checkout\\('\\w+'\\);$/", $plenigoCheckoutCode);
+        $this->assertRegExp("/^plenigo\\.checkout\\(\\{.*\\}\\);$/", $plenigoCheckoutCode);
         $this->assertError(E_USER_NOTICE, "Building CHECKOUT");
     }
 
@@ -64,7 +64,7 @@ class CheckoutSnippetBuilderTest extends PlenigoTestCase {
 
         $plenigoCheckoutCode = $checkout->build(array(), null, true);
 
-        $this->assertRegExp('/^plenigo\.checkout\(\'\w+\'\, true\);$/', $plenigoCheckoutCode);
+        $this->assertRegExp("/^plenigo\\.checkout\\(\\{.*\\}\\);$/", $plenigoCheckoutCode);
         $this->assertError(E_USER_NOTICE, "Building CHECKOUT");
     }
 
@@ -80,7 +80,7 @@ class CheckoutSnippetBuilderTest extends PlenigoTestCase {
             'testMode' => true
         ));
 
-        $this->assertRegExp("/^plenigo\\.checkout\\('\\w+'\\);$/", $plenigoCheckoutCode);
+        $this->assertRegExp("/^plenigo\\.checkout\\(\\{.*\\}\\);$/", $plenigoCheckoutCode);
         $this->assertError(E_USER_NOTICE, "Building CHECKOUT");
     }
 
@@ -96,7 +96,7 @@ class CheckoutSnippetBuilderTest extends PlenigoTestCase {
             'testMode' => true
                 ), "sampleFakeToken");
 
-        $this->assertRegExp("/^plenigo\\.checkoutWithRemoteLogin\\('\\w+'\\, '\\w+'\\);$/", $plenigoCheckoutCode);
+        $this->assertRegExp("/^plenigo\\.checkoutWithRemoteLogin\\(\\{.*\\}\\);$/", $plenigoCheckoutCode);
         $this->assertError(E_USER_NOTICE, "Login TOKEN");
     }
 
@@ -110,7 +110,7 @@ class CheckoutSnippetBuilderTest extends PlenigoTestCase {
             'testMode' => true
                 ), null, true, "http://www.google.com","http://www.google.com","GOOGL");
 
-        $this->assertRegExp("/^plenigo\\.checkout\\('\\w+'\\, true\\, '.*'\\, '.*'\\, '.*'\\);$/", $plenigoCheckoutCode);
+        $this->assertRegExp("/^plenigo\\.checkout\\(\\{.*\\}\\);$/", $plenigoCheckoutCode);
         $this->assertError(E_USER_NOTICE, "Source URL");
         $this->assertError(E_USER_NOTICE, "Target URL");
         $this->assertError(E_USER_NOTICE, "Affiliate ID");
@@ -125,7 +125,7 @@ class CheckoutSnippetBuilderTest extends PlenigoTestCase {
         $plenigoCheckoutCode = $checkout->build();
 
         $this->assertEquals("New Category", $checkout->getProduct()->getCategoryId());
-        $this->assertRegExp("/^plenigo\\.checkout\\('\\w+'\\);$/", $plenigoCheckoutCode);
+        $this->assertRegExp("/^plenigo\\.checkout\\(\\{.*\\}\\);$/", $plenigoCheckoutCode);
         $this->assertError(E_USER_NOTICE, "Building CHECKOUT");
         $this->assertError(E_USER_NOTICE, "Checkout QUERYSTRING");
     }
@@ -161,7 +161,7 @@ class CheckoutSnippetBuilderTest extends PlenigoTestCase {
         $checkout = new CheckoutSnippetBuilder($product);
 
         $plenigoCheckoutCode = $checkout->build();
-        $this->assertRegExp("/^plenigo\\.checkout\\('\\w+'\\);$/", $plenigoCheckoutCode);
+        $this->assertRegExp("/^plenigo\\.checkout\\(\\{.*\\}\\);$/", $plenigoCheckoutCode);
         $this->assertError(E_USER_NOTICE, "Building CHECKOUT");
         $this->assertError(E_USER_NOTICE, "Checkout QUERYSTRING");
     }

@@ -72,62 +72,35 @@ class CheckoutSnippetBuilder {
         PlenigoManager::get()->notice($clazz, "Checkout QUERYSTRING:" . $requestQueryString);
 
         $strFunction = "plenigo.checkout";
-        $strFirstParam = "";
-        if ($showRegisterFirst) {
-            $strFirstParam = ", true";
-        }
+
+        $checkoutParams = ['paymentData' => $encodedData,
+            'startWithRegistration' => $showRegisterFirst];
+        
         if (!is_null($loginToken)) {
             PlenigoManager::get()->notice($clazz, "Login TOKEN:" . $loginToken);
             $strFunction = "plenigo.checkoutWithRemoteLogin";
-            $strFirstParam = ", '" . $loginToken . "'";
+            $checkoutParams['loginToken'] = $loginToken;
         }
-        $strSourceURL = "";
-        $strTargetURL = "";
+        
         if (!is_null($sourceUrl)) {
             PlenigoManager::get()->notice($clazz, "Source URL:" . $sourceUrl);
-            $strSourceURL = ", '" . $sourceUrl . "'";
-            if (!$showRegisterFirst && is_null($loginToken)) {
-                $strFirstParam = ", false";
-            }
+            $checkoutParams['sourceUrl'] = $sourceUrl;
         }
         if (!is_null($targetUrl)) {
             PlenigoManager::get()->notice($clazz, "Target URL:" . $targetUrl);
-            $strTargetURL = ", '" . $targetUrl . "'";
-            if (is_null($sourceUrl)) {
-                $strSourceURL = ", null";
-            }
-	        if (empty($strFirstParam) && !$showRegisterFirst && is_null($loginToken)) {
-		        $strFirstParam = ", false";
-	        }
+            $checkoutParams['targetUrl'] = $targetUrl;
         }
-        $strAffiliate = null;
         if (!is_null($affiliateId)) {
             PlenigoManager::get()->notice($clazz, "Affiliate ID:" . $affiliateId);
-            $strAffiliate = ", '" . $affiliateId . "'";
-            if (is_null($sourceUrl)) {
-                $strSourceURL = ", null";
-            }
-            if (is_null($targetUrl)) {
-                $strTargetURL = ", null";
-            }
+            $checkoutParams['affiliateId'] = $affiliateId;
         }
-        $strElementId = "";
         if (!is_null($elementId)) {
             PlenigoManager::get()->notice($clazz, "Element ID:" . $elementId);
-            $strElementId = ", '" . $elementId . "'";
-            if (is_null($sourceUrl)) {
-                $strSourceURL = ", null";
-            }
-            if (is_null($targetUrl)) {
-                $strTargetURL = ", null";
-            }
-            if (is_null($strAffiliate)) {
-                $strAffiliate = ", null";
-            }
+            $checkoutParams['elementId'] = $affiliateId;
         }
 
-        $strFunctionFormula = $strFunction . "('%s'" . $strFirstParam . $strSourceURL . $strTargetURL . $strAffiliate . $strElementId . ");";
-        return sprintf($strFunctionFormula, $encodedData);
+        $strFunctionFormula = $strFunction . "(" . json_encode($checkoutParams) . ");";
+        return $strFunctionFormula;
     }
 
     /**
