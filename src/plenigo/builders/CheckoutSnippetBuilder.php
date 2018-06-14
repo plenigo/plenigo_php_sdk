@@ -96,7 +96,7 @@ class CheckoutSnippetBuilder {
         }
         if (!is_null($elementId)) {
             PlenigoManager::get()->notice($clazz, "Element ID:" . $elementId);
-            $checkoutParams['elementId'] = $affiliateId;
+            $checkoutParams['elementId'] = $elementId;
         }
 
         $strFunctionFormula = $strFunction . "(" . json_encode($checkoutParams) . ");";
