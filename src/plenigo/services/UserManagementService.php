@@ -52,12 +52,13 @@ class UserManagementService extends Service
      * @param string $firstName A given name for the new user
      * @param string $name A last name for the new user
      * @param boolean $withPasswordReset flag indicating if user should get an email with a one time password
+     * @param boolean $failByExistingEmail flag indicating if the registration process should fail if the user is already registered
      *
      * @return string Id of the created customer.
      *
      * @throws PlenigoException In case of communication errors or invalid parameters.
      */
-    public static function registerUser($email, $language = "en", $externalUserId = null, $firstName = null, $name = null, $withPasswordReset = false)
+    public static function registerUser($email, $language = "en", $externalUserId = null, $firstName = null, $name = null, $withPasswordReset = false, $failByExistingEmail = false)
     {
 
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -69,7 +70,8 @@ class UserManagementService extends Service
         $map = array(
             'email' => $email,
             'language' => $language,
-            'withPasswordReset' => $withPasswordReset
+            'withPasswordReset' => $withPasswordReset,
+            'failByExistingEmail' => $failByExistingEmail
         );
 
         if (!is_null($externalUserId) && is_int($externalUserId)) {
