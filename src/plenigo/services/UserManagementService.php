@@ -10,6 +10,7 @@ require_once __DIR__ . '/../internal/services/Service.php';
 
 use plenigo\internal\ApiParams;
 use plenigo\internal\ApiURLs;
+use plenigo\internal\exceptions\RegistrationException;
 use plenigo\internal\services\Service;
 use plenigo\PlenigoException;
 use plenigo\PlenigoManager;
@@ -255,6 +256,8 @@ class UserManagementService extends Service
     {
         try {
             $response = parent::execute();
+        } catch (RegistrationException $exception) {
+          throw $exception;
         } catch (\Exception $exc) {
             throw new PlenigoException('User Management Service execution failed!', $exc->getCode(), $exc);
         }

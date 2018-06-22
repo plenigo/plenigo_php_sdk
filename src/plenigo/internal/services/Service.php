@@ -7,6 +7,7 @@ require_once __DIR__ . '/../../PlenigoException.php';
 require_once __DIR__ . '/../../internal/utils/RestClient.php';
 require_once __DIR__ . '/../../models/ErrorCode.php';
 
+use plenigo\internal\exceptions\RegistrationException;
 use plenigo\internal\utils\RestClient;
 use plenigo\models\ErrorCode;
 use plenigo\PlenigoException;
@@ -235,7 +236,10 @@ class Service {
         $res = null;
         try {
             $res = $pRequest->execute();
-        } catch (Exception $exc) {
+        } catch (RegistrationException $exception) {
+            throw $exception;
+        }
+        catch (Exception $exc) {
             $errorCode = ErrorCode::getTranslation($pErrorSource, $exc->getCode());
             if (empty($errorCode) || is_null($errorCode)) {
                 $errorCode = $exc->getCode();
@@ -258,7 +262,10 @@ class Service {
         try {
             $response = $this->getRequestResponse();
             $this->checkForErrors($response);
-        } catch (\Exception $exc) {
+        } catch (RegistrationException $exception) {
+            throw $exception;
+        }
+        catch (\Exception $exc) {
             throw new \Exception('Error checking the response', $exc->getCode(), $exc);
         }
 

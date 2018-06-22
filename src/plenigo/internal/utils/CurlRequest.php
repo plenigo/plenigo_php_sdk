@@ -7,6 +7,7 @@ require_once __DIR__ . '/../../PlenigoManager.php';
 require_once __DIR__ . '/../exceptions/ConfigException.php';
 
 use plenigo\internal\exceptions\ConfigException;
+use plenigo\internal\exceptions\RegistrationException;
 use plenigo\PlenigoManager;
 
 /**
@@ -135,6 +136,16 @@ final class CurlRequest {
                 $msg = "An error occured while executing a [$url] request, post params?[$postParams], http response code was [$statusCode]";
                 if($statusCode != 403)    {
                     PlenigoManager::get()->logError($msg, $result);
+                }
+                // handle 409, if a user already exists (#55)
+                if ($statusCode == 409) {
+                    try {
+                        $msgRaw = json_decode($result, true);
+                        $msg = $msgRaw['error'];
+                    } catch (\Exception $exception) {
+                        $msg = $result;
+                    }
+                    throw new RegistrationException($msg);
                 }
                 throw new \Exception($statusCode . " HTTP Error detected with message: {$result}", $statusCode);
             }
