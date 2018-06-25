@@ -224,9 +224,8 @@ class CompanyUser {
             $instance->setBillingAddress(CompanyUserBillingData::createFromMap((array)$map['billingAddresses'][0]));
         }
         if (isset($map['deliveryAddresses']) && !is_null($map['deliveryAddresses']) && count(($map['deliveryAddresses'])) > 0) {
-            $instance->setBillingAddress(CompanyUserDeliveryData::createFromMap((array)$map['deliveryAddresses'][0]));
+            $instance->setDeliveryAddress(CompanyUserDeliveryData::createFromMap((array)$map['deliveryAddresses'][0]));
         }
-
         return $instance;
     }
 
