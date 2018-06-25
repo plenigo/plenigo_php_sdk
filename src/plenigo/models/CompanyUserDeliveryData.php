@@ -7,16 +7,16 @@ namespace plenigo\models;
  * This class contains the company user billing information.
  * </p>
  */
-class CompanyUserBillingData extends AddressData {
+class CompanyUserDeliveryData extends AddressData {
 
     /**
      * Creates a CompanyUserBillingData instance from an array map.
      *
      * @param array $map The array map to use for the instance creation.
-     * @return CompanyUserBillingData instance.
+     * @return CompanyUserDeliveryData instance.
      */
     public static function createFromMap($map) {
-        $instance = new CompanyUserBillingData();
+        $instance = new CompanyUserDeliveryData();
         $instance->setGender(isset($map['gender']) ? $map['gender'] : null);
         $instance->setFirstName(isset($map['firstName']) ? $map['firstName'] : null);
         $instance->setName(isset($map['name']) ? $map['name'] : null);

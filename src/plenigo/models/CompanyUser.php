@@ -30,6 +30,7 @@ class CompanyUser {
     private $country;
     private $agreementState;
     private $billingAddress = null;
+    private $deliveryAddress = null;
 
     private function __construct() {
         
@@ -189,6 +190,10 @@ class CompanyUser {
         $this->billingAddress = $billingAddress;
     }
 
+    public function setDeliveryAddress($deliveryAddress) {
+        $this->deliveryAddress = $deliveryAddress;
+    }
+
     /**
      * Creates a CompanyUser instance from an array map.
      *
@@ -218,6 +223,10 @@ class CompanyUser {
         if (isset($map['billingAddresses']) && !is_null($map['billingAddresses']) && count(($map['billingAddresses'])) > 0) {
             $instance->setBillingAddress(CompanyUserBillingData::createFromMap((array)$map['billingAddresses'][0]));
         }
+        if (isset($map['deliveryAddresses']) && !is_null($map['deliveryAddresses']) && count(($map['deliveryAddresses'])) > 0) {
+            $instance->setBillingAddress(CompanyUserDeliveryData::createFromMap((array)$map['deliveryAddresses'][0]));
+        }
+
         return $instance;
     }
 
