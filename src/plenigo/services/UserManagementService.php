@@ -75,7 +75,7 @@ class UserManagementService extends Service
             'failByExistingEmail' => $failByExistingEmail
         );
 
-        if (!is_null($externalUserId) && is_int($externalUserId)) {
+        if (!is_null($externalUserId)) {
             $map["externalUserId"] = $externalUserId;
         }
         if (!is_null($firstName) && is_string($firstName)) {
