@@ -110,7 +110,7 @@ abstract class ServerInterface
      *
      * @param float $value The value to validate as a number.
      *
-     * @return void
+     * @return boolean
      */
     protected function validateNumber($value)
     {

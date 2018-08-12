@@ -7,10 +7,11 @@ require_once __DIR__ . '/../internal/models/Product.php';
 require_once __DIR__ . '/../internal/utils/EncryptionUtils.php';
 require_once __DIR__ . '/../internal/server-interface/payment/Checkout.php';
 require_once __DIR__ . '/../internal/exceptions/ProductException.php';
+require_once __DIR__ . '/../internal/utils/JWT.php';
 
 use plenigo\internal\models\Product;
 use plenigo\internal\serverInterface\payment\Checkout;
-use plenigo\internal\utils\EncryptionUtils;
+use plenigo\internal\utils\JWT;
 use plenigo\PlenigoManager;
 
 /**
@@ -108,27 +109,27 @@ class CheckoutSnippetBuilder {
      *
      * @param array $settings A map of settings to pass to the Checkout service interface.
      *
-     * @return string The encoded data
+     * @return array The encoded data
      */
     private function buildCheckoutRequestQueryString($settings = array()) {
         $request = new Checkout($this->product);
 
         $request->setValuesFromMap($settings);
 
-        return $request->getQueryString();
+        return $request->getMap();
     }
 
     /**
      * This method builds the encoded data from the Checkout Object.
      *
-     * @param string $dataToEncode the string data to encode.
+     * @param array $dataToEncode the string data to encode.
      *
      * @return string The encoded data
      */
     private function buildEncodedData($dataToEncode) {
         $secret = PlenigoManager::get()->getSecret();
 
-        return EncryptionUtils::encryptWithAES($secret, $dataToEncode);
+        return JWT::encode($dataToEncode, $secret);
     }
 
     /**

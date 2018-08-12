@@ -12,10 +12,10 @@ class CheckoutTest extends TestCase
     public function checkoutRequestProvider()
     {
         $map = array(
-            'price'         => 1.5,
-            'title'         => 'premium-read',
-            'testMode'      => true,
-            'segmentId'      => 'test_seg',
+            'price' => 1.5,
+            'title' => 'premium-read',
+            'testMode' => true,
+            'segmentId' => 'test_seg',
         );
 
         $checkoutRequest = new Checkout($map);
@@ -33,45 +33,51 @@ class CheckoutTest extends TestCase
 
     public function testCheckoutWithProductInstance()
     {
-        $expectedResult     = 'pr=>2.5&cu=>USD&ti=>premium-read&pi=>premium-123&ts=>true';
-        $product            = new ProductBase('premium-123', 'premium-read', 2.5, 'USD');
+        $expectedResult = 'pr=>2.5&cu=>USD&ti=>premium-read&pi=>premium-123&ts=>true';
+        $product = new ProductBase('premium-123', 'premium-read', 2.5, 'USD');
 
-        $checkoutRequest    = new Checkout($product);
+        $checkoutRequest = new Checkout($product);
         $checkoutRequest->setTestMode(true);
 
-        $queryString        = $checkoutRequest->getQueryString();
+        $queryString = $checkoutRequest->getQueryString();
 
         $this->assertEquals($expectedResult, $queryString);
     }
 
     public function testSetProduct()
     {
-        $expectedResult     = 'pr=>2.5&cu=>USD&ti=>premium-read&pi=>premium-123&ts=>true';
-        $product            = new ProductBase('premium-123', 'premium-read', 2.5, 'USD');
+        $expectedResult = 'pr=>2.5&cu=>USD&ti=>premium-read&pi=>premium-123&ts=>true';
+        $product = new ProductBase('premium-123', 'premium-read', 2.5, 'USD');
 
-        $checkoutRequest    = new Checkout();
+        $checkoutRequest = new Checkout();
         $checkoutRequest->setProduct($product);
         $checkoutRequest->setTestMode(true);
 
-        $queryString        = $checkoutRequest->getQueryString();
+        $queryString = $checkoutRequest->getQueryString();
 
         $this->assertEquals($expectedResult, $queryString);
     }
 
     public function testSetValuesFromMap()
     {
-        $expectedResult     = 'pr=>1.5&cu=>USD&ti=>premium-read&ts=>true';
-        $map            = array(
-            'price'     => 1.5,
-            'title'     => 'premium-read',
-            'currency'  => 'USD',
-            'testMode'  => true
+        $expectedResult = array(
+            'pr' => 1.5,
+            'ti' => 'premium-read',
+            'cu' => 'USD',
+            'ts' => true
         );
 
-        $checkoutRequest    = new Checkout();
+        $map = array(
+            'price' => 1.5,
+            'title' => 'premium-read',
+            'currency' => 'USD',
+            'testMode' => true
+        );
+
+        $checkoutRequest = new Checkout();
         $checkoutRequest->setValuesFromMap($map);
 
-        $queryString        = $checkoutRequest->getQueryString();
+        $queryString = $checkoutRequest->getMap();
 
         $this->assertEquals($expectedResult, $queryString);
     }
@@ -190,26 +196,14 @@ class CheckoutTest extends TestCase
     public function testGetMap($checkout, $original)
     {
         $expectedResult = array(
-            'pr'    => $original['price'],
-            'ti'    => $original['title'],
-            'ts'    => $original['testMode'],
-            'si'    => $original['segmentId']
+            'pr' => $original['price'],
+            'ti' => $original['title'],
+            'ts' => $original['testMode'],
+            'si' => $original['segmentId']
         );
 
         $checkout->anotherProperty = 'value';
 
         $this->assertEquals($expectedResult, $checkout->getMap());
-    }
-
-    /**
-     * @dataProvider checkoutRequestProvider
-     */
-    public function testQueryString($checkout)
-    {
-        $expectedResult = 'pr=>1.5&ti=>premium-read&si=>test_seg&ts=>true';
-
-        $queryString = $checkout->getQueryString();
-
-        $this->assertEquals($expectedResult, $queryString);
     }
 }
