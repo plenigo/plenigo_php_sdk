@@ -113,6 +113,10 @@ class CompanyUser {
         return $this->billingAddress;
     }
 
+    public function getDeliveryAddress() {
+        return $this->deliveryAddress;
+    }
+
     public function setCustomerId($customerId) {
         $this->customerId = $customerId;
     }
