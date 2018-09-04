@@ -68,9 +68,9 @@ class CheckoutSnippetBuilder {
             $settings["testMode"] = "true";
         }
 
-        $requestQueryString = $this->buildCheckoutRequestQueryString($settings);
-        $encodedData = $this->buildEncodedData($requestQueryString);
-        PlenigoManager::get()->notice($clazz, "Checkout QUERYSTRING:" . $requestQueryString);
+        $requestQuery = $this->buildCheckoutRequestQueryString($settings);
+        $encodedData = $this->buildEncodedData($requestQuery);
+        PlenigoManager::get()->notice($clazz, "Checkout QUERYSTRING:" . http_build_query($requestQuery));
 
         $strFunction = "plenigo.checkout";
 

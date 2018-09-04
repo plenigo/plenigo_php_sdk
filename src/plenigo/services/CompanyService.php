@@ -18,6 +18,7 @@ use plenigo\internal\services\Service;
 use plenigo\internal\utils\SdkUtils;
 use plenigo\models\CompanyUserList;
 use plenigo\models\FailedPaymentList;
+use plenigo\models\Order;
 use plenigo\models\OrderList;
 use plenigo\models\SubscriptionList;
 use plenigo\PlenigoException;
@@ -30,8 +31,9 @@ use plenigo\PlenigoException;
 class CompanyService extends Service {
 
     const ERR_MSG_GET = "Error geting company users";
-    const ERR_MSG_GET_FAILED = "Error geting failed payments";
-    const ERR_MSG_GET_ORDERS = "Error geting orders";
+    const ERR_MSG_GET_FAILED = "Error getting failed payments";
+    const ERR_MSG_GET_ORDERS = "Error getting orders";
+    const ERR_MSG_GET_ORDER = "Error getting order";
 
     /**
      * The constructor for the CompanyService instance.
@@ -191,15 +193,43 @@ class CompanyService extends Service {
         return $result;
     }
 
+
+    /**
+     * Returns an order from API
+     *
+     * @param $id ID of the order
+     * @param bool $testMode
+     * @return Order the requested order
+     * @throws PlenigoException
+     */
+    public static function getOrder($id, $testMode = false) {
+
+        if (empty($id)) {
+            throw new PlenigoException("Order ID should not be empty!");
+        }
+
+        $url = str_ireplace(ApiParams::URL_ORDER_ID_TAG, $id, ApiURLs::COMPANY_ORDER);
+        $map = array(
+            'testMode' => $testMode ? 'true' : 'false'
+        );
+
+        $request = static::getRequest($url, false, $map);
+        $fpRequest = new static($request);
+        $data = parent::executeRequest($fpRequest, ApiURLs::COMPANY_ORDER, self::ERR_MSG_GET_ORDER);
+        $result = Order::createFromMap((array) $data);
+
+        return $result;
+    }
+
     /**
      * Returns a list of orders of the specified company.
-     * 
+     *
      * @param string $start Date start of the interval (String format YYYY-MM-DD)
      * @param string $end Date end of the interval (String format YYYY-MM-DD)
      * @param bool $testMode Test mode Flag
      * @param int $page Number of the page (starting from 0)
      * @param int $size Size of the page - must be between 10 and 100
-     * 
+     *
      * @return mixed list of orders
      */
     public static function getOrders($start = null, $end = null, $testMode = false , $page = 0, $size = 10) {

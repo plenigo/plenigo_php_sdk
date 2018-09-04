@@ -189,6 +189,12 @@ final class ApiURLs
      */
     const COMPANY_ORDERS = "/api/v2/orders/search";
 
+
+    /**
+     * This URL is used to get a specific order
+     */
+    const COMPANY_ORDER = "/api/v2/orders/{ORDER_ID}";
+
     /**
      * This URL is used to get a list of company subscriptions
      */

@@ -103,7 +103,7 @@ final class PlenigoManager {
      * Singleton instance retrieval method.
      *
      * @return PlenigoManager Singleton instance of {@link plenigo.PlenigoManager}
-     * @throws Exception when the PlenigoManager has not been previously configured.
+     * @throws \Exception when the PlenigoManager has not been previously configured.
      */
     public static function get() {
         if (self::$instance === null) {
@@ -197,7 +197,7 @@ final class PlenigoManager {
      *
      * @param mixed $obj can be an object, a string or any other variable, if its an object, it's class is shown
      * @param string $msg the NOTICE message to send
-     * @param Exception $exc an optional Exception object to show its stacktrace and messages
+     * @param \Exception $exc an optional Exception object to show its stacktrace and messages
      * @return bool returns FALSE only if the object reference or message are NULL
      */
     public static function notice($obj, $msg, $exc = null) {
@@ -213,7 +213,7 @@ final class PlenigoManager {
      *
      * @param mixed $obj can be an object, a string or any other variable, if its an object, it's class is shown
      * @param string $msg the WARNING message to send
-     * @param Exception $exc an optional Exception object to show its stacktrace and messages
+     * @param \Exception $exc an optional Exception object to show its stacktrace and messages
      *
      * @return bool returns FALSE only if the object reference or message are NULL
      */
@@ -230,7 +230,7 @@ final class PlenigoManager {
      *
      * @param mixed $obj can be an object, a string or any other variable, if its an object, it's class is shown
      * @param string $msg the ERROR message to send
-     * @param Exception $exc an optional Exception object to show its stacktrace and messages
+     * @param \Exception $exc an optional Exception object to show its stacktrace and messages
      *
      * @return bool returns FALSE only if the object reference or message are NULL
      */
