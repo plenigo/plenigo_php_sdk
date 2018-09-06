@@ -128,6 +128,7 @@ class CheckoutSnippetBuilder {
      */
     private function buildEncodedData($dataToEncode) {
         $secret = PlenigoManager::get()->getSecret();
+        $dataToEncode['aud'] = 'plenigo';
 
         return JWT::encode($dataToEncode, $secret);
     }
