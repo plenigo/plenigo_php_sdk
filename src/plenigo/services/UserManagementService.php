@@ -25,6 +25,7 @@ class UserManagementService extends Service
 {
 
     const ERR_MSG_EMAIL = "Invalid email address!";
+    const ERR_MSG_ADDRESS = "Invalid or empty address!";
     const ERR_MSG_REGISTER = "Error registering a customer";
     const ERR_MSG_CHANGEMAIL = "The email address could not be changed for this user";
     const ERR_MSG_ADDEXTERNALUSERID = "The external user id could not be added to this user";
@@ -130,6 +131,46 @@ class UserManagementService extends Service
         $url = str_ireplace(ApiParams::URL_USE_EXTERNAL_ID_TAG, var_export($useExternalCustomerId, true), $url);
 
         $request = static::putJSONRequest($url, $map);
+
+        $curlRequest = new static($request);
+
+        parent::executeRequest($curlRequest, ApiURLs::USER_MGMT_CHANGEMAIL, self::ERR_MSG_CHANGEMAIL);
+
+        return true;
+    }
+
+    /**
+     * Change address of an existing user.
+     *
+     * @param string $customerId Customer id of the user to change email address for
+     * @param array $address
+     * @param bool $useExternalCustomerId Flag indicating if customer id sent is the external customer id
+     *
+     * @return bool TRUE address changed
+     *
+     * @throws PlenigoException In case of communication errors or invalid parameters
+     */
+    public static function changeAddress($customerId, $address, $useExternalCustomerId = false)
+    {
+
+        if (empty($address) || !is_array($address) || !isset($address['gender'])) {
+            $clazz = get_class();
+            PlenigoManager::error($clazz, self::ERR_MSG_ADDRESS);
+            return false;
+        }
+
+        if (!empty($address['street']) && empty($address['country'])) {
+            $clazz = get_class();
+            PlenigoManager::error($clazz, self::ERR_MSG_ADDRESS);
+            return false;
+        }
+
+        $address['gender'] = strtoupper($address['gender']);
+
+        $url = str_ireplace(ApiParams::URL_USER_ID_TAG, $customerId, ApiURLs::USER_MGMT_CHANGEADDRESS);
+        $url = str_ireplace(ApiParams::URL_USE_EXTERNAL_ID_TAG, var_export($useExternalCustomerId, true), $url);
+
+        $request = static::putJSONRequest($url, $address);
 
         $curlRequest = new static($request);
 

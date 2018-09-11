@@ -150,6 +150,11 @@ final class ApiURLs
     const USER_MGMT_CHANGEMAIL = "/api/v2/externalUser/{USER_ID}/changeEmail?useExternalCustomerId={USE_EXTERNAL_ID}";
 
     /**
+     * This is the URL used to change email address of an existing user.
+     */
+    const USER_MGMT_CHANGEADDRESS = "/api/v2/user/{USER_ID}/address?useExternalCustomerId={USE_EXTERNAL_ID}";
+
+    /**
      * This is the URL used to add an external user id to an existing user.
      */
     const USER_MGMT_ADDEXTERNALUSERID = "/api/v2/externalUser/{USER_ID}/addExternalUserId";
