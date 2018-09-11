@@ -30,6 +30,13 @@ class Order {
     private $customerId;
 
     /**
+     * Customer Id
+     * @var string
+     */
+
+    private $externalCustomerId;
+
+    /**
      * Currency of the order price
      * @var string 
      */
@@ -121,6 +128,15 @@ class Order {
     public function getCustomerId() {
         return $this->customerId;
     }
+
+    /**
+     * @return string
+     */
+    public function getExternalCustomerId()
+    {
+        return $this->externalCustomerId;
+    }
+
 
     /**
      * Get the Currency.
@@ -241,6 +257,14 @@ class Order {
     }
 
     /**
+     * @param string $externalCustomerId
+     */
+    public function setExternalCustomerId($externalCustomerId)
+    {
+        $this->externalCustomerId = $externalCustomerId;
+    }
+
+    /**
      * Setter method for currency.
      * 
      * @param string $currency
@@ -343,6 +367,7 @@ class Order {
         $instance->setOrderId(isset($map['orderId']) ? $map['orderId'] : null);
         $instance->setOrderDate(isset($map['orderDate']) ? $map['orderDate'] : null);
         $instance->setCustomerId(isset($map['customerId']) ? $map['customerId'] : null);
+        $instance->setExternalCustomerId(isset($map['externalCustomerId']) ? $map['externalCustomerId'] : null);
         $instance->setCurrency(isset($map['currency']) ? $map['currency'] : null);
         $instance->setCumulatedPrice(isset($map['cumulatedPrice']) ? $map['cumulatedPrice'] : null);
         $instance->setVatNumber(isset($map['vatNumber']) ? $map['vatNumber'] : null);
