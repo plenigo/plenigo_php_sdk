@@ -142,7 +142,7 @@ class UserManagementService extends Service
     /**
      * Change address of an existing user.
      *
-     * @param string $customerId Customer id of the user to change email address for
+     * @param string $customerId Customer id of the user to change address for
      * @param array $address
      * @param bool $useExternalCustomerId Flag indicating if customer id sent is the external customer id
      *
