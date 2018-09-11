@@ -245,7 +245,7 @@ class CompanyService extends Service {
         // Check that start date is valid
         if (is_null($start)) {
             $dEnd = new \DateTime($end);
-            $start = date("Y-m-d", strtotime("-12 MONTH", $dEnd)); // 6 month before end date
+            $start = date("Y-m-d", strtotime("-12 MONTH", $dEnd->getTimestamp() )); // 6 month before end date
         }
 
         // parameter array
