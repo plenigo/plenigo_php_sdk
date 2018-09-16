@@ -197,7 +197,7 @@ class CompanyService extends Service {
     /**
      * Returns an order from API
      *
-     * @param $id ID of the order
+     * @param string $id ID of the order
      * @param bool $testMode
      * @return Order the requested order
      * @throws PlenigoException
@@ -307,7 +307,7 @@ class CompanyService extends Service {
     /**
      * Executes the prepared request and returns the Response object on success.
      *
-     * @return The request's response.
+     * @return string The request's response.
      *
      * @throws PlenigoException on request error.
      */

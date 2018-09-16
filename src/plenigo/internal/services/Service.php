@@ -256,7 +256,7 @@ class Service {
      * Executes the request, checks for errors
      * and returns the response.
      *
-     * @return The request's response.
+     * @return mixed The request's response.
      */
     public function execute() {
         try {

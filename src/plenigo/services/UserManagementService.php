@@ -141,11 +141,11 @@ class UserManagementService extends Service
 
     /**
      * Change address of an existing user.
+     * @link https://plenigo.github.io/user_management_php
      *
      * @param string $customerId Customer id of the user to change address for
      * @param array $address
      * @param bool $useExternalCustomerId Flag indicating if customer id sent is the external customer id
-     *
      * @return bool TRUE address changed
      *
      * @throws PlenigoException In case of communication errors or invalid parameters

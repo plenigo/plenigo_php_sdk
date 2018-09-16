@@ -40,10 +40,10 @@ class ProductData {
      * @param Subscription $subscript    The product subscription
      * @param string       $title        The title
      * @param string       $desc         The description
-     * @param bool      $collect      Flag indicating if product is part of the collectible model
+     * @param bool         $collect      Flag indicating if product is part of the collectible model
      * @param PricingData  $pricingData  The pricing information
      * @param ActionPeriod $actionPeriod The action period information
-     * @param array()      $images       The images information related to the product
+     * @param array        $images       The images information related to the product
      */
     public function __construct($id, $subscript, $title, $desc, $collect, $pricingData, $actionPeriod, $images) {
         $this->id = $id;
@@ -58,7 +58,7 @@ class ProductData {
         if (!is_null($pricingData)) {
             $this->pricingData = $pricingData;
         } else {
-            $this->pricingData = new PricingData(false, 0.0, 0.0, "");
+            $this->pricingData = new PricingData(false, 0.0, 0.0, "", 0.0);
         }
         if (!is_null($actionPeriod)) {
             $this->actionPeriod = $actionPeriod;
@@ -73,7 +73,7 @@ class ProductData {
     /**
      * Id of the product.
      *
-     * @return The id of the product
+     * @return string The id of the product
      */
     public function getId() {
         return $this->id;
@@ -82,7 +82,7 @@ class ProductData {
     /**
      * Title of the product.
      *
-     * @return The title of the product
+     * @return string The title of the product
      */
     public function getTitle() {
         return $this->title;
@@ -91,7 +91,7 @@ class ProductData {
     /**
      * Description of the product.
      *
-     * @return The description of the product
+     * @return string The description of the product
      */
     public function getDescription() {
         return $this->description;
@@ -100,7 +100,7 @@ class ProductData {
     /**
      * Flag indicating if product is part of the collectible model.
      *
-     * @return  a bool indicating if the product is collectible
+     * @return boolean a bool indicating if the product is collectible
      */
     public function isCollectible() {
         return ($this->collectible === true);
@@ -109,7 +109,7 @@ class ProductData {
     /**
      * An array of images that refer to information images of the product.
      *
-     * @return The images array
+     * @return array The images array
      */
     public function getImages() {
         return $this->images;
@@ -118,7 +118,7 @@ class ProductData {
     /**
      * Flag indicating if product represents a subscription.
      *
-     * @return a bool indicating if the product represents a subscription
+     * @return bool a bool indicating if the product represents a subscription
      */
     public function isSubscribable() {
         return $this->subscription->isSubscribable();
@@ -127,7 +127,7 @@ class ProductData {
     /**
      * Flag indicating if the product price can be freely selected by the user.
      *
-     * @return A bool indicating if the user can select the price or not
+     * @return bool A bool indicating if the user can select the price or not
      */
     public function isPriceChosen() {
         return $this->pricingData->isChoosePrice();
@@ -136,7 +136,7 @@ class ProductData {
     /**
      * The price of the product.
      *
-     * @return the price of the product
+     * @return float the price of the product
      */
     public function getPrice() {
         return $this->pricingData->getAmount();
@@ -145,7 +145,7 @@ class ProductData {
     /**
      * The product type.
      *
-     * @return string product type
+     * @return string string product type
      */
     public function getType() {
         return $this->pricingData->getType();
@@ -154,7 +154,7 @@ class ProductData {
     /**
      * Currency as ISO 4217 code, e.g. EUR .
      *
-     * @return the currency iso code
+     * @return string the currency iso code
      */
     public function getCurrency() {
         return $this->pricingData->getCurrency();
@@ -163,7 +163,7 @@ class ProductData {
     /**
      * Subscription term.
      *
-     * @return the subscription term
+     * @return int the subscription term
      */
     public function getSubscriptionTerm() {
         return $this->subscription->getTerm();
@@ -172,7 +172,7 @@ class ProductData {
     /**
      * Cancellation period for the subscription.
      *
-     * @return the cancellation period for the subscription
+     * @return int the cancellation period for the subscription
      */
     public function getCancellationPeriod() {
         return $this->subscription->getCancellationPeriod();
@@ -181,7 +181,7 @@ class ProductData {
     /**
      * Flag indicating if the subscription is auto renewed.
      *
-     * @return a bool indicating if the subscription is auto-renewed
+     * @return bool a bool indicating if the subscription is auto-renewed
      */
     public function isAutoRenewed() {
         return $this->subscription->isAutoRenewed();
@@ -190,7 +190,7 @@ class ProductData {
     /**
      * Name of the action period if one is defined.
      *
-     * @return The name of the action period
+     * @return string The name of the action period
      */
     public function getActionPeriodName() {
         return $this->actionPeriod->getName();
@@ -199,7 +199,7 @@ class ProductData {
     /**
      * Term of the action period if one is defined.
      *
-     * @return The term of the action period
+     * @return int The term of the action period
      */
     public function getActionPeriodTerm() {
         return $this->actionPeriod->getTerm();
@@ -208,7 +208,7 @@ class ProductData {
     /**
      * Price of the action period if one is defined.
      *
-     * @return The action period if one is defined
+     * @return float The action period if one is defined
      */
     public function getActionPeriodPrice() {
         return $this->actionPeriod->getPrice();
@@ -217,7 +217,7 @@ class ProductData {
     /**
      * Duration of the Video Prequel if defined
      *
-     * @return Duration of the Video Prequel if defined
+     * @return int Duration of the Video Prequel if defined
      */
     public function getVideoPrequelTime() {
         return $this->videoPrequelTime;
