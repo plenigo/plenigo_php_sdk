@@ -24,6 +24,23 @@ class Subscription
     private $endDate;
     private $active;
     private $term;
+    private $orderId;
+
+    /**
+     * @return mixed
+     */
+    public function getOrderId()
+    {
+        return $this->orderId;
+    }
+
+    /**
+     * @param mixed $orderId
+     */
+    public function setOrderId($orderId)
+    {
+        $this->orderId = $orderId;
+    }
 
     /**
      * Default constructor.
@@ -274,6 +291,7 @@ class Subscription
         $instance->setProductId(isset($map['productId']) ? $map['productId'] : null);
         $instance->setCustomerId(isset($map['customerId']) ? $map['customerId'] : null);
         $instance->setCurrency(isset($map['currency']) ? $map['currency'] : null);
+        $instance->setOrderId(isset($map['orderId']) ? $map['orderId'] : null);
         return $instance;
     }
 }
