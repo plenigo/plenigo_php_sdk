@@ -106,6 +106,74 @@ class CompanyService extends Service {
     }
 
     /**
+     * Returns a list of payments of the specified company.
+     *
+     * @param string $startDate date od the startdate of selection (format YYYY-MM-DD)
+     * @param string $endDate date od the enddate of selection - must be greater then $startDate (format YYYY-MM-DD)
+     * @param int $page Number of the page (starting from 0)
+     * @param int $size Size of the page - must be between 10 and 100
+     *
+     * @return array  A list of payments of the specified company
+     */
+    public static function getIncomingPayments($startDate = '-1 week', $endDate = 'now', $page = 0, $size = 10) {
+
+        $testMode = false;
+        $map = array(
+            'startDate' => date("Y-m-d", strtotime($startDate)),
+            'endDate' => date("Y-m-d",strtotime($endDate)),
+            'testMode' => $testMode ? 'true' : 'false',
+            'page' => SdkUtils::clampNumber($page, 0, null),
+            'size' => SdkUtils::clampNumber($size, 10, 100)
+        );
+
+        $url = ApiURLs::COMPANY_INCOMING_PAYMENTS;
+
+        $request = static::getRequest($url, false, $map);
+
+        $appTokenRequest = new static($request);
+
+        $data = parent::executeRequest($appTokenRequest, ApiURLs::COMPANY_INCOMING_PAYMENTS, self::ERR_MSG_GET);
+
+        $result = (array) $data;
+
+        return $result;
+    }
+
+    /**
+     * Returns a list of invoices of the specified company.
+     *
+     * @param string $startDate date od the startdate of selection (format YYYY-MM-DD)
+     * @param string $endDate date od the enddate of selection - must be greater then $startDate (format YYYY-MM-DD)
+     * @param int $page Number of the page (starting from 0)
+     * @param int $size Size of the page - must be between 10 and 100
+     *
+     * @return array  A list of invoices of the specified company
+     */
+    public static function getInvoices($startDate = '-1 week', $endDate = 'now', $page = 0, $size = 10) {
+
+        $testMode = false;
+        $map = array(
+            'startDate' => date("Y-m-d", strtotime($startDate)),
+            'endDate' => date("Y-m-d",strtotime($endDate)),
+            'testMode' => $testMode ? 'true' : 'false',
+            'page' => SdkUtils::clampNumber($page, 0, null),
+            'size' => SdkUtils::clampNumber($size, 10, 100)
+        );
+
+        $url = ApiURLs::COMPANY_INVOICES;
+
+        $request = static::getRequest($url, false, $map);
+
+        $appTokenRequest = new static($request);
+
+        $data = parent::executeRequest($appTokenRequest, ApiURLs::COMPANY_INVOICES, self::ERR_MSG_GET);
+
+        $result = (array) $data;
+
+        return $result;
+    }
+
+    /**
      * Returns a list of users based on the given ids.
      * 
      * @param string $userIds a comma separated list if ids

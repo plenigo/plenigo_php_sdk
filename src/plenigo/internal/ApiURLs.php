@@ -175,6 +175,16 @@ final class ApiURLs
     const COMPANY_USERS_CHANGED = "/api/v2/company/users/search/changes";
 
     /**
+     * This URL is used to get the paginated list of changed users in a given time frame
+     */
+    const COMPANY_INCOMING_PAYMENTS = "/api/v2/incomingPayments/search";
+
+    /**
+     * This URL is used to get the paginated list of changed users in a given time frame
+     */
+    const COMPANY_INVOICES = "/api/v2/invoices/search";
+
+    /**
      * This URL is used to get the paginated list of company users
      */
     const COMPANY_USERS = "/api/v2/company/users";
