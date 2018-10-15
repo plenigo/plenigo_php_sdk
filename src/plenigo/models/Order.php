@@ -97,6 +97,28 @@ class Order {
     private $orderItems;
 
     /**
+     * Affiliate ID used for this purchase, if one
+     * @var string
+     */
+    private $affiliateId;
+
+    /**
+     * @return mixed
+     */
+    public function getAffiliateId()
+    {
+        return $this->affiliateId;
+    }
+
+    /**
+     * @param mixed $affiliateId
+     */
+    public function setAffiliateId($affiliateId)
+    {
+        $this->affiliateId = $affiliateId;
+    }
+
+    /**
      * Default constructor.
      */
     private function __construct() {
@@ -377,6 +399,7 @@ class Order {
         $instance->setDiscount(isset($map['discount']) ? $map['discount'] : null);
         $instance->setDiscountPercentage(isset($map['discountPercentage']) ? $map['discountPercentage'] : null);
         $instance->setVoucherCode(isset($map['voucherCode']) ? $map['voucherCode'] : null);
+        $instance->setAffiliateId(isset($map['affiliateId']) ? $map['affiliateId'] : null);
         if (isset($map['orderItems']) && !is_null($map['orderItems']) && count(($map['orderItems'])) > 0) {
             $arrItems = array();
             foreach ($map['orderItems'] as $oItem) {
