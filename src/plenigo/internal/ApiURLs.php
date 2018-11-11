@@ -235,4 +235,11 @@ final class ApiURLs
      */
     const CHECKOUT_PRODUCT = "/api/v2/checkout/free/product/{PROD_ID}/{USER_ID}";
 
+
+    /**
+     * This URL is used to import users.
+     */
+    const USER_IMPORT_URL = "/api/v2/import/customers?useExternalCustomerId={USE_EXTERNAL_ID}";
+
+
 }
