@@ -89,7 +89,7 @@ class CompanyService extends Service {
             'startDate' => date("Y-m-d H:i", strtotime($startDate)),
             'endDate' => date("Y-m-d H:i",strtotime($endDate)),
             'page' => SdkUtils::clampNumber($page, 0, null),
-            'size' => SdkUtils::clampNumber($size, 10, 100)
+            'size' => SdkUtils::clampNumber($size, 10, 250)
         );
 
         $url = ApiURLs::COMPANY_USERS_CHANGED;
@@ -123,7 +123,7 @@ class CompanyService extends Service {
             'endDate' => date("Y-m-d",strtotime($endDate)),
             'testMode' => $testMode ? 'true' : 'false',
             'page' => SdkUtils::clampNumber($page, 0, null),
-            'size' => SdkUtils::clampNumber($size, 10, 100)
+            'size' => SdkUtils::clampNumber($size, 10, 250)
         );
 
         $url = ApiURLs::COMPANY_INCOMING_PAYMENTS;
@@ -157,7 +157,7 @@ class CompanyService extends Service {
             'endDate' => date("Y-m-d",strtotime($endDate)),
             'testMode' => $testMode ? 'true' : 'false',
             'page' => SdkUtils::clampNumber($page, 0, null),
-            'size' => SdkUtils::clampNumber($size, 10, 100)
+            'size' => SdkUtils::clampNumber($size, 10, 250)
         );
 
         $url = ApiURLs::COMPANY_INVOICES;
@@ -241,7 +241,7 @@ class CompanyService extends Service {
         // parameter array
         $map = array(
             'page' => SdkUtils::clampNumber($page, 0, null),
-            'size' => SdkUtils::clampNumber($size, 10, 100),
+            'size' => SdkUtils::clampNumber($size, 10, 250),
             'startDate' => $start,
             'endDate' => $end
         );
@@ -319,7 +319,7 @@ class CompanyService extends Service {
         // parameter array
         $map = array(
             'page' => SdkUtils::clampNumber($page, 0, null),
-            'size' => SdkUtils::clampNumber($size, 10, 100),
+            'size' => SdkUtils::clampNumber($size, 10, 250),
             'startDate' => $start,
             'endDate' => $end,
             'testMode' => $testMode ? 'true' : 'false'
@@ -356,7 +356,7 @@ class CompanyService extends Service {
         // parameter array
         $map = array(
             'page' => SdkUtils::clampNumber($page, 0, null),
-            'size' => SdkUtils::clampNumber($size, 10, 100),
+            'size' => SdkUtils::clampNumber($size, 10, 250),
             'startDate' => $start,
             'endDate' => $end,
             'testMode' => $testMode ? 'true' : 'false'
