@@ -36,6 +36,11 @@ final class ApiURLs
     const PRODUCT_ACCESS_RIGHTS_ADDITION_URL = "/api/v2/access/{USER_ID}/add";
 
     /**
+     * This URL is used to add user access rights.
+     */
+    const PRODUCT_ACCESS_RIGHTS_ADDITION_WITH_DETAILS_URL = "/api/v2/access/{USER_ID}/addWithDetails";
+
+    /**
      * This URL is used to remove user access rights.
      */
     const PRODUCT_ACCESS_RIGHTS_REMOVAL_URL = "/api/v2/access/{USER_ID}/remove";

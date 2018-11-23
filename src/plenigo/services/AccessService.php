@@ -83,6 +83,59 @@ class AccessService extends Service
     }
 
     /**
+     * Grant a user the right to access one or multiple products with details.
+     * Use this method to add things like receipts to each access right.
+     * @see https://api.plenigo.com/#!/access/addUserAccessDetail
+     *
+     * @param string $customerId The Customer ID
+     * @param boolean $useExternalCustomerId flag indicating if customer id is an external customer id
+     * @param string $startTime time when access should start in the format Y-m-d
+     * @param string $endTime time when access should end in the format Y-m-d
+     * @param array $accessRights ids of the products to grant customer access to
+     *  $accessRights = [
+     *      [
+     *      'productId' => (string, optional): Product id to add access for. ,
+     *      'receipt'   => (string, optional): Receipt of the user. ,
+     *      'source'    => (string, optional): Access right source.
+     *      ],
+     * ]
+     *
+     * @throws PlenigoException
+     */
+    public static function grantUserAccessWithDetails($customerId, $useExternalCustomerId, $startTime, $endTime, $accessRights = [])
+    {
+        $testModeText = (PlenigoManager::get()->isTestMode()) ? 'true' : 'false';
+
+        foreach ($accessRights as $accessRight) {
+            if (empty($accessRight['productId'])) {
+                throw new PlenigoException("Parameter accessRights hast to be of array format with the following structure: [\n[\n'productId' => (string),\n'receipt' => (string, optional),\n'source' => (string, optional),\n],\n]");
+            }
+        }
+
+        $map = array(
+            'useExternalCustomerId' => $useExternalCustomerId,
+            ApiParams::TEST_MODE => $testModeText,
+            'details' => $accessRights
+        );
+
+        if(!empty($startTime)) {
+            $map['startTime'] = date('Y-m-d', strtotime($startTime));
+        }
+
+        if(!empty($endTime)) {
+            $map['endTime'] = date('Y-m-d', strtotime($endTime));
+        }
+
+        $url = str_ireplace(ApiParams::URL_USER_ID_TAG, $customerId, ApiURLs::PRODUCT_ACCESS_RIGHTS_ADDITION_WITH_DETAILS_URL);
+
+        $request = static::postJSONRequest($url, false, $map);
+
+        $appTokenRequest = new static($request);
+
+        parent::executeRequest($appTokenRequest, ApiURLs::PRODUCT_ACCESS_RIGHTS_ADDITION_WITH_DETAILS_URL, self::ERR_MSG_POST);
+    }
+
+    /**
      * Removes a user's access right from one or multiple products.
      *
      * @param string $customerId The Customer ID
