@@ -82,6 +82,7 @@ class AccessService extends Service
         parent::executeRequest($appTokenRequest, ApiURLs::PRODUCT_ACCESS_RIGHTS_ADDITION_URL, self::ERR_MSG_POST);
     }
 
+
     /**
      * Grant a user the right to access one or multiple products with details.
      * Use this method to add things like receipts to each access right.

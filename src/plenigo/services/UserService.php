@@ -54,6 +54,7 @@ class UserService extends Service
     const ERR_MSG_PAYWALL = "Error while determining if the paywall is enabled!";
     const ERR_USER_LOGIN = "Error while verifying user";
     const INF_MSG_ACCESS = "User tried to access an item!";
+    const ERR_MSG_ACCESS = "User can't access item";
 
     /**
      * Gets the user data using the access token provided.
@@ -497,6 +498,40 @@ class UserService extends Service
             PlenigoManager::notice($clazz, "Product list NOT accesible!");
         }
         return $res;
+    }
+
+
+    /**
+     * Get AccessRights with their Details
+     *
+     * @see https://api.plenigo.com/#!/user/hasBoughtProductWithProducts
+     *
+     * @param $pCustomerId
+     * @param array|string $productId
+     * @param bool $useExternalCustomerId
+     * @return array of StdClass
+     * @throws PlenigoException
+     */
+    public static function getProductsBoughtWithDetails($pCustomerId, $productId, $useExternalCustomerId = false)
+    {
+
+        $productIds = is_array($productId) ? implode(",", $productId) : $productId;
+
+        $params = array(
+            'customerId' => $pCustomerId,
+            'productId' => $productIds,
+            ApiParams::USE_EXTERNAL_CUSTOMER_ID => ($useExternalCustomerId ? 'true' : 'false')
+        );
+
+        $url = ApiURLs::USER_PRODUCTS_DETAILS;
+
+        $request = static::getRequest($url, false, $params);
+
+        $appTokenRequest = new static($request);
+
+        $data = parent::executeRequest($appTokenRequest, $url, self::ERR_MSG_ACCESS);
+
+        return $data;
     }
 
     /**
