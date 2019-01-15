@@ -135,11 +135,7 @@ class UserService extends Service
 
         try {
             $result = parent::executeRequest($LoginRequest, ApiURLs::USER_LOGIN, self::ERR_USER_LOGIN);
-            $cachedData = array(
-                'result' => $result,
-                'error'  => $error
-            );
-            Cache::set(md5($email.$password), $cachedData);
+
             return $result;
         }
         // we only catch one specific Exception
