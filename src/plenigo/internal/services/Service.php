@@ -230,7 +230,7 @@ class Service {
      * 
      * @return mixed The request response or null
      * 
-     * @throws PlenigoException
+     * @throws PlenigoException|RegistrationException
      */
     protected static function executeRequest($pRequest, $pErrorSource, $pErrorMsg) {
         $res = null;
@@ -239,7 +239,7 @@ class Service {
         } catch (RegistrationException $exception) {
             throw $exception;
         }
-        catch (Exception $exc) {
+        catch (\Exception $exc) {
             $errorCode = ErrorCode::getTranslation($pErrorSource, $exc->getCode());
             if (empty($errorCode) || is_null($errorCode)) {
                 $errorCode = $exc->getCode();

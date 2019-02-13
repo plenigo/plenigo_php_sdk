@@ -20,6 +20,7 @@ use plenigo\internal\ApiParams;
 use plenigo\internal\ApiResults;
 use plenigo\internal\ApiURLs;
 use plenigo\internal\Cache;
+use plenigo\internal\exceptions\RegistrationException;
 use plenigo\internal\models\Customer;
 use plenigo\internal\services\Service;
 use plenigo\internal\utils\CurlRequest;
@@ -506,7 +507,7 @@ class UserService extends Service
      * @param array|string $productId
      * @param bool $useExternalCustomerId
      * @return array of StdClass
-     * @throws PlenigoException
+     * @throws PlenigoException|RegistrationException|\Exception
      */
     public static function getProductsBoughtWithDetails($pCustomerId, $productId, $useExternalCustomerId = false)
     {
@@ -525,9 +526,16 @@ class UserService extends Service
 
         $appTokenRequest = new static($request);
 
-        $data = parent::executeRequest($appTokenRequest, $url, self::ERR_MSG_ACCESS);
-
-        return $data;
+        try {
+            $data = parent::executeRequest($appTokenRequest, $url, self::ERR_MSG_ACCESS);
+            return $data;
+        } catch (PlenigoException $exception) {
+            // 403 is no access and should not result in an exception
+            if (403 !== $exception->getCode()) {
+                throw $exception;
+            }
+        }
+        return [];
     }
 
     /**
