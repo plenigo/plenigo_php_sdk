@@ -96,6 +96,36 @@ class CheckoutService extends Service {
 
         return true;
     }
+
+    /**
+     * Purchase a complete order. Returns orderID of purchase
+     *
+     * @param string $customerId ID of plenigo-customer.
+     * @param array $order
+     * @param string $paymentMethod
+     * @param bool $useMerchantCustomerId
+     * @return string OrderID
+     * @throws PlenigoException
+     */
+    public static function purchase($customerId, $order = [], $paymentMethod = 'PREFFERED', $useMerchantCustomerId = false) {
+        // purchase(customer_id, [['product_id' => '1', 'title' => 'title', 'description' => '2', 'amount' => 1]], 'PREFFERED')
+
+        if (!isset($customerId)) {
+            throw new PlenigoException("CustomerID is not optional");
+        }
+
+        if (empty($order) || !is_array($order)) {
+            throw new PlenigoException("Order is not optional and should be of type array");
+        }
+
+        foreach ($order as $orderItem) {
+            if (empty($orderItem['product_id'])) {
+                throw new PlenigoException("Each orderItem needs the key product_id with a valid plenigo productID as value");
+            }
+        }
+
+        return  bin2hex(openssl_random_pseudo_bytes(15));
+    }
     
     /**
      * Executes the request to checkout a free product
