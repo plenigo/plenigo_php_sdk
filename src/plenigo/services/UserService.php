@@ -506,7 +506,7 @@ class UserService extends Service
      * @param $pCustomerId
      * @param array|string $productId
      * @param bool $useExternalCustomerId
-     * @return array of StdClass
+     * @return \stdClass
      * @throws PlenigoException|RegistrationException|\Exception
      */
     public static function getProductsBoughtWithDetails($pCustomerId, $productId, $useExternalCustomerId = false)
@@ -535,7 +535,11 @@ class UserService extends Service
                 throw $exception;
             }
         }
-        return [];
+
+        $ret = new \stdClass();
+        $ret->accessGranted = false;
+        $ret->userProducts = array();
+        return $ret;
     }
 
     /**

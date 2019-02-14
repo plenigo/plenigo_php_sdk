@@ -107,7 +107,7 @@ class CheckoutService extends Service {
      * @return string OrderID
      * @throws PlenigoException
      */
-    public static function purchase($customerId, $order = [], $paymentMethod = 'PREFFERED', $useMerchantCustomerId = false) {
+    public static function purchase($customerId, $order, $paymentMethod = 'PREFFERED', $useMerchantCustomerId = false) {
         // purchase(customer_id, [['product_id' => '1', 'title' => 'title', 'description' => '2', 'amount' => 1]], 'PREFFERED')
 
         if (!isset($customerId)) {
