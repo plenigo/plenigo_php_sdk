@@ -100,6 +100,11 @@ class CheckoutService extends Service {
     /**
      * Purchase a complete order. Returns orderID of purchase
      *
+     * @example external user, pay per invoice \plenigo\services\CheckoutService::purchase(4711, [['product_id' => 'P_amrSQ6154783308456', 'title' => 'some blue shoes', 'description' => 'Size 8, special design', 'amount' => 4]], 'INVOICE', true);
+     * @example internal user (default), pay per prefered payment (default) \plenigo\services\CheckoutService::purchase('AIPM7JHMETZY', [['product_id' => 'P_amrSQ6154783308456', 'amount' => 1]], 'PREFFERED');
+     *
+     *
+     * @see https://plenigo.github.io/api_purchase_php
      * @param string $customerId ID of plenigo-customer.
      * @param array $order
      * @param string $paymentMethod
