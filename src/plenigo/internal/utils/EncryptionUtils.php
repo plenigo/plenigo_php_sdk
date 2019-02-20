@@ -33,6 +33,11 @@ final class EncryptionUtils
     private static $cryptoAlgorithm = MCRYPT_RIJNDAEL_128;
 
     /**
+     * @var string Encryption algorithm to use
+     */
+    private static $openSSLAlgorithm = 'AES-128-CTR';
+
+    /**
      * Encryption encoding mode to use
      */
     private static $cryptoEncoding = 'ctr';
@@ -72,9 +77,13 @@ final class EncryptionUtils
         }
         $preparedKey = self::prepareKey($key);
 
-        $encryptedData = mcrypt_encrypt(
-            self::$cryptoAlgorithm, $preparedKey, $data, self::$cryptoEncoding, $ivKey
-        );
+        if (function_exists('openssl_encrypt')) {
+            $encryptedData = self::openSSLEncrypt($data, $preparedKey, $ivKey);
+        } else {
+            $encryptedData = mcrypt_encrypt(
+                self::$cryptoAlgorithm, $preparedKey, $data, self::$cryptoEncoding, $ivKey
+            );
+        }
 
         return bin2hex($encryptedData . $ivKey);
     }
@@ -106,9 +115,33 @@ final class EncryptionUtils
         }
         $preparedKey = self::prepareKey($key);
 
+        if (function_exists('openssl_decrypt')) {
+            return self::openSSLDecrypt($encryptedData, $preparedKey, $ivKey);
+        }
+
         return mcrypt_decrypt(
             self::$cryptoAlgorithm, $preparedKey, $encryptedData, self::$cryptoEncoding, $ivKey
         );
+    }
+
+    /**
+     * @param string $encryptedData
+     * @param string $key
+     * @param string $iv
+     * @return string
+     */
+    private static function openSSLDecrypt($encryptedData, $key, $iv) {
+        return openssl_decrypt( $encryptedData, self::$openSSLAlgorithm, $key, OPENSSL_RAW_DATA, $iv);
+    }
+
+    /**
+     * @param string $data
+     * @param string $key
+     * @param string $iv
+     * @return string
+     */
+    private static function openSSLEncrypt($data, $key, $iv) {
+        return openssl_encrypt( $data, self::$openSSLAlgorithm, $key, OPENSSL_RAW_DATA, $iv);
     }
 
     /**
@@ -123,6 +156,12 @@ final class EncryptionUtils
      */
     private static function hasEncryptionAlgorithm($algorithmName, $libraryDir = null)
     {
+        // run with openSSL
+        if (function_exists('openssl_get_cipher_methods')) {
+            $algorithms = openssl_get_cipher_methods();
+            return in_array(self::$openSSLAlgorithm, $algorithms);
+        }
+
         $algorithms = mcrypt_list_algorithms($libraryDir);
 
         return in_array($algorithmName, $algorithms);
@@ -138,8 +177,13 @@ final class EncryptionUtils
      */
     private static function createIVKey()
     {
-        $ivSize = self::getIVSize();
 
+        //run with openSSL
+        if (function_exists('openssl_random_pseudo_bytes')) {
+            return openssl_random_pseudo_bytes(self::getIVSize());
+        }
+
+        $ivSize = self::getIVSize();
         return mcrypt_create_iv($ivSize, MCRYPT_RAND);
     }
 
@@ -153,6 +197,10 @@ final class EncryptionUtils
      */
     private static function getIVSize()
     {
+        if (function_exists('openssl_cipher_iv_length')) {
+            return openssl_cipher_iv_length(self::$openSSLAlgorithm);
+        }
+
         return mcrypt_get_iv_size(self::$cryptoAlgorithm, self::$cryptoEncoding);
     }
 
