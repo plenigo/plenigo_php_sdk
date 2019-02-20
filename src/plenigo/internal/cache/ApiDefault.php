@@ -29,7 +29,7 @@ class ApiDefault
     /**
      * Delete the provided key.
      *
-     * @param $key key to delete
+     * @param string $key key to delete
      *
      * @return bool|string[] a flag indicating if it was deleted
      */
@@ -40,7 +40,7 @@ class ApiDefault
     /**
      * Get the value of the provided key.
      *
-     * @param $key key to get
+     * @param string $key key to get
      *
      * @return bool|mixed value of the key
      */

@@ -2,6 +2,8 @@
 
 namespace plenigo\internal\cache;
 
+use \Memcached;
+
 /**
  * Class ApiMemcached
  * @package plenigo\internal\cache
@@ -22,7 +24,7 @@ class ApiMemcached extends ApiDefault
      * @param int $port
      */
     public function __construct($host, $port) {
-        self::$connection = new \Memcached();
+        self::$connection = new Memcached();
         if (is_array($host)) {
             self::$connection->addServers($host);
         } else {
@@ -33,8 +35,8 @@ class ApiMemcached extends ApiDefault
     /**
      * Stores a key with the provided value.
      *
-     * @param $key store a key
-     * @param $value value related to the key
+     * @param string $key store a key
+     * @param string $value value related to the key
      * @param int $ttl Time to live time to live for the key-value pair
      *
      * @return array|bool
@@ -50,7 +52,7 @@ class ApiMemcached extends ApiDefault
     /**
      * Delete the provided key.
      *
-     * @param $key key to delete
+     * @param string $key key to delete
      *
      * @return bool|string[] a flag indicating if it was deleted
      */
@@ -65,7 +67,7 @@ class ApiMemcached extends ApiDefault
     /**
      * Get the value of the provided key.
      *
-     * @param $key key to get
+     * @param $key string key to get
      *
      * @return bool|mixed value of the key
      */

@@ -2,6 +2,8 @@
 
 namespace plenigo\internal\cache;
 
+use \Memcache;
+
 /**
  * Class ApiMemcache
  * @package plenigo\internal\cache
@@ -12,7 +14,7 @@ class ApiMemcache extends ApiDefault
     /**
      * Memcache connection.
      *
-     * @var \Memcache
+     * @var Memcache
      */
     private static $connection;
 
@@ -23,15 +25,15 @@ class ApiMemcache extends ApiDefault
      * @param int $port host port
      */
     public function __construct($host, $port) {
-        self::$connection = new \Memcache();
+        self::$connection = new Memcache();
         self::$connection->pconnect($host, $port);
     }
 
     /**
      * Stores a key with the provided value.
      *
-     * @param $key store a key
-     * @param $value value related to the key
+     * @param string $key store a key
+     * @param mixed $value value related to the key
      * @param int $ttl Time to live time to live for the key-value pair
      *
      * @return array|bool
@@ -47,7 +49,7 @@ class ApiMemcache extends ApiDefault
     /**
      * Delete the provided key.
      *
-     * @param $key key to delete
+     * @param string $key key to delete
      *
      * @return bool|string[] a flag indicating if it was deleted
      */
@@ -62,7 +64,7 @@ class ApiMemcache extends ApiDefault
     /**
      * Get the value of the provided key.
      *
-     * @param $key key to get
+     * @param string $key key to get
      *
      * @return bool|mixed value of the key
      */
