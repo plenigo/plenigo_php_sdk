@@ -77,7 +77,7 @@ final class EncryptionUtils
         }
         $preparedKey = self::prepareKey($key);
 
-        if (function_exists('openssl_encrypt')) {
+        if (self::useOpenSSL()) {
             $encryptedData = self::openSSLEncrypt($data, $preparedKey, $ivKey);
         } else {
             $encryptedData = mcrypt_encrypt(
@@ -115,7 +115,7 @@ final class EncryptionUtils
         }
         $preparedKey = self::prepareKey($key);
 
-        if (function_exists('openssl_decrypt')) {
+        if (self::useOpenSSL()) {
             return self::openSSLDecrypt($encryptedData, $preparedKey, $ivKey);
         }
 
@@ -157,7 +157,7 @@ final class EncryptionUtils
     private static function hasEncryptionAlgorithm($algorithmName, $libraryDir = null)
     {
         // run with openSSL
-        if (function_exists('openssl_get_cipher_methods')) {
+        if (self::useOpenSSL()) {
             $algorithms = openssl_get_cipher_methods();
             return in_array(self::$openSSLAlgorithm, $algorithms);
         }
@@ -165,6 +165,15 @@ final class EncryptionUtils
         $algorithms = mcrypt_list_algorithms($libraryDir);
 
         return in_array($algorithmName, $algorithms);
+    }
+
+    /**
+     * should we use openSSL lib?
+     *
+     * @return bool
+     */
+    private static function useOpenSSL() {
+        return (function_exists('openssl_encrypt') && function_exists('openssl_decrypt'));
     }
 
     /**
@@ -179,7 +188,7 @@ final class EncryptionUtils
     {
 
         //run with openSSL
-        if (function_exists('openssl_random_pseudo_bytes')) {
+        if (self::useOpenSSL()) {
             return openssl_random_pseudo_bytes(self::getIVSize());
         }
 
@@ -197,7 +206,7 @@ final class EncryptionUtils
      */
     private static function getIVSize()
     {
-        if (function_exists('openssl_cipher_iv_length')) {
+        if (self::useOpenSSL()) {
             return openssl_cipher_iv_length(self::$openSSLAlgorithm);
         }
 
