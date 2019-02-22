@@ -30,7 +30,7 @@ final class EncryptionUtils
     /**
      * Encryption algorithm to use
      */
-    private static $cryptoAlgorithm = MCRYPT_RIJNDAEL_128;
+    private static $cryptoAlgorithm = 'MCRYPT_RIJNDAEL_128';
 
     /**
      * @var string Encryption algorithm to use
@@ -193,7 +193,7 @@ final class EncryptionUtils
         }
 
         $ivSize = self::getIVSize();
-        return mcrypt_create_iv($ivSize, MCRYPT_RAND);
+        return mcrypt_create_iv($ivSize, 'MCRYPT_RAND');
     }
 
     /**
@@ -266,7 +266,7 @@ final class EncryptionUtils
     public static function setCryptoAlgorithm($algorythm = null)
     {
         if (is_null($algorythm)) {
-            self::$cryptoAlgorithm = MCRYPT_RIJNDAEL_128;
+            self::$cryptoAlgorithm = 'MCRYPT_RIJNDAEL_128';
         } else {
             self::$cryptoAlgorithm = $algorythm;
         }
