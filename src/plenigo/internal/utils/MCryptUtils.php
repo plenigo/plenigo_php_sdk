@@ -1,41 +1,34 @@
 <?php
+/**
+ * Created by IntelliJ IDEA.
+ * User: soenke
+ * Date: 2019-02-22
+ * Time: 13:24
+ */
 
 namespace plenigo\internal\utils;
 
-require_once __DIR__ . '/../exceptions/EncryptionException.php';
+
 
 use plenigo\internal\exceptions\EncryptionException;
 
-/**
- * EncryptionUtils
- *
- * <p>
- * Provides different helper methods for working with encryption.
- * </p>
- *
- * <p>
- * <b>IMPORTANT:</b> This class is part of the internal API, please do not use it, because it can
- * be removed in future versions of the SDK or access to such elements could
- * be changed from 'public' to 'protected' or less.
- * </p>
- *
- * @category SDK
- * @package  PlenigoUtils
- * @author   René Olivo <r.olivo@plenigo.com>
- * @link     https://www.plenigo.com
- */
-final class EncryptionUtils
+class MCryptUtils
 {
+    /**
+     * Encryption algorithm to use
+     */
+    private static $cryptoAlgorithm = MCRYPT_RIJNDAEL_128;
 
     /**
-     * @var string Encryption algorithm to use
+     * Encryption encoding mode to use
      */
-    private static $openSSLAlgorithm = 'AES-128-CTR';
+    private static $cryptoEncoding = 'ctr';
 
     /**
-     * Hash algorithm for HMAC and SHA512.
+     * Path to the MCrypt library in case it's not
+     * on the default location (null)
      */
-    const HMAC_ALGORITHM = 'sha512';
+    private static $mCryptLibraryPath = null;
 
     /**
      * Encrypt given data string with AES.
@@ -50,8 +43,8 @@ final class EncryptionUtils
      */
     public static function encryptWithAES($key, $data, $customIV = null)
     {
-        if (!(self::useOpenSSL() && self::hasEncryptionAlgorithm())) {
-            return MCryptUtils::encryptWithAES($key, $data, $customIV);
+        if (self::hasEncryptionAlgorithm(self::$cryptoAlgorithm, self::$mCryptLibraryPath) === false) {
+            throw new EncryptionException("Encryption Algorythm is not available (" . self::$cryptoAlgorithm . ")");
         }
 
         if (is_null($customIV)) {
@@ -59,10 +52,11 @@ final class EncryptionUtils
         } else {
             $ivKey = hex2bin($customIV);
         }
-        // we need a binary string, key has to be 32bit
         $preparedKey = self::prepareKey($key);
 
-        $encryptedData = self::openSSLEncrypt($data, $preparedKey, $ivKey);
+        $encryptedData = mcrypt_encrypt(
+            self::$cryptoAlgorithm, $preparedKey, $data, self::$cryptoEncoding, $ivKey
+        );
 
         return bin2hex($encryptedData . $ivKey);
     }
@@ -79,8 +73,8 @@ final class EncryptionUtils
      */
     public static function decryptWithAES($key, $encryptedData, $customIV = null)
     {
-        if (!(self::useOpenSSL() && self::hasEncryptionAlgorithm())) {
-            return MCryptUtils::decryptWithAES($key, $encryptedData, $customIV);
+        if (self::hasEncryptionAlgorithm(self::$cryptoAlgorithm, self::$mCryptLibraryPath) === false) {
+            throw new EncryptionException("Encryption Algorythm is not available (" . self::$cryptoAlgorithm . ")");
         }
 
         $binData = hex2bin($encryptedData);
@@ -94,29 +88,11 @@ final class EncryptionUtils
         }
         $preparedKey = self::prepareKey($key);
 
-        return self::openSSLDecrypt($encryptedData, $preparedKey, $ivKey);
-
+        return mcrypt_decrypt(
+            self::$cryptoAlgorithm, $preparedKey, $encryptedData, self::$cryptoEncoding, $ivKey
+        );
     }
 
-    /**
-     * @param string $encryptedData
-     * @param string $key
-     * @param string $iv
-     * @return string
-     */
-    private static function openSSLDecrypt($encryptedData, $key, $iv) {
-        return openssl_decrypt( $encryptedData, self::$openSSLAlgorithm, $key, OPENSSL_RAW_DATA, $iv);
-    }
-
-    /**
-     * @param string $data
-     * @param string $key
-     * @param string $iv
-     * @return string
-     */
-    private static function openSSLEncrypt($data, $key, $iv) {
-        return openssl_encrypt( $data, self::$openSSLAlgorithm, $key, OPENSSL_RAW_DATA, $iv);
-    }
 
     /**
      * <p>
@@ -128,19 +104,11 @@ final class EncryptionUtils
      *
      * @return bool Encryption method availability confirmation.
      */
-    private static function hasEncryptionAlgorithm()
+    private static function hasEncryptionAlgorithm($algorithmName, $libraryDir = null)
     {
-        $algorithms = openssl_get_cipher_methods();
-        return in_array(self::$openSSLAlgorithm, $algorithms);
-    }
+        $algorithms = mcrypt_list_algorithms($libraryDir);
 
-    /**
-     * should we use openSSL lib?
-     *
-     * @return bool
-     */
-    private static function useOpenSSL() {
-        return (function_exists('openssl_encrypt') && function_exists('openssl_decrypt'));
+        return in_array($algorithmName, $algorithms);
     }
 
     /**
@@ -153,7 +121,8 @@ final class EncryptionUtils
      */
     private static function createIVKey()
     {
-        return openssl_random_pseudo_bytes(self::getIVSize());
+        $ivSize = self::getIVSize();
+        return mcrypt_create_iv($ivSize, MCRYPT_RAND);
     }
 
     /**
@@ -166,7 +135,7 @@ final class EncryptionUtils
      */
     private static function getIVSize()
     {
-        return openssl_cipher_iv_length(self::$openSSLAlgorithm);
+        return mcrypt_get_iv_size(self::$cryptoAlgorithm, self::$cryptoEncoding);
     }
 
     /**
@@ -186,42 +155,30 @@ final class EncryptionUtils
     }
 
     /**
-     * Generate hmac for data.
-     * <p>
-     * HMAC is generated using sha512 algorythm
-     * </p>
-     *
-     * @param  string $data   data to create checksum for
-     * @param  string $secret secret to use for hmac
-     * @return string generated checksum
-     */
-    public static function calculateHMAC($data, $secret)
-    {
-        return hash_hmac(self::HMAC_ALGORITHM, $data, $secret);
-    }
-
-    /**
      * <p>
      * Sets the mCrypt Library path if different from the default location
      * </p>
-     * 
+     *
      * @param string $path The alternative path for the mCrypt library, NULL for default
      */
     public static function setMCryptLibraryPath($path)
     {
-        MCryptUtils::setMCryptLibraryPath($path);
+        self::$mCryptLibraryPath = $path;
     }
 
     /**
      * <p>
      * Sets the Encryption algorythm to use for this class from the moment this method is called
      * </p>
-     * 
+     *
      * @param string $algorythm the encryption algorythm, default 'rijndael-128' if parameter is null
      */
     public static function setCryptoAlgorithm($algorythm = null)
     {
-        MCryptUtils::setCryptoAlgorithm($algorythm);
+        if (is_null($algorythm)) {
+            self::$cryptoAlgorithm = 'MCRYPT_RIJNDAEL_128';
+        } else {
+            self::$cryptoAlgorithm = $algorythm;
+        }
     }
-
 }
