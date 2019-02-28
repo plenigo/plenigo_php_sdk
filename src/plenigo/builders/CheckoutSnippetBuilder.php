@@ -51,15 +51,6 @@ class CheckoutSnippetBuilder {
         $this->product = $productToChkOut;
     }
 
-
-    /**
-     * Adding a birthday to checkout to automatically fill the verification rule
-     *
-     * @param DateTime $date
-     * @return bool
-     */
-
-
     /**
      * Adding a birthday to checkout to automatically fill the verification rule
      *
