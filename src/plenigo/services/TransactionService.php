@@ -23,7 +23,7 @@ use plenigo\PlenigoException;
  */
 class TransactionService extends Service {
 
-    const ERR_MSG_GET = "Error geting transaction data";
+    const ERR_MSG_GET = "Error getting transaction data";
     const MONTHS_RANGE = 18;
 
     /**

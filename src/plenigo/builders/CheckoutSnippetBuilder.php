@@ -13,6 +13,7 @@ use plenigo\internal\models\Product;
 use plenigo\internal\serverInterface\payment\Checkout;
 use plenigo\internal\utils\JWT;
 use plenigo\PlenigoManager;
+use \DateTime;
 
 /**
  * CheckoutSnippetBuilder
@@ -36,12 +37,55 @@ class CheckoutSnippetBuilder {
     protected $product;
 
     /**
+     * @var array
+     */
+    protected $rules = [];
+
+    /**
      * This constructor takes a {@link Product} object as a parameter.
      *
      * @param Product $productToChkOut The product object to build the link from
      */
     public function __construct(Product $productToChkOut) {
         $this->product = $productToChkOut;
+    }
+
+
+    /**
+     * Adding a birthday to checkout to automatically fill the verification rule
+     *
+     * @param DateTime $date
+     * @return bool
+     */
+
+
+    /**
+     * Adding a birthday to checkout to automatically fill the verification rule
+     *
+     * @param DateTime $date
+     * @return bool
+     * @throws \Exception
+     */
+    public function addBirthdayRule(DateTime $date) {
+
+        // should never happen because of TypeHinting
+        if (!is_a($date, "\DateTime")) {
+            throw new \Exception("Parameter has to be a DateTime");
+        }
+
+        // defining maximum and minimum of a valid birthday
+        // sorry for this oldest man alive
+        $min = new DateTime("1900-01-01");
+        $max = new DateTime("now");
+
+        // valid birthday is a valid birthday
+        if (!($min < $date) && ($date < $max)) {
+            throw new \Exception("Paramater has to be a valid birthday date. You gave " . $date->format("Y-m-d"));
+        }
+
+        array_push($this->rules, ['name' => 'birthday', 'date' => $date->format("Y-m-d")]);
+
+        return true;
     }
 
     /**

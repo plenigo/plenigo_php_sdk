@@ -27,7 +27,7 @@ use plenigo\PlenigoException;
 class MobileService extends Service {
 
     const ERR_MSG_VERIFY = "Error during mobile secret verification";
-    const ERR_MSG_GET = "Error geting mobile secret";
+    const ERR_MSG_GET = "Error getting mobile secret";
     const ERR_MSG_POST = "Error creating mobile secret";
     const ERR_MSG_DELETE = "Error deleting mobile secret";
 

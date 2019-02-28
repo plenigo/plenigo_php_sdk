@@ -30,7 +30,7 @@ use plenigo\PlenigoException;
  */
 class CompanyService extends Service {
 
-    const ERR_MSG_GET = "Error geting company users";
+    const ERR_MSG_GET = "Error getting company users";
     const ERR_MSG_GET_FAILED = "Error getting failed payments";
     const ERR_MSG_GET_ORDERS = "Error getting orders";
     const ERR_MSG_GET_ORDER = "Error getting order";
