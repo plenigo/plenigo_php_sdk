@@ -9,6 +9,7 @@ require_once __DIR__ . '/../internal/server-interface/payment/Checkout.php';
 require_once __DIR__ . '/../internal/exceptions/ProductException.php';
 require_once __DIR__ . '/../internal/utils/JWT.php';
 
+use plenigo\internal\exceptions\EncryptionException;
 use plenigo\internal\models\Product;
 use plenigo\internal\serverInterface\payment\Checkout;
 use plenigo\internal\utils\JWT;
@@ -63,7 +64,7 @@ class CheckoutSnippetBuilder {
      * Adding a birthday to checkout to automatically fill the verification rule
      *
      * @param DateTime $date
-     * @return bool
+     * @return bool id rule can be added
      * @throws \Exception
      */
     public function addBirthdayRule(DateTime $date) {
@@ -86,6 +87,7 @@ class CheckoutSnippetBuilder {
         array_push($this->rules, ['name' => 'birthday', 'date' => $date->format("Y-m-d")]);
 
         return true;
+
     }
 
     /**
@@ -102,7 +104,7 @@ class CheckoutSnippetBuilder {
      * @param string $elementId id of the element the checkout should be inserted into, if this parameter is passed the checkout will be embedded
      * 
      * @return string A Javascript snippet that is compliant with plenigo's Javascript SDK.
-     * @throws CryptographyException When an error occurs during data encoding
+     * @throws EncryptionException When an error occurs during data encoding
      */
     public function build($settings = array(), $loginToken = null, $showRegisterFirst = false, $sourceUrl = null, $targetUrl = null, $affiliateId = null, $elementId = null) {
         $clazz = get_class();
