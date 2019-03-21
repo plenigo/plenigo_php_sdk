@@ -75,7 +75,7 @@ class CheckoutSnippetBuilder {
             throw new \Exception("Paramater has to be a valid birthday date. You gave " . $date->format("Y-m-d"));
         }
 
-        array_push($this->rules, ['name' => 'birthday', 'date' => $date->format("Y-m-d")]);
+        array_push($this->rules, ['name' => 'birthday', 'date' => $date->format("mdY")]);
 
         return true;
 
@@ -136,6 +136,15 @@ class CheckoutSnippetBuilder {
             PlenigoManager::get()->notice($clazz, "Element ID:" . $elementId);
             $checkoutParams['elementId'] = $elementId;
         }
+
+        if (!empty($this->rules) && is_array($this->rules)) {
+            foreach ($this->rules as $rule) {
+                if ($rule['name'] === 'birthday' && !empty($rule['date'])) {
+                    $checkoutParams['raa'] = $rule['date'];
+                }
+            }
+        }
+
 
         $strFunctionFormula = $strFunction . "(" . json_encode($checkoutParams) . ");";
         return $strFunctionFormula;
