@@ -105,6 +105,14 @@ class CheckoutSnippetBuilder {
             $settings["testMode"] = "true";
         }
 
+        if (!empty($this->rules) && is_array($this->rules)) {
+            foreach ($this->rules as $rule) {
+                if ($rule['name'] === 'birthday' && !empty($rule['date'])) {
+                    $settings['birthdayRuleParam'] = $rule['date'];
+                }
+            }
+        }
+
         $requestQuery = $this->buildCheckoutRequestQueryString($settings);
         $encodedData = $this->buildEncodedData($requestQuery);
         PlenigoManager::get()->notice($clazz, "Checkout QUERYSTRING:" . http_build_query($requestQuery));
@@ -135,14 +143,6 @@ class CheckoutSnippetBuilder {
         if (!is_null($elementId)) {
             PlenigoManager::get()->notice($clazz, "Element ID:" . $elementId);
             $checkoutParams['elementId'] = $elementId;
-        }
-
-        if (!empty($this->rules) && is_array($this->rules)) {
-            foreach ($this->rules as $rule) {
-                if ($rule['name'] === 'birthday' && !empty($rule['date'])) {
-                    $checkoutParams['raa'] = $rule['date'];
-                }
-            }
         }
 
 

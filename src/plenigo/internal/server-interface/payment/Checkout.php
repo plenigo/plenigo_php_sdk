@@ -61,6 +61,7 @@ final class Checkout extends ServerInterface {
     protected $overrideMode;
     protected $testMode;
     protected $productIdReplacement;
+    protected $birthdayRuleParam;
     private $allowedShippingTypes = array(ProductBase::TYPE_BOOK, ProductBase::TYPE_NEWSPAPER);
 
     /**
@@ -138,6 +139,7 @@ final class Checkout extends ServerInterface {
         $this->setValueFromMapIfNotEmpty('failedPayment', $map);
         $this->setValueFromMapIfNotEmpty('shippingCost', $map);
         $this->setValueFromMapIfNotEmpty('productIdReplacement', $map);
+        $this->setValueFromMapIfNotEmpty('birthdayRuleParam', $map);
 
         $this->performValidation();
     }
@@ -177,6 +179,17 @@ final class Checkout extends ServerInterface {
      */
     public function setType($type) {
         $this->type = $type;
+    }
+
+    /**
+     * Sets the birthday date
+     *
+     * @param string $birthdayRuleParam birthday date.
+     *
+     * @return void
+     */
+    public function setBirthdayRuleParam($birthdayRuleParam) {
+        $this->birthdayRuleParam = $birthdayRuleParam;
     }
 
     /**
@@ -366,6 +379,7 @@ final class Checkout extends ServerInterface {
         $this->insertIntoMapIfDefined($map, 'shippingCost', 'sc');
         $this->insertIntoMapIfDefined($map, 'overrideMode', 'om');
         $this->insertIntoMapIfDefined($map, 'productIdReplacement', 'pir');
+        $this->insertIntoMapIfDefined($map, 'birthdayRuleParam', 'raa');
 
         return $map;
     }
