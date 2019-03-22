@@ -223,7 +223,7 @@ abstract class ErrorCode extends BasicEnum {
             self::HTTP_PRECONDITION_FAILED => self::PRODUCT_NOT_FREE,
             self::HTTP_INTERNAL_ERROR => self::INTERNAL_ERROR
         ),
-        ApiURLs::CHECKOUT_PRODUCT=> array(
+        ApiURLs::CHECKOUT_FREE_PRODUCT=> array(
             self::HTTP_BAD_REQUEST => self::INVALID_PARAMETERS,
             self::HTTP_UNAUTHORIZED => self::INVALID_SECRET_OR_COMPANY_ID,
             self::HTTP_NOT_FOUND => self::ID_DATA_NOT_FOUND,
