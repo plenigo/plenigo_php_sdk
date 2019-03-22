@@ -109,14 +109,14 @@ class CheckoutService extends Service {
      * @see https://plenigo.github.io/api_purchase_php
      * @param string $customerId ID of plenigo-customer.
      * @param array $order
-     * @param string $userCountry ISO-CODE of country 'DE' for example
+     * @param string $customerCountry ISO-CODE of country 'DE' for example
      * @param string $paymentMethod
      * @param bool $useMerchantCustomerId
      * @param string $ipAddress IP-Address of our customer
      * @return string OrderID
      * @throws RegistrationException | PlenigoException
      */
-    public static function purchase($customerId, $order, $userCountry, $paymentMethod = 'PREFERRED', $useMerchantCustomerId = false, $ipAddress = '') {
+    public static function purchase($customerId, $order, $customerCountry, $paymentMethod = 'PREFERRED', $useMerchantCustomerId = false, $ipAddress = '') {
         // purchase(customer_id, [['product_id' => '1', 'title' => 'title', 'description' => '2', 'amount' => 1]], 'PREFERRED')
 
         // some validating
@@ -128,7 +128,7 @@ class CheckoutService extends Service {
             throw new PlenigoException("Order is not optional and should be of type array");
         }
 
-        if (empty($userCountry) || strlen($userCountry) != 2) {
+        if (empty($customerCountry) || strlen($customerCountry) != 2) {
             throw new PlenigoException("Country code is not optional and has to be of ISO-3166-1 ALPHA-2");
         }
 
@@ -153,7 +153,7 @@ class CheckoutService extends Service {
             'paymentMethod' => $paymentMethod,
             'ipAddress' => $ipAddress,
             'order' => $order,
-            'userCountry' => $userCountry,
+            'customerCountry' => $customerCountry,
         ];
 
         $url = ApiURLs::CHECKOUT_PRODUCT;
