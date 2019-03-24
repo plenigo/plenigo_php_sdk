@@ -13,6 +13,7 @@ use plenigo\internal\ApiParams;
 use plenigo\internal\ApiURLs;
 use plenigo\internal\exceptions\RegistrationException;
 use plenigo\internal\services\Service;
+use plenigo\PaymentFailedException;
 use plenigo\PlenigoException;
 use plenigo\PlenigoManager;
 use plenigo\internal\utils\RestClient;
@@ -114,7 +115,7 @@ class CheckoutService extends Service {
      * @param bool $useMerchantCustomerId
      * @param string $ipAddress IP-Address of our customer
      * @return string OrderID
-     * @throws RegistrationException | PlenigoException
+     * @throws RegistrationException | PlenigoException | PaymentFailedException
      */
     public static function purchase($customerId, $order, $customerCountry, $paymentMethod = 'PREFERRED', $useMerchantCustomerId = false, $ipAddress = '') {
         // purchase(customer_id, [['product_id' => '1', 'title' => 'title', 'description' => '2', 'amount' => 1]], 'PREFERRED')
@@ -174,6 +175,8 @@ class CheckoutService extends Service {
                     throw new PlenigoException("Company id, customer id or product id cannot be found.", $ex->getCode(), $ex->getPrevious());
                 case 412:
                     throw new PlenigoException("Product is not a zero payment product.", $ex->getCode(), $ex->getPrevious());
+                case 422:
+                    throw new PaymentFailedException("Payment failed. Please try again later", $ex->getCode(), $ex->getPrevious());
                 case 500:
                     throw new PlenigoException("Internal server error.", $ex->getCode(), $ex->getPrevious());
                 default:
