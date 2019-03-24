@@ -13,7 +13,7 @@ use plenigo\internal\ApiParams;
 use plenigo\internal\ApiURLs;
 use plenigo\internal\exceptions\RegistrationException;
 use plenigo\internal\services\Service;
-use plenigo\PaymentFailedException;
+use plenigo\exceptions\PaymentFailedException;
 use plenigo\PlenigoException;
 use plenigo\PlenigoManager;
 use plenigo\internal\utils\RestClient;
@@ -117,8 +117,8 @@ class CheckoutService extends Service {
      * @return string OrderID
      * @throws RegistrationException | PlenigoException | PaymentFailedException
      */
-    public static function purchase($customerId, $order, $customerCountry, $paymentMethod = 'PREFERRED', $useMerchantCustomerId = false, $ipAddress = '') {
-        // purchase(customer_id, [['product_id' => '1', 'title' => 'title', 'description' => '2', 'amount' => 1]], 'PREFERRED')
+    public static function purchase(string $customerId, array $order, string $customerCountry, string $paymentMethod = 'PREFERRED', bool $useMerchantCustomerId = false, string $ipAddress = '') : string {
+        // purchase(customer_id, [['product_id' => '1', 'title' => 'title', 'description' => '2', 'amount' => 1]], 'DE', 'PREFERRED')
 
         // some validating
         if (!isset($customerId)) {
@@ -182,6 +182,10 @@ class CheckoutService extends Service {
                 default:
                     throw $ex;
             }
+        }
+
+        if (!is_a($response, "\stdClass") || empty($response->value)) {
+            throw new PlenigoException("got no response from service");
         }
 
         return $response->value ?? '';

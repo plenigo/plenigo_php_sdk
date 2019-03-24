@@ -14,6 +14,7 @@ use plenigo\internal\exceptions\RegistrationException;
 use plenigo\internal\services\Service;
 use plenigo\PlenigoException;
 use plenigo\PlenigoManager;
+use plenigo\internal\utils\RestClient;
 
 /**
  * <p>
@@ -58,7 +59,7 @@ class UserManagementService extends Service
      *
      * @return string Id of the created customer.
      *
-     * @throws PlenigoException In case of communication errors or invalid parameters.
+     * @throws PlenigoException | RegistrationException In case of communication errors or invalid parameters.
      */
     public static function registerUser($email, $language = "en", $externalUserId = null, $firstName = null, $name = null, $withPasswordReset = false, $failByExistingEmail = false)
     {
@@ -112,7 +113,7 @@ class UserManagementService extends Service
      *
      * @return bool TRUE Email address changed
      *
-     * @throws PlenigoException In case of communication errors or invalid parameters
+     * @throws PlenigoException | RegistrationException In case of communication errors or invalid parameters
      */
     public static function changeEmail($customerId, $email, $useExternalCustomerId = false)
     {
@@ -148,7 +149,7 @@ class UserManagementService extends Service
      * @param bool $useExternalCustomerId Flag indicating if customer id sent is the external customer id
      * @return bool TRUE address changed
      *
-     * @throws PlenigoException In case of communication errors or invalid parameters
+     * @throws PlenigoException | RegistrationException In case of communication errors or invalid parameters
      */
     public static function changeAddress($customerId, $address, $useExternalCustomerId = false)
     {
@@ -187,7 +188,7 @@ class UserManagementService extends Service
      *
      * @return bool TRUE external customer id added
      *
-     * @throws PlenigoException In case of communication errors or invalid parameters
+     * @throws PlenigoException | RegistrationException In case of communication errors or invalid parameters
      */
     public static function addExternalCustomerId($customerId, $externalCustomerId)
     {
@@ -214,7 +215,7 @@ class UserManagementService extends Service
      *
      * @return string One time token used to create a valid user session
      *
-     * @throws PlenigoException In case of communication errors or invalid parameters
+     * @throws PlenigoException | RegistrationException In case of communication errors or invalid parameters
      */
     public static function createLoginToken($customerId, $useExternalCustomerId = false)
     {
@@ -246,7 +247,7 @@ class UserManagementService extends Service
      *
      * @return boolean TRUE if the transaction was successful
      *
-     * @throws PlenigoException In case of communication errors or invalid parameters
+     * @throws PlenigoException | RegistrationException In case of communication errors or invalid parameters
      */
     public static function importCustomerAccess($customerId, $isExternal = false, $customIds = array())
     {
@@ -289,9 +290,9 @@ class UserManagementService extends Service
      * Executes the prepared request and returns
      * the Response object on success.
      *
-     * @return The request's response.
+     * @return mixed The request's response.
      *
-     * @throws \plenigo\PlenigoException on request error.
+     * @throws PlenigoException | RegistrationException on request error.
      */
     public function execute()
     {

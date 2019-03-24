@@ -1,10 +1,11 @@
 <?php
 
-namespace plenigo;
+namespace plenigo\exceptions;
 
-require_once __DIR__ . '/models/ErrorDetail.php';
+require_once __DIR__ . '/../models/ErrorDetail.php';
 
 use plenigo\models\ErrorDetail;
+use plenigo\PlenigoException;
 
 /**
  * <p>
