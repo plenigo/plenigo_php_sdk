@@ -12,7 +12,9 @@
     },
     "require": {
         "php": ">=7.0.0",
-        "ext-openssl": "*"
+        "ext-openssl": "*",
+        "ext-curl": "*",
+        "ext-json": "*"
     },
     "require-dev": {
         "pdepend/pdepend" : "*",

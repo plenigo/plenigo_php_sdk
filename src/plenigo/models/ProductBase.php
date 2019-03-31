@@ -98,12 +98,11 @@ class ProductBase extends ProductId {
      * @param float      $prodPrice The product price.
      * @param string     $curr      The currency.
      */
-    public function __construct($id, $prodTitle = null, $prodPrice = null, $curr = null) {
+    public function __construct($id, $prodTitle = null, $prodPrice = null) {
         parent::__construct($id);
 
         $this->price = $prodPrice;
         $this->title = $prodTitle;
-        $this->currency = $curr;
     }
 
     /**
@@ -210,15 +209,6 @@ class ProductBase extends ProductId {
      */
     public function getShippingCost() {
         return $this->shippingCost;
-    }
-
-    /**
-     * Sets a new shipping cost for this product.
-     *
-     * @param float $shippingCost the new shipping cost
-     */
-    public function setShippingCost($shippingCost) {
-        $this->shippingCost = $shippingCost;
     }
 
     /**

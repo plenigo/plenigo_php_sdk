@@ -129,7 +129,7 @@ class CheckoutService extends Service {
             throw new PlenigoException("Order is not optional and should be of type array");
         }
 
-        if (empty($customerCountry) || strlen($customerCountry) != 2) {
+        if (empty($customerCountry) || preg_match("/[A-Z]{2}/", $customerCountry) !== 1) {
             throw new PlenigoException("Country code is not optional and has to be of ISO-3166-1 ALPHA-2");
         }
 

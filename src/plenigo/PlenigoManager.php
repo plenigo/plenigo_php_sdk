@@ -9,6 +9,7 @@ require_once __DIR__ . '/internal/PlenigoLogger.php';
 use plenigo\internal\Cache;
 use plenigo\internal\models\Configuration;
 use plenigo\internal\PlenigoLogger;
+use plenigo\models\Loggable;
 
 /**
  * PlenigoManager
@@ -62,6 +63,16 @@ final class PlenigoManager {
      * @var bool
      */
     private static $debug = false;
+
+    /**
+     * @var int
+     */
+    private static $curlTimeout = 10;
+
+    /**
+     * @var int
+     */
+    private static $curlConnectTimeout = 10;
 
     /**
      * <p>
@@ -178,6 +189,40 @@ final class PlenigoManager {
         self::$debug = $debug;
     }
 
+
+    /**
+     * @return int
+     */
+    public static function getCurlTimeout(): int
+    {
+        return self::$curlTimeout;
+    }
+
+    /**
+     * @param int $curlTimeout
+     */
+    public static function setCurlTimeout(int $curlTimeout)
+    {
+        self::$curlTimeout = $curlTimeout;
+    }
+
+    /**
+     * @return int
+     */
+    public static function getCurlConnectTimeout(): int
+    {
+        return self::$curlConnectTimeout;
+    }
+
+    /**
+     * @param int $curlConnectTimeout
+     */
+    public static function setCurlConnectTimeout(int $curlConnectTimeout)
+    {
+        self::$curlConnectTimeout = $curlConnectTimeout;
+    }
+
+
     /**
      * Configure Cache. Each engine may have their own set of settings.
      * To choose an engine use $settings['engine']
@@ -244,7 +289,7 @@ final class PlenigoManager {
     /**
      * Set the loggable interface.
      *
-     * @param $loggable loggable interface to set
+     * @param Loggable $loggable loggable interface to set
      */
     public function setLoggable($loggable) {
         if (is_object($loggable)) {
@@ -255,14 +300,20 @@ final class PlenigoManager {
     /**
      * Logs an error through the loggable interface.
      *
-     * @param $msg message to log
-     * @param $obj object to log
+     * @param string $msg message to log
+     * @param object $obj to log
+     *
+     *
      */
     public function logError($msg, $obj) {
         if (is_object($this->loggable) && method_exists($this->loggable, "logData")) {
-            $date = new \DateTime();
-            $date = $date->format("Y-m-d h:i:s");
-            $this->loggable->logData($date . " - " . $msg . ", Data: [" . print_r($obj, true) . "]" . PHP_EOL);
+            try {
+                $date = new \DateTime();
+                $date = $date->format("Y-m-d h:i:s");
+                $this->loggable->logData($date . " - " . $msg . ", Data: [" . print_r($obj, true) . "]" . PHP_EOL);
+            } catch (\Exception $exception) {
+
+            }
         }
     }
 }

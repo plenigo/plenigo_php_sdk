@@ -6,6 +6,7 @@ require_once __DIR__ . '/CurlRequest.php';
 require_once __DIR__ . '/JWT.php';
 require_once __DIR__ . '/../../PlenigoManager.php';
 
+use plenigo\internal\exceptions\ConfigException;
 use plenigo\PlenigoManager;
 
 /**
@@ -235,6 +236,8 @@ class RestClient {
      * @param string $url The URL to access.
      *
      * @return CurlRequest instance.
+     *
+     * @throws ConfigException
      */
     private static function createCurlRequest($url = null) {
         return new CurlRequest($url);
@@ -277,7 +280,7 @@ class RestClient {
 
         try {
             $result = $this->curlRequest->execute();
-        } catch (Exception $exc) {
+        } catch (\Exception $exc) {
             throw $exc;
         }
 
@@ -292,11 +295,14 @@ class RestClient {
         }
     }
 
+    /**
+     * @throws \Exception
+     */
     public function setMandatoryOptions() {
         // Mandatory options
         $this->setOption(CURLOPT_RETURNTRANSFER, true);
-        $this->setOption(CURLOPT_TIMEOUT, 10);
-        $this->setOption(CURLOPT_CONNECTTIMEOUT, 10);
+        $this->setOption(CURLOPT_TIMEOUT, PlenigoManager::getCurlTimeout());
+        $this->setOption(CURLOPT_CONNECTTIMEOUT, PlenigoManager::getCurlTimeout());
 
         // Create the JWT token
         $uuid = uniqid("", true);
