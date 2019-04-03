@@ -95,7 +95,6 @@ class ProductBaseTest extends TestCase {
         $this->assertEquals($map['title'], $data['title']);
         $this->assertArrayHasKey('price', $map);
         $this->assertEquals($map['price'], $data['price']);
-        $this->assertArrayHasKey('currency', $map);
         $this->assertArrayHasKey('categoryId', $map);
         $this->assertEquals($map['categoryId'], $data['categoryId']);
         $this->assertArrayHasKey('type', $map);

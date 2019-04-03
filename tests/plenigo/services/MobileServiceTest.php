@@ -72,7 +72,7 @@ class MobileServiceTest extends PlenigoTestCase {
         try {
             $result = MobileServiceMock::verifyMobileSecret(self::USER_EMAIL, self::USER_SECRET);
         } catch (\Exception $ex) {
-            $this->assertEquals($ex->getMessage(), "Error during mobile secret verification'");
+            $this->assertEquals($ex->getMessage(), "Error during mobile secret verification");
         }
         $this->assertError(E_USER_NOTICE, "GET URL CALL");
     }
