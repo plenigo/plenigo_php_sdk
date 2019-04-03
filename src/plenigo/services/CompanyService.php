@@ -14,6 +14,7 @@ require_once __DIR__ . '/../models/ErrorCode.php';
 
 use plenigo\internal\ApiURLs;
 use plenigo\internal\ApiParams;
+use plenigo\internal\exceptions\RegistrationException;
 use plenigo\internal\services\Service;
 use plenigo\internal\utils\SdkUtils;
 use plenigo\models\CompanyUserList;
@@ -22,6 +23,7 @@ use plenigo\models\Order;
 use plenigo\models\OrderList;
 use plenigo\models\SubscriptionList;
 use plenigo\PlenigoException;
+use plenigo\internal\utils\RestClient;
 
 /**
  * <p>
@@ -51,13 +53,15 @@ class CompanyService extends Service {
      * 
      * @param int $page Number of the page (starting from 0)
      * @param int $size Size of the page - must be between 10 and 100
+     *
+     * @throws PlenigoException | RegistrationException
      * 
      * @return CompanyUserList A list of users of the specified company
      */
     public static function getUserList($page = 0, $size = 10) {
         $map = array(
             'page' => SdkUtils::clampNumber($page, 0, null),
-            'size' => SdkUtils::clampNumber($size, 10, 100)
+            'size' => SdkUtils::clampNumber($size, 10, 1000)
         );
 
         $url = ApiURLs::COMPANY_USERS;
@@ -81,6 +85,8 @@ class CompanyService extends Service {
      * @param int $page Number of the page (starting from 0)
      * @param int $size Size of the page - must be between 10 and 100
      *
+     * @throws PlenigoException | RegistrationException
+     *
      * @return array  A list of users (Objects) of the specified company
      */
     public static function getChangedUsers($startDate = '-1 week', $endDate = 'now', $page = 0, $size = 10) {
@@ -89,8 +95,12 @@ class CompanyService extends Service {
             'startDate' => date("Y-m-d H:i", strtotime($startDate)),
             'endDate' => date("Y-m-d H:i",strtotime($endDate)),
             'page' => SdkUtils::clampNumber($page, 0, null),
-            'size' => SdkUtils::clampNumber($size, 10, 250)
+            'size' => SdkUtils::clampNumber($size, 10, 1000)
         );
+
+        if ($size === 0) {
+            $map['size'] = 0;
+        }
 
         $url = ApiURLs::COMPANY_USERS_CHANGED;
 
@@ -113,6 +123,8 @@ class CompanyService extends Service {
      * @param int $page Number of the page (starting from 0)
      * @param int $size Size of the page - must be between 10 and 100
      *
+     * @throws PlenigoException | RegistrationException
+     *
      * @return array  A list of payments of the specified company
      */
     public static function getIncomingPayments($startDate = '-1 week', $endDate = 'now', $page = 0, $size = 10) {
@@ -123,7 +135,7 @@ class CompanyService extends Service {
             'endDate' => date("Y-m-d",strtotime($endDate)),
             'testMode' => $testMode ? 'true' : 'false',
             'page' => SdkUtils::clampNumber($page, 0, null),
-            'size' => SdkUtils::clampNumber($size, 10, 250)
+            'size' => SdkUtils::clampNumber($size, 10, 1000)
         );
 
         $url = ApiURLs::COMPANY_INCOMING_PAYMENTS;
@@ -147,6 +159,8 @@ class CompanyService extends Service {
      * @param int $page Number of the page (starting from 0)
      * @param int $size Size of the page - must be between 10 and 100
      *
+     * @throws PlenigoException | RegistrationException
+     *
      * @return array  A list of invoices of the specified company
      */
     public static function getInvoices($startDate = '-1 week', $endDate = 'now', $page = 0, $size = 10) {
@@ -157,7 +171,7 @@ class CompanyService extends Service {
             'endDate' => date("Y-m-d",strtotime($endDate)),
             'testMode' => $testMode ? 'true' : 'false',
             'page' => SdkUtils::clampNumber($page, 0, null),
-            'size' => SdkUtils::clampNumber($size, 10, 250)
+            'size' => SdkUtils::clampNumber($size, 10, 1000)
         );
 
         $url = ApiURLs::COMPANY_INVOICES;
@@ -178,6 +192,8 @@ class CompanyService extends Service {
      * 
      * @param string $userIds a comma separated list if ids
      * @param boolean $useExternalCustomerId (optional) Flag indicating if customer id sent is the external customer id
+     *
+     * @throws PlenigoException | RegistrationException
      *
      * @return CompanyUserList A  list of users of the specified company with the given ids
      */
@@ -211,6 +227,8 @@ class CompanyService extends Service {
      * @param string $status Status of the failed payment (FAILED, FIXED, FIXED_MANUALLY)
      * @param int $page Number of the page (starting from 0)
      * @param int $size Size of the page - must be between 10 and 100
+     *
+     * @throws PlenigoException | RegistrationException
      * 
      * @return FailedPaymentList A paginated list of FailedPayment objects
      */
@@ -241,7 +259,7 @@ class CompanyService extends Service {
         // parameter array
         $map = array(
             'page' => SdkUtils::clampNumber($page, 0, null),
-            'size' => SdkUtils::clampNumber($size, 10, 250),
+            'size' => SdkUtils::clampNumber($size, 10, 1000),
             'startDate' => $start,
             'endDate' => $end
         );
@@ -268,7 +286,7 @@ class CompanyService extends Service {
      * @param string $id ID of the order
      * @param bool $testMode
      * @return Order the requested order
-     * @throws PlenigoException
+     * @throws PlenigoException | RegistrationException
      */
     public static function getOrder($id, $testMode = false) {
 
@@ -298,6 +316,8 @@ class CompanyService extends Service {
      * @param int $page Number of the page (starting from 0)
      * @param int $size Size of the page - must be between 10 and 100
      *
+     * @throws PlenigoException | RegistrationException
+     *
      * @return OrderList
      */
     public static function getOrders($start = null, $end = null, $testMode = false , $page = 0, $size = 10) {
@@ -319,7 +339,7 @@ class CompanyService extends Service {
         // parameter array
         $map = array(
             'page' => SdkUtils::clampNumber($page, 0, null),
-            'size' => SdkUtils::clampNumber($size, 10, 250),
+            'size' => SdkUtils::clampNumber($size, 10, 1000),
             'startDate' => $start,
             'endDate' => $end,
             'testMode' => $testMode ? 'true' : 'false'
@@ -344,6 +364,8 @@ class CompanyService extends Service {
      * @param int $page Number of the page (starting from 0)
      * @param int $size Size of the page - must be between 10 and 100
      *
+     * @throws PlenigoException | RegistrationException
+     *
      * @return mixed list of subscriptions
      */
     public static function getSubscriptions($start = null, $end = null, $testMode = false , $page = 0, $size = 10) {
@@ -356,7 +378,7 @@ class CompanyService extends Service {
         // parameter array
         $map = array(
             'page' => SdkUtils::clampNumber($page, 0, null),
-            'size' => SdkUtils::clampNumber($size, 10, 250),
+            'size' => SdkUtils::clampNumber($size, 10, 1000),
             'startDate' => $start,
             'endDate' => $end,
             'testMode' => $testMode ? 'true' : 'false'
