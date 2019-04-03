@@ -152,32 +152,5 @@ class CheckoutSnippetBuilderTest extends PlenigoTestCase {
         $checkout->build();
     }
 
-    /**
-     * @dataProvider checkoutSnippetBuilderProvider
-     */
-    public function testValidShipping(ProductBase $product) {
-        $product->setType(ProductBase::TYPE_BOOK);
-        $product->setShippingCost(35.4);
-        $checkout = new CheckoutSnippetBuilder($product);
-
-        $plenigoCheckoutCode = $checkout->build();
-        $this->assertRegExp("/^plenigo\\.checkout\\(\\{.*\\}\\);$/", $plenigoCheckoutCode);
-        $this->assertError(E_USER_NOTICE, "Building CHECKOUT");
-        $this->assertError(E_USER_NOTICE, "Checkout QUERYSTRING");
-    }
-
-    /**
-     * @dataProvider checkoutSnippetBuilderProvider
-     * @expectedException plenigo\PlenigoException
-     */
-    public function testInvalidShipping(ProductBase $product) {
-        PlenigoManager::setDebug(false);
-        $product->setType(ProductBase::TYPE_EBOOK);
-        $product->setShippingCost(35.4);
-        $checkout = new CheckoutSnippetBuilder($product);
-
-        PlenigoManager::setDebug(false);
-        $checkout->build();
-    }
 
 }

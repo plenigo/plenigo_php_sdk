@@ -72,7 +72,7 @@ class MobileServiceTest extends PlenigoTestCase {
         try {
             $result = MobileServiceMock::verifyMobileSecret(self::USER_EMAIL, self::USER_SECRET);
         } catch (\Exception $ex) {
-            $this->assertEquals($ex->getMessage(), "Mobile Service execution failed!");
+            $this->assertEquals($ex->getMessage(), "Error getting mobile secret");
         }
         $this->assertError(E_USER_NOTICE, "GET URL CALL");
     }
@@ -164,7 +164,7 @@ class MobileServiceTest extends PlenigoTestCase {
         try {
             MobileServiceMock::createMobileSecret(self::CUSTOMER_ID, 150);
         } catch (\Exception $ex) {
-            $this->assertEquals($ex->getMessage(), "Mobile Service execution failed!");
+            $this->assertEquals($ex->getMessage(), "Error creating mobile secret");
         }
         $this->assertError(E_USER_NOTICE, "POST JSON URL CALL");
     }
@@ -189,7 +189,7 @@ class MobileServiceTest extends PlenigoTestCase {
         try {
             $result = MobileServiceMock::deleteMobileSecret(self::CUSTOMER_ID);
         } catch (\Exception $ex) {
-            $this->assertEquals($ex->getMessage(), "Mobile Service execution failed!");
+            $this->assertEquals($ex->getMessage(), "Error deleting mobile secret");
         }
         $this->assertError(E_USER_NOTICE, "DELETE URL CALL");
     }

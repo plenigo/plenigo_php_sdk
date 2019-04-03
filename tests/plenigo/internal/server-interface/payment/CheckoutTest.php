@@ -33,7 +33,7 @@ class CheckoutTest extends TestCase
 
     public function testCheckoutWithProductInstance()
     {
-        $expectedResult = 'pr=>2.5&cu=>USD&ti=>premium-read&pi=>premium-123&ts=>true';
+        $expectedResult = 'pr=>2.5&ti=>premium-read&pi=>premium-123&ts=>true';
         $product = new ProductBase('premium-123', 'premium-read', 2.5, 'USD');
 
         $checkoutRequest = new Checkout($product);
@@ -46,7 +46,7 @@ class CheckoutTest extends TestCase
 
     public function testSetProduct()
     {
-        $expectedResult = 'pr=>2.5&cu=>USD&ti=>premium-read&pi=>premium-123&ts=>true';
+        $expectedResult = 'pr=>2.5&ti=>premium-read&pi=>premium-123&ts=>true';
         $product = new ProductBase('premium-123', 'premium-read', 2.5, 'USD');
 
         $checkoutRequest = new Checkout();
