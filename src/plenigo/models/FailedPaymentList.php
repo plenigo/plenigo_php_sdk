@@ -57,7 +57,7 @@ class FailedPaymentList extends IterableBase {
     /**
      * Get the elements.
      * 
-     * @return array
+     * @return FailedPayment[]
      */
     public function getElements() {
         return $this->elements;

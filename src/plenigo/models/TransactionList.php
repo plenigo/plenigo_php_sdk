@@ -40,34 +40,58 @@ class TransactionList extends IterableBase {
         $this->endDate = $endDate;
     }
 
+    /**
+     * @return int
+     */
     public function getPageNumber() {
         return $this->pageNumber;
     }
 
+    /**
+     * @return int
+     */
     public function getSize() {
         return $this->size;
     }
 
+    /**
+     * @return Transaction[]
+     */
     public function getElements() {
         return $this->elements;
     }
 
+    /**
+     * @return int
+     */
     public function getTotalElements() {
         return $this->totalElements;
     }
 
+    /**
+     * @return int|null
+     */
     public function getStartDate() {
         return $this->startDate;
     }
 
+    /**
+     * @return int|null
+     */
     public function getEndDate() {
         return $this->endDate;
     }
 
+    /**
+     * @param $startDate
+     */
     public function setStartDate($startDate) {
         $this->startDate = $startDate;
     }
 
+    /**
+     * @param $endDate
+     */
     public function setEndDate($endDate) {
         $this->endDate = $endDate;
     }

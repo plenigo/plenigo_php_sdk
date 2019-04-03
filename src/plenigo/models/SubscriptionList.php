@@ -59,7 +59,7 @@ class SubscriptionList extends IterableBase {
     /**
      * Getter method.
      * 
-     * @return array
+     * @return Subscription[]
      */
     public function getElements() {
         return $this->elements;

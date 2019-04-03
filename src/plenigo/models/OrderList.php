@@ -55,7 +55,7 @@ class OrderList extends IterableBase {
     /**
      * Getter method.
      * 
-     * @return array
+     * @return Order[]
      */
     public function getElements() {
         return $this->elements;
