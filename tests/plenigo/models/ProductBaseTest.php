@@ -36,7 +36,6 @@ class ProductBaseTest extends TestCase {
         $this->assertEquals($data['id'], $product->getId());
         $this->assertEquals($data['title'], $product->getTitle());
         $this->assertEquals($data['price'], $product->getPrice());
-        $this->assertEquals($data['currency'], $product->getCurrency());
     }
 
     /**
@@ -97,7 +96,6 @@ class ProductBaseTest extends TestCase {
         $this->assertArrayHasKey('price', $map);
         $this->assertEquals($map['price'], $data['price']);
         $this->assertArrayHasKey('currency', $map);
-        $this->assertEquals($map['currency'], $data['currency']);
         $this->assertArrayHasKey('categoryId', $map);
         $this->assertEquals($map['categoryId'], $data['categoryId']);
         $this->assertArrayHasKey('type', $map);

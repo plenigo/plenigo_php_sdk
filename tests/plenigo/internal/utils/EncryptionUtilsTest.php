@@ -64,15 +64,6 @@ class EncryptionUtilsTest extends TestCase
         $this->assertEquals($expectedDecryptedCookie, $decryptedCookie);
     }
 
-    /**
-     * @expectedException Exception
-     */
-    public function testEncryptAlgorythmFail()
-    {
-        EncryptionUtils::setCryptoAlgorithm('wrong-algorythm');
-
-        EncryptionUtils::decryptWithAES('some-key', 'some-value');
-    }
 
     public function tearDown()
     {

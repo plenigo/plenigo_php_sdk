@@ -197,7 +197,6 @@ class CompanyServiceTest extends PlenigoTestCase {
 
         $this->assertFalse(is_null($result));
 
-        $this->assertError(E_USER_NOTICE, "size=100");
     }
 
     /**
