@@ -191,17 +191,6 @@ class CompanyServiceTest extends PlenigoTestCase {
     /**
      * @dataProvider userListProvider
      */
-    public function testGetUserListBigPage($data) {
-        CompanyServiceMock::$requestResponse = $data;
-        $result = CompanyServiceMock::getUserList(0, 1100);
-
-        $this->assertFalse(is_null($result));
-
-    }
-
-    /**
-     * @dataProvider userListProvider
-     */
     public function testGetUserListSmallPage($data) {
         CompanyServiceMock::$requestResponse = $data;
         $result = CompanyServiceMock::getUserList(0, 2);
