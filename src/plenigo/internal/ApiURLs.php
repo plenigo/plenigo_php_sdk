@@ -97,8 +97,14 @@ final class ApiURLs
     /**
      * This URL is used to get all the products this user has bouight
      */
-    const USER_PRODUCTS = "/api/v2/user/{USER_ID}/products";    /**
+    const USER_PRODUCTS = "/api/v2/user/{USER_ID}/products";
 
+    /**
+     * This URL is used to get all the products this user has bouight
+     */
+    const USER_SUBSCRIPTIONS = "/api/v2/user/{USER_ID}/subscriptions";
+
+    /**
      * This URL is used to get all the products this user has bouight with their details
      */
     const USER_PRODUCTS_DETAILS = "/api/v2/user/product/details";

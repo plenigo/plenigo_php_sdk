@@ -27,6 +27,8 @@ use plenigo\internal\utils\CurlRequest;
 use plenigo\internal\utils\EncryptionUtils;
 use plenigo\internal\utils\SdkUtils;
 use plenigo\models\ErrorCode;
+use plenigo\models\Subscription;
+use plenigo\models\SubscriptionList;
 use plenigo\models\UserData;
 use plenigo\PlenigoException;
 use plenigo\PlenigoManager;
@@ -453,7 +455,7 @@ class UserService extends Service
      * @param string $pCustId (optional) The customer ID if its not logged in
      * @param boolean $useExternalCustomerId (optional) Flag indicating if customer id sent is the external customer id
      * @return array The associative array containing the bought products/subscriptions or an empty array
-     * @throws PlenigoException If the compay ID and/or the Secret key is rejected
+     * @throws \Exception If the company ID and/or the Secret key is rejected
      */
     public static function getProductsBought($pCustId = null, $useExternalCustomerId = false)
     {
@@ -495,6 +497,39 @@ class UserService extends Service
             PlenigoManager::notice($clazz, "Product list NOT accesible!");
         }
         return $res;
+    }
+
+
+    /**
+     * returns all Subscriptions of a given user
+     *
+     * @see https://api.plenigo.com/#!/user/getSubscriptionsBought
+     *
+     * @param null $customerId
+     * @param bool $useExternalCustomerId
+     * @return SubscriptionList
+     * @throws PlenigoException | \Exception If the company ID and/or the Secret key is rejected
+     */
+    public static function getSubscriptions($customerId = null, $useExternalCustomerId = false)
+    {
+        if (is_null($customerId)) {
+            throw new PlenigoException("CustomerID is mandatory!");
+        }
+        $testModeText = (PlenigoManager::get()->isTestMode()) ? 'true' : 'false';
+
+        $params = array(
+            ApiParams::TEST_MODE => $testModeText,
+            ApiParams::USE_EXTERNAL_CUSTOMER_ID => ($useExternalCustomerId ? 'true' : 'false')
+
+        );
+        $url = str_ireplace(ApiParams::URL_USER_ID_TAG, $customerId, ApiURLs::USER_SUBSCRIPTIONS);
+        $request = static::getRequest($url, false, $params);
+
+        $userDataRequest = new static($request);
+        $response = $userDataRequest->execute();
+
+        return SubscriptionList::createFromMap((array) $response);
+
     }
 
 
