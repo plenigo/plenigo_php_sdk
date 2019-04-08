@@ -505,7 +505,7 @@ class UserService extends Service
      *
      * @see https://api.plenigo.com/#!/user/getSubscriptionsBought
      *
-     * @param null $customerId
+     * @param string $customerId
      * @param bool $useExternalCustomerId
      * @return SubscriptionList
      * @throws PlenigoException | \Exception If the company ID and/or the Secret key is rejected
