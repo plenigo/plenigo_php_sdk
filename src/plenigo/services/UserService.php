@@ -515,21 +515,21 @@ class UserService extends Service
         if (is_null($customerId)) {
             throw new PlenigoException("CustomerID is mandatory!");
         }
+
         $testModeText = (PlenigoManager::get()->isTestMode()) ? 'true' : 'false';
 
         $params = array(
             ApiParams::TEST_MODE => $testModeText,
             ApiParams::USE_EXTERNAL_CUSTOMER_ID => ($useExternalCustomerId ? 'true' : 'false')
-
         );
         $url = str_ireplace(ApiParams::URL_USER_ID_TAG, $customerId, ApiURLs::USER_SUBSCRIPTIONS);
         $request = static::getRequest($url, false, $params);
 
         $userDataRequest = new static($request);
+
         $response = $userDataRequest->execute();
 
         return SubscriptionList::createFromMap((array) $response);
-
     }
 
 

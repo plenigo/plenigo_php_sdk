@@ -85,12 +85,13 @@ class SubscriptionList extends IterableBase {
 
         $arrElements = isset($map['elements']) ? $map['elements'] : array();
         $arrResulting = array();
+
         foreach ($arrElements as $cpnySubscription) {
             $subscription = Subscription::createFromMap((array) $cpnySubscription);
             array_push($arrResulting, $subscription);
         }
 
-        $pageNumber = $map['pageNumber'] ?? 0;
+        $pageNumber = $map['pageNumber'] ?? 1;
         $size = $map['size'] ?? 100;
         $totalElements = $map['totalElements'] ?? count($arrResulting);
 
