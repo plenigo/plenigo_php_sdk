@@ -51,7 +51,7 @@ final class EncryptionUtils
     public static function encryptWithAES($key, $data, $customIV = null)
     {
         if (!(self::useOpenSSL() && self::hasEncryptionAlgorithm())) {
-            return MCryptUtils::encryptWithAES($key, $data, $customIV);
+            throw new EncryptionException("OpenSSL not installed!");
         }
 
         if (is_null($customIV)) {
@@ -80,7 +80,7 @@ final class EncryptionUtils
     public static function decryptWithAES($key, $encryptedData, $customIV = null)
     {
         if (!(self::useOpenSSL() && self::hasEncryptionAlgorithm())) {
-            return MCryptUtils::decryptWithAES($key, $encryptedData, $customIV);
+            throw new EncryptionException("OpenSSL not installed!");
         }
 
         $binData = hex2bin($encryptedData);
@@ -206,10 +206,12 @@ final class EncryptionUtils
      * </p>
      * 
      * @param string $path The alternative path for the mCrypt library, NULL for default
+     * @throws EncryptionException
+     * @deprecated
      */
     public static function setMCryptLibraryPath($path)
     {
-        MCryptUtils::setMCryptLibraryPath($path);
+        throw new EncryptionException("please don't use this method anymore");
     }
 
     /**
@@ -218,10 +220,12 @@ final class EncryptionUtils
      * </p>
      * 
      * @param string $algorythm the encryption algorythm, default 'rijndael-128' if parameter is null
+     * @deprecated
+     * @throws EncryptionException
      */
     public static function setCryptoAlgorithm($algorythm = null)
     {
-        MCryptUtils::setCryptoAlgorithm($algorythm);
+        throw new EncryptionException("please don't use this method anymore");
     }
 
 }

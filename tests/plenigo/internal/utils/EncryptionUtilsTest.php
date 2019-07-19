@@ -67,8 +67,8 @@ class EncryptionUtilsTest extends TestCase
 
     public function tearDown()
     {
-        EncryptionUtils::setMCryptLibraryPath(null);
-        EncryptionUtils::setCryptoAlgorithm(null);
+//        EncryptionUtils::setMCryptLibraryPath(null);
+//        EncryptionUtils::setCryptoAlgorithm(null);
     }
 
 }

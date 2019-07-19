@@ -20,6 +20,7 @@ use plenigo\internal\ApiParams;
 use plenigo\internal\ApiResults;
 use plenigo\internal\ApiURLs;
 use plenigo\internal\Cache;
+use plenigo\internal\exceptions\EncryptionException;
 use plenigo\internal\exceptions\RegistrationException;
 use plenigo\internal\models\Customer;
 use plenigo\internal\services\Service;
@@ -194,7 +195,7 @@ class UserService extends Service
      *
      * @return bool TRUE if the user in the cookie has bought the product and the session is not expired, false otherwise
      *
-     * @throws \plenigo\PlenigoException whenever an error happens
+     * @throws \Exception whenever an error happens
      */
     public static function hasUserBought($productId, $customerId = null, $useExternalCustomerId = false)
     {
@@ -258,7 +259,7 @@ class UserService extends Service
      *
      * @return array
      *
-     * @throws \plenigo\PlenigoException whenever an error happens
+     * @throws \Exception whenever an error happens
      */
     public static function hasBoughtProductWithProducts($productId, $customerId = null, $useExternalCustomerId = false)
     {
@@ -316,6 +317,8 @@ class UserService extends Service
      * all product paywall should be disabled and access should be granted
      *
      * @return bool true if Paywall is enabled and we need to check for specific product buy information
+     *
+     * @throws PlenigoException
      */
     public static function isPaywallEnabled()
     {
@@ -344,6 +347,8 @@ class UserService extends Service
      * Check if the user has been logged in (cookie is found and valid)
      *
      * @return bool TRUE if the user has been logged in
+     *
+     * @throws PlenigoException
      */
     public static function isLoggedIn()
     {
@@ -360,7 +365,9 @@ class UserService extends Service
      * Retrieves the user info from the cookie.
      * @param string $pCustId The customer ID if its not logged in
      * @return Customer The Customer Information from the cookie
-     * @throws \plenigo\PlenigoException whenever an error happens
+     * @throws \Exception whenever an error happens
+     * @throws EncryptionException if there are encryption errors
+     *
      */
     public static function getCustomerInfo($pCustId = null)
     {
