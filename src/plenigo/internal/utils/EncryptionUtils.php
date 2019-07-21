@@ -130,8 +130,8 @@ final class EncryptionUtils
      */
     private static function hasEncryptionAlgorithm()
     {
-        $algorithms = openssl_get_cipher_methods();
-        return in_array(self::$openSSLAlgorithm, $algorithms) ?: in_array(strtolower(self::$openSSLAlgorithm), $algorithms);
+        $algorithms = openssl_get_cipher_methods(true);
+        return in_array(self::$openSSLAlgorithm, $algorithms);
     }
 
     /**
