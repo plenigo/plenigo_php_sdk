@@ -137,7 +137,7 @@ class CheckoutService extends Service {
         if (empty($ipAddress)) {
             $ipAddress = $_SERVER['HTTP_CLIENT_IP'] ?? $_SERVER['HTTP_X_FORWARDED_FOR'] ?? $_SERVER['REMOTE_ADDR'] ?? filter_input(INPUT_SERVER, 'REMOTE_ADDR', FILTER_VALIDATE_IP);
         } elseif (!filter_var($ipAddress, FILTER_VALIDATE_IP)) {
-            throw new PlenigoException("Order is not optional and should be of type array");
+            throw new PlenigoException("IP address should be of a valid format");
         }
 
         // validate order
