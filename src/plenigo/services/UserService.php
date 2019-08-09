@@ -28,6 +28,7 @@ use plenigo\internal\utils\CurlRequest;
 use plenigo\internal\utils\EncryptionUtils;
 use plenigo\internal\utils\SdkUtils;
 use plenigo\models\ErrorCode;
+use plenigo\models\OrderList;
 use plenigo\models\Subscription;
 use plenigo\models\SubscriptionList;
 use plenigo\models\UserData;
@@ -537,6 +538,39 @@ class UserService extends Service
         $response = $userDataRequest->execute();
 
         return SubscriptionList::createFromMap((array) $response);
+    }
+
+
+    /**
+     * returns all Subscriptions of a given user
+     *
+     * @see https://api.plenigo.com/#!/user/getOrders
+     *
+     * @param string $customerId
+     * @param bool $useExternalCustomerId
+     * @return OrderList
+     * @throws PlenigoException | \Exception If the company ID and/or the Secret key is rejected
+     */
+    public static function getOrders($customerId = null, $useExternalCustomerId = false)
+    {
+        if (is_null($customerId)) {
+            throw new PlenigoException("CustomerID is mandatory!");
+        }
+
+        $testModeText = (PlenigoManager::get()->isTestMode()) ? 'true' : 'false';
+
+        $params = array(
+            ApiParams::TEST_MODE => $testModeText,
+            ApiParams::USE_EXTERNAL_CUSTOMER_ID => ($useExternalCustomerId ? 'true' : 'false')
+        );
+        $url = str_ireplace(ApiParams::URL_USER_ID_TAG, $customerId, ApiURLs::USER_ORDERS);
+        $request = static::getRequest($url, false, $params);
+
+        $userDataRequest = new static($request);
+
+        $response = $userDataRequest->execute();
+
+        return OrderList::createFromMap((array) $response);
     }
 
 

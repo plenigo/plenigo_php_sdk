@@ -92,7 +92,7 @@ class Order {
 
     /**
      * Array of order items
-     * @var array 
+     * @var OrderItem[]
      */
     private $orderItems;
 
@@ -245,7 +245,7 @@ class Order {
     /**
      * Get all Order Items.
      * 
-     * @return array
+     * @return OrderItem[]
      */
     public function getOrderItems() {
         return $this->orderItems;
