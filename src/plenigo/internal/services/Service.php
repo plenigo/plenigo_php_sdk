@@ -220,7 +220,7 @@ class Service {
 
 
     /**
-     * Executes the fiven RestClient and detects if there is an error, 
+     * Executes the given RestClient and detects if there is an error, 
      * gets its code and provides a PlenigoException describing it 
      * with the error parameters
      * 
