@@ -83,7 +83,7 @@ abstract class PlenigoTestCase extends TestCase
         $this->assertTrue(true);
     }
 
-    protected function tearDown()
+    protected function tearDown():void
     {
         restore_error_handler();
     }
