@@ -20,7 +20,7 @@ abstract class PlenigoTestCase extends TestCase
     protected $errors = array();
     protected $errorsAsserted = false;
 
-    protected function setUp()
+    protected function setUp():void
     {
         $this->errors = array();
         $this->errorsAsserted = false;
