@@ -88,7 +88,7 @@ abstract class PlenigoTestCase extends TestCase
         restore_error_handler();
     }
 
-    protected function assertPostConditions()
+    protected function assertPostConditions() :void
     {
         if ((count($this->errors) > 0) && ($this->errorsAsserted === false)) {
             $msgErrors = "";
