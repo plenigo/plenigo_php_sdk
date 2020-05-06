@@ -149,7 +149,7 @@ class AccessService extends Service
     {
         $testModeText = (PlenigoManager::get()->isTestMode()) ? 'true' : 'false';
         $params = array(
-            'useExternalCustomerId' => $useExternalCustomerId,
+            'useExternalCustomerId' => $useExternalCustomerId ? 'true' : 'false',
             ApiParams::TEST_MODE => $testModeText,
             'productIds' => $productIds
         );
