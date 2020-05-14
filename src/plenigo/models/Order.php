@@ -378,6 +378,26 @@ class Order {
     }
 
     /**
+     * Setter method for the numeric order id
+     * 
+     * @param int $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * Get numeric order id.
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+    
+    /**
      * Creates a Order instance from an array map.
      *
      * @param array $map The array map to use for the instance creation.
@@ -386,6 +406,7 @@ class Order {
      */
     public static function createFromMap($map) {
         $instance = new Order();
+        $instance->setId(isset($map['id']) ? $map['id'] : null);
         $instance->setOrderId(isset($map['orderId']) ? $map['orderId'] : null);
         $instance->setOrderDate(isset($map['orderDate']) ? $map['orderDate'] : null);
         $instance->setCustomerId(isset($map['customerId']) ? $map['customerId'] : null);
