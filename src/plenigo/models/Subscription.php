@@ -288,6 +288,27 @@ class Subscription
     }
 
     /**
+     * Set Delivery Blocked
+     *
+     * @param boolean $deliveryBlocked
+     *
+     */
+    public function setDeliveryBlocked($deliveryBlocked)
+    {
+        $this->deliveryBlocked = $deliveryBlocked;
+    }
+
+    /**
+     * Get deliveryBlocked.
+     *
+     * @return boolean deliveryBlocked
+     */
+    public function getDeliveryBlocked()
+    {
+        return $this->deliveryBlocked;
+    }
+
+    /**
      * Creates a subscription instance from an array map.
      *
      * @param array $map The array map to use for the instance creation.
@@ -310,6 +331,7 @@ class Subscription
         $instance->setCurrency(isset($map['currency']) ? $map['currency'] : null);
         $instance->setOrderId(isset($map['orderId']) ? $map['orderId'] : null);
         $instance->setSubscriptionId(isset($map['id']) ? $map['id'] : null);
+        $instance->setDeliveryBlocked(isset($map['deliveryBlocked']) ? !!$map['deliveryBlocked'] : false);
         return $instance;
     }
 }
