@@ -28,7 +28,7 @@ final class ApiURLs
     /**
      * OAuth2 plenigo URL.
      */
-    const OAUTH_PLENIGO_URL = "https://www.plenigo.com";
+    const OAUTH_PLENIGO_URL = "https://api.plenigo.com";
 
     /**
      * This URL is used to add user access rights.
